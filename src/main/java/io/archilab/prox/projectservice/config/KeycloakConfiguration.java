@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,14 +19,10 @@ import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper
 import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
-@Profile("prod")
 @Configuration
 @EnableWebSecurity
-class KeyCon extends KeycloakWebSecurityConfigurerAdapter {
+class KeycloakConfiguration extends KeycloakWebSecurityConfigurerAdapter {
 
-  /**
-   * Registers the KeycloakAuthenticationProvider with the authentication manager.
-   */
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
     KeycloakAuthenticationProvider keycloakAuthenticationProvider = this
@@ -36,9 +31,6 @@ class KeyCon extends KeycloakWebSecurityConfigurerAdapter {
     auth.authenticationProvider(keycloakAuthenticationProvider);
   }
 
-  /**
-   * Defines the session authentication strategy.
-   */
   @Bean
   @Override
   protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
@@ -61,7 +53,6 @@ class KeyCon extends KeycloakWebSecurityConfigurerAdapter {
         // TODO vlt. in Zukunft csrf protection aktiveren, dann müsste im Client ein solches Token immer mitgeschickt werden
         .csrf()
         .disable()
-
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // STATELESS
         .sessionAuthenticationStrategy(this.sessionAuthenticationStrategy())
         .and()
@@ -86,8 +77,6 @@ class KeyCon extends KeycloakWebSecurityConfigurerAdapter {
         .antMatchers("/projectModules/**").denyAll()
         .antMatchers("/").permitAll()
         .anyRequest().denyAll();
-//	    .anyRequest().permitAll();
-
   }
 
 
@@ -108,120 +97,3 @@ class KeyCon extends KeycloakWebSecurityConfigurerAdapter {
   }
 
 }
-
-
-@Profile("local")
-@Configuration
-@EnableWebSecurity
-class KeyConDevelopment extends KeycloakWebSecurityConfigurerAdapter {
-
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    super.configure(http);
-
-    http
-        .csrf()
-        .disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // STATELESS
-        .sessionAuthenticationStrategy(this.sessionAuthenticationStrategy())
-        .and()
-        .authorizeRequests()
-        .anyRequest().hasRole("Dozent"); //.permitAll();
-  }
-
-  @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    KeycloakAuthenticationProvider keycloakAuthenticationProvider = this
-        .keycloakAuthenticationProvider();
-    keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
-    auth.authenticationProvider(keycloakAuthenticationProvider);
-  }
-
-
-  @Override
-  protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-//		return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
-    return new NullAuthenticatedSessionStrategy();
-  }
-
-  @Bean
-  public KeycloakConfigResolver KeycloakConfigResolver() {
-    return new KeycloakSpringBootConfigResolver();
-  }
-
-  @Bean
-  public FilterRegistrationBean keycloakAuthenticationProcessingFilterRegistrationBean(
-      KeycloakAuthenticationProcessingFilter filter) {
-    FilterRegistrationBean registrationBean = new FilterRegistrationBean(filter);
-    registrationBean.setEnabled(false);
-    return registrationBean;
-  }
-
-  @Bean
-  public FilterRegistrationBean keycloakPreAuthActionsFilterRegistrationBean(
-      KeycloakPreAuthActionsFilter filter) {
-    FilterRegistrationBean registrationBean = new FilterRegistrationBean(filter);
-    registrationBean.setEnabled(false);
-    return registrationBean;
-  }
-
-}
-
-
-@Profile("db-migration")
-@Configuration
-@EnableWebSecurity
-class KeyConDbMigration extends KeycloakWebSecurityConfigurerAdapter {
-
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    super.configure(http);
-
-    http
-        .csrf()
-        .disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // STATELESS
-        .sessionAuthenticationStrategy(this.sessionAuthenticationStrategy())
-        .and()
-        .authorizeRequests()
-        .anyRequest().permitAll();
-  }
-
-  @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    KeycloakAuthenticationProvider keycloakAuthenticationProvider = this
-        .keycloakAuthenticationProvider();
-    keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
-    auth.authenticationProvider(keycloakAuthenticationProvider);
-  }
-
-
-  @Override
-  protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-//		return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
-    return new NullAuthenticatedSessionStrategy();
-  }
-
-  @Bean
-  public KeycloakConfigResolver KeycloakConfigResolver() {
-    return new KeycloakSpringBootConfigResolver();
-  }
-
-  @Bean
-  public FilterRegistrationBean keycloakAuthenticationProcessingFilterRegistrationBean(
-      KeycloakAuthenticationProcessingFilter filter) {
-    FilterRegistrationBean registrationBean = new FilterRegistrationBean(filter);
-    registrationBean.setEnabled(false);
-    return registrationBean;
-  }
-
-  @Bean
-  public FilterRegistrationBean keycloakPreAuthActionsFilterRegistrationBean(
-      KeycloakPreAuthActionsFilter filter) {
-    FilterRegistrationBean registrationBean = new FilterRegistrationBean(filter);
-    registrationBean.setEnabled(false);
-    return registrationBean;
-  }
-
-}
-
