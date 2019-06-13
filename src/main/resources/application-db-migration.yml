@@ -1,0 +1,29 @@
+eureka:
+    client:
+        enabled: false
+module:
+    service:
+        url: https://gpdev.archi-lab.io/modules
+spring:
+    datasource:
+        password: project-service
+        url: jdbc:postgresql://localhost:5432/project-db?currentSchema=project-db
+        username: project-service
+    flyway:
+        enabled: true
+        schemas: project-db
+        validate-on-migrate: false
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        hibernate:
+            ddl-auto: validate
+        properties:
+            javax:
+                persistence:
+                    schema-generation:
+                        create-source: metadata
+                        scripts:
+                            action: update
+                            create-target: update.sql
+    profiles:
+        active: db-migration

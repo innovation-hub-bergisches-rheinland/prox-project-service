@@ -1,0 +1,32 @@
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://service-discovery:8761/eureka/
+    instance:
+        hostname: project-service
+keycloak:
+    auth-server-url: https://login.coalbase.io/auth
+    bearer-only: true
+    cors: false
+    enabled: true
+    principal-attribute: preferred_username
+    public-client: false
+    realm: prox
+    resource: project-service
+logging:
+    level:
+        org:
+            keycloak: DEBUG
+            springframework:
+                security: DEBUG
+module:
+    service:
+        url: http://localhost:9001/studyCourses
+server:
+    port: 9002
+    use-forward-headers: true
+spring:
+    application:
+        name: project-service
+    flyway:
+        enabled: false

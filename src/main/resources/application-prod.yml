@@ -1,0 +1,17 @@
+module:
+    service:
+        url: https://gpdev.archi-lab.io/studyCourses
+spring:
+    datasource:
+        password: project-service
+        url: jdbc:postgresql://project-db:5432/project-db?currentSchema=project-db
+        username: project-service
+    flyway:
+        enabled: true
+        schemas: project-db
+        validate-on-migrate: false
+    jpa:
+        hibernate:
+            ddl-auto: validate
+    profiles:
+        active: prod
