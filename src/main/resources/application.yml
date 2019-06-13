@@ -1,32 +1,32 @@
 eureka:
-    client:
-        serviceUrl:
-            defaultZone: http://service-discovery:8761/eureka/
-    instance:
-        hostname: project-service
+  client:
+    serviceUrl:
+      defaultZone: http://service-discovery:8761/eureka/
 keycloak:
-    auth-server-url: https://login.coalbase.io/auth
-    bearer-only: true
-    cors: false
-    enabled: true
-    principal-attribute: preferred_username
-    public-client: false
-    realm: prox
-    resource: project-service
-logging:
-    level:
-        org:
-            keycloak: DEBUG
-            springframework:
-                security: DEBUG
+  auth-server-url: https://login.coalbase.io/auth
+  bearer-only: true
+  cors: false
+  principal-attribute: preferred_username
+  public-client: false
+  realm: prox
+  resource: project-service
 module:
-    service:
-        url: http://localhost:9001/studyCourses
+  service:
+    url: http://service-discovery/studyCourses
 server:
-    port: 9002
-    use-forward-headers: true
+  port: 9002
+  use-forward-headers: true
 spring:
-    application:
-        name: project-service
-    flyway:
-        enabled: false
+  application:
+    name: project-service
+  datasource:
+    password: project-service
+    url: jdbc:postgresql://project-db:5432/project-db
+    username: project-service
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+      jdbc:
+        lob:
+          non_contextual_creation: true

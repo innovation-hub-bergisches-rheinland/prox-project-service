@@ -5,5 +5,7 @@ spring:
         persistence:
           schema-generation:
             scripts:
-              action: update
-              create-target: update.sql
+              action: create
+              create-target: create.sql
+  flyway:
+    enabled: false
