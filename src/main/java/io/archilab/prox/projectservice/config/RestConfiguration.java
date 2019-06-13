@@ -1,4 +1,4 @@
-package io.archilab.prox.projectservice;
+package io.archilab.prox.projectservice.config;
 
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.Type;
