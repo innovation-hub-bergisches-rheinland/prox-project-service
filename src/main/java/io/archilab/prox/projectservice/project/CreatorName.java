@@ -18,8 +18,8 @@ public class CreatorName {
 
   public CreatorName(String creatorName) {
     if (!CreatorName.isValid(creatorName)) {
-      throw new IllegalArgumentException(String
-          .format("Name %s exceeded maximum number of %d allowed characters", creatorName,
+      throw new IllegalArgumentException(
+          String.format("Name %s exceeded maximum number of %d allowed characters", creatorName,
               CreatorName.MAX_LENGTH));
     }
     this.creatorName = creatorName;

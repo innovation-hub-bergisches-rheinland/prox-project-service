@@ -25,8 +25,8 @@ class KeycloakConfiguration extends KeycloakWebSecurityConfigurerAdapter {
 
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    KeycloakAuthenticationProvider keycloakAuthenticationProvider = this
-        .keycloakAuthenticationProvider();
+    KeycloakAuthenticationProvider keycloakAuthenticationProvider =
+        this.keycloakAuthenticationProvider();
     keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
     auth.authenticationProvider(keycloakAuthenticationProvider);
   }
@@ -34,7 +34,7 @@ class KeycloakConfiguration extends KeycloakWebSecurityConfigurerAdapter {
   @Bean
   @Override
   protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-//		return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
+    // return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
     return new NullAuthenticatedSessionStrategy();
   }
 
@@ -48,35 +48,27 @@ class KeycloakConfiguration extends KeycloakWebSecurityConfigurerAdapter {
     super.configure(http);
 
     http
-//	    .cors()
-//        .and()
-        // TODO vlt. in Zukunft csrf protection aktiveren, dann müsste im Client ein solches Token immer mitgeschickt werden
-        .csrf()
-        .disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // STATELESS
-        .sessionAuthenticationStrategy(this.sessionAuthenticationStrategy())
-        .and()
-        .authorizeRequests()
-        .antMatchers(HttpMethod.GET, "/projects*").permitAll()
+        // .cors()
+        // .and()
+        // TODO vlt. in Zukunft csrf protection aktiveren, dann müsste im Client ein solches Token
+        // immer mitgeschickt werden
+        .csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // STATELESS
+        .sessionAuthenticationStrategy(this.sessionAuthenticationStrategy()).and()
+        .authorizeRequests().antMatchers(HttpMethod.GET, "/projects*").permitAll()
         .antMatchers(HttpMethod.GET, "/projects/*").permitAll()
-        .antMatchers(HttpMethod.GET, "/projects/**").permitAll()
-        .antMatchers("/projects*").hasRole("Dozent")
-        .antMatchers("/projects/*").hasRole("Dozent")
-        .antMatchers("/projects/**").hasRole("Dozent")
-        .antMatchers(HttpMethod.GET, "/projectStudyCourses*").permitAll()
+        .antMatchers(HttpMethod.GET, "/projects/**").permitAll().antMatchers("/projects*")
+        .hasRole("Dozent").antMatchers("/projects/*").hasRole("Dozent").antMatchers("/projects/**")
+        .hasRole("Dozent").antMatchers(HttpMethod.GET, "/projectStudyCourses*").permitAll()
         .antMatchers(HttpMethod.GET, "/projectStudyCourses/*").permitAll()
         .antMatchers(HttpMethod.GET, "/projectStudyCourses/**").permitAll()
-        .antMatchers("/projectStudyCourses*").denyAll()
-        .antMatchers("/projectStudyCourses/*").denyAll()
-        .antMatchers("/projectStudyCourses/**").denyAll()
+        .antMatchers("/projectStudyCourses*").denyAll().antMatchers("/projectStudyCourses/*")
+        .denyAll().antMatchers("/projectStudyCourses/**").denyAll()
         .antMatchers(HttpMethod.GET, "/projectModules*").permitAll()
         .antMatchers(HttpMethod.GET, "/projectModules/*").permitAll()
         .antMatchers(HttpMethod.GET, "/projectModules/**").permitAll()
-        .antMatchers("/projectModules*").denyAll()
-        .antMatchers("/projectModules/*").denyAll()
-        .antMatchers("/projectModules/**").denyAll()
-        .antMatchers("/").permitAll()
-        .anyRequest().denyAll();
+        .antMatchers("/projectModules*").denyAll().antMatchers("/projectModules/*").denyAll()
+        .antMatchers("/projectModules/**").denyAll().antMatchers("/").permitAll().anyRequest()
+        .denyAll();
   }
 
 

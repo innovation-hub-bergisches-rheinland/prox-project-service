@@ -18,8 +18,8 @@ public class SupervisorName {
 
   public SupervisorName(String supervisorName) {
     if (!SupervisorName.isValid(supervisorName)) {
-      throw new IllegalArgumentException(String
-          .format("Name %s exceeded maximum number of %d allowed characters", supervisorName,
+      throw new IllegalArgumentException(
+          String.format("Name %s exceeded maximum number of %d allowed characters", supervisorName,
               SupervisorName.MAX_LENGTH));
     }
     this.supervisorName = supervisorName;

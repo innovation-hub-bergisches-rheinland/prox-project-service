@@ -18,8 +18,8 @@ public class ProjectName {
 
   public ProjectName(String name) {
     if (!ProjectName.isValid(name)) {
-      throw new IllegalArgumentException(String
-          .format("Name %s exceeded maximum number of %d allowed characters", name,
+      throw new IllegalArgumentException(
+          String.format("Name %s exceeded maximum number of %d allowed characters", name,
               ProjectName.MAX_LENGTH));
     }
     this.name = name;

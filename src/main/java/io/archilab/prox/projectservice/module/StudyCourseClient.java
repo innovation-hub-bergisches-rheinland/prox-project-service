@@ -23,12 +23,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class StudyCourseClient {
 
-  private static final String[] filteredModuleNames = new String[]{
-      "Master Thesis",
-      "Masterarbeit",
-      "Bachelor",
-      "Praxisprojekt"
-  };
+  private static final String[] filteredModuleNames =
+      new String[] {"Master Thesis", "Masterarbeit", "Bachelor", "Praxisprojekt"};
 
   private final Logger logger = LoggerFactory.getLogger(StudyCourseClient.class);
 
@@ -36,8 +32,7 @@ public class StudyCourseClient {
   private String moduleServiceURL;
 
 
-  public StudyCourseClient() {
-  }
+  public StudyCourseClient() {}
 
   private Traverson getTraversonInstance(String url) {
     try {
@@ -65,14 +60,12 @@ public class StudyCourseClient {
         Map<String, Object> params = new HashMap<>();
         params.put("page", currentPage);
 
-        final PagedResources<Resource<StudyCourse>> pagedStudyCourseResources = traverson
-            .follow("self")
-            .withTemplateParameters(params)
-            .toObject(new TypeReferences.PagedResourcesType<Resource<StudyCourse>>() {
-            });
+        final PagedResources<Resource<StudyCourse>> pagedStudyCourseResources =
+            traverson.follow("self").withTemplateParameters(params)
+                .toObject(new TypeReferences.PagedResourcesType<Resource<StudyCourse>>() {});
 
-        reachedLastPage = (++currentPage >= pagedStudyCourseResources.getMetadata()
-            .getTotalPages());
+        reachedLastPage =
+            (++currentPage >= pagedStudyCourseResources.getMetadata().getTotalPages());
 
         for (Resource<StudyCourse> studyCourseResource : pagedStudyCourseResources.getContent()) {
           StudyCourse studyCourse = studyCourseResource.getContent();
@@ -83,10 +76,8 @@ public class StudyCourseClient {
             continue;
           }
 
-          final Resources<Resource<Module>> moduleResources = modulesTraverson
-              .follow("self")
-              .toObject(new TypeReferences.ResourcesType<Resource<Module>>() {
-              });
+          final Resources<Resource<Module>> moduleResources = modulesTraverson.follow("self")
+              .toObject(new TypeReferences.ResourcesType<Resource<Module>>() {});
 
           for (Resource<Module> moduleResource : moduleResources.getContent()) {
             Module module = moduleResource.getContent();
@@ -122,34 +113,21 @@ public class StudyCourseClient {
     return false;
   }
 
-  /*public List<StudyCourse> getStudyCourses() { // Test-method which creates studyCourses
-    try {
-      List<StudyCourse> studyCourses = new ArrayList<>();
-
-      int coursesC = 50;
-      int modulesC = 10;
-      int moduleID = 0;
-      for (int i = 0; i < coursesC; i++) {
-        StudyCourse sc = new StudyCourse();
-        sc.setAcademicDegree(AcademicDegree.MASTER);
-        sc.setExternalStudyCourseID(new ExternalStudyCourseID(new URL("http://localhost:9002/studyCourses/" + i)));
-        sc.setName(new StudyCourseName("Studiengang " + i));
-
-        List<Module> modules = new ArrayList<>();
-        for (int j = 0; j < modulesC; j++) {
-          Module module = new Module();
-          module.setExternalModuleID(new ExternalModuleID(new URL("http://localhost:9002/modules/" + moduleID)));
-          module.setName(new ModuleName("Modul " + moduleID));
-          moduleID++;
-          modules.add(module);
-        }
-        sc.setModules(modules);
-        studyCourses.add(sc);
-      }
-
-      return studyCourses;
-    } catch (Exception e) {
-      return new ArrayList<>();
-    }
-  }*/
+  /*
+   * public List<StudyCourse> getStudyCourses() { // Test-method which creates studyCourses try {
+   * List<StudyCourse> studyCourses = new ArrayList<>();
+   * 
+   * int coursesC = 50; int modulesC = 10; int moduleID = 0; for (int i = 0; i < coursesC; i++) {
+   * StudyCourse sc = new StudyCourse(); sc.setAcademicDegree(AcademicDegree.MASTER);
+   * sc.setExternalStudyCourseID(new ExternalStudyCourseID(new
+   * URL("http://localhost:9002/studyCourses/" + i))); sc.setName(new StudyCourseName("Studiengang "
+   * + i));
+   * 
+   * List<Module> modules = new ArrayList<>(); for (int j = 0; j < modulesC; j++) { Module module =
+   * new Module(); module.setExternalModuleID(new ExternalModuleID(new
+   * URL("http://localhost:9002/modules/" + moduleID))); module.setName(new ModuleName("Modul " +
+   * moduleID)); moduleID++; modules.add(module); } sc.setModules(modules); studyCourses.add(sc); }
+   * 
+   * return studyCourses; } catch (Exception e) { return new ArrayList<>(); } }
+   */
 }

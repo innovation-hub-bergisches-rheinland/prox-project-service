@@ -11,5 +11,5 @@ public interface ProjectRepository extends PagingAndSortingRepository<Project, U
 
   Set<Project> findBySupervisorName_SupervisorNameContaining(
       @Param(value = "supervisorName") String supervisorName);
-  // save, saveAll    delete, deleteAll, deleteAll, deleteById,
+  // save, saveAll delete, deleteAll, deleteAll, deleteById,
 }

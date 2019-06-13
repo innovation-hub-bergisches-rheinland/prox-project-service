@@ -36,8 +36,8 @@ public class StudyCourseService {
       List<Module> newModules = new ArrayList<>();
       List<Module> retrievedModules = studyCourse.getModules();
       for (Module module : retrievedModules) {
-        Optional<Module> existingModuleOptional = this.moduleRepository
-            .findByExternalModuleID(module.getExternalModuleID());
+        Optional<Module> existingModuleOptional =
+            this.moduleRepository.findByExternalModuleID(module.getExternalModuleID());
 
         if (existingModuleOptional.isPresent()) {
           this.logger.info("Module with ID " + module.getExternalModuleID() + " already exists.");
@@ -46,7 +46,8 @@ public class StudyCourseService {
           newModules.add(existingModule);
           this.moduleRepository.save(existingModule);
         } else {
-          this.logger.info("Module with ID " + module.getExternalModuleID() + " does not exist yet.");
+          this.logger
+              .info("Module with ID " + module.getExternalModuleID() + " does not exist yet.");
           newModules.add(module);
           this.moduleRepository.save(module);
         }

@@ -20,8 +20,8 @@ public class ProjectDescription {
 
   public ProjectDescription(String description) {
     if (!ProjectDescription.isValid(description)) {
-      throw new IllegalArgumentException(String
-          .format("Name %s exceeded maximum number of %d allowed characters", description,
+      throw new IllegalArgumentException(
+          String.format("Name %s exceeded maximum number of %d allowed characters", description,
               ProjectDescription.MAX_LENGTH));
     }
     this.description = description;
