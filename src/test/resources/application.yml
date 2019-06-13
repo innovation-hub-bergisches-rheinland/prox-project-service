@@ -1,0 +1,14 @@
+eureka:
+  client:
+    enabled: false
+keycloak:
+  enabled: false
+module:
+  service:
+    url: http://service-discovery/studyCourses
+server:
+  port: 9002
+  use-forward-headers: true
+spring:
+  application:
+    name: project-service
