@@ -10,9 +10,6 @@ keycloak:
   public-client: false
   realm: prox
   resource: project-service
-module:
-  service:
-    url: http://service-discovery/studyCourses
 server:
   port: 9002
   use-forward-headers: true
