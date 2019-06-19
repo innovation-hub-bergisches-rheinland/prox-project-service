@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 public class StudyCourseClient {
 
   private static final String[] filteredModuleNames =
-      new String[] {"Master Thesis", "Masterarbeit", "Bachelor", "Praxisprojekt"};
+      new String[]{"Master Thesis", "Masterarbeit", "Bachelor", "Praxisprojekt"};
   private final EurekaClient eurekaClient;
 
   public StudyCourseClient(EurekaClient eurekaClient) {
@@ -38,17 +38,19 @@ public class StudyCourseClient {
   }
 
   private Traverson getTraversonInstance(String url) {
+    URI uri;
     try {
-      return new Traverson(new URI(url), MediaTypes.HAL_JSON);
+      uri = new URI(url);
     } catch (URISyntaxException e) {
-      StudyCourseClient.log.error("Could not init Traverson");
-      e.printStackTrace();
-      return null;
+      throw new RuntimeException("Eureka provided an invalid service URL", e);
     }
+
+    return new Traverson(uri, MediaTypes.HAL_JSON);
   }
 
   public List<StudyCourse> getStudyCourses() {
     Traverson traverson = this.getTraversonInstance(this.serviceUrl());
+
     if (traverson == null) {
       return new ArrayList<>();
     }
@@ -65,7 +67,8 @@ public class StudyCourseClient {
 
         final PagedResources<Resource<StudyCourse>> pagedStudyCourseResources =
             traverson.follow("self").withTemplateParameters(params)
-                .toObject(new TypeReferences.PagedResourcesType<Resource<StudyCourse>>() {});
+                .toObject(new TypeReferences.PagedResourcesType<Resource<StudyCourse>>() {
+                });
 
         reachedLastPage =
             (++currentPage >= pagedStudyCourseResources.getMetadata().getTotalPages());
@@ -80,7 +83,8 @@ public class StudyCourseClient {
           }
 
           final Resources<Resource<Module>> moduleResources = modulesTraverson.follow("self")
-              .toObject(new TypeReferences.ResourcesType<Resource<Module>>() {});
+              .toObject(new TypeReferences.ResourcesType<Resource<Module>>() {
+              });
 
           for (Resource<Module> moduleResource : moduleResources.getContent()) {
             Module module = moduleResource.getContent();
