@@ -8,7 +8,7 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 
 @Configuration
-public class RestConfiguration implements RepositoryRestConfigurer {
+public class RestConfig implements RepositoryRestConfigurer {
 
   @Autowired
   private EntityManager entityManager;

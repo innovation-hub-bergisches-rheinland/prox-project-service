@@ -1,11 +1,12 @@
-package io.archilab.prox.projectservice.module;
+package io.archilab.prox.projectservice.config;
 
+import io.archilab.prox.projectservice.module.StudyCourseService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ImportRunner {
+public class ImportConfig {
 
   @Bean
   CommandLineRunner runFeign(StudyCourseService studyCourseService) {
