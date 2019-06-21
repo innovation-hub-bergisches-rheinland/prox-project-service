@@ -4,8 +4,6 @@ services:
 
   project-service:
     image: docker.nexus.archi-lab.io/archilab/prox-project-service
-    ports:
-      - "9002:9002"
     restart: always
     networks:
       - prox
