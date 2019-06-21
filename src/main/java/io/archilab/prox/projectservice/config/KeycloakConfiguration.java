@@ -52,13 +52,14 @@ class KeycloakConfiguration extends KeycloakWebSecurityConfigurerAdapter {
         // .and()
         // TODO vlt. in Zukunft csrf protection aktiveren, dann müsste im Client ein solches Token
         // immer mitgeschickt werden
-        .csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // STATELESS
+        .csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .sessionAuthenticationStrategy(this.sessionAuthenticationStrategy()).and()
         .authorizeRequests().antMatchers(HttpMethod.GET, "/projects*").permitAll()
         .antMatchers(HttpMethod.GET, "/projects/*").permitAll()
         .antMatchers(HttpMethod.GET, "/projects/**").permitAll().antMatchers("/projects*")
-        .hasRole("Dozent").antMatchers("/projects/*").hasRole("Dozent").antMatchers("/projects/**")
-        .hasRole("Dozent").antMatchers(HttpMethod.GET, "/projectStudyCourses*").permitAll()
+        .hasRole("professor").antMatchers("/projects/*").hasRole("professor")
+        .antMatchers("/projects/**").hasRole("professor")
+        .antMatchers(HttpMethod.GET, "/projectStudyCourses*").permitAll()
         .antMatchers(HttpMethod.GET, "/projectStudyCourses/*").permitAll()
         .antMatchers(HttpMethod.GET, "/projectStudyCourses/**").permitAll()
         .antMatchers("/projectStudyCourses*").denyAll().antMatchers("/projectStudyCourses/*")
