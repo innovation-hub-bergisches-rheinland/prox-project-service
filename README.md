@@ -20,10 +20,10 @@ docker-compose -f docker-compose-project-service.yml up
 ```
 
 Starts a Docker container based on the compose file and the image. A Docker
-network named `ptb` is required for the communication between services:
+network named `prox` is required for the communication between services:
 
 ``` bash
-docker network create ptb
+docker network create prox
 ```
 
 ## About the Team
