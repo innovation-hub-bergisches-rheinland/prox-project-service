@@ -3,7 +3,7 @@ version: "3.6"
 services:
 
   project-service:
-    image: docker.nexus.archi-lab.io/archilab/prox-project-service
+    image: docker.nexus.archi-lab.io/archilab/${IMAGE}:${TAG}
     restart: always
     networks:
       - prox
