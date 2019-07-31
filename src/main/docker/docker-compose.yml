@@ -4,7 +4,6 @@ services:
 
   project-service:
     image: docker.nexus.archi-lab.io/archilab/${IMAGE}:${TAG}
-    restart: always
     networks:
       - prox
       - project-db
@@ -13,7 +12,6 @@ services:
     image: postgres:11.3-alpine
     volumes:
       - project-db-data:/var/lib/postgresql/data
-    restart: always
     environment:
       - POSTGRES_USER=project-service
       - POSTGRES_PASSWORD=project-service
