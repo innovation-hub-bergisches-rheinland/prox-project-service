@@ -43,6 +43,7 @@ public class StudyCourseService {
           this.logger.info("Module with ID " + module.getExternalModuleID() + " already exists.");
           Module existingModule = existingModuleOptional.get();
           existingModule.setName(module.getName());
+          existingModule.setProjectType(module.getProjectType());
           newModules.add(existingModule);
           this.moduleRepository.save(existingModule);
         } else {

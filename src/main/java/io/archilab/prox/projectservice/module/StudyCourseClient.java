@@ -2,6 +2,9 @@ package io.archilab.prox.projectservice.module;
 
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
+
+import ch.qos.logback.classic.Logger;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -10,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+
+import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.PagedResources;
@@ -23,9 +28,16 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class StudyCourseClient {
+	
+  private final org.slf4j.Logger logger = LoggerFactory.getLogger(StudyCourseClient.class);
+
 
   private static final String[] filteredModuleNames =
       new String[] {"Master Thesis", "Masterarbeit", "Bachelor", "Praxisprojekt"};
+  
+  private static final ProjectType[] filteredProjectTypes =
+	      new ProjectType[] {ProjectType.PP,ProjectType.BA,ProjectType.MA,};
+  
   private final EurekaClient eurekaClient;
 
   public StudyCourseClient(EurekaClient eurekaClient) {
@@ -51,18 +63,23 @@ public class StudyCourseClient {
 
   public List<StudyCourse> getStudyCourses() {
     Traverson traverson = this.getTraversonInstance(this.serviceUrl());
+   
 
     if (traverson == null) {
       return new ArrayList<>();
     }
+   
 
     List<StudyCourse> studyCourses = new ArrayList<>();
 
     try {
       int currentPage = 0;
       boolean reachedLastPage = false;
+      
+     
 
       while (!reachedLastPage) {
+    	  
         Map<String, Object> params = new HashMap<>();
         params.put("page", currentPage);
 
@@ -74,6 +91,7 @@ public class StudyCourseClient {
             (++currentPage >= pagedStudyCourseResources.getMetadata().getTotalPages());
 
         for (Resource<StudyCourse> studyCourseResource : pagedStudyCourseResources.getContent()) {
+        	
           StudyCourse studyCourse = studyCourseResource.getContent();
           Link modulesLink = studyCourseResource.getLink("modules");
 
@@ -86,6 +104,7 @@ public class StudyCourseClient {
               .toObject(new TypeReferences.ResourcesType<Resource<Module>>() {});
 
           for (Resource<Module> moduleResource : moduleResources.getContent()) {
+        	  
             Module module = moduleResource.getContent();
             if (this.isModuleFiltered(module)) {
               module.setExternalModuleID(
@@ -108,12 +127,16 @@ public class StudyCourseClient {
   }
 
   private boolean isModuleFiltered(Module module) {
-    String moduleName = module.getName().getName();
-
-    for (String filteredModuleName : StudyCourseClient.filteredModuleNames) {
-      if (moduleName.toLowerCase().contains(filteredModuleName.toLowerCase())) {
+    //String moduleName = module.getName().getName();
+	  ProjectType moduleProjectType = module.getProjectType();
+	  
+    for (ProjectType filteredProjectTypesList : StudyCourseClient.filteredProjectTypes) {
+    	
+      if (moduleProjectType.compareTo(filteredProjectTypesList)==0) {
         return true;
       }
+      
+      
     }
 
     return false;
