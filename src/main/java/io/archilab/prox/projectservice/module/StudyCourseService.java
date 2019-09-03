@@ -73,5 +73,6 @@ public class StudyCourseService {
         this.studyCourseRepository.save(studyCourse);
       }
     }
+    this.logger.info("Finished import");
   }
 }
