@@ -5,6 +5,7 @@ import io.archilab.prox.projectservice.module.AcademicDegree;
 import io.archilab.prox.projectservice.module.Module;
 import io.archilab.prox.projectservice.module.ModuleName;
 import io.archilab.prox.projectservice.module.ModuleRepository;
+import io.archilab.prox.projectservice.module.ProjectType;
 import io.archilab.prox.projectservice.module.StudyCourse;
 import io.archilab.prox.projectservice.module.StudyCourseName;
 import io.archilab.prox.projectservice.module.StudyCourseRepository;
@@ -46,10 +47,10 @@ public class DatabaseTest {
     StudyCourse informationSystems =
         new StudyCourse(new StudyCourseName("Information Systems"), AcademicDegree.MASTER);
 
-    Module am = new Module(new ModuleName("Anforderungsmanagement"));
-    Module fae = new Module(new ModuleName("Fachspezifischer Architekturentwurf"));
-    Module bi = new Module(new ModuleName("Business Intelligence"));
-    Module eam = new Module(new ModuleName("Enterprise Architecture Management"));
+    Module am = new Module(new ModuleName("Anforderungsmanagement"),ProjectType.UNDEFINED);
+    Module fae = new Module(new ModuleName("Fachspezifischer Architekturentwurf"),ProjectType.UNDEFINED);
+    Module bi = new Module(new ModuleName("Business Intelligence"),ProjectType.UNDEFINED);
+    Module eam = new Module(new ModuleName("Enterprise Architecture Management"),ProjectType.UNDEFINED);
 
     this.moduleRepository.save(am);
     this.moduleRepository.save(fae);

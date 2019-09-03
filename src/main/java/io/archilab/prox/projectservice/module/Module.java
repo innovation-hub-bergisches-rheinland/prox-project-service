@@ -20,9 +20,12 @@ public class Module extends AbstractEntity {
 
   @JsonUnwrapped
   private ModuleName name;
+  
+  private ProjectType projectType;
 
 
-  public Module(ModuleName name) {
+  public Module(ModuleName name, ProjectType projectType) {
     this.name = name;
+    this.projectType = projectType;
   }
 }

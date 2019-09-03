@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import io.archilab.prox.projectservice.module.Module;
 import io.archilab.prox.projectservice.module.ModuleName;
 import io.archilab.prox.projectservice.module.ModuleRepository;
+import io.archilab.prox.projectservice.module.ProjectType;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -27,9 +29,9 @@ public class ProjectTest {
   public void equality() {
     // Create Modules for Project
     List<Module> modules = new ArrayList<>();
-    modules.add(new Module(new ModuleName("Module 1")));
-    modules.add(new Module(new ModuleName("Module 2")));
-    modules.add(new Module(new ModuleName("Module 3")));
+    modules.add(new Module(new ModuleName("Module 1"),ProjectType.UNDEFINED));
+    modules.add(new Module(new ModuleName("Module 2"),ProjectType.UNDEFINED));
+    modules.add(new Module(new ModuleName("Module 3"),ProjectType.UNDEFINED));
     this.moduleRepository.saveAll(modules);
     assertThat(this.moduleRepository.count()).isEqualTo(3);
 
