@@ -1,1 +1,1 @@
-alter Table Module rename projecttype to project_type
+ALTER TABLE Module DROP projecttype;
