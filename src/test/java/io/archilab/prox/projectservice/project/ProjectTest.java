@@ -37,8 +37,8 @@ public class ProjectTest {
 
     // Create Project
     Project project =
-        new Project(new ProjectName("Testprojekt"), new ProjectDescription("Bestes Projekt"),
-            ProjectStatus.LAUFEND, new CreatorID(UUID.randomUUID()), new CreatorName("Jann"),
+        new Project(new ProjectName("Testprojekt"), new ProjectShortDescription("Best Proj."), new ProjectDescription("Bestes Projekt"),
+            ProjectStatus.LAUFEND, new ProjectRequirement("PhD"), new CreatorID(UUID.randomUUID()), new CreatorName("Jann"),
             new SupervisorName("Jann"), modules);
 
     this.projectRepository.save(project);

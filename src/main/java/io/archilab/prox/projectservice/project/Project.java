@@ -35,6 +35,14 @@ public class Project extends AbstractEntity {
   private ProjectDescription description;
 
   @Setter
+  @JsonUnwrapped
+  private ProjectShortDescription shortDescription;
+
+  @Setter
+  @JsonUnwrapped
+  private ProjectRequirement requirement;
+
+  @Setter
   private ProjectStatus status;
 
   @NotNull
@@ -69,10 +77,13 @@ public class Project extends AbstractEntity {
   private java.util.Date modified;
 
 
-  public Project(ProjectName name, ProjectDescription description, ProjectStatus status,
+  public Project(ProjectName name, ProjectShortDescription shortDescription, ProjectDescription description, ProjectStatus status,
+                 ProjectRequirement requirement,
       @NotNull CreatorID creatorID, @NotNull CreatorName creatorName,
       @NotNull SupervisorName supervisorName, List<Module> modules) {
+    this.requirement = requirement;
     this.name = name;
+    this.shortDescription = shortDescription;
     this.description = description;
     this.status = status;
     this.creatorID = creatorID;
