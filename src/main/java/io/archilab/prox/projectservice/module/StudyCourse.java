@@ -23,6 +23,7 @@ import lombok.ToString;
 public class StudyCourse extends AbstractEntity {
 
   @Setter
+  @JsonIgnore
   private ExternalStudyCourseID externalStudyCourseID;
 
   @Setter
