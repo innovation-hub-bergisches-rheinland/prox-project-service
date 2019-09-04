@@ -27,6 +27,10 @@ public class StudyCourseService {
 
     this.studyCourseRepository = studyCourseRepository;
   }
+
+  public boolean hasData() {
+    return studyCourseRepository.count() > 0;
+  }
   
 
 
