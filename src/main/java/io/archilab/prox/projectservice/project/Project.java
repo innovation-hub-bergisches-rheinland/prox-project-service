@@ -3,6 +3,8 @@ package io.archilab.prox.projectservice.project;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import io.archilab.prox.projectservice.core.AbstractEntity;
 import io.archilab.prox.projectservice.module.Module;
+import io.archilab.prox.projectservice.tags.Tags;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
@@ -64,6 +66,11 @@ public class Project extends AbstractEntity {
   @Getter
   @ManyToMany
   private List<Module> modules = new ArrayList<>();
+  
+  @Getter
+  @ManyToMany
+  private List<Tags> tags = new ArrayList<>();
+
 
   @Basic
   @Temporal(TemporalType.TIMESTAMP)
