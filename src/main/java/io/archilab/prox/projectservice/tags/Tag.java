@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Tag extends AbstractEntity
 {
-	public TagName tagName;
+	private TagName tagName;
 	
 	public Tag(TagName tagName)
 	{

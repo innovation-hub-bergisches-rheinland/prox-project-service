@@ -87,7 +87,7 @@ public class Project extends AbstractEntity {
   public Project(ProjectName name, ProjectShortDescription shortDescription, ProjectDescription description, ProjectStatus status,
                  ProjectRequirement requirement,
       @NotNull CreatorID creatorID, @NotNull CreatorName creatorName,
-      @NotNull SupervisorName supervisorName, List<Module> modules) {
+      @NotNull SupervisorName supervisorName, List<Module> modules, List<Tag> tags ) {
     this.requirement = requirement;
     this.name = name;
     this.shortDescription = shortDescription;
@@ -97,5 +97,20 @@ public class Project extends AbstractEntity {
     this.creatorName = creatorName;
     this.supervisorName = supervisorName;
     this.modules = modules;
+    this.tags = tags;
+  }
+  
+  public Project(ProjectName name, ProjectShortDescription shortDescription, ProjectDescription description, ProjectStatus status,
+          ProjectRequirement requirement,
+	@NotNull CreatorID creatorID, @NotNull CreatorName creatorName,
+	@NotNull SupervisorName supervisorName) {
+	this.requirement = requirement;
+	this.name = name;
+	this.shortDescription = shortDescription;
+	this.description = description;
+	this.status = status;
+	this.creatorID = creatorID;
+	this.creatorName = creatorName;
+	this.supervisorName = supervisorName;
   }
 }

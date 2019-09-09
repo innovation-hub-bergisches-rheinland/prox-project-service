@@ -5,6 +5,7 @@ import io.archilab.prox.projectservice.module.Module;
 import io.archilab.prox.projectservice.module.ModuleName;
 import io.archilab.prox.projectservice.module.ModuleRepository;
 import io.archilab.prox.projectservice.module.ProjectType;
+import io.archilab.prox.projectservice.tags.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class ProjectTest {
     Project project =
         new Project(new ProjectName("Testprojekt"), new ProjectShortDescription("Best Proj."), new ProjectDescription("Bestes Projekt"),
             ProjectStatus.LAUFEND, new ProjectRequirement("PhD"), new CreatorID(UUID.randomUUID()), new CreatorName("Jann"),
-            new SupervisorName("Jann"), modules);
+            new SupervisorName("Jann"), modules,new ArrayList<Tag>());
 
     this.projectRepository.save(project);
     assertThat(this.projectRepository.findById(project.getId()).isPresent()).isEqualTo(true);

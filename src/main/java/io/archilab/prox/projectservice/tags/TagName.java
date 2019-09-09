@@ -18,11 +18,11 @@ public class TagName {
     private static final int MAX_LENGTH = 40;
 	
 	@Column(length = 40)
-	public String tagName;
+	private String tagName;
 	
 	public TagName(String tagName)
 	{
-		if (!ProjectDescription.isValid(tagName)) {
+		if (!TagName.isValid(tagName)) {
 		      throw new IllegalArgumentException(
 		          String.format("Name %s exceeded maximum number of %d allowed characters", tagName,
 		        		  TagName.MAX_LENGTH));
