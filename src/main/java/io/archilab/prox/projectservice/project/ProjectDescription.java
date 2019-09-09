@@ -13,9 +13,9 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProjectDescription {
 
-  private static final int MAX_LENGTH = 3000;
+  private static final int MAX_LENGTH = 10000;
 
-  @Column(length = 3000)
+  @Column(length = MAX_LENGTH)
   private String description;
 
   public ProjectDescription(String description) {
