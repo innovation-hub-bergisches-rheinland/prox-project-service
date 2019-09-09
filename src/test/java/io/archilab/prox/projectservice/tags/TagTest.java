@@ -125,7 +125,7 @@ public class TagTest {
 	    tagRepository.saveAll(tags1);
 	    tagRepository.saveAll(tags2);
 	    
-	    Optional<Tag> foundTag =tagRepository.findByTagName_TagNameEquals( (tagName));
+	    Optional<Tag> foundTag =tagRepository.findByTagName_TagName( (tagName));
 	    Set<Tag> allTags =tagRepository.findByTagName_TagNameContaining(("tag"));
 	    
 	    if(foundTag.isPresent())

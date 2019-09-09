@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface TagRepository  extends PagingAndSortingRepository<Tag, UUID>{
 	
-	  Optional<Tag> findByTagName_TagNameEquals(@Param(value = "tagName") String tagName);
+	  Optional<Tag> findByTagName_TagName(@Param(value = "tagName") String tagName);
 
 	  Set<Tag> findByTagName_TagNameContaining(
 	      @Param(value = "tagName") String tagName);
