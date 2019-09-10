@@ -6,6 +6,7 @@ import io.archilab.prox.projectservice.core.AbstractEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
@@ -13,6 +14,8 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Tag extends AbstractEntity {
+
+  @Setter
   @JsonUnwrapped
   private TagName tagName;
 
