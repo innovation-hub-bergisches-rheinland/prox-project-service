@@ -1,40 +1,25 @@
 package io.archilab.prox.projectservice.tags;
 
+import io.archilab.prox.projectservice.module.Module;
+import io.archilab.prox.projectservice.module.ModuleName;
+import io.archilab.prox.projectservice.module.ModuleRepository;
+import io.archilab.prox.projectservice.module.ProjectType;
+import io.archilab.prox.projectservice.project.*;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.*;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
-
-import javax.validation.constraints.NotNull;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import io.archilab.prox.projectservice.module.Module;
-import io.archilab.prox.projectservice.module.ModuleName;
-import io.archilab.prox.projectservice.module.ModuleRepository;
-import io.archilab.prox.projectservice.module.ProjectType;
-import io.archilab.prox.projectservice.project.CreatorID;
-import io.archilab.prox.projectservice.project.CreatorName;
-import io.archilab.prox.projectservice.project.Project;
-import io.archilab.prox.projectservice.project.ProjectDescription;
-import io.archilab.prox.projectservice.project.ProjectName;
-import io.archilab.prox.projectservice.project.ProjectRepository;
-import io.archilab.prox.projectservice.project.ProjectRequirement;
-import io.archilab.prox.projectservice.project.ProjectShortDescription;
-import io.archilab.prox.projectservice.project.ProjectStatus;
-import io.archilab.prox.projectservice.project.SupervisorName;
-import io.micrometer.core.instrument.Tags;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -76,6 +61,33 @@ public class TagTest {
 		{
 			 assertThat(e.getMessage(), containsString("exceeded maximum number of"));
 		}
+	}
+
+	@Test
+	public void tagUniqueName()
+	{
+		Tag tag_1 = new Tag(new TagName("Tag_1"));
+		Tag tag_2 = new Tag(new TagName("Tag_2"));
+		Tag tag_fail = new Tag(new TagName("Tag_1"));
+
+		this.tagRepository.save(tag_1);
+		Assert.assertEquals(1, this.tagRepository.count());
+
+		this.tagRepository.save(tag_2);
+		Assert.assertEquals(2, this.tagRepository.count());
+
+		try
+		{
+			this.tagRepository.save(tag_fail);
+
+			Assert.assertEquals(2, this.tagRepository.count());
+		}
+		catch(DataIntegrityViolationException e)
+		{
+			return;
+		}
+
+		fail("Tag name is not unique not detected!");
 	}
 	
 	@Test
