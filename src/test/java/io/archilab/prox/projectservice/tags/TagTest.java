@@ -84,6 +84,7 @@ public class TagTest {
 		}
 		catch(DataIntegrityViolationException e)
 		{
+			fail("DataIntegrityViolationException");
 			return;
 		}
 

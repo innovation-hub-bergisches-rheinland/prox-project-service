@@ -17,6 +17,7 @@ import java.util.UUID;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -46,7 +47,7 @@ public class DatabaseTest {
     Module fae = new Module(new ModuleName("Fachspezifischer Architekturentwurf"),ProjectType.UNDEFINED);
     Module bi = new Module(new ModuleName("Business Intelligence"),ProjectType.UNDEFINED);
     Module eam = new Module(new ModuleName("Enterprise Architecture Management"),ProjectType.UNDEFINED);
-
+    
     this.moduleRepository.save(am);
     this.moduleRepository.save(fae);
     this.moduleRepository.save(bi);
