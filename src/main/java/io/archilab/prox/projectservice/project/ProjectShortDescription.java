@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
@@ -21,8 +20,8 @@ public class ProjectShortDescription {
   public ProjectShortDescription(String shortDescription) {
     if (!ProjectShortDescription.isValid(shortDescription)) {
       throw new IllegalArgumentException(
-              String.format("ShortDescription %s exceeded maximum number of %d allowed characters", shortDescription,
-                      ProjectShortDescription.MAX_LENGTH));
+          String.format("ShortDescription %s exceeded maximum number of %d allowed characters",
+              shortDescription, ProjectShortDescription.MAX_LENGTH));
     }
     this.shortDescription = shortDescription;
   }

@@ -31,7 +31,7 @@ public class Module extends AbstractEntity {
 
   @JsonUnwrapped
   private ModuleName name;
-  
+
   private ProjectType projectType;
   
 //  @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = { javax.persistence.CascadeType.MERGE, javax.persistence.CascadeType.PERSIST })
