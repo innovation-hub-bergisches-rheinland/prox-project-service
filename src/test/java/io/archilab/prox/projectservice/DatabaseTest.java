@@ -11,7 +11,6 @@ import io.archilab.prox.projectservice.module.StudyCourseName;
 import io.archilab.prox.projectservice.module.StudyCourseRepository;
 import io.archilab.prox.projectservice.project.*;
 import io.archilab.prox.projectservice.tags.Tag;
-
 import java.util.ArrayList;
 import java.util.UUID;
 import org.junit.Test;
@@ -42,10 +41,12 @@ public class DatabaseTest {
     StudyCourse informationSystems =
         new StudyCourse(new StudyCourseName("Information Systems"), AcademicDegree.MASTER);
 
-    Module am = new Module(new ModuleName("Anforderungsmanagement"),ProjectType.UNDEFINED);
-    Module fae = new Module(new ModuleName("Fachspezifischer Architekturentwurf"),ProjectType.UNDEFINED);
-    Module bi = new Module(new ModuleName("Business Intelligence"),ProjectType.UNDEFINED);
-    Module eam = new Module(new ModuleName("Enterprise Architecture Management"),ProjectType.UNDEFINED);
+    Module am = new Module(new ModuleName("Anforderungsmanagement"), ProjectType.UNDEFINED);
+    Module fae =
+        new Module(new ModuleName("Fachspezifischer Architekturentwurf"), ProjectType.UNDEFINED);
+    Module bi = new Module(new ModuleName("Business Intelligence"), ProjectType.UNDEFINED);
+    Module eam =
+        new Module(new ModuleName("Enterprise Architecture Management"), ProjectType.UNDEFINED);
 
     this.moduleRepository.save(am);
     this.moduleRepository.save(fae);
@@ -68,24 +69,27 @@ public class DatabaseTest {
 
     ArrayList<Module> modules = new ArrayList<>();
     modules.add(am);
-    Project p1 =
-        new Project(new ProjectName("Projekt 1"), new ProjectShortDescription("P1"), new ProjectDescription("Ein neues Projekt 1"),
-            ProjectStatus.VERFÜGBAR, new ProjectRequirement("R1"), new CreatorID(UUID.randomUUID()), new CreatorName("Creator 1"),
-            new SupervisorName("Supervisor Professor 1"), modules, new ArrayList<Tag>());
+    Project p1 = new Project(new ProjectName("Projekt 1"), new ProjectShortDescription("P1"),
+        new ProjectDescription("Ein neues Projekt 1"), ProjectStatus.VERFÜGBAR,
+        new ProjectRequirement("R1"), new CreatorID(UUID.randomUUID()),
+        new CreatorName("Creator 1"), new SupervisorName("Supervisor Professor 1"), modules,
+        new ArrayList<Tag>());
 
     modules = new ArrayList<>();
     modules.add(fae);
-    Project p2 =
-        new Project(new ProjectName("Projekt 1"), new ProjectShortDescription("P2"),new ProjectDescription("Ein neues Projekt 2"),
-            ProjectStatus.VERFÜGBAR, new ProjectRequirement("R2"), new CreatorID(UUID.randomUUID()), new CreatorName("Creator 3"),
-            new SupervisorName("Supervisor Professor 3"), modules, new ArrayList<Tag>());
+    Project p2 = new Project(new ProjectName("Projekt 1"), new ProjectShortDescription("P2"),
+        new ProjectDescription("Ein neues Projekt 2"), ProjectStatus.VERFÜGBAR,
+        new ProjectRequirement("R2"), new CreatorID(UUID.randomUUID()),
+        new CreatorName("Creator 3"), new SupervisorName("Supervisor Professor 3"), modules,
+        new ArrayList<Tag>());
 
     modules = new ArrayList<>();
     modules.add(eam);
-    Project p3 =
-        new Project(new ProjectName("Projekt 1"), new ProjectShortDescription("P3"), new ProjectDescription("Ein neues Projekt 3"),
-            ProjectStatus.VERFÜGBAR, new ProjectRequirement("R3"),new CreatorID(UUID.randomUUID()), new CreatorName("Creator 4"),
-            new SupervisorName("Supervisor Professor 4"), modules, new ArrayList<Tag>());
+    Project p3 = new Project(new ProjectName("Projekt 1"), new ProjectShortDescription("P3"),
+        new ProjectDescription("Ein neues Projekt 3"), ProjectStatus.VERFÜGBAR,
+        new ProjectRequirement("R3"), new CreatorID(UUID.randomUUID()),
+        new CreatorName("Creator 4"), new SupervisorName("Supervisor Professor 4"), modules,
+        new ArrayList<Tag>());
 
     this.projectRepository.save(p1);
     this.projectRepository.save(p2);

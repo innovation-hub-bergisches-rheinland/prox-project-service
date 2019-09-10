@@ -20,7 +20,7 @@ public class Module extends AbstractEntity {
 
   @JsonUnwrapped
   private ModuleName name;
-  
+
   private ProjectType projectType;
 
 

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import io.archilab.prox.projectservice.core.AbstractEntity;
 import io.archilab.prox.projectservice.module.Module;
 import io.archilab.prox.projectservice.tags.Tag;
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
@@ -66,7 +65,7 @@ public class Project extends AbstractEntity {
   @Getter
   @ManyToMany
   private List<Module> modules = new ArrayList<>();
-  
+
   @Getter
   @ManyToMany
   private List<Tag> tags = new ArrayList<>();
@@ -84,10 +83,10 @@ public class Project extends AbstractEntity {
   private java.util.Date modified;
 
 
-  public Project(ProjectName name, ProjectShortDescription shortDescription, ProjectDescription description, ProjectStatus status,
-                 ProjectRequirement requirement,
+  public Project(ProjectName name, ProjectShortDescription shortDescription,
+      ProjectDescription description, ProjectStatus status, ProjectRequirement requirement,
       @NotNull CreatorID creatorID, @NotNull CreatorName creatorName,
-      @NotNull SupervisorName supervisorName, List<Module> modules, List<Tag> tags ) {
+      @NotNull SupervisorName supervisorName, List<Module> modules, List<Tag> tags) {
     this.requirement = requirement;
     this.name = name;
     this.shortDescription = shortDescription;
@@ -99,18 +98,18 @@ public class Project extends AbstractEntity {
     this.modules = modules;
     this.tags = tags;
   }
-  
-  public Project(ProjectName name, ProjectShortDescription shortDescription, ProjectDescription description, ProjectStatus status,
-          ProjectRequirement requirement,
-	@NotNull CreatorID creatorID, @NotNull CreatorName creatorName,
-	@NotNull SupervisorName supervisorName) {
-	this.requirement = requirement;
-	this.name = name;
-	this.shortDescription = shortDescription;
-	this.description = description;
-	this.status = status;
-	this.creatorID = creatorID;
-	this.creatorName = creatorName;
-	this.supervisorName = supervisorName;
+
+  public Project(ProjectName name, ProjectShortDescription shortDescription,
+      ProjectDescription description, ProjectStatus status, ProjectRequirement requirement,
+      @NotNull CreatorID creatorID, @NotNull CreatorName creatorName,
+      @NotNull SupervisorName supervisorName) {
+    this.requirement = requirement;
+    this.name = name;
+    this.shortDescription = shortDescription;
+    this.description = description;
+    this.status = status;
+    this.creatorID = creatorID;
+    this.creatorName = creatorName;
+    this.supervisorName = supervisorName;
   }
 }
