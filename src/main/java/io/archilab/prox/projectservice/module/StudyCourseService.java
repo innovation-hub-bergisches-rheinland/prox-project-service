@@ -32,17 +32,27 @@ public class StudyCourseService {
     return studyCourseRepository.count() > 0;
   }
 
-
-
   public void importStudyCourses() {
-
-
     this.logger.info("Start importing Study Courses");
 
     List<StudyCourse> studyCourses = this.studyCourseClient.getStudyCourses();
     for (StudyCourse studyCourse : studyCourses) {
+      Optional<StudyCourse> existingStudyCourseOptional = this.studyCourseRepository
+          .findByExternalStudyCourseID(studyCourse.getExternalStudyCourseID());
 
-      List<Module> newModules = new ArrayList<>();
+      if (existingStudyCourseOptional.isPresent()) {
+        this.logger.info(
+            "StudyCourse with ID " + studyCourse.getExternalStudyCourseID() + " already exists.");
+        StudyCourse existingStudyCourse = existingStudyCourseOptional.get();
+        existingStudyCourse.setName(studyCourse.getName());
+        existingStudyCourse.setAcademicDegree(studyCourse.getAcademicDegree());
+        this.studyCourseRepository.save(existingStudyCourse);
+      } else {
+        this.logger.info("StudyCourse with ID " + studyCourse.getExternalStudyCourseID()
+            + " does not exist yet.");
+        this.studyCourseRepository.save(studyCourse);
+      }
+
       List<Module> retrievedModules = studyCourse.getModules();
       for (Module module : retrievedModules) {
         Optional<Module> existingModuleOptional =
@@ -53,33 +63,14 @@ public class StudyCourseService {
           Module existingModule = existingModuleOptional.get();
           existingModule.setName(module.getName());
           existingModule.setProjectType(module.getProjectType());
-          newModules.add(existingModule);
+          existingModule.setStudyCourse(studyCourse);
           this.moduleRepository.save(existingModule);
         } else {
           this.logger
               .info("Module with ID " + module.getExternalModuleID() + " does not exist yet.");
-          newModules.add(module);
+          module.setStudyCourse(studyCourse);
           this.moduleRepository.save(module);
         }
-      }
-
-      Optional<StudyCourse> existingStudyCourseOptional = this.studyCourseRepository
-          .findByExternalStudyCourseID(studyCourse.getExternalStudyCourseID());
-
-      if (existingStudyCourseOptional.isPresent()) {
-        this.logger.info(
-            "StudyCourse with ID " + studyCourse.getExternalStudyCourseID() + " already exists.");
-        StudyCourse existingStudyCourse = existingStudyCourseOptional.get();
-        existingStudyCourse.setName(studyCourse.getName());
-        existingStudyCourse.setAcademicDegree(studyCourse.getAcademicDegree());
-        existingStudyCourse.setModules(newModules);
-        this.studyCourseRepository.save(existingStudyCourse);
-
-      } else {
-        this.logger.info("StudyCourse with ID " + studyCourse.getExternalStudyCourseID()
-            + " does not exist yet.");
-        studyCourse.setModules(newModules);
-        this.studyCourseRepository.save(studyCourse);
       }
     }
     this.logger.info("Finished import");
