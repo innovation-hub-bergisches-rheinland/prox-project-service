@@ -39,6 +39,7 @@ public class StudyCourseService {
     for (StudyCourse studyCourse : studyCourses) {
       Optional<StudyCourse> existingStudyCourseOptional = this.studyCourseRepository
           .findByExternalStudyCourseID(studyCourse.getExternalStudyCourseID());
+      StudyCourse savedStudyCourse = null;
 
       if (existingStudyCourseOptional.isPresent()) {
         this.logger.info(
@@ -46,11 +47,11 @@ public class StudyCourseService {
         StudyCourse existingStudyCourse = existingStudyCourseOptional.get();
         existingStudyCourse.setName(studyCourse.getName());
         existingStudyCourse.setAcademicDegree(studyCourse.getAcademicDegree());
-        studyCourse = this.studyCourseRepository.save(existingStudyCourse);
+        savedStudyCourse = this.studyCourseRepository.save(existingStudyCourse);
       } else {
         this.logger.info("StudyCourse with ID " + studyCourse.getExternalStudyCourseID()
             + " does not exist yet.");
-        studyCourse = this.studyCourseRepository.save(studyCourse);
+        savedStudyCourse = this.studyCourseRepository.save(studyCourse);
       }
 
       List<Module> retrievedModules = studyCourse.getModules();
@@ -63,12 +64,12 @@ public class StudyCourseService {
           Module existingModule = existingModuleOptional.get();
           existingModule.setName(module.getName());
           existingModule.setProjectType(module.getProjectType());
-          existingModule.setStudyCourse(studyCourse);
+          existingModule.setStudyCourse(savedStudyCourse);
           this.moduleRepository.save(existingModule);
         } else {
           this.logger
               .info("Module with ID " + module.getExternalModuleID() + " does not exist yet.");
-          module.setStudyCourse(studyCourse);
+          module.setStudyCourse(savedStudyCourse);
           this.moduleRepository.save(module);
         }
       }
