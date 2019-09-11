@@ -46,11 +46,11 @@ public class StudyCourseService {
         StudyCourse existingStudyCourse = existingStudyCourseOptional.get();
         existingStudyCourse.setName(studyCourse.getName());
         existingStudyCourse.setAcademicDegree(studyCourse.getAcademicDegree());
-        this.studyCourseRepository.save(existingStudyCourse);
+        studyCourse = this.studyCourseRepository.save(existingStudyCourse);
       } else {
         this.logger.info("StudyCourse with ID " + studyCourse.getExternalStudyCourseID()
             + " does not exist yet.");
-        this.studyCourseRepository.save(studyCourse);
+        studyCourse = this.studyCourseRepository.save(studyCourse);
       }
 
       List<Module> retrievedModules = studyCourse.getModules();
