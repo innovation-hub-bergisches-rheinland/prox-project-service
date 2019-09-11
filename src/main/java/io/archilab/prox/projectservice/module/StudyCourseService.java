@@ -1,13 +1,12 @@
 package io.archilab.prox.projectservice.module;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Service
@@ -44,19 +43,17 @@ public class StudyCourseService {
       if (existingStudyCourseOptional.isPresent()) {
         this.logger.info(
             "StudyCourse with ID " + studyCourse.getExternalStudyCourseID() + " already exists.");
-        StudyCourse existingStudyCourse = existingStudyCourseOptional.get();
-        existingStudyCourse.setName(studyCourse.getName());
-        existingStudyCourse.setAcademicDegree(studyCourse.getAcademicDegree());
-        savedStudyCourse = this.studyCourseRepository.save(existingStudyCourse);
+        savedStudyCourse = existingStudyCourseOptional.get();
       } else {
         this.logger.info("StudyCourse with ID " + studyCourse.getExternalStudyCourseID()
             + " does not exist yet.");
-        StudyCourse newStudyCourse = new StudyCourse();
-        newStudyCourse.setName(studyCourse.getName());
-        newStudyCourse.setAcademicDegree(studyCourse.getAcademicDegree());
-        newStudyCourse.setExternalStudyCourseID(studyCourse.getExternalStudyCourseID());
-        savedStudyCourse = this.studyCourseRepository.save(newStudyCourse);
+        savedStudyCourse = new StudyCourse();
       }
+
+      savedStudyCourse.setName(studyCourse.getName());
+      savedStudyCourse.setAcademicDegree(studyCourse.getAcademicDegree());
+      savedStudyCourse.setExternalStudyCourseID(studyCourse.getExternalStudyCourseID());
+      savedStudyCourse = this.studyCourseRepository.save(savedStudyCourse);
 
       List<Module> retrievedModules = studyCourse.getModules();
       for (Module module : retrievedModules) {
