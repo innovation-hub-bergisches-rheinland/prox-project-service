@@ -34,11 +34,11 @@ public class TagTest {
 
   @Test
   public void tagNameConstraints() {
+
     String name_5 = "12345";
     String name_40 = "1234567890123456789012345678901234567890";
     String name_100 =
         "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
-
 
     TagName tagName_5_a = new TagName(name_5);
     TagName tagName_5_b = new TagName(name_5);
@@ -72,7 +72,6 @@ public class TagTest {
 
     try {
       this.tagRepository.save(tag_fail);
-
       Assert.assertEquals(2, this.tagRepository.count());
     } catch (DataIntegrityViolationException e) {
       return;
