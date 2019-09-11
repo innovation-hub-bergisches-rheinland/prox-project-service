@@ -1,17 +1,18 @@
 package io.archilab.prox.projectservice.tags;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.core.annotation.HandleAfterCreate;
-import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import io.archilab.prox.projectservice.project.Project;
 import io.archilab.prox.projectservice.project.ProjectRepository;
 
-@Component
-@RepositoryEventHandler(Project.class)
+@Transactional
+@Service
 public class TagCounterUpdater {
 
   @Autowired
@@ -21,12 +22,7 @@ public class TagCounterUpdater {
   private TagCounterRepository tagCounterRepository;
 
 
-  @HandleAfterCreate // TODO temporary. should update on association crud
-  public void handleProjectAfterCreate(Project project) {
-    updateTagCounter();
-  }
-
-  private void updateTagCounter() { // TODO problems on parallel execution?
+  public void updateTagCounter() { // TODO problems on parallel execution of different microservice replicas?
     Map<TagCounter, TagCounter> tagCountersCache = new HashMap<>();
 
     for (Project project : projectRepository.findAll()) {

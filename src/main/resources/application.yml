@@ -10,6 +10,9 @@ moduleImport:
       minutes: 1440
     hasNoData:
       seconds: 10
+tagRecommendationCalculation:
+  delay:
+    seconds: 10
 keycloak:
   auth-server-url: https://login.archi-lab.io/auth
   bearer-only: true

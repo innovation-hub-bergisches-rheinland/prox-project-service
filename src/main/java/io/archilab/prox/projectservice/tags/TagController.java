@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +95,32 @@ public class TagController {
     return ResponseEntity.ok(generateTagResource(tag));
   }
 
+  @RequestMapping(path = "search", method = RequestMethod.GET, produces = { "application/hal+json" })
+  public ResponseEntity<?> getSearchLinks() {
+    Resources<?> resources = new Resources<>(new ArrayList<Resource<?>>());
+    resources.add(ControllerLinkBuilder.linkTo(
+        ControllerLinkBuilder.methodOn(TagController.class).getTagByTagName(""))
+        .withRel("findByTagName"));
+    resources.add(ControllerLinkBuilder.linkTo(
+        ControllerLinkBuilder.methodOn(TagController.class).getSearchLinks())
+        .withSelfRel());
+
+    return ResponseEntity.ok(resources);
+  }
+
+  @RequestMapping(path = "search/findByTagName", method = RequestMethod.GET, produces = { "application/hal+json" })
+  public ResponseEntity<Resource<Tag>> getTagByTagName(@RequestParam("tagName") String tagName) {
+    final Optional<Tag> optTag = tagRepository.findByTagName_TagName(tagName);
+    if (!optTag.isPresent())
+    {
+      return ResponseEntity.notFound().build();
+    }
+
+    Tag tag = optTag.get();
+
+    return ResponseEntity.ok(generateTagResource(tag));
+  }
+
   @RequestMapping(path = "", method = RequestMethod.GET, produces = { "application/hal+json" })
   public ResponseEntity<Resources<Resource<Tag>>> getTags() {
     Iterable<Tag> tags = tagRepository.findAll();
@@ -103,6 +130,9 @@ public class TagController {
     tagResources.add(ControllerLinkBuilder.linkTo(
         ControllerLinkBuilder.methodOn(TagController.class).getTags())
         .withSelfRel());
+    tagResources.add(ControllerLinkBuilder.linkTo(
+        ControllerLinkBuilder.methodOn(TagController.class).getSearchLinks())
+        .withRel("search"));
 
     return ResponseEntity.ok(tagResources);
   }
