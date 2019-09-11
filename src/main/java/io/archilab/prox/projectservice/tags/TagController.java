@@ -186,7 +186,7 @@ public class TagController {
 
     // Add Remaining Tags
     for (Tag tag : tagRepository.findAll()) {
-      if (!recommendedTags.contains(tag)) {
+      if (!recommendedTags.contains(tag) && !tag.equals(searchTag)) {
         recommendedTags.add(tag);
       }
     }
