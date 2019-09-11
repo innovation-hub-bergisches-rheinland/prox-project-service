@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,17 +29,16 @@ public class TagController {
   private TagRepository tagRepository;
 
 
-  @RequestMapping(path = "", method = RequestMethod.POST, produces = { "application/hal+json" })
+  @RequestMapping(path = "", method = RequestMethod.POST, produces = {"application/hal+json"})
   public ResponseEntity<?> addTag(@RequestBody Tag tag) {
     tag = tagRepository.save(tag);
     return ResponseEntity.status(HttpStatus.CREATED).body(generateTagResource(tag));
   }
 
-  @RequestMapping(path = "{id}", method = RequestMethod.PATCH, produces = { "application/hal+json" })
+  @RequestMapping(path = "{id}", method = RequestMethod.PATCH, produces = {"application/hal+json"})
   public ResponseEntity<Resource<Tag>> patchTag(@PathVariable UUID id, @RequestBody Tag newTag) {
     final Optional<Tag> optTag = tagRepository.findById(id);
-    if (!optTag.isPresent())
-    {
+    if (!optTag.isPresent()) {
       return ResponseEntity.notFound().build();
     }
 
@@ -53,11 +51,10 @@ public class TagController {
     return ResponseEntity.ok(generateTagResource(tag));
   }
 
-  @RequestMapping(path = "{id}", method = RequestMethod.PUT, produces = { "application/hal+json" })
+  @RequestMapping(path = "{id}", method = RequestMethod.PUT, produces = {"application/hal+json"})
   public ResponseEntity<Resource<Tag>> putTag(@PathVariable UUID id, @RequestBody Tag newTag) {
     final Optional<Tag> optTag = tagRepository.findById(id);
-    if (!optTag.isPresent())
-    {
+    if (!optTag.isPresent()) {
       return ResponseEntity.notFound().build();
     }
 
@@ -71,8 +68,7 @@ public class TagController {
   @RequestMapping(path = "{id}", method = RequestMethod.DELETE)
   public ResponseEntity<Resource<Tag>> deleteTag(@PathVariable UUID id) {
     final Optional<Tag> optTag = tagRepository.findById(id);
-    if (!optTag.isPresent())
-    {
+    if (!optTag.isPresent()) {
       return ResponseEntity.notFound().build();
     }
 
@@ -81,11 +77,10 @@ public class TagController {
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
-  @RequestMapping(path = "{id}", method = RequestMethod.GET, produces = { "application/hal+json" })
+  @RequestMapping(path = "{id}", method = RequestMethod.GET, produces = {"application/hal+json"})
   public ResponseEntity<Resource<Tag>> getTag(@PathVariable UUID id) {
     final Optional<Tag> optTag = tagRepository.findById(id);
-    if (!optTag.isPresent())
-    {
+    if (!optTag.isPresent()) {
       return ResponseEntity.notFound().build();
     }
 
@@ -94,20 +89,20 @@ public class TagController {
     return ResponseEntity.ok(generateTagResource(tag));
   }
 
-  @RequestMapping(path = "", method = RequestMethod.GET, produces = { "application/hal+json" })
+  @RequestMapping(path = "", method = RequestMethod.GET, produces = {"application/hal+json"})
   public ResponseEntity<Resources<Resource<Tag>>> getTags() {
     Iterable<Tag> tags = tagRepository.findAll();
 
     Resources<Resource<Tag>> tagResources = generateTagResources(tags);
 
-    tagResources.add(ControllerLinkBuilder.linkTo(
-        ControllerLinkBuilder.methodOn(TagController.class).getTags())
-        .withSelfRel());
+    tagResources.add(ControllerLinkBuilder
+        .linkTo(ControllerLinkBuilder.methodOn(TagController.class).getTags()).withSelfRel());
 
     return ResponseEntity.ok(tagResources);
   }
 
-  @RequestMapping(path = "{id}/recommendations", method = RequestMethod.GET, produces = { "application/hal+json" })
+  @RequestMapping(path = "{id}/recommendations", method = RequestMethod.GET,
+      produces = {"application/hal+json"})
   public ResponseEntity<Resources<Resource<Tag>>> tagRecommendations(@PathVariable("id") UUID id) {
     List<Tag> recommendedTags = getRecommendedTags(id);
     if (recommendedTags == null) {
@@ -116,8 +111,8 @@ public class TagController {
 
     Resources<Resource<Tag>> recommendedTagResources = generateTagResources(recommendedTags);
 
-    recommendedTagResources.add(ControllerLinkBuilder.linkTo(
-        ControllerLinkBuilder.methodOn(TagController.class).tagRecommendations(id))
+    recommendedTagResources.add(ControllerLinkBuilder
+        .linkTo(ControllerLinkBuilder.methodOn(TagController.class).tagRecommendations(id))
         .withSelfRel());
 
     return ResponseEntity.ok(recommendedTagResources);
@@ -125,9 +120,15 @@ public class TagController {
 
   private Resource<Tag> generateTagResource(Tag tag) {
     Resource<Tag> tagResource = new Resource<>(tag);
-    tagResource.add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(TagController.class).getTag(tag.getId())).withSelfRel());
-    tagResource.add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(TagController.class).getTag(tag.getId())).withRel("tag"));
-    tagResource.add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(TagController.class).tagRecommendations(tag.getId())).withRel("recommendations"));
+    tagResource.add(ControllerLinkBuilder
+        .linkTo(ControllerLinkBuilder.methodOn(TagController.class).getTag(tag.getId()))
+        .withSelfRel());
+    tagResource.add(ControllerLinkBuilder
+        .linkTo(ControllerLinkBuilder.methodOn(TagController.class).getTag(tag.getId()))
+        .withRel("tag"));
+    tagResource.add(ControllerLinkBuilder
+        .linkTo(ControllerLinkBuilder.methodOn(TagController.class).tagRecommendations(tag.getId()))
+        .withRel("recommendations"));
     return tagResource;
   }
 

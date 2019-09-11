@@ -34,24 +34,14 @@ public class TagTest {
 
   @Test
   public void tagNameConstraints() {
+
     String name_5 = "12345";
     String name_40 = "1234567890123456789012345678901234567890";
     String name_100 =
         "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
 
-
-<<<<<<< HEAD
-			Assert.assertEquals(2, this.tagRepository.count());
-		}
-		catch(DataIntegrityViolationException e)
-		{
-			fail("DataIntegrityViolationException");
-			return;
-		}
-=======
     TagName tagName_5_a = new TagName(name_5);
     TagName tagName_5_b = new TagName(name_5);
->>>>>>> branch 'gp-ws2019' of https://github.com/Archi-Lab/prox-project-service
 
     assertEquals(tagName_5_a, tagName_5_b);
     assertEquals(tagName_5_a.getTagName(), name_5);
@@ -82,7 +72,6 @@ public class TagTest {
 
     try {
       this.tagRepository.save(tag_fail);
-
       Assert.assertEquals(2, this.tagRepository.count());
     } catch (DataIntegrityViolationException e) {
       return;

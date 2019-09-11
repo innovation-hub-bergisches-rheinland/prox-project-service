@@ -31,12 +31,12 @@ public class StudyCourseService {
   public boolean hasData() {
     return studyCourseRepository.count() > 0;
   }
-  
+
 
 
   public void importStudyCourses() {
-	  
-	  
+
+
     this.logger.info("Start importing Study Courses");
 
     List<StudyCourse> studyCourses = this.studyCourseClient.getStudyCourses();

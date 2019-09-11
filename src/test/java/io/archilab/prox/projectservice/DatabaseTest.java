@@ -42,13 +42,6 @@ public class DatabaseTest {
     StudyCourse informationSystems =
         new StudyCourse(new StudyCourseName("Information Systems"), AcademicDegree.MASTER);
 
-<<<<<<< HEAD
-    Module am = new Module(new ModuleName("Anforderungsmanagement"),ProjectType.UNDEFINED);
-    Module fae = new Module(new ModuleName("Fachspezifischer Architekturentwurf"),ProjectType.UNDEFINED);
-    Module bi = new Module(new ModuleName("Business Intelligence"),ProjectType.UNDEFINED);
-    Module eam = new Module(new ModuleName("Enterprise Architecture Management"),ProjectType.UNDEFINED);
-    
-=======
     Module am = new Module(new ModuleName("Anforderungsmanagement"), ProjectType.UNDEFINED);
     Module fae =
         new Module(new ModuleName("Fachspezifischer Architekturentwurf"), ProjectType.UNDEFINED);
@@ -56,7 +49,6 @@ public class DatabaseTest {
     Module eam =
         new Module(new ModuleName("Enterprise Architecture Management"), ProjectType.UNDEFINED);
 
->>>>>>> branch 'gp-ws2019' of https://github.com/Archi-Lab/prox-project-service
     this.moduleRepository.save(am);
     this.moduleRepository.save(fae);
     this.moduleRepository.save(bi);
