@@ -3,11 +3,9 @@ package io.archilab.prox.projectservice.tags;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import io.archilab.prox.projectservice.project.Project;
 import io.archilab.prox.projectservice.project.ProjectRepository;
 
@@ -22,7 +20,8 @@ public class TagCounterUpdater {
   private TagCounterRepository tagCounterRepository;
 
 
-  public void updateTagCounter() { // TODO problems on parallel execution of different microservice replicas?
+  public void updateTagCounter() { // TODO problems on parallel execution of different microservice
+                                   // replicas?
     Map<TagCounter, TagCounter> tagCountersCache = new HashMap<>();
 
     for (Project project : projectRepository.findAll()) {

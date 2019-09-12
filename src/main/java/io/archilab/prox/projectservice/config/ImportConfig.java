@@ -2,7 +2,6 @@ package io.archilab.prox.projectservice.config;
 
 import io.archilab.prox.projectservice.module.StudyCourseService;
 import io.archilab.prox.projectservice.tags.TagCounterUpdater;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
