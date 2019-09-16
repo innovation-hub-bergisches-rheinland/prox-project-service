@@ -2,6 +2,7 @@ package io.archilab.prox.projectservice.config;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -44,7 +45,10 @@ import io.archilab.prox.projectservice.tags.TagName;
 @Component
 @Profile("local-test-big-data")
 public class BigTestDataSetupConfig implements ApplicationRunner   {
+	
+	public final String words_lorem = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet";
 
+	public final int testAmount = 10000;
 
   private final Logger logger = LoggerFactory.getLogger(BigTestDataSetupConfig.class);
 
@@ -59,7 +63,9 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
   @Override
   public void run(ApplicationArguments  args) throws Exception 
   {
-  	final int testAmount = 10000;
+  	String[] split_words_lorem = words_lorem.split(" ");
+  	List<String> words = Arrays.asList(split_words_lorem);
+  	
   	Random rand = new Random();
   	// add data for big data testing
   	ArrayList<Project> test_projects = new ArrayList<Project>();
@@ -69,46 +75,64 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
     List<Pair<UUID,String>> allCreatorIds = new ArrayList<Pair<UUID,String>>();
     for(int i=0;i<testAmount/3;i++)
     {
-      int length = 85;
-      boolean useLetters = true;
-      boolean useNumbers = false;
-      String name = RandomStringUtils.random(length, useLetters, useNumbers);
-    	
+    	String name = "";
+    	for(int k=0;k<rand.nextInt(5)+2;k++)
+    	{
+    		if(k!=0)
+    		{
+    			name+=" ";
+    		}
+    		name+= words.get(rand.nextInt(words.size()));
+    	}   	
     	allCreatorIds.add(Pair.of(UUID.randomUUID(),name));
     }
     
     ArrayList<Tag> allTags = new ArrayList<Tag>();
-    for(int i=0;i<testAmount/8;i++)
-    {
-      int length = 40;
-      boolean useLetters = true;
-      boolean useNumbers = false;
-      String name = RandomStringUtils.random(length, useLetters, useNumbers);
-    	Tag tag = new Tag(new TagName(name));
-      if(!allTags.contains(tag))
-      {
-      	allTags.add(tag);
-      } 
-    }
+    allTags.add(new Tag(new TagName("Informatik")));
+    allTags.add(new Tag(new TagName("Mathematik")));
+    allTags.add(new Tag(new TagName("DB1")));
+    allTags.add(new Tag(new TagName("DB2")));
+    allTags.add(new Tag(new TagName("GP")));
+    allTags.add(new Tag(new TagName("Wirtschaft")));
+    allTags.add(new Tag(new TagName("UI")));
+    allTags.add(new Tag(new TagName("Medien")));
+    allTags.add(new Tag(new TagName("Technik")));
+    allTags.add(new Tag(new TagName("Maschinen")));
+    allTags.add(new Tag(new TagName("Strom")));
+    allTags.add(new Tag(new TagName("BWL")));
+    allTags.add(new Tag(new TagName("Erweiterre Strömungslehre")));
+    allTags.add(new Tag(new TagName("Architektur")));
+    allTags.add(new Tag(new TagName("Betirebssysteme")));
+    allTags.add(new Tag(new TagName("Partner")));
+    allTags.add(new Tag(new TagName("Extern")));
+    allTags.add(new Tag(new TagName("Remote")));
+       
     projectBigDataTestService.saveDataTags(allTags);
     
     StudyCourse[] allStudyCourses = new StudyCourse[] {
-    		new StudyCourse(new StudyCourseName(RandomStringUtils.random(26, true, false)), AcademicDegree.values()[rand.nextInt(2)]),
-    		new StudyCourse(new StudyCourseName(RandomStringUtils.random(26, true, false)), AcademicDegree.values()[rand.nextInt(2)]),
-    		new StudyCourse(new StudyCourseName(RandomStringUtils.random(26, true, false)), AcademicDegree.values()[rand.nextInt(2)]),
-    		new StudyCourse(new StudyCourseName(RandomStringUtils.random(26, true, false)), AcademicDegree.values()[rand.nextInt(2)]),
-    		new StudyCourse(new StudyCourseName(RandomStringUtils.random(26, true, false)), AcademicDegree.values()[rand.nextInt(2)]),
-    		new StudyCourse(new StudyCourseName(RandomStringUtils.random(26, true, false)), AcademicDegree.values()[rand.nextInt(2)])
+    		new StudyCourse(new StudyCourseName("Informatik Master"), AcademicDegree.values()[rand.nextInt(2)]),
+    		new StudyCourse(new StudyCourseName("TI Bachelor"), AcademicDegree.values()[rand.nextInt(2)]),
+    		new StudyCourse(new StudyCourseName("WI Bachelor"), AcademicDegree.values()[rand.nextInt(2)]),
+    		new StudyCourse(new StudyCourseName("Maschinenlehre"), AcademicDegree.values()[rand.nextInt(2)]),
+    		new StudyCourse(new StudyCourseName("Medien Master"), AcademicDegree.values()[rand.nextInt(2)]),
+    		new StudyCourse(new StudyCourseName("Chemie Master"), AcademicDegree.values()[rand.nextInt(2)])
     };
     
     
     ArrayList<Module> allModules = new ArrayList<Module>();
     for(int i=0;i<testAmount/8;i++)
     {
-      boolean useLetters = true;
-      boolean useNumbers = false;
+    	String name = "";
+    	for(int k=0;k<rand.nextInt(2)+2;k++)
+    	{
+    		if(k!=0)
+    		{
+    			name+=" ";
+    		}
+    		name+= words.get(rand.nextInt(words.size()));
+    	} 
       ProjectType projectType = ProjectType.values()[rand.nextInt(3)];
-      Module mod = new Module(new ModuleName(RandomStringUtils.random(22, useLetters, useNumbers)), projectType);
+      Module mod = new Module(new ModuleName(name), projectType);
       StudyCourse studyCourse = allStudyCourses[rand.nextInt(allStudyCourses.length)];
       mod.setStudyCourse(studyCourse);
       if(!allModules.contains(mod))
@@ -138,10 +162,12 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
     	modules.clear();
     	tags.clear();
     	
-    	String projectNameString = RandomStringUtils.random(rand.nextInt(120), true, true);
-    	String projectShortDescriptionString = RandomStringUtils.random(rand.nextInt(3000), true, true);
-    	String projectDescriptionAtring = RandomStringUtils.random(rand.nextInt(6000), true, true);
-    	String projectRequirementString = RandomStringUtils.random(rand.nextInt(80), true, true);
+    	
+    	
+    	String projectNameString = stringOfWords(rand.nextInt(20),words,rand);
+    	String projectShortDescriptionString = stringOfWords(rand.nextInt(500),words,rand);
+    	String projectDescriptionAtring = stringOfWords(rand.nextInt(800),words,rand);
+    	String projectRequirementString = stringOfWords(rand.nextInt(60),words,rand);
     	Pair<UUID, String> pair = allCreatorIds.get(rand.nextInt(allCreatorIds.size()));
       UUID creatorIDValue = pair.getFirst();
       String creatorNameString = pair.getSecond();
@@ -156,7 +182,7 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
     	creatorName = new CreatorName(creatorNameString);
     	supervisorName = new SupervisorName(supervisorNameString);
     	
-      for(int k=0;k < rand.nextInt(33); k++)
+      for(int k=0;k < rand.nextInt(allTags.size()); k++)
       {
       	Tag tag = allTags.get(k);
       	if(!tags.contains(tag))
@@ -182,6 +208,22 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
   	
   	logger.info("Done creating test data");
   	
+  }
+  
+  private String stringOfWords(int number, List<String> words, Random rand)
+  {
+  	String string="";
+  	
+  	for(int k=0;k<number;k++)
+  	{
+  		if(k!=0)
+  		{
+  			string+=" ";
+  		}
+  		string+= words.get(rand.nextInt(words.size()));
+  	} 
+  	
+  	return string;
   }
   
 }
