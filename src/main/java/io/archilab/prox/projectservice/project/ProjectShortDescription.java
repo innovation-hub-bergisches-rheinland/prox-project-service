@@ -15,6 +15,7 @@ public class ProjectShortDescription {
 
   private static final int MAX_LENGTH = 10000;
 
+  @Column(length = MAX_LENGTH)
   private String shortDescription;
 
   public ProjectShortDescription(String shortDescription) {

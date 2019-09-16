@@ -6,6 +6,8 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
@@ -15,6 +17,7 @@ import javax.persistence.Embeddable;
 public class ProjectRequirement {
   private static final int MAX_LENGTH = 10000;
 
+  @Column(length = MAX_LENGTH)
   private String requirement;
 
   public ProjectRequirement(String requirement) {

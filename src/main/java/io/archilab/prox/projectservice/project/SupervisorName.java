@@ -1,5 +1,6 @@
 package io.archilab.prox.projectservice.project;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -14,6 +15,7 @@ public class SupervisorName {
 
   private static final int MAX_LENGTH = 255;
 
+  @Column(length = MAX_LENGTH)
   private String supervisorName;
 
   public SupervisorName(String supervisorName) {
