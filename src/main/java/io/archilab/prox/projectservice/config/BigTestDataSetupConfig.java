@@ -48,7 +48,12 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
 	
 	public final String words_lorem = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet";
 
-	public final int testAmount = 10000;
+	public final int testAmount = 5000;
+	
+	public final String BACHELOR="Bachelorarbeit";
+	public final String PP="PP";
+	public final String MASTER="Masterarbeit";
+	
 
   private final Logger logger = LoggerFactory.getLogger(BigTestDataSetupConfig.class);
 
@@ -66,6 +71,8 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
   	String[] split_words_lorem = words_lorem.split(" ");
   	List<String> words = Arrays.asList(split_words_lorem);
   	
+  	List<String> prof_words = Arrays.asList("Schmidt","Heiner","Klaus","Peter","Marie","Heide","Julian","Bente","Klocke","Köhler","Johannes","Alken","Felix","Berg","Bergstein","Böhmer","Lambers","Lau","Uria","Lucia","Iris","Michael");
+  	
   	Random rand = new Random();
   	// add data for big data testing
   	ArrayList<Project> test_projects = new ArrayList<Project>();
@@ -75,14 +82,10 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
     List<Pair<UUID,String>> allCreatorIds = new ArrayList<Pair<UUID,String>>();
     for(int i=0;i<testAmount/3;i++)
     {
-    	String name = "";
-    	for(int k=0;k<rand.nextInt(5)+2;k++)
+    	String name = "Prof.";  	
+    	for(int k=0;k<rand.nextInt(2)+2;k++)
     	{
-    		if(k!=0)
-    		{
-    			name+=" ";
-    		}
-    		name+= words.get(rand.nextInt(words.size()));
+    		name+= " "+prof_words.get(rand.nextInt(prof_words.size()));
     	}   	
     	allCreatorIds.add(Pair.of(UUID.randomUUID(),name));
     }
@@ -106,41 +109,74 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
     allTags.add(new Tag(new TagName("Partner")));
     allTags.add(new Tag(new TagName("Extern")));
     allTags.add(new Tag(new TagName("Remote")));
+    allTags.add(new Tag(new TagName("Linux")));
+    allTags.add(new Tag(new TagName("Usability")));
+    allTags.add(new Tag(new TagName("Design")));
+    allTags.add(new Tag(new TagName("KI")));
        
     projectBigDataTestService.saveDataTags(allTags);
     
     StudyCourse[] allStudyCourses = new StudyCourse[] {
-    		new StudyCourse(new StudyCourseName("Informatik Master"), AcademicDegree.values()[rand.nextInt(2)]),
-    		new StudyCourse(new StudyCourseName("TI Bachelor"), AcademicDegree.values()[rand.nextInt(2)]),
-    		new StudyCourse(new StudyCourseName("WI Bachelor"), AcademicDegree.values()[rand.nextInt(2)]),
-    		new StudyCourse(new StudyCourseName("Maschinenlehre"), AcademicDegree.values()[rand.nextInt(2)]),
-    		new StudyCourse(new StudyCourseName("Medien Master"), AcademicDegree.values()[rand.nextInt(2)]),
-    		new StudyCourse(new StudyCourseName("Chemie Master"), AcademicDegree.values()[rand.nextInt(2)])
+    		new StudyCourse(new StudyCourseName("Informatik Master"), AcademicDegree.MASTER),
+    		new StudyCourse(new StudyCourseName("TI Bachelor"), AcademicDegree.BACHELOR),
+    		new StudyCourse(new StudyCourseName("WI Bachelor"), AcademicDegree.BACHELOR),
+    		new StudyCourse(new StudyCourseName("Maschinenlehre"), AcademicDegree.BACHELOR),
+    		new StudyCourse(new StudyCourseName("Medien Master"), AcademicDegree.MASTER),
+    		new StudyCourse(new StudyCourseName("KI Master"), AcademicDegree.MASTER),
+    		new StudyCourse(new StudyCourseName("Data Science Master"), AcademicDegree.MASTER),
+    		new StudyCourse(new StudyCourseName("Chemie Master"), AcademicDegree.MASTER)
     };
     
-    
     ArrayList<Module> allModules = new ArrayList<Module>();
-    for(int i=0;i<testAmount/8;i++)
+    
+    for(int i=0;i<allStudyCourses.length;i++)
     {
-    	String name = "";
-    	for(int k=0;k<rand.nextInt(2)+2;k++)
+    	Module mod  = null;
+    	StudyCourse studyCourse = allStudyCourses[i];
+    	if(studyCourse.getAcademicDegree().equals(AcademicDegree.BACHELOR))
     	{
-    		if(k!=0)
-    		{
-    			name+=" ";
-    		}
-    		name+= words.get(rand.nextInt(words.size()));
-    	} 
-      ProjectType projectType = ProjectType.values()[rand.nextInt(3)+1];
-      Module mod = new Module(new ModuleName(name), projectType);
-      StudyCourse studyCourse = allStudyCourses[rand.nextInt(allStudyCourses.length)];
-      mod.setStudyCourse(studyCourse);
-      if(!allModules.contains(mod))
-      {
-      	studyCourse.addModule(mod);
-      	allModules.add(mod);
-      } 
+    		int count_modules = rand.nextInt(2);
+      	
+      		if(count_modules>=0)
+      		{
+      			ProjectType projectType = ProjectType.BA;
+            mod = new Module(new ModuleName(BACHELOR), projectType);
+            mod.setStudyCourse(studyCourse);
+            
+            if(!allModules.contains(mod))
+            {
+            	studyCourse.addModule(mod);
+            	allModules.add(mod);
+            }
+      		}
+      		if(count_modules==1)
+      		{
+      			ProjectType projectType = ProjectType.PP;
+            mod = new Module(new ModuleName(PP), projectType);
+            mod.setStudyCourse(studyCourse);
+            
+            if(!allModules.contains(mod))
+            {
+            	studyCourse.addModule(mod);
+            	allModules.add(mod);
+            }
+      		}
+        
+    	}
+    	else
+    	{
+    		ProjectType projectType = ProjectType.MA;
+    		mod = new Module(new ModuleName(PP), projectType);
+        mod.setStudyCourse(studyCourse);
+        
+        if(!allModules.contains(mod))
+        {
+        	studyCourse.addModule(mod);
+        	allModules.add(mod);
+        }
+    	}   	
     }
+    
     // save all Modules and Study Courses
     projectBigDataTestService.saveDataStudyCourses(allStudyCourses);
   	projectBigDataTestService.saveDataModules(allModules);
@@ -159,11 +195,9 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
   	
   	for(int i=0;i< testAmount;i++)
   	{
-    	modules.clear();
-    	tags.clear();
-    	
-    	
-    	
+    	modules = new ArrayList<Module>();
+    	tags = new ArrayList<Tag>();
+
     	String projectNameString = stringOfWords(rand.nextInt(20),words,rand);
     	String projectShortDescriptionString = stringOfWords(rand.nextInt(500),words,rand);
     	String projectDescriptionAtring = stringOfWords(rand.nextInt(800),words,rand);
@@ -191,13 +225,31 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
       	}  	
       }
       
-      for(int k=0;k < rand.nextInt(33); k++)
+      for(int k=0;k < rand.nextInt(4)+1; k++)
       {
-      	Module module = allModules.get(k);
-      	if(!allModules.contains(module))
+      	StudyCourse studyCourse = allStudyCourses[k];
+      	if(studyCourse.getAcademicDegree().equals(AcademicDegree.BACHELOR) && studyCourse.getModules().size()==2)
       	{
-      		modules.add(module);
-      	}  	
+	      	for(int s=0;s < rand.nextInt(2)+1; s++)
+	        {
+	      		Module module = studyCourse.getModules().get(s);
+	      		
+	        	if(!modules.contains(module))
+	        	{
+	        		modules.add(module);
+	        		logger.info(" "+allModules.contains(module));
+	        	} 
+	        }
+      	}
+      	else
+      	{
+      		Module module = studyCourse.getModules().get(0);
+        	if(!modules.contains(module))
+        	{
+        		modules.add(module);
+        	}  	
+      	}
+	      
       }
     	
     	newProject = new Project(projectName,shortDescription,description,status,requirement,creatorID,creatorName,supervisorName,modules,tags);
