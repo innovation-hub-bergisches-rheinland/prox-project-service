@@ -131,7 +131,7 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
     		}
     		name+= words.get(rand.nextInt(words.size()));
     	} 
-      ProjectType projectType = ProjectType.values()[rand.nextInt(3)];
+      ProjectType projectType = ProjectType.values()[rand.nextInt(3)+1];
       Module mod = new Module(new ModuleName(name), projectType);
       StudyCourse studyCourse = allStudyCourses[rand.nextInt(allStudyCourses.length)];
       mod.setStudyCourse(studyCourse);
