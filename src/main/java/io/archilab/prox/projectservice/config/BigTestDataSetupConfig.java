@@ -198,10 +198,10 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
     	modules = new ArrayList<Module>();
     	tags = new ArrayList<Tag>();
 
-    	String projectNameString = stringOfWords(rand.nextInt(20),words,rand);
-    	String projectShortDescriptionString = stringOfWords(rand.nextInt(500),words,rand);
-    	String projectDescriptionAtring = stringOfWords(rand.nextInt(800),words,rand);
-    	String projectRequirementString = stringOfWords(rand.nextInt(60),words,rand);
+    	String projectNameString = stringOfWords(rand.nextInt(20)+4,words,rand);
+    	String projectShortDescriptionString = stringOfWords(rand.nextInt(300)+100,words,rand);
+    	String projectDescriptionAtring = stringOfWords(rand.nextInt(650)+150,words,rand);
+    	String projectRequirementString = stringOfWords(rand.nextInt(30),words,rand);
     	Pair<UUID, String> pair = allCreatorIds.get(rand.nextInt(allCreatorIds.size()));
       UUID creatorIDValue = pair.getFirst();
       String creatorNameString = pair.getSecond();
@@ -237,7 +237,6 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
 	        	if(!modules.contains(module))
 	        	{
 	        		modules.add(module);
-	        		logger.info(" "+allModules.contains(module));
 	        	} 
 	        }
       	}
