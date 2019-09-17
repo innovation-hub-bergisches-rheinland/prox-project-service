@@ -39,8 +39,7 @@ import io.archilab.prox.projectservice.project.ProjectRequirement;
 import io.archilab.prox.projectservice.project.ProjectShortDescription;
 import io.archilab.prox.projectservice.project.ProjectStatus;
 import io.archilab.prox.projectservice.project.SupervisorName;
-import io.archilab.prox.projectservice.tags.Tag;
-import io.archilab.prox.projectservice.tags.TagName;
+
 
 @Component
 @Profile("local-test-big-data")
@@ -90,31 +89,31 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
     	allCreatorIds.add(Pair.of(UUID.randomUUID(),name));
     }
     
-    ArrayList<Tag> allTags = new ArrayList<Tag>();
-    allTags.add(new Tag(new TagName("Informatik")));
-    allTags.add(new Tag(new TagName("Mathematik")));
-    allTags.add(new Tag(new TagName("DB1")));
-    allTags.add(new Tag(new TagName("DB2")));
-    allTags.add(new Tag(new TagName("GP")));
-    allTags.add(new Tag(new TagName("Wirtschaft")));
-    allTags.add(new Tag(new TagName("UI")));
-    allTags.add(new Tag(new TagName("Medien")));
-    allTags.add(new Tag(new TagName("Technik")));
-    allTags.add(new Tag(new TagName("Maschinen")));
-    allTags.add(new Tag(new TagName("Strom")));
-    allTags.add(new Tag(new TagName("BWL")));
-    allTags.add(new Tag(new TagName("Erweiterre Strömungslehre")));
-    allTags.add(new Tag(new TagName("Architektur")));
-    allTags.add(new Tag(new TagName("Betirebssysteme")));
-    allTags.add(new Tag(new TagName("Partner")));
-    allTags.add(new Tag(new TagName("Extern")));
-    allTags.add(new Tag(new TagName("Remote")));
-    allTags.add(new Tag(new TagName("Linux")));
-    allTags.add(new Tag(new TagName("Usability")));
-    allTags.add(new Tag(new TagName("Design")));
-    allTags.add(new Tag(new TagName("KI")));
-       
-    projectBigDataTestService.saveDataTags(allTags);
+//    ArrayList<Tag> allTags = new ArrayList<Tag>();
+//    allTags.add(new Tag(new TagName("Informatik")));
+//    allTags.add(new Tag(new TagName("Mathematik")));
+//    allTags.add(new Tag(new TagName("DB1")));
+//    allTags.add(new Tag(new TagName("DB2")));
+//    allTags.add(new Tag(new TagName("GP")));
+//    allTags.add(new Tag(new TagName("Wirtschaft")));
+//    allTags.add(new Tag(new TagName("UI")));
+//    allTags.add(new Tag(new TagName("Medien")));
+//    allTags.add(new Tag(new TagName("Technik")));
+//    allTags.add(new Tag(new TagName("Maschinen")));
+//    allTags.add(new Tag(new TagName("Strom")));
+//    allTags.add(new Tag(new TagName("BWL")));
+//    allTags.add(new Tag(new TagName("Erweiterre Strömungslehre")));
+//    allTags.add(new Tag(new TagName("Architektur")));
+//    allTags.add(new Tag(new TagName("Betirebssysteme")));
+//    allTags.add(new Tag(new TagName("Partner")));
+//    allTags.add(new Tag(new TagName("Extern")));
+//    allTags.add(new Tag(new TagName("Remote")));
+//    allTags.add(new Tag(new TagName("Linux")));
+//    allTags.add(new Tag(new TagName("Usability")));
+//    allTags.add(new Tag(new TagName("Design")));
+//    allTags.add(new Tag(new TagName("KI")));
+//       
+//    projectBigDataTestService.saveDataTags(allTags);
     
     StudyCourse[] allStudyCourses = new StudyCourse[] {
     		new StudyCourse(new StudyCourseName("Informatik Master"), AcademicDegree.MASTER),
@@ -166,7 +165,7 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
     	else
     	{
     		ProjectType projectType = ProjectType.MA;
-    		mod = new Module(new ModuleName(PP), projectType);
+    		mod = new Module(new ModuleName(MASTER), projectType);
         mod.setStudyCourse(studyCourse);
         
         if(!allModules.contains(mod))
@@ -191,12 +190,12 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
   	CreatorName creatorName = null;
   	SupervisorName supervisorName = null;
   	List<Module> modules = new ArrayList<Module>();
-  	List<Tag> tags  = new ArrayList<Tag>();
+  	
   	
   	for(int i=0;i< testAmount;i++)
   	{
     	modules = new ArrayList<Module>();
-    	tags = new ArrayList<Tag>();
+  
 
     	String projectNameString = stringOfWords(rand.nextInt(20)+4,words,rand);
     	String projectShortDescriptionString = stringOfWords(rand.nextInt(300)+100,words,rand);
@@ -216,16 +215,17 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
     	creatorName = new CreatorName(creatorNameString);
     	supervisorName = new SupervisorName(supervisorNameString);
     	
-      for(int k=0;k < rand.nextInt(allTags.size()); k++)
-      {
-      	Tag tag = allTags.get(k);
-      	if(!tags.contains(tag))
-      	{
-      		tags.add(tag);
-      	}  	
-      }
+    	// tags hinzufügen geht mit diesem desing nur über ein post auf den tag service. problem sind berechtigungen.
+//      for(int k=0;k < rand.nextInt(allTags.size()); k++)
+//      {
+//      	Tag tag = allTags.get(k);
+//      	if(!tags.contains(tag))
+//      	{
+//      		tags.add(tag);
+//      	}  	
+//      }
       
-      for(int k=0;k < rand.nextInt(4)+1; k++)
+      for(int k=0;k < rand.nextInt(5)+1; k++)
       {
       	StudyCourse studyCourse = allStudyCourses[k];
       	if(studyCourse.getAcademicDegree().equals(AcademicDegree.BACHELOR) && studyCourse.getModules().size()==2)
@@ -251,7 +251,7 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
 	      
       }
     	
-    	newProject = new Project(projectName,shortDescription,description,status,requirement,creatorID,creatorName,supervisorName,modules,tags);
+    	newProject = new Project(projectName,shortDescription,description,status,requirement,creatorID,creatorName,supervisorName,modules);
     	test_projects.add(newProject);
   	}
   	

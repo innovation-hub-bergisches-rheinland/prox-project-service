@@ -10,9 +10,9 @@ moduleImport:
       minutes: 1440
     hasNoData:
       seconds: 10
-tagRecommendationCalculation:
-  delay:
-    seconds: 10
+tagServiceLink:
+  tag: https://api.gp-ws2019.prox.archi-lab.io/tags
+  tag-collection:  https://api.gp-ws2019.prox.archi-lab.io/tagCollections
 keycloak:
   auth-server-url: https://login.archi-lab.io/auth
   bearer-only: true

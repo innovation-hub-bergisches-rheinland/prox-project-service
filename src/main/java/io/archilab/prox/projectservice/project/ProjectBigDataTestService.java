@@ -11,8 +11,6 @@ import io.archilab.prox.projectservice.module.Module;
 import io.archilab.prox.projectservice.module.ModuleRepository;
 import io.archilab.prox.projectservice.module.StudyCourse;
 import io.archilab.prox.projectservice.module.StudyCourseRepository;
-import io.archilab.prox.projectservice.tags.Tag;
-import io.archilab.prox.projectservice.tags.TagRepository;
 
 @Service
 @Transactional
@@ -26,14 +24,13 @@ public class ProjectBigDataTestService {
 
   private final StudyCourseRepository studyCourseRepository;
 
-  private final TagRepository tagRepository;
+
   
-  
-  public ProjectBigDataTestService(  ProjectRepository projectRepository, ModuleRepository moduleRepository, StudyCourseRepository studyCourseRepository, TagRepository tagRepository) {
+  public ProjectBigDataTestService(  ProjectRepository projectRepository, ModuleRepository moduleRepository, StudyCourseRepository studyCourseRepository) {
     this.projectRepository = projectRepository;
     this.moduleRepository = moduleRepository;
     this.studyCourseRepository = studyCourseRepository;
-    this.tagRepository = tagRepository;
+
   }
   
   public void saveDataProjects(ArrayList<Project> test_projects)
@@ -46,10 +43,7 @@ public class ProjectBigDataTestService {
   	moduleRepository.saveAll(test_modules);
   }
   
-  public void saveDataTags(ArrayList<Tag> test_tags)
-  {
-  	tagRepository.saveAll(test_tags);
-  }
+
 
 	public void saveDataStudyCourses(StudyCourse[] allStudyCourses) {
 		for (int i = 0; i < allStudyCourses.length; i++) {

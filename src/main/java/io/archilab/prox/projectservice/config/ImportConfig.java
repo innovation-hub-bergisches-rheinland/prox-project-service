@@ -1,7 +1,7 @@
 package io.archilab.prox.projectservice.config;
 
 import io.archilab.prox.projectservice.module.StudyCourseService;
-import io.archilab.prox.projectservice.tags.TagCounterUpdater;
+import io.archilab.prox.projectservice.project.Project;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.ResourceProcessor;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import java.util.Calendar;
@@ -31,12 +34,14 @@ public class ImportConfig implements SchedulingConfigurer {
   public Executor taskExecutor() {
     return Executors.newScheduledThreadPool(100);
   }
+  
+
 
   @Autowired
   private StudyCourseService studyCourseService;
 
-  @Autowired
-  private TagCounterUpdater tagCounterUpdater;
+//  @Autowired
+//  private TagCounterUpdater tagCounterUpdater;
 
 
   @Override
@@ -71,13 +76,13 @@ public class ImportConfig implements SchedulingConfigurer {
     });
 
     // TagCounterService
-    taskRegistrar.addTriggerTask(() -> tagCounterUpdater.updateTagCounter(), triggerContext -> {
-
-      Calendar nextExecutionTime = new GregorianCalendar();
-
-      nextExecutionTime.add(Calendar.SECOND,
-          Integer.valueOf(env.getProperty("tagRecommendationCalculation.delay.seconds")));
-      return nextExecutionTime.getTime();
-    });
+//    taskRegistrar.addTriggerTask(() -> tagCounterUpdater.updateTagCounter(), triggerContext -> {
+//
+//      Calendar nextExecutionTime = new GregorianCalendar();
+//
+//      nextExecutionTime.add(Calendar.SECOND,
+//          Integer.valueOf(env.getProperty("tagRecommendationCalculation.delay.seconds")));
+//      return nextExecutionTime.getTime();
+//    });
   }
 }

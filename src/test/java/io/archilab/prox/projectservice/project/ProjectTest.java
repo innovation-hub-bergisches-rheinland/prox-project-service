@@ -1,19 +1,21 @@
 package io.archilab.prox.projectservice.project;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import io.archilab.prox.projectservice.module.Module;
-import io.archilab.prox.projectservice.module.ModuleName;
-import io.archilab.prox.projectservice.module.ModuleRepository;
-import io.archilab.prox.projectservice.module.ProjectType;
-import io.archilab.prox.projectservice.tags.Tag;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import io.archilab.prox.projectservice.module.Module;
+import io.archilab.prox.projectservice.module.ModuleName;
+import io.archilab.prox.projectservice.module.ModuleRepository;
+import io.archilab.prox.projectservice.module.ProjectType;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -39,7 +41,7 @@ public class ProjectTest {
     Project project = new Project(new ProjectName("Testprojekt"),
         new ProjectShortDescription("Best Proj."), new ProjectDescription("Bestes Projekt"),
         ProjectStatus.LAUFEND, new ProjectRequirement("PhD"), new CreatorID(UUID.randomUUID()),
-        new CreatorName("Jann"), new SupervisorName("Jann"), modules, new ArrayList<Tag>());
+        new CreatorName("Jann"), new SupervisorName("Jann"), modules);
 
     this.projectRepository.save(project);
     assertThat(this.projectRepository.findById(project.getId()).isPresent()).isEqualTo(true);

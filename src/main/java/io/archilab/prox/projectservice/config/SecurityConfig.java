@@ -50,13 +50,13 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     super.configure(http);
     http.csrf().disable().authorizeRequests()
 
-        .antMatchers(HttpMethod.GET, "/tags/**").permitAll().antMatchers("/tags/**")
-        .hasRole("professor").antMatchers(HttpMethod.GET, "/projects/**").permitAll()
+        .antMatchers(HttpMethod.GET, "/projects/**").permitAll()
         .antMatchers("/projects/**").hasRole("professor")
         .antMatchers(HttpMethod.GET, "/projectStudyCourses/**").permitAll()
         .antMatchers("/projectStudyCourses/**").denyAll()
         .antMatchers(HttpMethod.GET, "/projectModules/**").permitAll()
-        .antMatchers("/projectModules/**").denyAll().antMatchers("/profile/**").permitAll()
+        .antMatchers("/projectModules/**").denyAll()
+        .antMatchers("/profile/**").permitAll()
         .anyRequest().denyAll();
   }
 
