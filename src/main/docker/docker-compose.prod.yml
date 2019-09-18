@@ -15,7 +15,6 @@ services:
       options:
         gelf-address: "udp://archilab-infra:12201"
 
-
   project-db:
     deploy:
       replicas: 1
