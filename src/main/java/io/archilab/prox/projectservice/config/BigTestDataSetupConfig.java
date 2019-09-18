@@ -18,7 +18,11 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.util.Pair;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import io.archilab.prox.projectservice.module.AcademicDegree;
 import io.archilab.prox.projectservice.module.Module;
@@ -39,6 +43,7 @@ import io.archilab.prox.projectservice.project.ProjectRequirement;
 import io.archilab.prox.projectservice.project.ProjectShortDescription;
 import io.archilab.prox.projectservice.project.ProjectStatus;
 import io.archilab.prox.projectservice.project.SupervisorName;
+import net.minidev.json.JSONObject;
 
 
 @Component
@@ -63,10 +68,39 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
     this.projectBigDataTestService = projectBigDataTestService;
   }
   
+  public String post(String name) {
+
+  	HttpHeaders headers = new HttpHeaders();
+  	headers.setContentType(MediaType.APPLICATION_JSON);
+  	
+  	final String url = "http://localhost:9003/tags";
+
+  	RestTemplate restTemplate = new RestTemplate();
+
+  	JSONObject jsonObject = new JSONObject();
+  	jsonObject .put("tagName", name);
+
+  	HttpEntity<JSONObject> entity = new HttpEntity<>(jsonObject , headers);
+
+  	return restTemplate.postForObject(url, entity, String.class);
+  	}
+  
 
   @Override
   public void run(ApplicationArguments  args) throws Exception 
   {
+  	
+  	// test
+  	
+
+  	String tagName = "saas";
+  	String ret = post(tagName);
+  	logger.info(ret);
+  	
+  	// test
+  	if(true)
+  		return;
+  	
   	String[] split_words_lorem = words_lorem.split(" ");
   	List<String> words = Arrays.asList(split_words_lorem);
   	

@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.Type;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +60,7 @@ public class RestConfig implements RepositoryRestConfigurer {
   
   
   @Bean
-  public ResourceProcessor<Resource<Project>> personProcessor() {
+  public ResourceProcessor<Resource<Project>> personProcessor(HttpServletRequest request) {
 
      return new ResourceProcessor<Resource<Project>>() {
 
@@ -67,20 +68,23 @@ public class RestConfig implements RepositoryRestConfigurer {
        public Resource<Project> process(Resource<Project> resource) {
       	 
       	String projectID = resource.getContent().getId().toString();
-
+      //	log.info(request.toString());
+      	
       	UriComponents request  = ServletUriComponentsBuilder.fromCurrentRequest().build();
         String scheme = request.getScheme() + "://";
         String serverName = request.getHost();
         String serverPort = "";
      //   serverPort = (request.getPort() == 80) ? "" : ":" + request.getPort();
         
-        if(serverName.contains("localhost"))
+        if(request.getPort() == 8081)
         {
-        	serverPort = portLokal;
+        	serverPort=":"+request.getPort();
+        }
+        else if(serverName.contains("localhost"))
+        {
+        	serverPort = ":"+portLokal;
         }
 
-      	
-      	
         resource.add(new Link(scheme + serverName + serverPort+"/"+env.getProperty("tagServiceLink.tag-collection")+"/"+projectID, "tagCollection"));
         return resource;
        }

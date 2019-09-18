@@ -34,8 +34,7 @@ public class StudyCourse extends AbstractEntity {
   @Setter
   private AcademicDegree academicDegree;
 
-  @OneToMany(mappedBy = "studyCourse", cascade = CascadeType.ALL) // cascade =
-                                                                  // javax.persistence.CascadeType.REMOVE)
+  @OneToMany(mappedBy = "studyCourse", cascade = CascadeType.ALL) 
   private List<Module> modules = new ArrayList<>();
 
 
