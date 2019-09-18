@@ -32,13 +32,22 @@ public class RestConfig implements RepositoryRestConfigurer {
   
   private final Logger log = LoggerFactory.getLogger(RestConfig.class);
   
-  @Autowired
+//  @Autowired
   private Environment env;
   
   private final EurekaClient eurekaClient;
 
-  public RestConfig(EurekaClient eurekaClient) {
-    this.eurekaClient = eurekaClient;
+  private String portLokal = "";
+  
+  public RestConfig(EurekaClient eurekaClient, Environment env) {
+  	this.eurekaClient = eurekaClient;
+  	this.env=env;
+    
+    portLokal = env.getProperty("tagServiceLink.port");
+    
+//    InstanceInfo instance = serviceUrl("tag-service");
+//    portLokal = ""+instance.getPort();
+//    log.info(portLokal);
   }
 
   @Override
@@ -46,6 +55,7 @@ public class RestConfig implements RepositoryRestConfigurer {
     config.exposeIdsFor(this.entityManager.getMetamodel().getEntities().stream()
         .map(Type::getJavaType).toArray(Class[]::new));
   }
+  
   
   
   @Bean
@@ -62,13 +72,13 @@ public class RestConfig implements RepositoryRestConfigurer {
         String scheme = request.getScheme() + "://";
         String serverName = request.getHost();
         String serverPort = "";
-        serverPort = ""+request.getPort();
      //   serverPort = (request.getPort() == 80) ? "" : ":" + request.getPort();
-//        String contextPath = request.getPath();
         
-//        log.info(scheme + serverName + serverPort); 
-        
-        log.info(serviceUrl("project-service"));
+        if(serverName.contains("localhost"))
+        {
+        	serverPort = portLokal;
+        }
+
       	
       	
         resource.add(new Link(scheme + serverName + serverPort+"/"+env.getProperty("tagServiceLink.tag-collection")+"/"+projectID, "tagCollection"));
@@ -77,8 +87,9 @@ public class RestConfig implements RepositoryRestConfigurer {
      };
   }
   
-  private String serviceUrl(String service) {
+  private InstanceInfo serviceUrl(String service) {
     InstanceInfo instance = this.eurekaClient.getNextServerFromEureka(service, false);
-    return instance.getHomePageUrl();
+
+    return instance;
   }
 }

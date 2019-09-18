@@ -11,8 +11,8 @@ moduleImport:
     hasNoData:
       seconds: 10
 tagServiceLink:
-  tag: tags
-  tag-collection:  tagCollections
+  port: 9003
+  tag-collection: tagCollections
 keycloak:
   auth-server-url: https://login.archi-lab.io/auth
   bearer-only: true

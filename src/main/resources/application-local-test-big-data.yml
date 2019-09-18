@@ -4,8 +4,8 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   enabled: true
 tagServiceLink:
-  tag: http://localhost:9003/tags
-  tag-collection:  http://localhost:9003/tagCollections
+  port: 9003
+  tag-collection: tagCollections
 moduleImport:
   delay:
     initial:
