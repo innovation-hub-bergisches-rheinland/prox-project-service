@@ -1,11 +1,9 @@
+
+
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
-  enabled: true
-tagServiceLink:
-  port: 9003
-  tag-collection: tagCollections
 moduleImport:
   delay:
     initial:
@@ -37,6 +35,10 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+# spring:
   flyway:
     enabled: false
+#  profiles:
+#    include: local
+
 

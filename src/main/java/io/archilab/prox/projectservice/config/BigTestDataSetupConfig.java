@@ -1,6 +1,10 @@
 package io.archilab.prox.projectservice.config;
 
 
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpEntity;
@@ -23,6 +28,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.archilab.prox.projectservice.module.AcademicDegree;
 import io.archilab.prox.projectservice.module.Module;
@@ -67,39 +75,12 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
   public BigTestDataSetupConfig(  ProjectBigDataTestService projectBigDataTestService) {
     this.projectBigDataTestService = projectBigDataTestService;
   }
-  
-  public String post(String name) {
 
-  	HttpHeaders headers = new HttpHeaders();
-  	headers.setContentType(MediaType.APPLICATION_JSON);
-  	
-  	final String url = "http://localhost:9003/tags";
-
-  	RestTemplate restTemplate = new RestTemplate();
-
-  	JSONObject jsonObject = new JSONObject();
-  	jsonObject .put("tagName", name);
-
-  	HttpEntity<JSONObject> entity = new HttpEntity<>(jsonObject , headers);
-
-  	return restTemplate.postForObject(url, entity, String.class);
-  	}
   
 
   @Override
   public void run(ApplicationArguments  args) throws Exception 
   {
-  	
-  	// test
-  	
-
-  	String tagName = "saas";
-  	String ret = post(tagName);
-  	logger.info(ret);
-  	
-  	// test
-  	if(true)
-  		return;
   	
   	String[] split_words_lorem = words_lorem.split(" ");
   	List<String> words = Arrays.asList(split_words_lorem);
@@ -123,31 +104,9 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
     	allCreatorIds.add(Pair.of(UUID.randomUUID(),name));
     }
     
-//    ArrayList<Tag> allTags = new ArrayList<Tag>();
-//    allTags.add(new Tag(new TagName("Informatik")));
-//    allTags.add(new Tag(new TagName("Mathematik")));
-//    allTags.add(new Tag(new TagName("DB1")));
-//    allTags.add(new Tag(new TagName("DB2")));
-//    allTags.add(new Tag(new TagName("GP")));
-//    allTags.add(new Tag(new TagName("Wirtschaft")));
-//    allTags.add(new Tag(new TagName("UI")));
-//    allTags.add(new Tag(new TagName("Medien")));
-//    allTags.add(new Tag(new TagName("Technik")));
-//    allTags.add(new Tag(new TagName("Maschinen")));
-//    allTags.add(new Tag(new TagName("Strom")));
-//    allTags.add(new Tag(new TagName("BWL")));
-//    allTags.add(new Tag(new TagName("Erweiterre Strömungslehre")));
-//    allTags.add(new Tag(new TagName("Architektur")));
-//    allTags.add(new Tag(new TagName("Betirebssysteme")));
-//    allTags.add(new Tag(new TagName("Partner")));
-//    allTags.add(new Tag(new TagName("Extern")));
-//    allTags.add(new Tag(new TagName("Remote")));
-//    allTags.add(new Tag(new TagName("Linux")));
-//    allTags.add(new Tag(new TagName("Usability")));
-//    allTags.add(new Tag(new TagName("Design")));
-//    allTags.add(new Tag(new TagName("KI")));
-//       
-//    projectBigDataTestService.saveDataTags(allTags);
+    ArrayList<String> allTags = getTagList();
+    
+
     
     StudyCourse[] allStudyCourses = new StudyCourse[] {
     		new StudyCourse(new StudyCourseName("Informatik Master"), AcademicDegree.MASTER),
@@ -224,6 +183,7 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
   	CreatorName creatorName = null;
   	SupervisorName supervisorName = null;
   	List<Module> modules = new ArrayList<Module>();
+  	String[] tags;
   	
   	
   	for(int i=0;i< testAmount;i++)
@@ -249,15 +209,7 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
     	creatorName = new CreatorName(creatorNameString);
     	supervisorName = new SupervisorName(supervisorNameString);
     	
-    	// tags hinzufügen geht mit diesem desing nur über ein post auf den tag service. problem sind berechtigungen.
-//      for(int k=0;k < rand.nextInt(allTags.size()); k++)
-//      {
-//      	Tag tag = allTags.get(k);
-//      	if(!tags.contains(tag))
-//      	{
-//      		tags.add(tag);
-//      	}  	
-//      }
+    	
       
       for(int k=0;k < rand.nextInt(5)+1; k++)
       {
@@ -284,9 +236,29 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
       	}
 	      
       }
-    	
+
     	newProject = new Project(projectName,shortDescription,description,status,requirement,creatorID,creatorName,supervisorName,modules);
     	test_projects.add(newProject);
+    	
+   // tags hinzufügen geht mit diesem desing nur über ein post auf den tag service.
+    	tags = new String[rand.nextInt(14)];
+      for(int k=0;k < tags.length; k++)
+      {
+      	
+      	String link_tag = allTags.get(rand.nextInt(allTags.size()));
+      	boolean result = Arrays.stream(tags).anyMatch(link_tag::equals);
+      	if (!result) {
+      		tags[k]=link_tag;
+      	}
+      	else
+      	{
+      		k--;
+      		continue;
+      	}
+      	
+      }
+    	putTags(tags,newProject.getId());
+    	
   	}
   	
   	projectBigDataTestService.saveDataProjects(test_projects);
@@ -295,7 +267,119 @@ public class BigTestDataSetupConfig implements ApplicationRunner   {
   	
   }
   
-  private String stringOfWords(int number, List<String> words, Random rand)
+  public void putTags(	String[] links, UUID id) {
+  	
+
+  	final String url = "http://localhost:9003/tagCollections/"+id.toString();
+  	
+  	HttpHeaders headers = new HttpHeaders();
+
+  	headers.setContentType(new MediaType("text", "uri-list"));
+  	
+  	
+  	RestTemplate restTemplate = new RestTemplate();
+
+  	
+  	String links_data ="";
+  	
+  	for (int i = 0; i < links.length; i++) {
+  		links_data+=links[i];
+  		if(i<links.length-1)
+  		{
+  			links_data+="\n";
+  		}
+		}
+  	
+
+  	HttpEntity<String> entity = new HttpEntity<>(links_data , headers);
+  	
+  	logger.info(entity.toString());;
+
+		try {
+			String res  = restTemplate.getForObject(url, String.class);
+			restTemplate.put(url+"/tags", entity);
+	  	
+		} catch (Exception e) { e.printStackTrace(); logger.error("error"); }
+		
+  }
+  
+  private ArrayList<String> getTagList() 
+  {
+  	
+  	ArrayList<String> links = new ArrayList<String>();
+  	
+  	links.add(post("Informatik"));
+  	links.add(post("Mathematik"));
+  	links.add(post("DB1"));
+  	links.add(post("DB2"));
+  	links.add(post("GP"));
+  	links.add(post("UI"));
+  	links.add(post("Medien"));
+  	links.add(post("Technik"));
+  	links.add(post("Maschinen"));
+  	links.add(post("Strom"));
+  	links.add(post("BWL"));
+  	links.add(post("Erweiterre Strömungslehre"));
+  	links.add(post("Architektur"));
+  	links.add(post("Betirebssysteme"));
+  	links.add(post("Partner"));
+  	links.add(post("Extern"));
+  	links.add(post("Remote"));
+  	links.add(post("Linux"));
+  	links.add(post("Usability"));
+  	links.add(post("Design"));
+  	links.add(post("KI"));
+  	
+  	for (int i = 0; i < links.size(); i++) {
+			logger.info(links.get(i));
+		}
+
+		return links;
+	}
+  
+  
+  public String post(String name) {
+
+  	HttpHeaders headers = new HttpHeaders();
+  	headers.setContentType(MediaType.APPLICATION_JSON);
+  	
+  	final String url = "http://localhost:9003/tags";
+
+  	RestTemplate restTemplate = new RestTemplate();
+
+  	JSONObject jsonObject = new JSONObject();
+  	jsonObject.put("tagName", name);
+
+  	HttpEntity<JSONObject> entity = new HttpEntity<>(jsonObject , headers);
+  	  	
+  	String link = "";
+	
+  	ObjectMapper objectMapper = new ObjectMapper();
+  	JsonNode jsonNode = null;
+		try {
+			String res = restTemplate.postForObject(url, entity, String.class);
+			jsonNode = objectMapper.readTree(res);
+	  	link = jsonNode.get("_links").get("self").get("href").asText();
+	  	
+		} catch (Exception e) { logger.error("post"); }
+		
+		if(link == "")
+		{
+			
+			try {
+				RestTemplate restTemplate2 = new RestTemplate();
+				String res  = restTemplate2.getForObject(url+"/search/findByTagName_TagName?tagName="+name, String.class);
+				jsonNode = objectMapper.readTree(res);
+
+		  	link = jsonNode.get("_links").get("self").get("href").asText();
+			} catch (Exception e) {  logger.error("get");  }
+		}
+
+  	return link;
+  	
+  }
+
+	private String stringOfWords(int number, List<String> words, Random rand)
   {
   	String string="";
   	

@@ -2,9 +2,6 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
-tagServiceLink:
-  port: 9003
-  tag-collection: tagCollections
 moduleImport:
   delay:
     initial:
