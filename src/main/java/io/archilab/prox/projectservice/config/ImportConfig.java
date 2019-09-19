@@ -34,14 +34,14 @@ public class ImportConfig implements SchedulingConfigurer {
   public Executor taskExecutor() {
     return Executors.newScheduledThreadPool(100);
   }
-  
+
 
 
   @Autowired
   private StudyCourseService studyCourseService;
 
-//  @Autowired
-//  private TagCounterUpdater tagCounterUpdater;
+  // @Autowired
+  // private TagCounterUpdater tagCounterUpdater;
 
 
   @Override
@@ -76,13 +76,13 @@ public class ImportConfig implements SchedulingConfigurer {
     });
 
     // TagCounterService
-//    taskRegistrar.addTriggerTask(() -> tagCounterUpdater.updateTagCounter(), triggerContext -> {
-//
-//      Calendar nextExecutionTime = new GregorianCalendar();
-//
-//      nextExecutionTime.add(Calendar.SECOND,
-//          Integer.valueOf(env.getProperty("tagRecommendationCalculation.delay.seconds")));
-//      return nextExecutionTime.getTime();
-//    });
+    // taskRegistrar.addTriggerTask(() -> tagCounterUpdater.updateTagCounter(), triggerContext -> {
+    //
+    // Calendar nextExecutionTime = new GregorianCalendar();
+    //
+    // nextExecutionTime.add(Calendar.SECOND,
+    // Integer.valueOf(env.getProperty("tagRecommendationCalculation.delay.seconds")));
+    // return nextExecutionTime.getTime();
+    // });
   }
 }
