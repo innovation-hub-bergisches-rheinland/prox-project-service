@@ -80,7 +80,7 @@ public class RestConfig implements RepositoryRestConfigurer {
 
         resource.add(new Link(
             scheme + serverName + serverPort + "/"
-                + env.getProperty("tagServiceLink.tag-collection") + "/" + projectID,
+                + env.getProperty("tagServiceLink.tag-collection") + "/" + projectID+"/tags",
             "tagCollection"));
         return resource;
       }
