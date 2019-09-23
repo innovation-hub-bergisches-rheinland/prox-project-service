@@ -6,20 +6,8 @@ moduleImport:
   delay:
     initial:
       seconds: 0
-keycloak:
-  auth-server-url: https://login.archi-lab.io/auth
-  bearer-only: true
-  cors: false
-  principal-attribute: preferred_username
-  public-client: false
-  realm: archilab
-  resource: project-service
-server:
-  port: 9002
-  use-forward-headers: true
+
 spring:
-  application:
-    name: project-service
   datasource:
     password: project-service
     url: jdbc:h2:mem:testdb
@@ -27,11 +15,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: validate
-    properties:
-      hibernate:
-        jdbc:
-          lob:
-            non_contextual_creation: true
-
-
+      ddl-auto: create-drop
+  flyway:
+    enabled: false
+  
