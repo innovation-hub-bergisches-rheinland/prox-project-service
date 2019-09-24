@@ -223,7 +223,7 @@ public class BigTestDataSetupConfig implements ApplicationRunner {
 
   public void putTags(String[] links, UUID id) {
 
-    final String url = "http://localhost:9003/tagCollections/" + id.toString()+"/tags";
+    final String url = "http://localhost:9003/tagCollections/" + id.toString() + "/tags";
 
     HttpHeaders headers = new HttpHeaders();
 
@@ -242,7 +242,7 @@ public class BigTestDataSetupConfig implements ApplicationRunner {
 
     HttpEntity<String> entity = new HttpEntity<>(links_data, headers);
 
-//    logger.info(url+" "+entity.toString());
+    // logger.info(url+" "+entity.toString());
 
     try {
       restTemplate.put(url, entity);
@@ -310,28 +310,31 @@ public class BigTestDataSetupConfig implements ApplicationRunner {
       String res = restTemplate.postForObject(url, entity, String.class);
       jsonNode = objectMapper.readTree(res);
       link = jsonNode.get("_links").get("self").get("href").asText();
-      
+
       logger.info(link);
 
     } catch (Exception e) {
       logger.error("post");
-      link=null;
+      link = null;
     }
 
     if (link == null) {
-      link="";
+      link = "";
       logger.info("Get");
       try {
         RestTemplate restTemplate2 = new RestTemplate();
-        String res = restTemplate2
-            .getForObject(url + "/search/findByTagName_TagName?tagName=" + name.toLowerCase(), String.class);
+        String res = restTemplate2.getForObject(
+            url + "/search/findByTagName_TagName?tagName=" + name.toLowerCase(), String.class);
         jsonNode = objectMapper.readTree(res);
-        //logger.info(jsonNode.toString());
+        // logger.info(jsonNode.toString());
         logger.info(jsonNode.get("_embedded").get("tags").elements().next().toString());
-        logger.info(jsonNode.get("_embedded").get("tags").elements().next().get("_links").toString());
-        logger.info(jsonNode.get("_embedded").get("tags").elements().next().get("_links").get("self").toString());
+        logger
+            .info(jsonNode.get("_embedded").get("tags").elements().next().get("_links").toString());
+        logger.info(jsonNode.get("_embedded").get("tags").elements().next().get("_links")
+            .get("self").toString());
 
-        link = jsonNode.get("_embedded").get("tags").elements().next().get("_links").get("self").get("href").asText();
+        link = jsonNode.get("_embedded").get("tags").elements().next().get("_links").get("self")
+            .get("href").asText();
         logger.info(link);
       } catch (Exception e) {
         logger.error("get");
