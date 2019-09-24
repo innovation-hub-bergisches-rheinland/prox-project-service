@@ -6,7 +6,6 @@ moduleImport:
   delay:
     initial:
       seconds: 0
-
 spring:
   datasource:
     password: project-service
