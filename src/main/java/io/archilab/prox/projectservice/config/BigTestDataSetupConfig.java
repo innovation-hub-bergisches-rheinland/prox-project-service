@@ -223,7 +223,7 @@ public class BigTestDataSetupConfig implements ApplicationRunner {
 
   public void putTags(String[] links, UUID id) {
 
-    final String url = "http://localhost:9003/tagCollections/" + id.toString() + "/tags";
+    final String url = "http://tag-service:9003/tagCollections/" + id.toString() + "/tags";
 
     HttpHeaders headers = new HttpHeaders();
 
@@ -292,7 +292,7 @@ public class BigTestDataSetupConfig implements ApplicationRunner {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
 
-    final String url = "http://localhost:9003/tags";
+    final String url = "http://tag-service:9003/tags";
 
     RestTemplate restTemplate = new RestTemplate();
 
