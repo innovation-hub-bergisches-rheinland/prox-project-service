@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -45,6 +46,12 @@ public class BigTestDataSetupConfig implements ApplicationRunner {
       "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet";
 
   public final int testAmount = 250;
+  
+  public final String tagServiceAddress;
+  
+  @Autowired
+  private Environment env;
+
 
   public final String BACHELOR = "Bachelorarbeit";
   public final String PP = "PP";
@@ -57,6 +64,7 @@ public class BigTestDataSetupConfig implements ApplicationRunner {
 
   public BigTestDataSetupConfig(ProjectBigDataTestService projectBigDataTestService) {
     this.projectBigDataTestService = projectBigDataTestService;
+    tagServiceAddress=env.getProperty("tag-service.address");
   }
 
   @Override
@@ -223,7 +231,7 @@ public class BigTestDataSetupConfig implements ApplicationRunner {
 
   public void putTags(String[] links, UUID id) {
 
-    final String url = "http://tag-service:9003/tagCollections/" + id.toString() + "/tags";
+    final String url = "http://"+tagServiceAddress+":9003/tagCollections/" + id.toString() + "/tags";
 
     HttpHeaders headers = new HttpHeaders();
 
@@ -292,7 +300,7 @@ public class BigTestDataSetupConfig implements ApplicationRunner {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
 
-    final String url = "http://tag-service:9003/tags";
+    final String url = "http://"+tagServiceAddress+":9003/tags";
 
     RestTemplate restTemplate = new RestTemplate();
 
