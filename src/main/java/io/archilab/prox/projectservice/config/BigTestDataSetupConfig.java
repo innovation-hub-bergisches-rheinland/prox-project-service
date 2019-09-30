@@ -20,6 +20,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
+
 import io.archilab.prox.projectservice.module.AcademicDegree;
 import io.archilab.prox.projectservice.module.Module;
 import io.archilab.prox.projectservice.module.ModuleName;
@@ -39,18 +42,20 @@ import io.archilab.prox.projectservice.project.SupervisorName;
 import net.minidev.json.JSONObject;
 
 @Component
-@Profile("local-test-big-data")
+@Profile({"local-test-big-data","test-big-data"})
 public class BigTestDataSetupConfig implements ApplicationRunner {
 
   public final String words_lorem =
       "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet";
 
-  public final int testAmount = 250;
+  public final int testAmount;
   
-  public final String tagServiceAddress;
-  
-  @Autowired
+ 
   private Environment env;
+  
+  private final EurekaClient eurekaClient;
+  
+  private String urlBaseAddress="";
 
 
   public final String BACHELOR = "Bachelorarbeit";
@@ -62,14 +67,48 @@ public class BigTestDataSetupConfig implements ApplicationRunner {
   @Autowired
   private ProjectBigDataTestService projectBigDataTestService;
 
-  public BigTestDataSetupConfig(ProjectBigDataTestService projectBigDataTestService) {
+  public BigTestDataSetupConfig(ProjectBigDataTestService projectBigDataTestService,Environment env,EurekaClient eurekaClient) {
     this.projectBigDataTestService = projectBigDataTestService;
-    tagServiceAddress=env.getProperty("tag-service.address");
+    this.eurekaClient = eurekaClient;
+    this.env=env;
+
+    String amount_create_test_data = this.env.getProperty("testAmount");
+    
+    logger.info(amount_create_test_data);
+    this.testAmount=Integer.parseInt(amount_create_test_data);
+  }
+  
+  private String serviceUrl(String service) {
+    InstanceInfo instance = this.eurekaClient.getNextServerFromEureka(service, false);
+    String url = instance.getHomePageUrl();
+    return url;
   }
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
+    
+    boolean wait=true;
+    String url_adress="";
+    
+    while(wait)
+    {
+      logger.info("try");
+      try{
+        
+        url_adress = serviceUrl("tag-service");
 
+        logger.info(url_adress);
+        wait=false;
+      }
+      catch(Exception e)
+      {
+        Thread.sleep(1000);
+      }
+    }
+    urlBaseAddress=url_adress;
+    
+
+    
     String[] split_words_lorem = words_lorem.split(" ");
     List<String> words = Arrays.asList(split_words_lorem);
 
@@ -231,8 +270,9 @@ public class BigTestDataSetupConfig implements ApplicationRunner {
 
   public void putTags(String[] links, UUID id) {
 
-    final String url = "http://"+tagServiceAddress+":9003/tagCollections/" + id.toString() + "/tags";
-
+    // "http://"+tagServiceAddress+":9003/
+    final String url = urlBaseAddress+"tagCollections/" + id.toString() + "/tags";
+    
     HttpHeaders headers = new HttpHeaders();
 
     headers.setContentType(new MediaType("text", "uri-list"));
@@ -287,6 +327,19 @@ public class BigTestDataSetupConfig implements ApplicationRunner {
     links.add(post("Usability"));
     links.add(post("Design"));
     links.add(post("KI"));
+    links.add(post("Maschinen"));
+    links.add(post("Restful"));
+    links.add(post("CSS"));
+    links.add(post("HTTP"));
+    links.add(post("JS"));
+    links.add(post("Roboter"));
+    links.add(post("Integralrechnung"));
+    links.add(post("FP"));
+    links.add(post("Smartphone"));
+    links.add(post("Uhren"));
+    links.add(post("Messungen"));
+    links.add(post("NOSQL"));
+    links.add(post("BigData"));
 
     for (int i = 0; i < links.size(); i++) {
       logger.info(links.get(i));
@@ -299,9 +352,9 @@ public class BigTestDataSetupConfig implements ApplicationRunner {
 
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
-
-    final String url = "http://"+tagServiceAddress+":9003/tags";
-
+    // "http://"+tagServiceAddress+":9003/
+    final String url = urlBaseAddress+"tags";
+    
     RestTemplate restTemplate = new RestTemplate();
 
     JSONObject jsonObject = new JSONObject();

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceProcessor;
@@ -20,7 +21,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 @Configuration
-@Profile("!local-test-big-data")
 public class ImportConfig implements SchedulingConfigurer {
 
   private final Logger logger = LoggerFactory.getLogger(StudyCourseService.class);
@@ -74,6 +74,13 @@ public class ImportConfig implements SchedulingConfigurer {
 
       return nextExecutionTime.getTime();
     });
+    
+   
+//    if(env.acceptsProfiles(org.springframework.core.env.Profiles.of("test-big-data | local-test-big-data")))
+//    {
+//      
+//    }
+    
 
     // TagCounterService
     // taskRegistrar.addTriggerTask(() -> tagCounterUpdater.updateTagCounter(), triggerContext -> {
