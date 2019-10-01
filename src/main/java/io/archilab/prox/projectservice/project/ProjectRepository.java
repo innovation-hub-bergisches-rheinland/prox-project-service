@@ -15,7 +15,7 @@ public interface ProjectRepository extends PagingAndSortingRepository<Project, U
       @Param(value = "supervisorName") String supervisorName);
 
   Set<Project> findAllByModifiedAfter(
-          @DateTimeFormat(pattern = "yyyy-MM-dd")
+          @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
           @Param(value = "modified") Date modified);
 
 }
