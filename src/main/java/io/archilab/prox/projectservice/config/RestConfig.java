@@ -74,8 +74,11 @@ public class RestConfig implements RepositoryRestConfigurer {
 
         if (request.getPort() == 8081) {
           serverPort = ":" + request.getPort();
-        } else if (serverName.contains("localhost")) {
+        } else if (request.getPort() == 9002) {
           serverPort = ":" + portLokal;
+        }
+        else {
+          ; // if no port is given, then no need to change port or add in uncessary ":" 
         }
 
         resource.add(new Link(
