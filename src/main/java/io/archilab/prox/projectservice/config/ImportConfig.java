@@ -74,13 +74,14 @@ public class ImportConfig implements SchedulingConfigurer {
 
       return nextExecutionTime.getTime();
     });
-    
-   
-//    if(env.acceptsProfiles(org.springframework.core.env.Profiles.of("test-big-data | local-test-big-data")))
-//    {
-//      
-//    }
-    
+
+
+    // if(env.acceptsProfiles(org.springframework.core.env.Profiles.of("test-big-data |
+    // local-test-big-data")))
+    // {
+    //
+    // }
+
 
     // TagCounterService
     // taskRegistrar.addTriggerTask(() -> tagCounterUpdater.updateTagCounter(), triggerContext -> {
