@@ -3,7 +3,6 @@ package io.archilab.prox.projectservice.project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
