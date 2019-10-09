@@ -1,7 +1,10 @@
 package io.archilab.prox.projectservice.config;
 
+import io.archilab.prox.projectservice.module.ModuleRepository;
+import io.archilab.prox.projectservice.module.StudyCourseRepository;
 import io.archilab.prox.projectservice.module.StudyCourseService;
 import io.archilab.prox.projectservice.project.Project;
+import io.archilab.prox.projectservice.project.ProjectRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,61 +39,52 @@ public class ImportConfig implements SchedulingConfigurer {
   }
 
 
+  @Autowired
+  private ModuleRepository moduleRepository;
+  @Autowired
+  private StudyCourseRepository studyCourseRepository;
+  @Autowired
+  private ProjectRepository projectRepository;
 
   @Autowired
   private StudyCourseService studyCourseService;
-
-  // @Autowired
-  // private TagCounterUpdater tagCounterUpdater;
-
 
   @Override
   public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
     taskRegistrar.setScheduler(taskExecutor());
 
-    // StudyCourseService
-    taskRegistrar.addTriggerTask(() -> studyCourseService.importStudyCourses(), triggerContext -> {
+    taskRegistrar.addTriggerTask(() -> {
+              // studyCourseService.importStudyCourses();
 
-      Calendar nextExecutionTime = new GregorianCalendar();
+              this.projectRepository.deleteAll();
+              this.moduleRepository.deleteAll();
+              this.studyCourseRepository.deleteAll();
 
-      if (initialStart) {
-        initialStart = false;
-        nextExecutionTime.add(Calendar.SECOND,
-            Integer.valueOf(env.getProperty("moduleImport.delay.initial.seconds")));
-        return nextExecutionTime.getTime();
-      }
+            },
+            triggerContext -> {
 
-      boolean hasData = studyCourseService.hasData();
+              Calendar nextExecutionTime = new GregorianCalendar();
 
-      if (hasData) {
-        logger.info("importData: has data");
-        nextExecutionTime.add(Calendar.MINUTE,
-            Integer.valueOf(env.getProperty("moduleImport.delay.hasData.minutes")));
-      } else {
-        logger.info("importData: has no data");
-        nextExecutionTime.add(Calendar.SECOND,
-            Integer.valueOf(env.getProperty("moduleImport.delay.hasNoData.seconds")));
-      }
+              if (initialStart) {
+                initialStart = false;
+                nextExecutionTime.add(Calendar.SECOND,
+                        Integer.valueOf(env.getProperty("moduleImport.delay.initial.seconds")));
+                return nextExecutionTime.getTime();
+              }
 
-      return nextExecutionTime.getTime();
-    });
+              boolean hasData = studyCourseService.hasData();
 
+              if (hasData) {
+                logger.info("importData: has data");
+                nextExecutionTime.add(Calendar.MINUTE,
+                        Integer.valueOf(env.getProperty("moduleImport.delay.hasData.minutes")));
+              } else {
+                logger.info("importData: has no data");
+                nextExecutionTime.add(Calendar.SECOND,
+                        Integer.valueOf(env.getProperty("moduleImport.delay.hasNoData.seconds")));
+              }
 
-    // if(env.acceptsProfiles(org.springframework.core.env.Profiles.of("test-big-data |
-    // local-test-big-data")))
-    // {
-    //
-    // }
-
-
-    // TagCounterService
-    // taskRegistrar.addTriggerTask(() -> tagCounterUpdater.updateTagCounter(), triggerContext -> {
-    //
-    // Calendar nextExecutionTime = new GregorianCalendar();
-    //
-    // nextExecutionTime.add(Calendar.SECOND,
-    // Integer.valueOf(env.getProperty("tagRecommendationCalculation.delay.seconds")));
-    // return nextExecutionTime.getTime();
-    // });
+              return nextExecutionTime.getTime();
+            });
   }
 }

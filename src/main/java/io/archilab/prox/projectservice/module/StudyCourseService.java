@@ -1,5 +1,6 @@
 package io.archilab.prox.projectservice.module;
 
+import io.archilab.prox.projectservice.project.ProjectRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,6 @@ public class StudyCourseService {
       StudyCourseRepository studyCourseRepository) {
     this.studyCourseClient = studyCourseClient;
     this.moduleRepository = moduleRepository;
-
     this.studyCourseRepository = studyCourseRepository;
   }
 
@@ -37,6 +37,8 @@ public class StudyCourseService {
 
   public void importStudyCourses() {
     this.logger.info("Start importing Study Courses");
+
+
 
     List<StudyCourse> studyCourses = this.studyCourseClient.getStudyCourses();
     for (StudyCourse studyCourse : studyCourses) {
