@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import io.archilab.prox.projectservice.project.Project;
+import io.archilab.prox.projectservice.project.ProjectRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,11 +20,13 @@ public class StudyCourseService {
   private final StudyCourseClient studyCourseClient;
   private final ModuleRepository moduleRepository;
   private final StudyCourseRepository studyCourseRepository;
+  private final ProjectRepository projectRepository;
 
   public StudyCourseService(StudyCourseClient studyCourseClient, ModuleRepository moduleRepository,
-      StudyCourseRepository studyCourseRepository) {
+      StudyCourseRepository studyCourseRepository, ProjectRepository projectRepository) {
     this.studyCourseClient = studyCourseClient;
     this.moduleRepository = moduleRepository;
+    this.projectRepository = projectRepository;
 
     this.studyCourseRepository = studyCourseRepository;
   }
@@ -34,6 +38,10 @@ public class StudyCourseService {
 
   public void importStudyCourses() {
     this.logger.info("Start importing Study Courses");
+
+    this.projectRepository.deleteAll();
+    this.moduleRepository.deleteAll();
+    this.studyCourseRepository.deleteAll();
 
     List<StudyCourse> studyCourses = this.studyCourseClient.getStudyCourses();
     for (StudyCourse studyCourse : studyCourses) {
