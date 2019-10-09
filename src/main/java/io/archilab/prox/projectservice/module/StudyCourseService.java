@@ -35,6 +35,9 @@ public class StudyCourseService {
   public void importStudyCourses() {
     this.logger.info("Start importing Study Courses");
 
+    this.studyCourseRepository.deleteAll();
+    this.moduleRepository.deleteAll();
+
     List<StudyCourse> studyCourses = this.studyCourseClient.getStudyCourses();
     for (StudyCourse studyCourse : studyCourses) {
       Optional<StudyCourse> existingStudyCourseOptional = this.studyCourseRepository
