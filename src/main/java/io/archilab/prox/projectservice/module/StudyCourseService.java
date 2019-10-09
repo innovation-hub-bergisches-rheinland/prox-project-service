@@ -20,13 +20,12 @@ public class StudyCourseService {
   private final StudyCourseClient studyCourseClient;
   private final ModuleRepository moduleRepository;
   private final StudyCourseRepository studyCourseRepository;
-  private final ProjectRepository projectRepository;
+
 
   public StudyCourseService(StudyCourseClient studyCourseClient, ModuleRepository moduleRepository,
-      StudyCourseRepository studyCourseRepository, ProjectRepository projectRepository) {
+      StudyCourseRepository studyCourseRepository) {
     this.studyCourseClient = studyCourseClient;
     this.moduleRepository = moduleRepository;
-    this.projectRepository = projectRepository;
 
     this.studyCourseRepository = studyCourseRepository;
   }
@@ -38,10 +37,6 @@ public class StudyCourseService {
 
   public void importStudyCourses() {
     this.logger.info("Start importing Study Courses");
-
-    this.projectRepository.deleteAll();
-    this.moduleRepository.deleteAll();
-    this.studyCourseRepository.deleteAll();
 
     List<StudyCourse> studyCourses = this.studyCourseClient.getStudyCourses();
     for (StudyCourse studyCourse : studyCourses) {

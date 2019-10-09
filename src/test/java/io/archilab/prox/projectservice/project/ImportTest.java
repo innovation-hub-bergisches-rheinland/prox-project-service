@@ -40,7 +40,7 @@ public class ImportTest {
 
         Assert.assertEquals(2, this.studyCourseRepository.count());
 
-        StudyCourseService service = new StudyCourseService(null, this.moduleRepository, this.studyCourseRepository, null);
+        StudyCourseService service = new StudyCourseService(null, this.moduleRepository, this.studyCourseRepository);
 
         service.cleanUp();
 
