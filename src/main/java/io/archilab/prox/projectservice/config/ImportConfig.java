@@ -1,23 +1,15 @@
 package io.archilab.prox.projectservice.config;
 
-import io.archilab.prox.projectservice.module.ModuleRepository;
-import io.archilab.prox.projectservice.module.StudyCourseRepository;
 import io.archilab.prox.projectservice.module.StudyCourseService;
-import io.archilab.prox.projectservice.project.Project;
-import io.archilab.prox.projectservice.project.ProjectRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
-import org.springframework.core.env.Profiles;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.ResourceProcessor;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.concurrent.Executor;
@@ -40,27 +32,13 @@ public class ImportConfig implements SchedulingConfigurer {
 
 
   @Autowired
-  private ModuleRepository moduleRepository;
-  @Autowired
-  private StudyCourseRepository studyCourseRepository;
-  @Autowired
-  private ProjectRepository projectRepository;
-
-  @Autowired
   private StudyCourseService studyCourseService;
 
   @Override
   public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
     taskRegistrar.setScheduler(taskExecutor());
 
-    taskRegistrar.addTriggerTask(() -> {
-              // studyCourseService.importStudyCourses();
-
-              this.projectRepository.deleteAll();
-              this.moduleRepository.deleteAll();
-              this.studyCourseRepository.deleteAll();
-
-            },
+    taskRegistrar.addTriggerTask(() -> studyCourseService.importStudyCourses(),
             triggerContext -> {
 
               Calendar nextExecutionTime = new GregorianCalendar();
