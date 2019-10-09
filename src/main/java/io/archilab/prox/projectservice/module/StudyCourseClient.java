@@ -2,7 +2,6 @@ package io.archilab.prox.projectservice.module;
 
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
-import ch.qos.logback.classic.Logger;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;

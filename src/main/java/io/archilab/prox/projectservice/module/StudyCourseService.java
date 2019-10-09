@@ -82,7 +82,7 @@ public class StudyCourseService {
       }
     }
 
-    this.cleanUp();
+    //this.cleanUp();
 
     this.logger.info("Finished import");
   }
