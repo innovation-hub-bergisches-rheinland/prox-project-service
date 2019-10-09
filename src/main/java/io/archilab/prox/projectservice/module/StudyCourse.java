@@ -50,8 +50,4 @@ public class StudyCourse extends AbstractEntity {
   public void addModule(Module module) {
     this.modules.add(module);
   }
-
-  public void removeModule(Module module) {
-    this.modules.remove(module);
-  }
 }

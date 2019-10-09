@@ -76,6 +76,21 @@ public class StudyCourseService {
         }
       }
     }
+
+    this.cleanUp();
+
     this.logger.info("Finished import");
+  }
+
+  public void cleanUp(){
+
+    // delete all study courses without modules
+    Iterable<StudyCourse> studyCourses = this.studyCourseRepository.findAll();
+
+    for (StudyCourse studyCourse : studyCourses){
+      if(studyCourse.getModules().size() == 0){
+        this.studyCourseRepository.delete(studyCourse);
+      }
+    }
   }
 }
