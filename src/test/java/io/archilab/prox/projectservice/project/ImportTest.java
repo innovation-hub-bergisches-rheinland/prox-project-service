@@ -13,41 +13,44 @@ import org.springframework.test.context.junit4.SpringRunner;
 @DataJpaTest
 public class ImportTest {
 
-    @Autowired
-    ModuleRepository moduleRepository;
+  @Autowired
+  ModuleRepository moduleRepository;
 
-    @Autowired
-    StudyCourseRepository studyCourseRepository;
+  @Autowired
+  StudyCourseRepository studyCourseRepository;
 
-    @Test
-    public void cleanup() {
+  @Test
+  public void cleanup() {
 
-        // Create Modules for Project
-        Module m1 = new Module(new ModuleName("Module 1"), ProjectType.UNDEFINED);
-        Module m2 = new Module(new ModuleName("Module 2"), ProjectType.UNDEFINED);
-        this.moduleRepository.save(m1);
-        this.moduleRepository.save(m2);
+    // Create Modules for Project
+    Module m1 = new Module(new ModuleName("Module 1"), ProjectType.UNDEFINED);
+    Module m2 = new Module(new ModuleName("Module 2"), ProjectType.UNDEFINED);
+    this.moduleRepository.save(m1);
+    this.moduleRepository.save(m2);
 
-        StudyCourse moduleStudyCourse = new StudyCourse(new StudyCourseName("SC"), AcademicDegree.MASTER);
-        moduleStudyCourse.addModule(m1);
-        moduleStudyCourse.addModule(m2);
-        this.studyCourseRepository.save(moduleStudyCourse);
+    StudyCourse moduleStudyCourse =
+        new StudyCourse(new StudyCourseName("SC"), AcademicDegree.MASTER);
+    moduleStudyCourse.addModule(m1);
+    moduleStudyCourse.addModule(m2);
+    this.studyCourseRepository.save(moduleStudyCourse);
 
-        Assert.assertEquals(1, this.studyCourseRepository.count());
+    Assert.assertEquals(1, this.studyCourseRepository.count());
 
-        StudyCourse emptyStudyCourse = new StudyCourse(new StudyCourseName("Empty"), AcademicDegree.MASTER);
-        this.studyCourseRepository.save(emptyStudyCourse);
+    StudyCourse emptyStudyCourse =
+        new StudyCourse(new StudyCourseName("Empty"), AcademicDegree.MASTER);
+    this.studyCourseRepository.save(emptyStudyCourse);
 
-        Assert.assertEquals(2, this.studyCourseRepository.count());
+    Assert.assertEquals(2, this.studyCourseRepository.count());
 
-        StudyCourseService service = new StudyCourseService(null, this.moduleRepository, this.studyCourseRepository);
+    StudyCourseService service =
+        new StudyCourseService(null, this.moduleRepository, this.studyCourseRepository);
 
-        service.cleanUp();
+    service.cleanUp();
 
-        Assert.assertEquals(1, this.studyCourseRepository.count());
+    Assert.assertEquals(1, this.studyCourseRepository.count());
 
-        StudyCourse result = this.studyCourseRepository.findById(moduleStudyCourse.getId()).get();
+    StudyCourse result = this.studyCourseRepository.findById(moduleStudyCourse.getId()).get();
 
-        Assert.assertNotNull(result);
-    }
+    Assert.assertNotNull(result);
+  }
 }

@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.concurrent.Executor;
@@ -38,31 +37,30 @@ public class ImportConfig implements SchedulingConfigurer {
   public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
     taskRegistrar.setScheduler(taskExecutor());
 
-    taskRegistrar.addTriggerTask(() -> studyCourseService.importStudyCourses(),
-            triggerContext -> {
+    taskRegistrar.addTriggerTask(() -> studyCourseService.importStudyCourses(), triggerContext -> {
 
-              Calendar nextExecutionTime = new GregorianCalendar();
+      Calendar nextExecutionTime = new GregorianCalendar();
 
-              if (initialStart) {
-                initialStart = false;
-                nextExecutionTime.add(Calendar.SECOND,
-                        Integer.valueOf(env.getProperty("moduleImport.delay.initial.seconds")));
-                return nextExecutionTime.getTime();
-              }
+      if (initialStart) {
+        initialStart = false;
+        nextExecutionTime.add(Calendar.SECOND,
+            Integer.valueOf(env.getProperty("moduleImport.delay.initial.seconds")));
+        return nextExecutionTime.getTime();
+      }
 
-              boolean hasData = studyCourseService.hasData();
+      boolean hasData = studyCourseService.hasData();
 
-              if (hasData) {
-                logger.info("importData: has data");
-                nextExecutionTime.add(Calendar.MINUTE,
-                        Integer.valueOf(env.getProperty("moduleImport.delay.hasData.minutes")));
-              } else {
-                logger.info("importData: has no data");
-                nextExecutionTime.add(Calendar.SECOND,
-                        Integer.valueOf(env.getProperty("moduleImport.delay.hasNoData.seconds")));
-              }
+      if (hasData) {
+        logger.info("importData: has data");
+        nextExecutionTime.add(Calendar.MINUTE,
+            Integer.valueOf(env.getProperty("moduleImport.delay.hasData.minutes")));
+      } else {
+        logger.info("importData: has no data");
+        nextExecutionTime.add(Calendar.SECOND,
+            Integer.valueOf(env.getProperty("moduleImport.delay.hasNoData.seconds")));
+      }
 
-              return nextExecutionTime.getTime();
-            });
+      return nextExecutionTime.getTime();
+    });
   }
 }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import io.archilab.prox.projectservice.project.Project;
 import io.archilab.prox.projectservice.project.ProjectRepository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -82,18 +81,18 @@ public class StudyCourseService {
       }
     }
 
-    //this.cleanUp();
+    // this.cleanUp();
 
     this.logger.info("Finished import");
   }
 
-  public void cleanUp(){
+  public void cleanUp() {
 
     // delete all study courses without modules
     Iterable<StudyCourse> studyCourses = this.studyCourseRepository.findAll();
 
-    for (StudyCourse studyCourse : studyCourses){
-      if(studyCourse.getModules().size() == 0){
+    for (StudyCourse studyCourse : studyCourses) {
+      if (studyCourse.getModules().size() == 0) {
         this.studyCourseRepository.delete(studyCourse);
       }
     }
