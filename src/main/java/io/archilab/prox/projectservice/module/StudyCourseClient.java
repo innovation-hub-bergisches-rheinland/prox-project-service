@@ -10,15 +10,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.Resources;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.client.Traverson;
-import org.springframework.hateoas.mvc.TypeReferences;
+import org.springframework.hateoas.server.core.TypeReferences.CollectionModelType;
+import org.springframework.hateoas.server.core.TypeReferences.PagedModelType;
 import org.springframework.stereotype.Component;
-
 
 @Component
 @Slf4j
@@ -28,7 +30,7 @@ public class StudyCourseClient {
       new String[] {"Master Thesis", "Masterarbeit", "Bachelor", "Praxisprojekt"};
   private final EurekaClient eurekaClient;
 
-  public StudyCourseClient(EurekaClient eurekaClient) {
+  public StudyCourseClient(@Qualifier("eurekaClient") EurekaClient eurekaClient) {
     this.eurekaClient = eurekaClient;
   }
 
@@ -66,36 +68,41 @@ public class StudyCourseClient {
         Map<String, Object> params = new HashMap<>();
         params.put("page", currentPage);
 
-        final PagedResources<Resource<StudyCourse>> pagedStudyCourseResources =
-            traverson.follow("self").withTemplateParameters(params)
-                .toObject(new TypeReferences.PagedResourcesType<Resource<StudyCourse>>() {});
+        final PagedModel<EntityModel<StudyCourse>> pagedStudyCourseResources =
+            traverson
+                .follow("self")
+                .withTemplateParameters(params)
+                .toObject(new PagedModelType<>() {});
 
         reachedLastPage =
             (++currentPage >= pagedStudyCourseResources.getMetadata().getTotalPages());
 
-        for (Resource<StudyCourse> studyCourseResource : pagedStudyCourseResources.getContent()) {
+        for (EntityModel<StudyCourse> studyCourseResource :
+            pagedStudyCourseResources.getContent()) {
           StudyCourse studyCourse = studyCourseResource.getContent();
-          Link modulesLink = studyCourseResource.getLink("modules");
+          Link modulesLink = studyCourseResource.getLink("modules").get();
 
           Traverson modulesTraverson = this.getTraversonInstance(modulesLink.getHref());
           if (traverson == null) {
             continue;
           }
 
-          final Resources<Resource<Module>> moduleResources = modulesTraverson.follow("self")
-              .toObject(new TypeReferences.ResourcesType<Resource<Module>>() {});
+          final CollectionModel<EntityModel<Module>> moduleResources =
+              modulesTraverson.follow("self").toObject(new CollectionModelType<>() {});
 
-          for (Resource<Module> moduleResource : moduleResources.getContent()) {
+          for (EntityModel<Module> moduleResource : moduleResources.getContent()) {
             Module module = moduleResource.getContent();
             if (this.isModuleFiltered(module)) {
               module.setExternalModuleID(
-                  new ExternalModuleID(new URL(moduleResource.getId().getHref())));
+                  new ExternalModuleID(
+                      new URL(moduleResource.getLink(IanaLinkRelations.SELF).get().getHref())));
               studyCourse.addModule(module);
             }
           }
 
           studyCourse.setExternalStudyCourseID(
-              new ExternalStudyCourseID(new URL(studyCourseResource.getId().getHref())));
+              new ExternalStudyCourseID(
+                  new URL(studyCourseResource.getLink(IanaLinkRelations.SELF).get().getHref())));
           studyCourses.add(studyCourse);
         }
       }
