@@ -5,8 +5,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,50 +14,48 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
 @Configuration
+@Slf4j
 public class ImportConfig implements SchedulingConfigurer {
-
-  private final Logger logger = LoggerFactory.getLogger(StudyCourseService.class);
 
   @Autowired private Environment env;
 
   private boolean initialStart = true;
+  @Autowired private StudyCourseService studyCourseService;
 
   @Bean
   public Executor taskExecutor() {
     return Executors.newScheduledThreadPool(100);
   }
 
-  @Autowired private StudyCourseService studyCourseService;
-
   @Override
   public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-    taskRegistrar.setScheduler(taskExecutor());
+    taskRegistrar.setScheduler(this.taskExecutor());
 
     taskRegistrar.addTriggerTask(
-        () -> studyCourseService.importStudyCourses(),
+        () -> this.studyCourseService.importStudyCourses(),
         triggerContext -> {
           Calendar nextExecutionTime = new GregorianCalendar();
 
-          if (initialStart) {
-            initialStart = false;
+          if (this.initialStart) {
+            this.initialStart = false;
             nextExecutionTime.add(
                 Calendar.SECOND,
-                Integer.valueOf(env.getProperty("moduleImport.delay.initial.seconds")));
+                Integer.valueOf(this.env.getProperty("moduleImport.delay.initial.seconds")));
             return nextExecutionTime.getTime();
           }
 
-          boolean hasData = studyCourseService.hasData();
+          boolean hasData = this.studyCourseService.hasData();
 
           if (hasData) {
-            logger.info("importData: has data");
+            ImportConfig.log.info("importData: has data");
             nextExecutionTime.add(
                 Calendar.MINUTE,
-                Integer.valueOf(env.getProperty("moduleImport.delay.hasData.minutes")));
+                Integer.valueOf(this.env.getProperty("moduleImport.delay.hasData.minutes")));
           } else {
-            logger.info("importData: has no data");
+            ImportConfig.log.info("importData: has no data");
             nextExecutionTime.add(
                 Calendar.SECOND,
-                Integer.valueOf(env.getProperty("moduleImport.delay.hasNoData.seconds")));
+                Integer.valueOf(this.env.getProperty("moduleImport.delay.hasNoData.seconds")));
           }
 
           return nextExecutionTime.getTime();

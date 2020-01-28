@@ -6,8 +6,6 @@ import io.archilab.prox.projectservice.project.Project;
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.Type;
 import javax.servlet.http.HttpServletRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,22 +21,17 @@ import org.springframework.web.util.UriComponents;
 @Configuration
 public class RestConfig implements RepositoryRestConfigurer {
 
+  private final EurekaClient eurekaClient;
   @Autowired private EntityManager entityManager;
-
-  private final Logger log = LoggerFactory.getLogger(RestConfig.class);
-
   // @Autowired
   private Environment env;
-
-  private final EurekaClient eurekaClient;
-
   private String portLokal = "";
 
   public RestConfig(EurekaClient eurekaClient, Environment env) {
     this.eurekaClient = eurekaClient;
     this.env = env;
 
-    portLokal = env.getProperty("tagServiceLink.port");
+    this.portLokal = env.getProperty("tagServiceLink.port");
 
     // InstanceInfo instance = serviceUrl("tag-service");
     // portLokal = ""+instance.getPort();
@@ -57,7 +50,7 @@ public class RestConfig implements RepositoryRestConfigurer {
   public RepresentationModelProcessor<EntityModel<Project>> personProcessor(
       HttpServletRequest request) {
 
-    return new RepresentationModelProcessor<EntityModel<Project>>() {
+    return new RepresentationModelProcessor<>() {
 
       @Override
       public EntityModel<Project> process(EntityModel<Project> resource) {
@@ -74,8 +67,9 @@ public class RestConfig implements RepositoryRestConfigurer {
         if (request.getPort() == 8081) {
           serverPort = ":" + request.getPort();
         } else if (request.getPort() == 9002) {
-          serverPort = ":" + portLokal;
-        } else {; // if no port is given, then no need to change port or add in uncessary ":"
+          serverPort = ":" + RestConfig.this.portLokal;
+        } else {
+          // if no port is given, then no need to change port or add in uncessary ":"
         }
 
         resource.add(
@@ -84,7 +78,7 @@ public class RestConfig implements RepositoryRestConfigurer {
                     + serverName
                     + serverPort
                     + "/"
-                    + env.getProperty("tagServiceLink.tag-collection")
+                    + RestConfig.this.env.getProperty("tagServiceLink.tag-collection")
                     + "/"
                     + projectID
                     + "/tags",

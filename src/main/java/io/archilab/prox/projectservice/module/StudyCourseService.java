@@ -27,7 +27,7 @@ public class StudyCourseService {
   }
 
   public boolean hasData() {
-    return studyCourseRepository.count() > 0;
+    return this.studyCourseRepository.count() > 0;
   }
 
   public void importStudyCourses() {
@@ -42,13 +42,11 @@ public class StudyCourseService {
 
       if (existingStudyCourseOptional.isPresent()) {
         this.logger.info(
-            "StudyCourse with ID " + studyCourse.getExternalStudyCourseID() + " already exists.");
+            "StudyCourse with ID {} already exists.", studyCourse.getExternalStudyCourseID());
         savedStudyCourse = existingStudyCourseOptional.get();
       } else {
         this.logger.info(
-            "StudyCourse with ID "
-                + studyCourse.getExternalStudyCourseID()
-                + " does not exist yet.");
+            "StudyCourse with ID {} does not exist yet.", studyCourse.getExternalStudyCourseID());
         savedStudyCourse = new StudyCourse();
       }
 
@@ -63,15 +61,14 @@ public class StudyCourseService {
             this.moduleRepository.findByExternalModuleID(module.getExternalModuleID());
 
         if (existingModuleOptional.isPresent()) {
-          this.logger.info("Module with ID " + module.getExternalModuleID() + " already exists.");
+          this.logger.info("Module with ID {} already exists.", module.getExternalModuleID());
           Module existingModule = existingModuleOptional.get();
           existingModule.setName(module.getName());
           existingModule.setProjectType(module.getProjectType());
           existingModule.setStudyCourse(savedStudyCourse);
           this.moduleRepository.save(existingModule);
         } else {
-          this.logger.info(
-              "Module with ID " + module.getExternalModuleID() + " does not exist yet.");
+          this.logger.info("Module with ID {} does not exist yet.", module.getExternalModuleID());
           module.setStudyCourse(savedStudyCourse);
           this.moduleRepository.save(module);
         }

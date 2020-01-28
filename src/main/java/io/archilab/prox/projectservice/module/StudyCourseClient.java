@@ -112,8 +112,7 @@ public class StudyCourseClient {
         }
       }
     } catch (Exception e) {
-      e.printStackTrace();
-      StudyCourseClient.log.error("Error retrieving modules");
+      StudyCourseClient.log.error("Error retrieving modules", e);
     }
 
     return studyCourses;
