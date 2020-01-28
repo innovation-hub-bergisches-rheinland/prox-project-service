@@ -1,12 +1,9 @@
 package io.archilab.prox.projectservice.config;
 
-import com.netflix.appinfo.InstanceInfo;
-import com.netflix.discovery.EurekaClient;
 import io.archilab.prox.projectservice.project.Project;
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.Type;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -21,16 +18,14 @@ import org.springframework.web.util.UriComponents;
 @Configuration
 public class RestConfig implements RepositoryRestConfigurer {
 
-  private final EurekaClient eurekaClient;
-  @Autowired private EntityManager entityManager;
-  // @Autowired
+  private final EntityManager entityManager;
   private Environment env;
   private String portLokal = "";
 
-  public RestConfig(EurekaClient eurekaClient, Environment env) {
-    this.eurekaClient = eurekaClient;
+  public RestConfig(Environment env, EntityManager entityManager) {
     this.env = env;
     this.portLokal = env.getProperty("tagServiceLink.port");
+    this.entityManager = entityManager;
   }
 
   @Override
@@ -77,11 +72,5 @@ public class RestConfig implements RepositoryRestConfigurer {
         return resource;
       }
     };
-  }
-
-  private InstanceInfo serviceUrl(String service) {
-    InstanceInfo instance = this.eurekaClient.getNextServerFromEureka(service, false);
-
-    return instance;
   }
 }

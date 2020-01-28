@@ -26,8 +26,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class StudyCourseClient {
 
-  private static final String[] filteredModuleNames =
-      new String[] {"Master Thesis", "Masterarbeit", "Bachelor", "Praxisprojekt"};
   private static final ProjectType[] filteredProjectTypes =
       new ProjectType[] {
         ProjectType.PP, ProjectType.BA, ProjectType.MA,

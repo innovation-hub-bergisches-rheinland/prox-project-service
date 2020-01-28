@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
   @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+  public void configureGlobal(AuthenticationManagerBuilder auth) {
     KeycloakAuthenticationProvider keycloakAuthenticationProvider =
         this.keycloakAuthenticationProvider();
     keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
