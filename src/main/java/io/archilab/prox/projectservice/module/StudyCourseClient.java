@@ -28,6 +28,10 @@ public class StudyCourseClient {
 
   private static final String[] filteredModuleNames =
       new String[] {"Master Thesis", "Masterarbeit", "Bachelor", "Praxisprojekt"};
+  private static final ProjectType[] filteredProjectTypes =
+      new ProjectType[] {
+        ProjectType.PP, ProjectType.BA, ProjectType.MA,
+      };
   private final EurekaClient eurekaClient;
 
   public StudyCourseClient(@Qualifier("eurekaClient") EurekaClient eurekaClient) {
@@ -65,6 +69,7 @@ public class StudyCourseClient {
       boolean reachedLastPage = false;
 
       while (!reachedLastPage) {
+
         Map<String, Object> params = new HashMap<>();
         params.put("page", currentPage);
 
@@ -115,10 +120,12 @@ public class StudyCourseClient {
   }
 
   private boolean isModuleFiltered(Module module) {
-    String moduleName = module.getName().getName();
+    // String moduleName = module.getName().getName();
+    ProjectType moduleProjectType = module.getProjectType();
 
-    for (String filteredModuleName : StudyCourseClient.filteredModuleNames) {
-      if (moduleName.toLowerCase().contains(filteredModuleName.toLowerCase())) {
+    for (ProjectType filteredProjectTypesList : StudyCourseClient.filteredProjectTypes) {
+
+      if (moduleProjectType.compareTo(filteredProjectTypesList) == 0) {
         return true;
       }
     }

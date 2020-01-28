@@ -1,0 +1,5 @@
+testAmount: 500
+
+spring:
+  profiles:
+    include: local

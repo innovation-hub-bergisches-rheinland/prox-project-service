@@ -48,15 +48,37 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     super.configure(http);
-    http.csrf().disable().authorizeRequests()
-        .antMatchers(HttpMethod.GET, "/projects**").permitAll()
-        .antMatchers(HttpMethod.GET, "/projects/**").permitAll()
-        .antMatchers("/projects/**").hasRole("professor")
-        .antMatchers(HttpMethod.GET, "/projectStudyCourses/**").permitAll()
-        .antMatchers("/projectStudyCourses/**").denyAll()
-        .antMatchers(HttpMethod.GET, "/projectModules/**").permitAll()
-        .antMatchers("/projectModules/**").denyAll().antMatchers("/profile/**").permitAll()
-        .anyRequest().denyAll();
+    http.csrf()
+        .disable()
+        .authorizeRequests()
+        .antMatchers(HttpMethod.GET, "/projects/**")
+        .permitAll()
+        .antMatchers(HttpMethod.HEAD, "/projects/**")
+        .permitAll()
+        .antMatchers(HttpMethod.OPTIONS, "/projects/**")
+        .permitAll()
+        .antMatchers("/projects/**")
+        .hasRole("professor")
+        .antMatchers(HttpMethod.GET, "/projectStudyCourses/**")
+        .permitAll()
+        .antMatchers(HttpMethod.HEAD, "/projectStudyCourses/**")
+        .permitAll()
+        .antMatchers(HttpMethod.OPTIONS, "/projprojectStudyCoursesects/**")
+        .permitAll()
+        .antMatchers("/projectStudyCourses/**")
+        .denyAll()
+        .antMatchers(HttpMethod.GET, "/projectModules/**")
+        .permitAll()
+        .antMatchers(HttpMethod.HEAD, "/projectModules/**")
+        .permitAll()
+        .antMatchers(HttpMethod.OPTIONS, "/projectModules/**")
+        .permitAll()
+        .antMatchers("/projectModules/**")
+        .denyAll()
+        .antMatchers("/profile/**")
+        .permitAll()
+        .anyRequest()
+        .denyAll();
   }
 
   // @Bean

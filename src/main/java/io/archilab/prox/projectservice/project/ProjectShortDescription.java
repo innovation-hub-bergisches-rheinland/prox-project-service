@@ -11,24 +11,24 @@ import lombok.Setter;
 @Data
 @Setter(AccessLevel.NONE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProjectDescription {
+public class ProjectShortDescription {
 
   private static final int MAX_LENGTH = 10000;
 
   @Column(length = MAX_LENGTH)
-  private String description;
+  private String shortDescription;
 
-  public ProjectDescription(String description) {
-    if (!ProjectDescription.isValid(description)) {
+  public ProjectShortDescription(String shortDescription) {
+    if (!ProjectShortDescription.isValid(shortDescription)) {
       throw new IllegalArgumentException(
           String.format(
-              "Name %s exceeded maximum number of %d allowed characters",
-              description, ProjectDescription.MAX_LENGTH));
+              "ShortDescription %s exceeded maximum number of %d allowed characters",
+              shortDescription, ProjectShortDescription.MAX_LENGTH));
     }
-    this.description = description;
+    this.shortDescription = shortDescription;
   }
 
   public static boolean isValid(String name) {
-    return name != null && name.length() <= ProjectDescription.MAX_LENGTH;
+    return name != null && name.length() <= ProjectShortDescription.MAX_LENGTH;
   }
 }
