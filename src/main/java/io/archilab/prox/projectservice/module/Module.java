@@ -22,9 +22,6 @@ public class Module extends AbstractEntity {
 
   private ProjectType projectType;
 
-  // @ManyToOne(fetch = FetchType.LAZY, optional = true, cascade = {
-  // javax.persistence.CascadeType.MERGE, javax.persistence.CascadeType.PERSIST })
-  // @JoinColumn(name = "studyCourse_id", nullable = true)
   @ManyToOne private StudyCourse studyCourse;
 
   public Module(ModuleName name, ProjectType projectType) {

@@ -30,12 +30,7 @@ public class RestConfig implements RepositoryRestConfigurer {
   public RestConfig(EurekaClient eurekaClient, Environment env) {
     this.eurekaClient = eurekaClient;
     this.env = env;
-
     this.portLokal = env.getProperty("tagServiceLink.port");
-
-    // InstanceInfo instance = serviceUrl("tag-service");
-    // portLokal = ""+instance.getPort();
-    // log.info(portLokal);
   }
 
   @Override
@@ -56,20 +51,16 @@ public class RestConfig implements RepositoryRestConfigurer {
       public EntityModel<Project> process(EntityModel<Project> resource) {
 
         String projectID = resource.getContent().getId().toString();
-        // log.info(request.toString());
 
         UriComponents request = ServletUriComponentsBuilder.fromCurrentRequest().build();
         String scheme = request.getScheme() + "://";
         String serverName = request.getHost();
         String serverPort = "";
-        // serverPort = (request.getPort() == 80) ? "" : ":" + request.getPort();
 
         if (request.getPort() == 8081) {
           serverPort = ":" + request.getPort();
         } else if (request.getPort() == 9002) {
           serverPort = ":" + RestConfig.this.portLokal;
-        } else {
-          // if no port is given, then no need to change port or add in uncessary ":"
         }
 
         resource.add(

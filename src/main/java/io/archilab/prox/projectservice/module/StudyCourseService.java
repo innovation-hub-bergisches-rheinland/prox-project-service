@@ -75,8 +75,6 @@ public class StudyCourseService {
       }
     }
 
-    // this.cleanUp();
-
     this.logger.info("Finished import");
   }
 

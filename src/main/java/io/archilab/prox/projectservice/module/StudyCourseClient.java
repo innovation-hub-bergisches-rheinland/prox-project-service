@@ -119,7 +119,6 @@ public class StudyCourseClient {
   }
 
   private boolean isModuleFiltered(Module module) {
-    // String moduleName = module.getName().getName();
     ProjectType moduleProjectType = module.getProjectType();
 
     for (ProjectType filteredProjectTypesList : StudyCourseClient.filteredProjectTypes) {
@@ -131,22 +130,4 @@ public class StudyCourseClient {
 
     return false;
   }
-
-  /*
-   * public List<StudyCourse> getStudyCourses() { // Test-method which creates studyCourses try {
-   * List<StudyCourse> studyCourses = new ArrayList<>();
-   *
-   * int coursesC = 50; int modulesC = 10; int moduleID = 0; for (int i = 0; i < coursesC; i++) {
-   * StudyCourse sc = new StudyCourse(); sc.setAcademicDegree(AcademicDegree.MASTER);
-   * sc.setExternalStudyCourseID(new ExternalStudyCourseID(new
-   * URL("http://localhost:9002/studyCourses/" + i))); sc.setName(new StudyCourseName("Studiengang "
-   * + i));
-   *
-   * List<Module> modules = new ArrayList<>(); for (int j = 0; j < modulesC; j++) { Module module =
-   * new Module(); module.setExternalModuleID(new ExternalModuleID(new
-   * URL("http://localhost:9002/modules/" + moduleID))); module.setName(new ModuleName("Modul " +
-   * moduleID)); moduleID++; modules.add(module); } sc.setModules(modules); studyCourses.add(sc); }
-   *
-   * return studyCourses; } catch (Exception e) { return new ArrayList<>(); } }
-   */
 }
