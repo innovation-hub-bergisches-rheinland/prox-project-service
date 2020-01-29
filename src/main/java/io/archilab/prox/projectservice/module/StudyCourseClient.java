@@ -83,7 +83,7 @@ public class StudyCourseClient {
         for (EntityModel<StudyCourse> studyCourseResource :
             pagedStudyCourseResources.getContent()) {
           StudyCourse studyCourse = studyCourseResource.getContent();
-          Link modulesLink = studyCourseResource.getLink("modules").get();
+          Link modulesLink = studyCourseResource.getLink("modules").orElseThrow();
 
           Traverson modulesTraverson = this.getTraversonInstance(modulesLink.getHref());
           if (traverson == null) {
@@ -98,14 +98,19 @@ public class StudyCourseClient {
             if (this.isModuleFiltered(module)) {
               module.setExternalModuleID(
                   new ExternalModuleID(
-                      new URL(moduleResource.getLink(IanaLinkRelations.SELF).get().getHref())));
+                      new URL(
+                          moduleResource.getLink(IanaLinkRelations.SELF).orElseThrow().getHref())));
               studyCourse.addModule(module);
             }
           }
 
           studyCourse.setExternalStudyCourseID(
               new ExternalStudyCourseID(
-                  new URL(studyCourseResource.getLink(IanaLinkRelations.SELF).get().getHref())));
+                  new URL(
+                      studyCourseResource
+                          .getLink(IanaLinkRelations.SELF)
+                          .orElseThrow()
+                          .getHref())));
           studyCourses.add(studyCourse);
         }
       }
