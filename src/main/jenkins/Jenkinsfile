@@ -6,9 +6,9 @@ node {
     def image
     def tag
 
-    def server = 'tcp://10.10.10.43:2376'
-    def certs = 'prox-gp-ws2019-certs'
-    def tagPrefix = '-gp-ws2019'
+    def server = 'tcp://10.10.10.42:2376'
+    def certs = 'prox-dev-certs'
+    def tagPrefix = '-dev'
 
     stage('Checkout') {
         checkout scm
@@ -42,7 +42,7 @@ node {
 
     stage('Deploy') {
         docker.withServer(server, certs) {
-    
+
 
             docker.withRegistry('https://docker.nexus.archi-lab.io', 'archilab-nexus-jenkins') {
                 sh "env REPOSITORY=${repository} IMAGE=${image} TAG=${tag} \
