@@ -84,7 +84,7 @@ public class StudyCourseService {
     Iterable<StudyCourse> studyCourses = this.studyCourseRepository.findAll();
 
     for (StudyCourse studyCourse : studyCourses) {
-      if (studyCourse.getModules().size() == 0) {
+      if (studyCourse.getModules().isEmpty()) {
         this.studyCourseRepository.delete(studyCourse);
       }
     }
