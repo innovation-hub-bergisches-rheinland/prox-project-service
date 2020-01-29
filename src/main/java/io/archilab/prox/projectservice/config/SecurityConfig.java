@@ -19,6 +19,13 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @KeycloakConfiguration
 class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
+  private static final String PROJECTS_PATTERN = "/projects/**";
+  private static final String PROJECT_STUDY_COURSES_PATTERN = "/projectStudyCourses/**";
+  private static final String PROJECT_MODULES_PATTERN = "/projectModules/**";
+  private static final String PROJPROJECT_STUDY_COURSESECTS_PATTERN =
+      "/projprojectStudyCoursesects/**";
+  private static final String PROFILE_PATTERN = "/profile/**";
+
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) {
     KeycloakAuthenticationProvider keycloakAuthenticationProvider =
@@ -51,31 +58,31 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     http.csrf()
         .disable()
         .authorizeRequests()
-        .antMatchers(HttpMethod.GET, "/projects/**")
+        .antMatchers(HttpMethod.GET, SecurityConfig.PROJECTS_PATTERN)
         .permitAll()
-        .antMatchers(HttpMethod.HEAD, "/projects/**")
+        .antMatchers(HttpMethod.HEAD, SecurityConfig.PROJECTS_PATTERN)
         .permitAll()
-        .antMatchers(HttpMethod.OPTIONS, "/projects/**")
+        .antMatchers(HttpMethod.OPTIONS, SecurityConfig.PROJECTS_PATTERN)
         .permitAll()
-        .antMatchers("/projects/**")
+        .antMatchers(SecurityConfig.PROJECTS_PATTERN)
         .hasRole("professor")
-        .antMatchers(HttpMethod.GET, "/projectStudyCourses/**")
+        .antMatchers(HttpMethod.GET, SecurityConfig.PROJECT_STUDY_COURSES_PATTERN)
         .permitAll()
-        .antMatchers(HttpMethod.HEAD, "/projectStudyCourses/**")
+        .antMatchers(HttpMethod.HEAD, SecurityConfig.PROJECT_STUDY_COURSES_PATTERN)
         .permitAll()
-        .antMatchers(HttpMethod.OPTIONS, "/projprojectStudyCoursesects/**")
+        .antMatchers(HttpMethod.OPTIONS, SecurityConfig.PROJPROJECT_STUDY_COURSESECTS_PATTERN)
         .permitAll()
-        .antMatchers("/projectStudyCourses/**")
+        .antMatchers(SecurityConfig.PROJECT_STUDY_COURSES_PATTERN)
         .denyAll()
-        .antMatchers(HttpMethod.GET, "/projectModules/**")
+        .antMatchers(HttpMethod.GET, SecurityConfig.PROJECT_MODULES_PATTERN)
         .permitAll()
-        .antMatchers(HttpMethod.HEAD, "/projectModules/**")
+        .antMatchers(HttpMethod.HEAD, SecurityConfig.PROJECT_MODULES_PATTERN)
         .permitAll()
-        .antMatchers(HttpMethod.OPTIONS, "/projectModules/**")
+        .antMatchers(HttpMethod.OPTIONS, SecurityConfig.PROJECT_MODULES_PATTERN)
         .permitAll()
-        .antMatchers("/projectModules/**")
+        .antMatchers(SecurityConfig.PROJECT_MODULES_PATTERN)
         .denyAll()
-        .antMatchers("/profile/**")
+        .antMatchers(SecurityConfig.PROFILE_PATTERN)
         .permitAll()
         .anyRequest()
         .denyAll();
