@@ -38,8 +38,7 @@ public class StudyCourseClient {
 
   private String serviceUrl() {
     InstanceInfo instance = this.eurekaClient.getNextServerFromEureka("module-service", false);
-    String url = instance.getHomePageUrl() + "studyCourses";
-    return url;
+    return instance.getHomePageUrl() + "studyCourses";
   }
 
   private Traverson getTraversonInstance(String url) {
