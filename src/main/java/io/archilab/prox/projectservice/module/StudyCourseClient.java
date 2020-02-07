@@ -55,10 +55,6 @@ public class StudyCourseClient {
   public List<StudyCourse> getStudyCourses() {
     Traverson traverson = this.getTraversonInstance(this.serviceUrl());
 
-    if (traverson == null) {
-      return new ArrayList<>();
-    }
-
     List<StudyCourse> studyCourses = new ArrayList<>();
 
     try {
@@ -85,9 +81,6 @@ public class StudyCourseClient {
           Link modulesLink = studyCourseResource.getLink("modules").orElseThrow();
 
           Traverson modulesTraverson = this.getTraversonInstance(modulesLink.getHref());
-          if (traverson == null) {
-            continue;
-          }
 
           final CollectionModel<EntityModel<Module>> moduleResources =
               modulesTraverson.follow("self").toObject(new CollectionModelType<>() {});
