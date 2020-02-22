@@ -19,8 +19,15 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @KeycloakConfiguration
 class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
+  private static final String PROJECTS_PATTERN = "/projects/**";
+  private static final String PROJECT_STUDY_COURSES_PATTERN = "/projectStudyCourses/**";
+  private static final String PROJECT_MODULES_PATTERN = "/projectModules/**";
+  private static final String PROJPROJECT_STUDY_COURSESECTS_PATTERN =
+      "/projprojectStudyCoursesects/**";
+  private static final String PROFILE_PATTERN = "/profile/**";
+
   @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+  public void configureGlobal(AuthenticationManagerBuilder auth) {
     KeycloakAuthenticationProvider keycloakAuthenticationProvider =
         this.keycloakAuthenticationProvider();
     keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
@@ -41,37 +48,43 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
   }
 
   @Bean
-  public KeycloakConfigResolver KeycloakConfigResolver() {
+  public KeycloakConfigResolver keycloakConfigResolver() {
     return new KeycloakSpringBootConfigResolver();
   }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     super.configure(http);
-    http.csrf().disable().authorizeRequests()
-        .antMatchers(HttpMethod.GET, "/projects**").permitAll()
-        .antMatchers(HttpMethod.GET, "/projects/**").permitAll()
-        .antMatchers("/projects/**").hasRole("professor")
-        .antMatchers(HttpMethod.GET, "/projectStudyCourses/**").permitAll()
-        .antMatchers("/projectStudyCourses/**").denyAll()
-        .antMatchers(HttpMethod.GET, "/projectModules/**").permitAll()
-        .antMatchers("/projectModules/**").denyAll().antMatchers("/profile/**").permitAll()
-        .anyRequest().denyAll();
+    http.csrf()
+        .disable()
+        .authorizeRequests()
+        .antMatchers(HttpMethod.GET, SecurityConfig.PROJECTS_PATTERN)
+        .permitAll()
+        .antMatchers(HttpMethod.HEAD, SecurityConfig.PROJECTS_PATTERN)
+        .permitAll()
+        .antMatchers(HttpMethod.OPTIONS, SecurityConfig.PROJECTS_PATTERN)
+        .permitAll()
+        .antMatchers(SecurityConfig.PROJECTS_PATTERN)
+        .hasRole("professor")
+        .antMatchers(HttpMethod.GET, SecurityConfig.PROJECT_STUDY_COURSES_PATTERN)
+        .permitAll()
+        .antMatchers(HttpMethod.HEAD, SecurityConfig.PROJECT_STUDY_COURSES_PATTERN)
+        .permitAll()
+        .antMatchers(HttpMethod.OPTIONS, SecurityConfig.PROJPROJECT_STUDY_COURSESECTS_PATTERN)
+        .permitAll()
+        .antMatchers(SecurityConfig.PROJECT_STUDY_COURSES_PATTERN)
+        .denyAll()
+        .antMatchers(HttpMethod.GET, SecurityConfig.PROJECT_MODULES_PATTERN)
+        .permitAll()
+        .antMatchers(HttpMethod.HEAD, SecurityConfig.PROJECT_MODULES_PATTERN)
+        .permitAll()
+        .antMatchers(HttpMethod.OPTIONS, SecurityConfig.PROJECT_MODULES_PATTERN)
+        .permitAll()
+        .antMatchers(SecurityConfig.PROJECT_MODULES_PATTERN)
+        .denyAll()
+        .antMatchers(SecurityConfig.PROFILE_PATTERN)
+        .permitAll()
+        .anyRequest()
+        .denyAll();
   }
-
-  // @Bean
-  // public FilterRegistrationBean keycloakAuthenticationProcessingFilterRegistrationBean(
-  // KeycloakAuthenticationProcessingFilter filter) {
-  // FilterRegistrationBean registrationBean = new FilterRegistrationBean(filter);
-  // registrationBean.setEnabled(false);
-  // return registrationBean;
-  // }
-  //
-  // @Bean
-  // public FilterRegistrationBean keycloakPreAuthActionsFilterRegistrationBean(
-  // KeycloakPreAuthActionsFilter filter) {
-  // FilterRegistrationBean registrationBean = new FilterRegistrationBean(filter);
-  // registrationBean.setEnabled(false);
-  // return registrationBean;
-  // }
 }

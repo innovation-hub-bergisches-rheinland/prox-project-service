@@ -26,36 +26,23 @@ import org.hibernate.annotations.UpdateTimestamp;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Project extends AbstractEntity {
 
-  @Setter
-  @JsonUnwrapped
-  private ProjectName name;
+  @Setter @JsonUnwrapped private ProjectName name;
 
-  @Setter
-  @JsonUnwrapped
-  private ProjectDescription description;
+  @Setter @JsonUnwrapped private ProjectDescription description;
 
-  @Setter
-  private ProjectStatus status;
+  @Setter @JsonUnwrapped private ProjectShortDescription shortDescription;
 
-  @NotNull
-  @Setter
-  @JsonUnwrapped
-  private CreatorID creatorID;
+  @Setter @JsonUnwrapped private ProjectRequirement requirement;
 
-  @NotNull
-  @Setter
-  @JsonUnwrapped
-  private CreatorName creatorName;
+  @Setter private ProjectStatus status;
 
-  @NotNull
-  @Setter
-  @JsonUnwrapped
-  private SupervisorName supervisorName;
+  @NotNull @Setter @JsonUnwrapped private CreatorID creatorID;
 
+  @NotNull @Setter @JsonUnwrapped private CreatorName creatorName;
 
-  @Getter
-  @ManyToMany
-  private List<Module> modules = new ArrayList<>();
+  @NotNull @Setter @JsonUnwrapped private SupervisorName supervisorName;
+
+  @Getter @ManyToMany private List<Module> modules = new ArrayList<>();
 
   @Basic
   @Temporal(TemporalType.TIMESTAMP)
@@ -68,16 +55,43 @@ public class Project extends AbstractEntity {
   @UpdateTimestamp
   private java.util.Date modified;
 
-
-  public Project(ProjectName name, ProjectDescription description, ProjectStatus status,
-      @NotNull CreatorID creatorID, @NotNull CreatorName creatorName,
-      @NotNull SupervisorName supervisorName, List<Module> modules) {
+  public Project(
+      ProjectName name,
+      ProjectShortDescription shortDescription,
+      ProjectDescription description,
+      ProjectStatus status,
+      ProjectRequirement requirement,
+      @NotNull CreatorID creatorID,
+      @NotNull CreatorName creatorName,
+      @NotNull SupervisorName supervisorName,
+      List<Module> modules) {
+    this.requirement = requirement;
     this.name = name;
+    this.shortDescription = shortDescription;
     this.description = description;
     this.status = status;
     this.creatorID = creatorID;
     this.creatorName = creatorName;
     this.supervisorName = supervisorName;
     this.modules = modules;
+  }
+
+  public Project(
+      ProjectName name,
+      ProjectShortDescription shortDescription,
+      ProjectDescription description,
+      ProjectStatus status,
+      ProjectRequirement requirement,
+      @NotNull CreatorID creatorID,
+      @NotNull CreatorName creatorName,
+      @NotNull SupervisorName supervisorName) {
+    this.requirement = requirement;
+    this.name = name;
+    this.shortDescription = shortDescription;
+    this.description = description;
+    this.status = status;
+    this.creatorID = creatorID;
+    this.creatorName = creatorName;
+    this.supervisorName = supervisorName;
   }
 }

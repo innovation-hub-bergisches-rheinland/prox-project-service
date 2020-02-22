@@ -1,10 +1,12 @@
 package io.archilab.prox.projectservice;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import io.archilab.prox.projectservice.module.AcademicDegree;
 import io.archilab.prox.projectservice.module.Module;
 import io.archilab.prox.projectservice.module.ModuleName;
 import io.archilab.prox.projectservice.module.ModuleRepository;
+import io.archilab.prox.projectservice.module.ProjectType;
 import io.archilab.prox.projectservice.module.StudyCourse;
 import io.archilab.prox.projectservice.module.StudyCourseName;
 import io.archilab.prox.projectservice.module.StudyCourseRepository;
@@ -14,6 +16,8 @@ import io.archilab.prox.projectservice.project.Project;
 import io.archilab.prox.projectservice.project.ProjectDescription;
 import io.archilab.prox.projectservice.project.ProjectName;
 import io.archilab.prox.projectservice.project.ProjectRepository;
+import io.archilab.prox.projectservice.project.ProjectRequirement;
+import io.archilab.prox.projectservice.project.ProjectShortDescription;
 import io.archilab.prox.projectservice.project.ProjectStatus;
 import io.archilab.prox.projectservice.project.SupervisorName;
 import java.util.ArrayList;
@@ -28,14 +32,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 @DataJpaTest
 public class DatabaseTest {
 
-  @Autowired
-  ProjectRepository projectRepository;
+  @Autowired ProjectRepository projectRepository;
 
-  @Autowired
-  ModuleRepository moduleRepository;
+  @Autowired ModuleRepository moduleRepository;
 
-  @Autowired
-  StudyCourseRepository studyCourseRepository;
+  @Autowired StudyCourseRepository studyCourseRepository;
 
   @Test
   public void creation() {
@@ -46,10 +47,12 @@ public class DatabaseTest {
     StudyCourse informationSystems =
         new StudyCourse(new StudyCourseName("Information Systems"), AcademicDegree.MASTER);
 
-    Module am = new Module(new ModuleName("Anforderungsmanagement"));
-    Module fae = new Module(new ModuleName("Fachspezifischer Architekturentwurf"));
-    Module bi = new Module(new ModuleName("Business Intelligence"));
-    Module eam = new Module(new ModuleName("Enterprise Architecture Management"));
+    Module am = new Module(new ModuleName("Anforderungsmanagement"), ProjectType.UNDEFINED);
+    Module fae =
+        new Module(new ModuleName("Fachspezifischer Architekturentwurf"), ProjectType.UNDEFINED);
+    Module bi = new Module(new ModuleName("Business Intelligence"), ProjectType.UNDEFINED);
+    Module eam =
+        new Module(new ModuleName("Enterprise Architecture Management"), ProjectType.UNDEFINED);
 
     this.moduleRepository.save(am);
     this.moduleRepository.save(fae);
@@ -66,34 +69,54 @@ public class DatabaseTest {
     this.studyCourseRepository.save(softwareEngineering);
     this.studyCourseRepository.save(informationSystems);
 
-    assertThat(this.studyCourseRepository.findAll()).contains(computerScience, softwareEngineering,
-        informationSystems);
+    assertThat(this.studyCourseRepository.findAll())
+        .contains(computerScience, softwareEngineering, informationSystems);
     assertThat(this.moduleRepository.findAll()).contains(am, fae, bi, eam);
 
     ArrayList<Module> modules = new ArrayList<>();
     modules.add(am);
     Project p1 =
-        new Project(new ProjectName("Projekt 1"), new ProjectDescription("Ein neues Projekt 1"),
-            ProjectStatus.VERFÜGBAR, new CreatorID(UUID.randomUUID()), new CreatorName("Creator 1"),
-            new SupervisorName("Supervisor Professor 1"), modules);
+        new Project(
+            new ProjectName("Projekt 1"),
+            new ProjectShortDescription("P1"),
+            new ProjectDescription("Ein neues Projekt 1"),
+            ProjectStatus.VERFÜGBAR,
+            new ProjectRequirement("R1"),
+            new CreatorID(UUID.randomUUID()),
+            new CreatorName("Creator 1"),
+            new SupervisorName("Supervisor Professor 1"),
+            modules);
 
     modules = new ArrayList<>();
     modules.add(fae);
     Project p2 =
-        new Project(new ProjectName("Projekt 1"), new ProjectDescription("Ein neues Projekt 2"),
-            ProjectStatus.VERFÜGBAR, new CreatorID(UUID.randomUUID()), new CreatorName("Creator 3"),
-            new SupervisorName("Supervisor Professor 3"), modules);
+        new Project(
+            new ProjectName("Projekt 1"),
+            new ProjectShortDescription("P2"),
+            new ProjectDescription("Ein neues Projekt 2"),
+            ProjectStatus.VERFÜGBAR,
+            new ProjectRequirement("R2"),
+            new CreatorID(UUID.randomUUID()),
+            new CreatorName("Creator 3"),
+            new SupervisorName("Supervisor Professor 3"),
+            modules);
 
     modules = new ArrayList<>();
     modules.add(eam);
     Project p3 =
-        new Project(new ProjectName("Projekt 1"), new ProjectDescription("Ein neues Projekt 3"),
-            ProjectStatus.VERFÜGBAR, new CreatorID(UUID.randomUUID()), new CreatorName("Creator 4"),
-            new SupervisorName("Supervisor Professor 4"), modules);
+        new Project(
+            new ProjectName("Projekt 1"),
+            new ProjectShortDescription("P3"),
+            new ProjectDescription("Ein neues Projekt 3"),
+            ProjectStatus.VERFÜGBAR,
+            new ProjectRequirement("R3"),
+            new CreatorID(UUID.randomUUID()),
+            new CreatorName("Creator 4"),
+            new SupervisorName("Supervisor Professor 4"),
+            modules);
 
     this.projectRepository.save(p1);
     this.projectRepository.save(p2);
     this.projectRepository.save(p3);
   }
-
 }

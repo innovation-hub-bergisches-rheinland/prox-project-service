@@ -1,0 +1,1 @@
+alter Table Module add ProjectType integer default 0

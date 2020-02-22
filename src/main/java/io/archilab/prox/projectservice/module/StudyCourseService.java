@@ -1,6 +1,5 @@
 package io.archilab.prox.projectservice.module;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -18,13 +17,17 @@ public class StudyCourseService {
   private final ModuleRepository moduleRepository;
   private final StudyCourseRepository studyCourseRepository;
 
-
-  public StudyCourseService(StudyCourseClient studyCourseClient, ModuleRepository moduleRepository,
+  public StudyCourseService(
+      StudyCourseClient studyCourseClient,
+      ModuleRepository moduleRepository,
       StudyCourseRepository studyCourseRepository) {
     this.studyCourseClient = studyCourseClient;
     this.moduleRepository = moduleRepository;
-
     this.studyCourseRepository = studyCourseRepository;
+  }
+
+  public boolean hasData() {
+    return this.studyCourseRepository.count() > 0;
   }
 
   public void importStudyCourses() {
@@ -32,44 +35,57 @@ public class StudyCourseService {
 
     List<StudyCourse> studyCourses = this.studyCourseClient.getStudyCourses();
     for (StudyCourse studyCourse : studyCourses) {
+      Optional<StudyCourse> existingStudyCourseOptional =
+          this.studyCourseRepository.findByExternalStudyCourseID(
+              studyCourse.getExternalStudyCourseID());
+      StudyCourse savedStudyCourse = null;
 
-      List<Module> newModules = new ArrayList<>();
+      if (existingStudyCourseOptional.isPresent()) {
+        this.logger.info(
+            "StudyCourse with ID {} already exists.", studyCourse.getExternalStudyCourseID());
+        savedStudyCourse = existingStudyCourseOptional.get();
+      } else {
+        this.logger.info(
+            "StudyCourse with ID {} does not exist yet.", studyCourse.getExternalStudyCourseID());
+        savedStudyCourse = new StudyCourse();
+      }
+
+      savedStudyCourse.setName(studyCourse.getName());
+      savedStudyCourse.setAcademicDegree(studyCourse.getAcademicDegree());
+      savedStudyCourse.setExternalStudyCourseID(studyCourse.getExternalStudyCourseID());
+      savedStudyCourse = this.studyCourseRepository.save(savedStudyCourse);
+
       List<Module> retrievedModules = studyCourse.getModules();
       for (Module module : retrievedModules) {
         Optional<Module> existingModuleOptional =
             this.moduleRepository.findByExternalModuleID(module.getExternalModuleID());
 
         if (existingModuleOptional.isPresent()) {
-          this.logger.info("Module with ID " + module.getExternalModuleID() + " already exists.");
+          this.logger.info("Module with ID {} already exists.", module.getExternalModuleID());
           Module existingModule = existingModuleOptional.get();
           existingModule.setName(module.getName());
-          newModules.add(existingModule);
+          existingModule.setProjectType(module.getProjectType());
+          existingModule.setStudyCourse(savedStudyCourse);
           this.moduleRepository.save(existingModule);
         } else {
-          this.logger
-              .info("Module with ID " + module.getExternalModuleID() + " does not exist yet.");
-          newModules.add(module);
+          this.logger.info("Module with ID {} does not exist yet.", module.getExternalModuleID());
+          module.setStudyCourse(savedStudyCourse);
           this.moduleRepository.save(module);
         }
       }
+    }
 
-      Optional<StudyCourse> existingStudyCourseOptional = this.studyCourseRepository
-          .findByExternalStudyCourseID(studyCourse.getExternalStudyCourseID());
+    this.logger.info("Finished import");
+  }
 
-      if (existingStudyCourseOptional.isPresent()) {
-        this.logger.info(
-            "StudyCourse with ID " + studyCourse.getExternalStudyCourseID() + " already exists.");
-        StudyCourse existingStudyCourse = existingStudyCourseOptional.get();
-        existingStudyCourse.setName(studyCourse.getName());
-        existingStudyCourse.setAcademicDegree(studyCourse.getAcademicDegree());
-        existingStudyCourse.setModules(newModules);
-        this.studyCourseRepository.save(existingStudyCourse);
+  public void cleanUp() {
 
-      } else {
-        this.logger.info("StudyCourse with ID " + studyCourse.getExternalStudyCourseID()
-            + " does not exist yet.");
-        studyCourse.setModules(newModules);
-        this.studyCourseRepository.save(studyCourse);
+    // delete all study courses without modules
+    Iterable<StudyCourse> studyCourses = this.studyCourseRepository.findAll();
+
+    for (StudyCourse studyCourse : studyCourses) {
+      if (studyCourse.getModules().isEmpty()) {
+        this.studyCourseRepository.delete(studyCourse);
       }
     }
   }
