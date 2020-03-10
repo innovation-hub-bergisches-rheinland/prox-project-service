@@ -1,15 +1,19 @@
 package io.archilab.prox.projectservice.project;
 
-import io.archilab.prox.projectservice.module.*;
+import io.archilab.prox.projectservice.module.AcademicDegree;
 import io.archilab.prox.projectservice.module.Module;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import io.archilab.prox.projectservice.module.ModuleName;
+import io.archilab.prox.projectservice.module.ModuleRepository;
+import io.archilab.prox.projectservice.module.ProjectType;
+import io.archilab.prox.projectservice.module.StudyCourse;
+import io.archilab.prox.projectservice.module.StudyCourseName;
+import io.archilab.prox.projectservice.module.StudyCourseRepository;
+import io.archilab.prox.projectservice.module.StudyCourseService;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
 public class ImportTest {
 
@@ -32,23 +36,24 @@ public class ImportTest {
     moduleStudyCourse.addModule(m2);
     this.studyCourseRepository.save(moduleStudyCourse);
 
-    Assert.assertEquals(1, this.studyCourseRepository.count());
+    Assertions.assertEquals(1, this.studyCourseRepository.count());
 
     StudyCourse emptyStudyCourse =
         new StudyCourse(new StudyCourseName("Empty"), AcademicDegree.MASTER);
     this.studyCourseRepository.save(emptyStudyCourse);
 
-    Assert.assertEquals(2, this.studyCourseRepository.count());
+    Assertions.assertEquals(2, this.studyCourseRepository.count());
 
     StudyCourseService service =
         new StudyCourseService(null, this.moduleRepository, this.studyCourseRepository);
 
     service.cleanUp();
 
-    Assert.assertEquals(1, this.studyCourseRepository.count());
+    Assertions.assertEquals(1, this.studyCourseRepository.count());
 
-    StudyCourse result = this.studyCourseRepository.findById(moduleStudyCourse.getId()).get();
+    StudyCourse result =
+        this.studyCourseRepository.findById(moduleStudyCourse.getId()).orElseThrow();
 
-    Assert.assertNotNull(result);
+    Assertions.assertNotNull(result);
   }
 }
