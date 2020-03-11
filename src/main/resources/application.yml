@@ -18,12 +18,11 @@ keycloak:
   bearer-only: true
   cors: false
   principal-attribute: preferred_username
-  public-client: false
   realm: archilab
-  resource: project-service
+  resource: prox-project-service
 server:
   port: 9002
-  use-forward-headers: true
+  forward-headers-strategy: native
 spring:
   application:
     name: project-service
