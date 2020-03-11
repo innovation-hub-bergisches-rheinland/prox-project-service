@@ -18,7 +18,6 @@ keycloak:
   bearer-only: true
   cors: false
   principal-attribute: preferred_username
-  public-client: false
   realm: archilab
   resource: prox-project-service
 server:
