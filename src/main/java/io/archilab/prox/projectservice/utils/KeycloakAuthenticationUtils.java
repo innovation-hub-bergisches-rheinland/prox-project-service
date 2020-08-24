@@ -8,6 +8,9 @@ import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.representations.AccessToken;
 import org.springframework.security.core.Authentication;
 
+/**
+ * Implements AuthenticationUtils for a Keycloak context
+ */
 public class KeycloakAuthenticationUtils implements AuthenticationUtils {
 
   public Optional<UUID> getUserUUIDFromRequest(HttpServletRequest request) {
@@ -16,6 +19,11 @@ public class KeycloakAuthenticationUtils implements AuthenticationUtils {
     return getSubjectUUIDFromToken(keycloakSecurityContext.getToken());
   }
 
+  /**
+   * Helper Method which casts the principal to a keycloak specific token
+   * @param request the request of which the user principal should be casted
+   * @return UserPrincipal casted to KeycloakAuthenticationToken
+   */
   private KeycloakAuthenticationToken getAuthentication(HttpServletRequest request) {
     return (KeycloakAuthenticationToken) request.getUserPrincipal();
   }
