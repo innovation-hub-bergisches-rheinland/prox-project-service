@@ -35,13 +35,10 @@ public class KeycloakAuthenticationUtils implements AuthenticationUtils {
    */
   private Optional<UUID> getSubjectUUIDFromToken(AccessToken accessToken) {
     String subject = accessToken.getSubject();
-    if(!subject.isBlank()) {
-      try {
-        return Optional.of(UUID.fromString(subject));
-      } catch (IllegalArgumentException illegalArgumentException) {
-        return Optional.empty();
-      }
+    try {
+      return Optional.of(UUID.fromString(subject));
+    } catch (IllegalArgumentException illegalArgumentException) {
+      return Optional.empty();
     }
-    return Optional.empty();
   }
 }
