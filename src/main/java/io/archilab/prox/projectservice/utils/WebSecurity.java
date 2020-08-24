@@ -34,6 +34,10 @@ public class WebSecurity {
   public boolean checkProjectCreator(HttpServletRequest request, UUID projectId, ProjectRepository projectRepository) {
     Optional<UUID> optionalUUID = authenticationUtils.getUserUUIDFromRequest(request);
     Optional<Project> optionalProject = projectRepository.findById(projectId);
-    return optionalProject.isPresent() && optionalUUID.isPresent() && optionalProject.get().getCreatorID().getCreatorID().equals(optionalUUID.get());
+    return optionalProject.isPresent()
+        && optionalProject.get().getCreatorID() != null
+        && optionalProject.get().getCreatorID().getCreatorID() != null
+        && optionalUUID.isPresent()
+        && optionalProject.get().getCreatorID().getCreatorID().equals(optionalUUID.get());
   }
 }
