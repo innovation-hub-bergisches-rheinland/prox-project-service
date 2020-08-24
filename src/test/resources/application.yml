@@ -1,11 +1,22 @@
-eureka:
-  client:
-    enabled: false
+# TODO Keycloak Config necessary?
 keycloak:
-  enabled: false
+  auth-server-url: https://login.archi-lab.io/auth
+  bearer-only: true
+  cors: false
+  principal-attribute: preferred_username
+  realm: archilab
+  resource: prox-project-service
 module:
   service:
     url: http://service-discovery/studyCourses
+moduleImport:
+  delay:
+    initial:
+      seconds: 10
+    hasData:
+      minutes: 1440
+    hasNoData:
+      seconds: 10
 server:
   port: 9002
   use-forward-headers: true
@@ -14,9 +25,9 @@ spring:
     name: project-service
   datasource:
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
-    driverClassName: org.postgresql.Driver
     username: sa
   jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
     properties:
