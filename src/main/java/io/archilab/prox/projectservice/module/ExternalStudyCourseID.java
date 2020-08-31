@@ -11,8 +11,6 @@ import lombok.Setter;
 
 @Embeddable
 @Data
-@Setter
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ExternalStudyCourseID implements Serializable {
 
