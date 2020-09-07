@@ -2,7 +2,9 @@ package io.archilab.prox.projectservice.utils;
 
 import java.util.Optional;
 import java.util.UUID;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.representations.AccessToken;
@@ -25,7 +27,8 @@ public class KeycloakAuthenticationUtils implements AuthenticationUtils {
    * @return UserPrincipal casted to KeycloakAuthenticationToken
    */
   private KeycloakAuthenticationToken getAuthentication(HttpServletRequest request) {
-    return (KeycloakAuthenticationToken) request.getUserPrincipal();
+    HttpServletRequestWrapper httpServletRequestWrapper = new HttpServletRequestWrapper(request);
+    return (KeycloakAuthenticationToken) httpServletRequestWrapper.getUserPrincipal();
   }
 
   /**
