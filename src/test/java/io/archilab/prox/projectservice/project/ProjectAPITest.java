@@ -14,18 +14,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.archilab.prox.projectservice.utils.AuthenticationUtils;
 import java.util.Optional;
 import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -50,6 +55,13 @@ class ProjectAPITest {
 
   @Autowired
   ProjectRepository projectRepository;
+
+  @MockBean
+  AuthenticationUtils authenticationUtils;
+
+  //Generating a User ID which is used for performing authorized requests that depend on the requesting User ID
+  //That User ID can be referenced from within the tests
+  private static final UUID USER_ID = UUID.randomUUID();
 
   Project sampleProject = new Project(
         new ProjectName("Test Project"),
@@ -85,6 +97,14 @@ class ProjectAPITest {
   //POST /projects
   @Test
   void when_valid_post_to_projects_then_project_is_saved() throws Exception {
+
+    /*
+      Since the default Spring Data REST POST Mapping is replaced and relies on AuthenticationUtils
+      it needs to be mocked to obtain a valid UserID while setting CreatorID
+     */
+    Mockito.when(authenticationUtils.getUserUUIDFromRequest(Mockito.any(HttpServletRequest.class))).thenReturn(Optional.of(USER_ID));
+    sampleProject.setCreatorID(new CreatorID(USER_ID));
+
     mockMvc.perform(post(PROJECTS_ROUTE)
         .contentType(MediaType.APPLICATION_JSON)
         .content(new ObjectMapper().writeValueAsString(sampleProject))
