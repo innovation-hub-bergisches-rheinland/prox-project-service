@@ -22,20 +22,17 @@
  * SOFTWARE.
  */
 
-package io.archilab.prox.projectservice.project;
+package io.archilab.prox.projectservice.config;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import io.archilab.prox.projectservice.utils.AuthenticationUtils;
+import io.archilab.prox.projectservice.utils.KeycloakAuthenticationUtils;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import org.junit.jupiter.api.Test;
-
-public class ProjectDescriptionTest {
-
-  @Test
-  public void equality() {
-    String description = "Lorem ipsum";
-    ProjectDescription projectDescription1 = new ProjectDescription(description);
-    ProjectDescription projectDescription2 = new ProjectDescription(description);
-    assertThat(projectDescription1).isEqualTo(projectDescription2);
-    assertThat(projectDescription1.hashCode()).isEqualTo(projectDescription2.hashCode());
+@Configuration
+public class UtilsConfig {
+  @Bean
+  public AuthenticationUtils authenticationUtils() {
+    return new KeycloakAuthenticationUtils();
   }
 }

@@ -22,20 +22,21 @@
  * SOFTWARE.
  */
 
-package io.archilab.prox.projectservice.project;
+package io.archilab.prox.projectservice.utils;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.Optional;
+import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.data.repository.CrudRepository;
 
-import org.junit.jupiter.api.Test;
-
-public class ProjectDescriptionTest {
-
-  @Test
-  public void equality() {
-    String description = "Lorem ipsum";
-    ProjectDescription projectDescription1 = new ProjectDescription(description);
-    ProjectDescription projectDescription2 = new ProjectDescription(description);
-    assertThat(projectDescription1).isEqualTo(projectDescription2);
-    assertThat(projectDescription1.hashCode()).isEqualTo(projectDescription2.hashCode());
-  }
+/**
+ * Provides some Authentication Utilities
+ */
+public interface AuthenticationUtils {
+  /**
+   * Method to obtain UUID of the requesting user from a HttpServletRequest
+   * @param request the request of which the UUID should be extracted
+   * @return If extraction was successful it returns the UUID, otherwise a empty optional
+   */
+  Optional<UUID> getUserUUIDFromRequest(HttpServletRequest request);
 }
