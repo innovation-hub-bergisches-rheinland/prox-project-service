@@ -1,0 +1,1336 @@
+{
+  "_embedded" : {
+    "modules" : [ {
+      "id" : "4500fd8d-b6c4-4573-86c5-4ff3ffe7b7a5",
+      "name" : "QQ2 SdA",
+      "description" : "<h1>Herausforderungen</h1>\r\n<p>In der heutigen Zeit empfinden viele Menschen durch die immer komplexer werdenden Anforderungen ihren normalen Alltag schon als relativ stressig. Immer weiter zunehmende Anforderungen und Belastungen k&ouml;nnen zu chronischem Stress f&uuml;hren.Auch in der Studienzeit k&ouml;nnen viele Belastungen auftreten. Leistungsdruck, Sorgen um die berufliche Zukunft, Abl&ouml;seprozesse von der Familie sind einige der zentralen Orientierungsfragen im studentischen Leben. Das Pilotprojekt richtet sich an Studierende, die ihre Belastungen in einem anderen Licht anschauen m&ouml;chten.</p>\r\n<h1>Ein MBSR-Kurs</h1>\r\n<p>l&auml;dt zu einer Entdeckungsreise ein, die zu pers&ouml;nlicher Weiterentwicklung, Selbstfindung und einem besseren Umgang mit Problemen und Stress f&uuml;hren kann.</p>\r\n<h2>Entwicklung</h2>\r\n<p>In den sp&auml;ten 1970er Jahren wurde von Dr. Jon Kabat-Zinn und Kollegen an der Universit&auml;tsklinik in Worcester, Massachusetts (USA) ein Programm zur &bdquo;Stressbew&auml;ltigung durch die &Uuml;bung von Achtsamkeit\" (im Original &bdquo;Mindfulness Based Stress Reduction) entwickelt. Es entstand w&auml;hrend der Arbeit mit chronisch k&ouml;rperlich erkrankten Patienten in der Klinik.</p>\r\n<h2>Konzept</h2>\r\n<p>Das MBSR-Programm basiert auf einer Form der Meditation, die in den buddhistischen Traditionen Asiens entwickelt wurde und systematisch die Achtsamkeit schult. Vereinfacht ausgedr&uuml;ckt bedeutet Achtsamkeit, bewusst, im gegenw&auml;rtigen Moment pr&auml;sent zu sein, ohne zu bewerten.</p>\r\n<p>MBSR beinhaltet unter anderem meditative &Uuml;bungen in Ruhe und Bewegung, die &uuml;ber einen Zeitraum von acht Wochen in den Kursen eingef&uuml;hrt und zuhause vertieft werden. <em>&bdquo;Es ist ein systematischer Ansatz zur Ausbildung einer zuvor unbekannten Ebene der inneren Kraft, der Selbstbestimmung und Weisheit, die auf unserer nat&uuml;rlichen F&auml;higkeit zur Aufmerksamkeit aufbaut&ldquo;</em>[i].</p>\r\n<p>Durch die im Kurs vermittelten &Uuml;bungen kann ein anderer Umgang mit Stress, schmerzhaften Emotionen, k&ouml;rperlichen Schmerzen oder schwierigen Kommunikationssituationen erfahren werden.Zahlreiche internationale Studien belegen die gesundheitsf&ouml;rdernde, stressreduzierende und die Lebensqualit&auml;t steigernde Wirkung von MBSR.[ii]</p>\r\n<h1>Kurs</h1>\r\n<p>Ein MBSR-Kurs ist &uuml;ber 8 Wochen inhaltlich darauf ausgerichtet, die Achtsamkeitspraxis nach und nach zu vertiefen. Es werden theoretische und wissenschaftliche Hintergr&uuml;nde zur menschlichen Wahrnehmung, zur Entstehung von Stress und dessen Bew&auml;ltigung durch Achtsamkeit vermittelt. Ziel dabei ist es, einen klaren, akzeptierenden Blick f&uuml;r uns und die Situation, in der wir uns befinden, zu kultivieren und stressausl&ouml;senden Situationen mit mehr Distanz und Gelassenheit zu begegnen.&nbsp;</p>\r\n<h2>Termine</h2>\r\n<p><strong>Pilotprojekt vom 25. April bis 13. Juni 2017</strong> <strong>Dienstags:</strong> 25.04., 02.05., 09.05., 16.05., 23.05., 30.05., 06.06. und 13.06. in der Zeit von von 13.15 bis 15.45 Uhr</p>\r\n<p><strong>Achtsamkeitstag</strong> (als &Uuml;bungstag am Pfingstwochenende): Freitag, 2. Juni von 10.30 bis 16.30 Uhr</p>\r\n<p><strong>eigene &Uuml;bungszeit:</strong> ca. 45 bis 60 Minuten pro Tag&nbsp;</p>\r\n<h2>Kosten</h2>\r\n<p>30,00 Euro zahlbar an den Verein zur F&ouml;rderung des Campus Gummersbach der Technischen Hochschule K&ouml;ln e.V. zur Unterst&uuml;tzung der dort eingeschriebenen Studentinnen und Studenten (ein MBSR-Kurs in K&ouml;ln kostet ca. 380 &euro;).</p>\r\n<h1>Anmeldung</h1>\r\n<p>weitere Informationen sowie die Anmeldeinformationen finden Sie unter dem folgenden Link: <a href=\"https://advcloud.gm.fh-koeln.de/index.php/s/s4UxKzw2nOkDFGx\">https://advcloud.gm.fh-koeln.de/index.php/s/s4UxKzw2nOkDFGx </a></p>\r\n<p>[i] vgl. Jon Kabat-Zinn, Gesund durch Meditation, S. 31 [ii] vgl. http://www.mbsr-verband.de/mbsr-mbct/forschung.html 13.03.17</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/4500fd8d-b6c4-4573-86c5-4ff3ffe7b7a5"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/4500fd8d-b6c4-4573-86c5-4ff3ffe7b7a5"
+        }
+      }
+    }, {
+      "id" : "58b4efdf-4e7a-43b0-9f5d-162a7b09f812",
+      "name" : "WPF Software-Architektur und Agile Methoden",
+      "description" : "",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/58b4efdf-4e7a-43b0-9f5d-162a7b09f812"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/58b4efdf-4e7a-43b0-9f5d-162a7b09f812"
+        }
+      }
+    }, {
+      "id" : "9a54e544-b607-4361-b389-9ef0827a1aba",
+      "name" : "WPF Data Mining (praktisch)",
+      "description" : "<ul>\r\n<li>Kann man mit Twitter Daten den Ausgang der Bundestagswahl vorhersagen?</li>\r\n<li>Wie deckt man in sozialen Netzwerken oder anhand von Verbindungsdaten Gruppen von Individuen auf, die zusammen geh&ouml;ren?&nbsp;</li>\r\n<li>Wie erzeugt man Profile von Internetnutzern, um deren Verhalten vorherzusagen oder Werbema&szlig;nahmen zielgerecht zu platzieren?</li>\r\n<li>Wie betreibt man Meinungsforschung im Internet, also z.B. ob ein bestimmter Text einem Produkt positiv oder negativ gegen&uuml;bersteht?</li>\r\n</ul>\r\n<p>Mit solchen Fragen, die von gro&szlig;em &ouml;konomischen und politischen Interesse sind und gegenw&auml;rtig stark beforscht werden, wird sich das WPF Data Mining besch&auml;ftigen. Ausgangspunkt f&uuml;r die behandelten Verfahren ist die Lineare Algebra. Der Kurs gliedert sich in drei Teile:<br /> <br /> Im <strong>ersten</strong> Teil (Vorlesung) werden zun&auml;chst Regressionsmodelle, dann einfache neuronale Netze (Perceptron) und Verfahren des Deep Learnings behandelt.<br /> <br /> Im <strong>zweiten</strong> Teil (Vorlesung) kommen weitere &uuml;berwachte und nicht &uuml;berwachte Lernverfahren hinzu, insbesondere</p>\r\n<ul style=\"list-style-type: circle;\">\r\n<li>Entscheidungsb&auml;ume</li>\r\n<li>K-NN</li>\r\n<li>Na&iuml;ve Bayes</li>\r\n<li>Support Vector Machines</li>\r\n<li>Clustering</li>\r\n<li>Assoziationsanalyse</li>\r\n</ul>\r\n<p>Die Teilnehmerinnen und Teilnehmer sollen im <strong>dritten</strong> Teil des Kurses eine praxisrelevante Data Mining Aufgabe selbstst&auml;ndig bearbeiten, z.B. im Rahmen eines&nbsp; Data Mining Wettbewerbs (Data Mining Cup)&nbsp; oder durch die Analyse aktueller Daten eines Industriepartners.</p>\r\n<p>Als Tools zur praktischen Umsetzung werden wir Python und R nutzen. Zu Beginn wird es einen Python-Einf&uuml;hrungskurs geben.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/9a54e544-b607-4361-b389-9ef0827a1aba"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/9a54e544-b607-4361-b389-9ef0827a1aba"
+        }
+      }
+    }, {
+      "id" : "e5f3d9dc-4746-4372-8baa-0f3a38b80ee5",
+      "name" : "Bachelor Kolloquium",
+      "description" : "<p>\n\tEs werden von teilnehmenden Studierenden &uuml;ber die Thematiken Ihrer Bachelorarbeiten vorgetragen, insbesondere sollen Aufgabenstellung, gegebenenfalls der Kontext zu einem Gesamtkonzept des Unternehmens und die eingeschlagenen L&ouml;sungswege erl&auml;utert werden.</p>\n",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/e5f3d9dc-4746-4372-8baa-0f3a38b80ee5"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/e5f3d9dc-4746-4372-8baa-0f3a38b80ee5"
+        }
+      }
+    }, {
+      "id" : "2a179ecb-3573-4a37-8bb0-49ca9d22fbf4",
+      "name" : "Crossplatform Game Development mit Unity3D",
+      "description" : "<p>Das WPF \"Cross-platform Game Development mit Unity3D\" besch&auml;ftigt sich, wie der Name schon andeutet, mit den praktischen Aspekten der Spieleentwicklung f&uuml;r unterschiedliche Zielplattformen mit der Engine Unity3D.</p>\r\n<p>Zu diesem Zweck wird zun&auml;chst w&auml;hrend der Profil&sup2;-Woche ein &Uuml;berblick &uuml;ber alle wichtigen Komponenten der Engine vermittelt, von der Bedeutung und Nutzung der Transforms und GameObjects, &uuml;ber die verschiedenen Eingabem&ouml;glichkeiten, das GUI-System, hin zu den Physik-, Grafik- und Audioengines. Weiterhin werden wir h&auml;ufige Performance-Bottlenecks f&uuml;r das Deployment auf mobilen Systemen (speziell Android) und M&ouml;glichkeiten diese zu umgehen beleuchten.</p>\r\n<p>Der Blockkurs wird als Mix zwischen Vorlesung und praktischer &Uuml;bung stattfinden. Im Anschluss werden Teilnehmer alleine oder in Zweierteams selbst erarbeitete Projekte weiterf&uuml;hren, die letztlich als Bewertungsgrundlage am Ende des Semesters dienen. Im Laufe des Semesters werden weiterhin monatliche (oder h&auml;ufigere, je nach Bedarf) Treffen angeboten, w&auml;hrend derer Konzepte und auftretende Probleme besprochen werden k&ouml;nnen. (Bei ausreichendem Interesse w&auml;re es auch m&ouml;glich, zu diesen Treffen noch fortgeschrittene Themen zu behandeln)</p>\r\n<p>&nbsp;</p>\r\n<p>Bitte bringen Sie zum Blockkurs ein Notebook mit Windows oder MacOS mit (Linux ist leider bislang nur als Ziel-, nicht Quellplattform m&ouml;glich). Falls Sie planen mit Ihrem Projekt au&szlig;erdem eine mobile Plattform anzuvisieren ist es au&szlig;erdem empfehlenswert, Zugang zu einem entsprechenden Ger&auml;t zu haben.</p>\r\n<p>Der Kurs findet in Raum 0.511 statt!</p>\r\n<p>F&uuml;r Fragen, Feedback oder Themenw&uuml;nsche f&uuml;r die monatlichen Treffen, melden Sie sich bitte unter sascha.schewe(at)fh-koeln.de.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/2a179ecb-3573-4a37-8bb0-49ca9d22fbf4"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/2a179ecb-3573-4a37-8bb0-49ca9d22fbf4"
+        }
+      }
+    }, {
+      "id" : "687e41df-c6c7-44d2-b8ec-158a2f04b18d",
+      "name" : "WPF Unternehmensgründung und Entrepreneurship",
+      "description" : "<p>Es werden die Themen der Unternehmensgr&uuml;ndung bzw. Existenzgr&uuml;ndung mit den Themenfeldern&nbsp;Rechtsformen, Finanzierung, Businessplan, etc., die der Unternehmensf&uuml;hrung mit den Themenfeldern</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/687e41df-c6c7-44d2-b8ec-158a2f04b18d"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/687e41df-c6c7-44d2-b8ec-158a2f04b18d"
+        }
+      }
+    }, {
+      "id" : "1749231e-442d-4588-9aa2-89232d35f219",
+      "name" : "WPF (Kuenstliche) Neuronale Netze",
+      "description" : "<p>&Uuml;bersicht Neuronale Netze,Konzepte Neuronaler Netze, Biologie Neuronaler Netze, Feedforward Netze (Adaline, Perceptron, Multilayer-Perceptron) und Lernverfahren Backpropagation  - Begleitendes Praktikum mit Unterst&uuml;tzung von MAPLE und SNNS (zB. Klassifizierende Netze f&uuml;r Kreditw&uuml;rdigkeit, Neuronale Netze als Spieleagent, NN und Musikkomposition) Vorbesprechung am Di 9.10. 13h15 Raum 3.112</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/1749231e-442d-4588-9aa2-89232d35f219"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/1749231e-442d-4588-9aa2-89232d35f219"
+        }
+      }
+    }, {
+      "id" : "97509065-2fb1-4695-89a0-f6551a78f451",
+      "name" : "Cloud Computing Services Openstack",
+      "description" : "<p>- Wesentliche Module von OpenStack</p>\r\n<p>- Grundlegender Aufbau einer Infrastructure as a Service Plattform am Beispiel OpenStack</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/97509065-2fb1-4695-89a0-f6551a78f451"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/97509065-2fb1-4695-89a0-f6551a78f451"
+        }
+      }
+    }, {
+      "id" : "be113acf-9368-4268-b4f3-3ad07c83cc93",
+      "name" : "WPF Entwurfsmuster für objektorientierte Softwareentwicklung",
+      "description" : "",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/be113acf-9368-4268-b4f3-3ad07c83cc93"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/be113acf-9368-4268-b4f3-3ad07c83cc93"
+        }
+      }
+    }, {
+      "id" : "16d1877a-7c80-4035-9b12-191c3f3fcc7a",
+      "name" : "Mathematik",
+      "description" : "<ul>\r\n<li>mathematische Grundlagen, Logik</li>\r\n<li>Lineare Algebra</li>\r\n<li>Zahlenfolgen und &ndash;reihen, Finanzmathematik.</li>\r\n<li>Analysis f&uuml;r Funktionen einer Ver&auml;nderlicher</li>\r\n<li>Analysis f&uuml;r Funktionen mehrerer Ver&auml;nderlicher,</li>\r\n<li>Nicht-Lineare Optimierung unter Nebenbedingungen</li>\r\n<li>Wahrscheinlichkeitstheorie und Statistik</li>\r\n</ul>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/16d1877a-7c80-4035-9b12-191c3f3fcc7a"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/16d1877a-7c80-4035-9b12-191c3f3fcc7a"
+        }
+      }
+    }, {
+      "id" : "10a97357-b9d7-4959-829f-df8da4174f32",
+      "name" : "Fuzzy-Logik & -control",
+      "description" : "Fuzzy-Logik & -control",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/10a97357-b9d7-4959-829f-df8da4174f32"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/10a97357-b9d7-4959-829f-df8da4174f32"
+        }
+      }
+    }, {
+      "id" : "8c283c5c-32e5-45ba-90bd-2b57c2b44515",
+      "name" : "WPF Requirements Engineering",
+      "description" : "<ul>\r\n<li>Merkmale einer guten Anforderungsspezifikation</li>\r\n<li>Aufgaben und Methoden der Anforderungsspezifikation</li>\r\n<li>Persona</li>\r\n<li>Spezifikation mit nat&uuml;rlicher Sprache</li>\r\n<li>Modellbasierte Anforderungsspezifikation, Use Cases, UML</li>\r\n<li>Spezifikation von Qualit&auml;tsanforderungen und Randbedingungen</li>\r\n<li>Usability</li>\r\n<li>Validierung und Verwaltung von Anforderungen</li>\r\n<li>Agile Requirements Engineering, User Stories</li>\r\n<li>Tool Support</li>\r\n<li>Sch&auml;tzverfahren</li>\r\n<li>IT Produktauswahl, Testing, Abnahme Entwicklungsprojekte</li>\r\n</ul>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/8c283c5c-32e5-45ba-90bd-2b57c2b44515"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/8c283c5c-32e5-45ba-90bd-2b57c2b44515"
+        }
+      }
+    }, {
+      "id" : "1e036c77-c3b8-481c-aa90-93c8fda66af5",
+      "name" : "Angewandte Statistik",
+      "description" : "<p>Unter <strong>Statistik</strong> verstehen wir die methodische Erhebung, Darstellung, Analyse und Interpretation von Daten. Wir unterscheiden zwischen der beschreibenden (deskriptiven) und schlie&szlig;enden (induktiven) Statistik.</p>\r\n<p><br />Die <strong>beschreibende</strong> Statistik befa&szlig;t sich mit der Aufbereitung und der anschaulichen Darstellung von Daten und mit der Ermittlung von Kenngr&ouml;&szlig;en, die die Daten charakterisieren und zur Entscheidungsfindung genutzt werden.<br />Die <strong>schlie&szlig;ende</strong> Statistik hingegen hat als Aufgabe, R&uuml;ckschl&uuml;sse aus den Daten einer zuf&auml;lligen Stichprobe auf die Grundgesamtheit zu ziehen. Dabei st&uuml;tzt sich die schlie&szlig;ende Statistik auf die <strong>Wahrscheinlichkeitsrechnung</strong> (Stochastik).</p>\r\n<p><br />Statistische Methoden finden Anwendung in vielen Wissenschaftsbereichen wie - um nur einige zu nennen- Biologie, Informatik, Medizin, Ingenieur- und Wirtschaftswissenschaften. Auch unser Alltag ist von &bdquo;Statistiken&ldquo; gepr&auml;gt.</p>\r\n<p>Folgende Themen werden unter anderem behandelt:</p>\r\n<p><strong>Beschreibende Statistik</strong>: <br /> &bull; systematische Erhebung und Bereinigung von Daten<br /> &bull; graphische Darstellung von Daten<br /> &bull; Charakterisierung von Daten durch Kennzahlen</p>\r\n<p><br /><strong>Einf&uuml;hrung in die Wahrscheinlichkeitsrechnung</strong>:<br /> &bull; Zufallsexperimente und Ereignisse<br /> &bull; Wahrscheinlichkeiten<br /> &bull; Zufallsvariablen und ihre Verteilungen<br /> &bull; Erwartungswert und Varianz</p>\r\n<p><strong>Schlie&szlig;ende&nbsp;Statistik</strong>:<br /> &bull; Sch&auml;tzen bekannter Parameter<br /> &bull; Testen von Hypothesen<br /> &bull; Prognose k&uuml;nftiger Entwicklungen</p>\r\n<p>In den ersten Sitzungen werden einige mathematische Hilfsmittel und die Grundideen der Statistik in Vorlesungsform vermittelt. Danach schlie&szlig;en sich Referate &uuml;ber wichtige Methoden der Statistik an.</p>\r\n<p><strong>1. Sitzung</strong> , Dienstag, 09.10.2018, um 14:00 Uhr im Raum 0610</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/1e036c77-c3b8-481c-aa90-93c8fda66af5"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/1e036c77-c3b8-481c-aa90-93c8fda66af5"
+        }
+      }
+    }, {
+      "id" : "82806ac0-21f2-487a-a15f-38e4fb23d786",
+      "name" : "WPF Innovationsmanagement mit der Fakultät für Informationswissenschaften",
+      "description" : "<p>Die Inhalte erstrecken sich &uuml;ber die folgenden Themengebiete:</p>\r\n<ul>\r\n<li>Kreativit&auml;tstechniken (Brainstorming, Lateral Thinking, &hellip;)</li>\r\n<li>Formulieren einer Innovationsfrage / Innovation Challenge Innovationsstrategie und Erfolgsfaktoren</li>\r\n<li>Design Thinking</li>\r\n<li>Analytische Innovationsmethoden</li>\r\n<li>CPS, Business Model Canvas, Blue Ocean Strategy</li>\r\n<li>Open Innovation Formate</li>\r\n<li>Patent Management</li>\r\n</ul>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/82806ac0-21f2-487a-a15f-38e4fb23d786"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/82806ac0-21f2-487a-a15f-38e4fb23d786"
+        }
+      }
+    }, {
+      "id" : "6d67e05f-0524-424a-91c3-684f7fb8c087",
+      "name" : "WPF Bildverarbeitung",
+      "description" : "",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/6d67e05f-0524-424a-91c3-684f7fb8c087"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/6d67e05f-0524-424a-91c3-684f7fb8c087"
+        }
+      }
+    }, {
+      "id" : "63ebcf74-b90a-4271-b8b6-3bdcbaa4564c",
+      "name" : "Datenbanken I",
+      "description" : "<p>Grundbegriffe und Architektur von Datenbanken</p>\r\n<ul>\r\n<li>Ein Vorgehensmodell zur Erstellung eines Datenbanksystems</li>\r\n<li>Grundlagen des relationalen Modells\r\n<ul>\r\n<li>Relationale Algebra</li>\r\n<li>Anfrageoptimierung</li>\r\n<li>Funktionale Abh&auml;ngigkeiten</li>\r\n<li>Datenintegrit&auml;t</li>\r\n<li>Normalisierung</li>\r\n</ul>\r\n</li>\r\n<li>Datenmodellierung (Entity Relationship Modell) und Implementierung am Beispiel eines relationalen Datenbanksystems</li>\r\n<li>Datenbanksprache SQL: DDL, DML, DAL, Integrit&auml;tsbedingungen und Constraints unter dem jeweils aktuellen SQL-Standard, zur Zeit SQL2013</li>\r\n<li>Transaktionskonzepte, Mehrbenutzersynchronisation, Fehlererholung und Datensicherheit</li>\r\n</ul>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/63ebcf74-b90a-4271-b8b6-3bdcbaa4564c"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/63ebcf74-b90a-4271-b8b6-3bdcbaa4564c"
+        }
+      }
+    }, {
+      "id" : "bfd64559-4b5e-44c3-bf05-aece9508183f",
+      "name" : "Praxis-Semester (optional)",
+      "description" : "<ul>\n\t<li>\n\t\tAnwendung von Modulinhalten des ersten bis f&uuml;nften Semesters anhand von realen&nbsp; Anforderungen in einem praxisrelevanten Kontext.</li>\n\t<li>\n\t\tDies kann entweder in einem Unternehmen oder in der Hochschule &ndash; dann eingebettet in Forschungsprojekte &ndash; erfolgen.</li>\n</ul>\n",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/bfd64559-4b5e-44c3-bf05-aece9508183f"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/bfd64559-4b5e-44c3-bf05-aece9508183f"
+        }
+      }
+    }, {
+      "id" : "c2c5f8c0-77cc-48d5-8e57-35513f65e7a0",
+      "name" : "BWL II - Rechnungswesen",
+      "description" : "<ol>\r\n<li>&Uuml;berblick und Einordnung<br />\r\n<ul>\r\n<li>Grundbegriffe des Rechnungswesens</li>\r\n<li>Aufgaben des Rechnungswesens</li>\r\n<li>Externes und internes Rechnungswesen</li>\r\n</ul>\r\n</li>\r\n<li>Externes Rechnungswesen\r\n<ul>\r\n<li>Definition und Grundlagen</li>\r\n<li>Buchf&uuml;hrungsvorschriften</li>\r\n<li>Buchf&uuml;hrung</li>\r\n<li>GuV, Bilanz</li>\r\n<li>Jahresabschlussarbeiten (Rechnungsabgrenzung, R&uuml;ckstellungen)</li>\r\n</ul>\r\n</li>\r\n<li>Internes Rechnungswesen\r\n<ul>\r\n<li>Einf&uuml;hrung</li>\r\n<li>Kostenrechnung</li>\r\n<li>Kostenartenrechnung</li>\r\n<li>Kostenstellenrechnung</li>\r\n<li>M&auml;ngel der Vollkostenrechnung</li>\r\n<li>Teilkostenrechnung</li>\r\n<li>Kurzfristige Erfolgsrechnung</li>\r\n</ul>\r\n</li>\r\n</ol>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/c2c5f8c0-77cc-48d5-8e57-35513f65e7a0"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/c2c5f8c0-77cc-48d5-8e57-35513f65e7a0"
+        }
+      }
+    }, {
+      "id" : "90943380-8c69-4a63-aa70-c666baf506a7",
+      "name" : "Performance-Tuning auf verschiedenen Ebenen",
+      "description" : "<p>Laufzeitverbesserungen (Performance-Tuning) sind wieder \"in aller Munde\". Wartezeiten beim Online-Einkauf, bei Smartphones sind bei Anwendern &auml;u&szlig;erst unbeliebt und k&ouml;nnen den Verlust von Kundschaft zur Folge haben. In Firmen mit ihren vielen, vielen Mitarbeitern potenzieren sich Wartezeiten bei Unternehmensanwendungen zu problematischen Geldbetr&auml;gen und demotivieren die Mitarbeiter zudem unn&ouml;tig. &nbsp;</p>\r\n<p>Sie haben die Gelegenheit ein umfassendes Verst&auml;ndnis des Performance-Begriffs zu erlangen. Performance-Tuning in Datenbanksystemen wird sicherlich ein Schwerpunktthema sein, dar&uuml;ber hinaus werden jedoch alle Ebenen, die Performance beeinflussen, vorgestellt.&nbsp;</p>\r\n<p><strong>Systeme</strong>: Hardware, Betriebssystemparameter, Netze, ...</p>\r\n<p><strong>Anwendungen</strong>: Programme, Daten, ...&nbsp;</p>\r\n<p><strong>Gesch&auml;ftsprozesse</strong>: kritische Prozesse, Dokumentationen, Tests, ...</p>\r\n<p>Gegenstand der Betrachtungen werden sein: Strategien, Konzepte, Tools zur Kontrolle und Durchf&uuml;hrung, ...</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/90943380-8c69-4a63-aa70-c666baf506a7"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/90943380-8c69-4a63-aa70-c666baf506a7"
+        }
+      }
+    }, {
+      "id" : "cf1f8252-ce4b-4c49-bba7-daf3ebbd7dc6",
+      "name" : "Theoretische Informatik",
+      "description" : "<p>Grundlagen</p>\r\n<ul>\r\n<li>Mengen, Relationen, Graphen</li>\r\n<li>Zahlensysteme, Zahlendarstellung, Numerische Aspekte</li>\r\n<li>Codierung, Textdarstellung, Alphabete, W&ouml;rter</li>\r\n</ul>\r\n<p>Logik und Boolesche Algebra</p>\r\n<ul>\r\n<li>Aussagenlogik</li>\r\n<li>Pr&auml;dikatenlogik</li>\r\n<li>Boolesche Algebra</li>\r\n</ul>\r\n<p>Regul&auml;re (Typ-3) Sprachen</p>\r\n<ul>\r\n<li>Endliche Automaten</li>\r\n<li>Regul&auml;re Ausdr&uuml;cke</li>\r\n<li>Typ3-Grammatiken, Syntaxdiagramme</li>\r\n<li>Chomsky-Hierarchie</li>\r\n</ul>\r\n<p>Kontextfreie (Typ-2) Sprachen</p>\r\n<ul>\r\n<li>Kontextfreie Grammatiken, Chomsky- und Greibach-Normalformen</li>\r\n<li>Anwendungen (Ableitungs- und Syntaxb&auml;ume, Syntax von Programmiersprachen, Backus-Naur-Form)</li>\r\n</ul>\r\n<p>Kontextsensitive (Typ-1) und rekursiv aufz&auml;hlende (Typ-0) Sprachen</p>\r\n<ul>\r\n<li>Grammatiken, Monotonie, Normalform</li>\r\n</ul>\r\n<p>Berechenbarkeit, Entscheidbarkeit und Komplexit&auml;t</p>\r\n<ul>\r\n<li>Berechenbarkeit intuitiv</li>\r\n<li>Programmier- und Spezifikations-Modelle</li>\r\n<li>Church'sche These</li>\r\n<li>WHILE- und GOTO-Programme, Kleene-Normalform</li>\r\n<li>Turing-Maschinen, Turing-Berechenbarkeit</li>\r\n<li>Entscheidbarkeit, rekursive Aufz&auml;hlbarkeit</li>\r\n<li>Komplexit&auml;t (Einf.)</li>\r\n</ul>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/cf1f8252-ce4b-4c49-bba7-daf3ebbd7dc6"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/cf1f8252-ce4b-4c49-bba7-daf3ebbd7dc6"
+        }
+      }
+    }, {
+      "id" : "830e9b96-1000-4c58-9f0f-ba4bc9b8a0df",
+      "name" : "Cloud Computing Services Plattformen",
+      "description" : "<p>Untersuchung des IaaS-Angebotes namhafter Cloud Service Provider f&uuml;r Infrastructure as a Service (IaaS).</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/830e9b96-1000-4c58-9f0f-ba4bc9b8a0df"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/830e9b96-1000-4c58-9f0f-ba4bc9b8a0df"
+        }
+      }
+    }, {
+      "id" : "dc93d658-4a6c-45fb-bb0a-07f13d07bfd7",
+      "name" : "WPF Datenbankadminstration und Implementierung",
+      "description" : "<p>Fach besteht aus einem allgemeinen Teil und einem Oracle-spezifischen Anteil.&nbsp;</p>\r\n<p>Der allgemeine Teil beschreibt ein Architekturmodell f&uuml;r Datenbanken, das den meisten relationalen Datenbanken zugrunde liegt, sowie dessen Implementierung. Dazu geh&ouml;ren die Architektur von Datenbanksystemen, Verwaltung des Hintergrundspeichers, Pufferverwaltungen, Dateiorganisationen und Zugriffsstrukturen, Indexstrukturen, Basisalgorithmen f&uuml;r Datenbankoperationen, die Optimierungen von Anfragen, Transaktionsmodelle, die Transaktionsverwaltung sowie Backup und Recovery&ndash;Techniken und Datensicherung.</p>\r\n<p>Der Oracle-orientierte Teil wird durch Praxisvortr&auml;ge und Referate der Studierenden abgedeckt. Dazu geh&ouml;rt auch ein umfangreicher SQL-Tuning-Workshop und die Umsetzung der allgemeinen Modelle auf eine konkrete Datenbank wie Oracle. Zum Abschluss wird eine Oracle Zertifizierung im Bereich Datenbankenadministration angeboten, die jedoch nicht scheinrelevant ist. N&auml;here Einzelheiten finden Sie <a title=\"WPF Datenbankadministration\" href=\"http://lwibs01.gm.fh-koeln.de/blogs/faeskorn/2014/03/06/neues-wahlpflichtfach-datenbankadministration-und-implementierung/\" target=\"_blank\">auf meiner Homepage</a>.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/dc93d658-4a6c-45fb-bb0a-07f13d07bfd7"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/dc93d658-4a6c-45fb-bb0a-07f13d07bfd7"
+        }
+      }
+    }, {
+      "id" : "a51c9bef-ec9c-4370-9c30-a21f6fbad57e",
+      "name" : "WPF XML/Semantik Web  und Datenbanken",
+      "description" : "<p>Im ersten Semestermonat wird eine grundlegende Einf&uuml;hrung in Vorlesungsform gehalten. Danach gibt es ein Pause, in der die Pr&auml;sentationen/Ausarbeitungen vorbereitet werden, gefolgt von der Pr&auml;sentationsphase der Teilnehmer. Das WPF kann auch in englischer Sprache (MI) belegt werden.</p>\n<p>XML-Grundlagen von&nbsp; XML-Schemasprachen</p>\n<ul>\n<li>DTD und XML-Schema Anfragesprachen f&uuml;r XML</li>\n<li>XPath</li>\n<li>XQuery</li>\n<li>XSLT XML in Datenbanksystemen</li>\n<li>Abbildung von XML auf Datenbanken</li>\n<li>Speichertechniken f&uuml;r XML-Dokumente in Datenbanken</li>\n<li>SQL/XML als SQL-Standard Indexstrukturen f&uuml;r XML-Dokumente Kommerzielle XML-Datenbanksysteme XML in relationalen Datenbanksystemen</li>\n<li>DB2</li>\n<li>ORACLE</li>\n<li>Microsoft SQL Server Reine XML-Datenbanksysteme</li>\n<li>Tamino</li>\n<li>exists</li>\n<li>andere</li>\n<li>Semantik Web</li>\n<li>Grundidee des Semantik WEB</li>\n<li>XML-Basierte Sprachen f&uuml;r das Semantik Web</li>\n<li>RDF und RDF-Schema OWL Regel- und Anfragesprachen</li>\n<li>Spezielle Anwendungsgebiete von XML</li>\n<li>Spezielle Anwendungsgebiete des Semantik Web</li>\n</ul>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/a51c9bef-ec9c-4370-9c30-a21f6fbad57e"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/a51c9bef-ec9c-4370-9c30-a21f6fbad57e"
+        }
+      }
+    }, {
+      "id" : "5813d303-00b3-4c55-a903-62cfa258f814",
+      "name" : "Digitale Kommunikation",
+      "description" : "<p>Dieses Modul befasst sich mit verschiedenen Perspektiven der digitalen Kommunikation und bietet Platz zum entwickeln und ausprobieren eigener Ans&auml;tze und L&ouml;sungen in diesem Themenfeld. Das Modul hat eine hohe Praxisorientierung. Als Voraussetzung sollten Sie das Modul \"Grundlagen der visuellen Kommunikation\" als auch das \"Audiovisuelle Medienprojekt\" erfolgreich abgeschlossen haben. Auch die erfolgreich abgeschlossenen Module \"Web-basierte Anwendungen 1 + 2\" als auch das Modul \"Computergrafik und Animation\" erh&ouml;hen Ihre Handlungsf&auml;higkeit in diesem Modul.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/5813d303-00b3-4c55-a903-62cfa258f814"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/5813d303-00b3-4c55-a903-62cfa258f814"
+        }
+      }
+    }, {
+      "id" : "42c77966-1468-4e90-8ca4-17816394d11f",
+      "name" : "Mensch-Computer Interaktion",
+      "description" : "<p>\n\tCognitive Engineering</p>\n<ul>\n\t<li>\n\t\tSinneswahrnehmung (sensation), kognitive Wahrnehmung (perception), Wahrnehmungskan&auml;le</li>\n\t<li>\n\t\tModelle der Informationsverarbeitung</li>\n\t<li>\n\t\tGed&auml;chtnis:</li>\n\t<li>\n\t\tArten: implizit, explizit, episodisch</li>\n\t<li>\n\t\tProzesse (Kurz-/Langzeit)</li>\n\t<li>\n\t\tGrenzen und Kapazit&auml;t (7&plusmn;2&ndash;Regel)</li>\n\t<li>\n\t\tModelle: Waugh&amp;Norman, Atkison&amp;Shiffrin, LOR, LOP, Rumelhart&amp;McClelland (PDP), ...</li>\n\t<li>\n\t\tWahrnehmung und (Welt-)Wissen</li>\n\t<li>\n\t\tSelektive und visuelle Aufmerksamkeit</li>\n\t<li>\n\t\tBewusstsein: automatische und kontrollierte kognitive Prozesse</li>\n\t<li>\n\t\tDenkprozesse: Probleml&ouml;sen, Kreativit&auml;t, menschliche Intelligenz</li>\n</ul>\n<p>\n\tUsability Engineering (Schwerpunkt des Praktikums)</p>\n<ul>\n\t<li>\n\t\tGebrauchstauglichkeit im Nutzungskontext</li>\n\t<li>\n\t\tInteraktionsstile</li>\n\t<li>\n\t\tRequirements analysis: Kontext- und Problemszenarien</li>\n\t<li>\n\t\tActivity- und Informationdesign, GOMS-Modelle</li>\n\t<li>\n\t\tInteraction-Design</li>\n\t<li>\n\t\tUsability Evaluation und Eyetracking</li>\n</ul>\n",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/42c77966-1468-4e90-8ca4-17816394d11f"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/42c77966-1468-4e90-8ca4-17816394d11f"
+        }
+      }
+    }, {
+      "id" : "e6d2f690-21dd-4555-9d10-f32f83b3e4bc",
+      "name" : "WPF Geographische Informationssysteme",
+      "description" : "<p>Geodatenbanken sind essentieller Bestandteil von Geoinformationssystemen (GIS) und eine Anwendung von objektrelationalen Datenbanken. Mit dem Erfolg von Google Maps, Google Earth und dem freien OpenStreetMap-Projekt finden GIS-Systeme ein weit verbreitetes Interesse und viele Anwendungsfelder. Im WPF GIS werden Grundlagen und Anwendungsgebiete dieser Systeme behandelt. Als GIS-System wird ARGGIS der Firma Esri vorgestellt und vertieft.</p>\n<p>Das Fach wird&nbsp; gemeinsam mit Herrn Prof. Dr. Roehrig vom Institut f&uuml;r Tropentechnologie ( <a href=\"http://www.tt.fh-koeln.de/d/itt/staff/index.htm\"> ITT </a> )angeboten und kann auch in englischer Sprache belegt werden.</p>\n<p>Inhalt:</p>\n<ul>\n<li>Grundlagen von Geoinformationssystemen</li>\n<li>R&auml;umliche Datenmodelle</li>\n<li>SQL/MM Spatial R&auml;umliche</li>\n<li>Bezugssysteme</li>\n<li>Geometrische Algorithmen,</li>\n<li>Indexierung von Geodaten</li>\n<li>Geometrische Basisanfragen,</li>\n<li>Geography Markup Language (GML)</li>\n<li>OpenLayers: Javascript-Bibliothek f&uuml;r Geo-WEB-Anwendungen</li>\n<li>Openstreetmap, ein offenes Projekt mit Geodaten.</li>\n<li>ARCGIS mit Prigarmmierung in JAVA,. .NET oder python</li>\n<li>web map-services mit flex API*</li>\n<li>Google-Earth, google map und streetview Anbindung</li>\n</ul>\n<p>Pr&uuml;fungsleistung: Referat und Ausarbeitung/Wiki-Eintrag</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/e6d2f690-21dd-4555-9d10-f32f83b3e4bc"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/e6d2f690-21dd-4555-9d10-f32f83b3e4bc"
+        }
+      }
+    }, {
+      "id" : "40639b7e-7da7-46bd-96ec-cc2944035cda",
+      "name" : "WPF Grundlagen des strategischen IT-Managements",
+      "description" : "",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/40639b7e-7da7-46bd-96ec-cc2944035cda"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/40639b7e-7da7-46bd-96ec-cc2944035cda"
+        }
+      }
+    }, {
+      "id" : "fdeddff3-6c07-41e9-a435-6ad042bfae20",
+      "name" : "WPF Games Werkstatt",
+      "description" : "",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/fdeddff3-6c07-41e9-a435-6ad042bfae20"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/fdeddff3-6c07-41e9-a435-6ad042bfae20"
+        }
+      }
+    }, {
+      "id" : "9b26521d-e704-4faa-a1a8-bd9c551aafb1",
+      "name" : "WPF WPF ERP",
+      "description" : "<p>Anwendungsentwicklung unter MS Dynamics NAV + Vorbereitung auf die MS Zertifizierung</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/9b26521d-e704-4faa-a1a8-bd9c551aafb1"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/9b26521d-e704-4faa-a1a8-bd9c551aafb1"
+        }
+      }
+    }, {
+      "id" : "1ca8bb59-63fe-4401-aea4-1bf868cfda9c",
+      "name" : "RPA Robotic Process Automation",
+      "description" : "",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/1ca8bb59-63fe-4401-aea4-1bf868cfda9c"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/1ca8bb59-63fe-4401-aea4-1bf868cfda9c"
+        }
+      }
+    }, {
+      "id" : "d5d40433-599c-4038-8723-164aac057aa8",
+      "name" : "WPF Distributed Virtual Lab",
+      "description" : "<p>Aufbau eines verteilten und virtuell gemeinsamen Labors mit einer niederl&auml;ndischen Hochschule. Ziel ist die Durchf&uuml;hrung r&auml;umlich verteilter Laboraktivit&auml;ten in einer sicheren gemeinsamen Umgebung. Dazu erfolgt ein Entwurf einer Softwarearchitektur soweit wie m&ouml;glich auf Grundlage von Standardkomponenten. Als Ergebnis soll die Umgebung an den Standorten Gummersbach und Heerlen aufgebaut und getestet werden.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/d5d40433-599c-4038-8723-164aac057aa8"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/d5d40433-599c-4038-8723-164aac057aa8"
+        }
+      }
+    }, {
+      "id" : "e94c024d-d72e-4857-8543-3321e4ea6a77",
+      "name" : "WI-Projekt ",
+      "description" : "<ul>\n\t<li>\n\t\tDie Studierende analysieren eine Aufgabenstellung aus der Praxis (vorzugsweise in Kooperation mit einem externen Kooperationspartner), entwickeln, implementieren und pr&auml;sentieren ein rudiment&auml;res L&ouml;sungskonzept.</li>\n\t<li>\n\t\tIn der Regel besteht die Projektgruppe aus mehreren Teams mit&nbsp; 2-3 Studierenden, die sich frei zusammen finden. Der Dozent definiert die Zielsetzung und leitet das Projekt. Er weist den Studierenden unterschiedliche Rollen zu, vereinbart mit den Teams Meilensteine sowie&nbsp; Kommunikations- und Kooperationsformen und kontrolliert den Fortschritt.</li>\n</ul>\n",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/e94c024d-d72e-4857-8543-3321e4ea6a77"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/e94c024d-d72e-4857-8543-3321e4ea6a77"
+        }
+      }
+    }, {
+      "id" : "a12ff06f-d2ed-4037-aafd-a3c0f5c140e0",
+      "name" : "Semantic Web",
+      "description" : "<p>In den letzten Jahren schreitet die Entwicklung des World Wide Webs in Richtung der Vision eines Semantic Webs von Tim Berners-Lee immer weiter fort. Neben den gro&szlig;en Konzernen wie Google oder Facebook, die sich in diesem Bereich immer mehr etablieren gibt es mit der Linked Data Bewegung eine praxisnahe Implementierung des Semantic Webs.</p>\n<p>Die grundlegenden Konzepte, Sprachen und Programmierumgebungen des Semantic Web werden in einem konzentrierten Vorlesungsteil zu Beginn des Semesters dargestellt. Im Hauptteil des Semesters werden in einem Projektpraktikum eigene  einfache Anwendungen realisiert.  Detailliertere Infos erscheinen im Laufe des September auf einer Veranstaltungsseite im Wiki der Medieninformatik.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/a12ff06f-d2ed-4037-aafd-a3c0f5c140e0"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/a12ff06f-d2ed-4037-aafd-a3c0f5c140e0"
+        }
+      }
+    }, {
+      "id" : "80ba2854-6cbd-4a20-8450-49dbf9d7ef3d",
+      "name" : "WPF Business Intelligence",
+      "description" : "<p>Grundlagen von IT-gest&uuml;tzter Unternehmensf&uuml;hrung; dimensionsorientierte Datenmodelle; Data Warehouse-Architektur; DWH-Fallstudie mit praktischer Realisierung.</p>\n<p>Das WPF wird aktuell im Sommersemester angeboten.</p>\n<p>Infoveranstaltung am ersten Vorlesungstermin.</p>\n<p>&nbsp;</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/80ba2854-6cbd-4a20-8450-49dbf9d7ef3d"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/80ba2854-6cbd-4a20-8450-49dbf9d7ef3d"
+        }
+      }
+    }, {
+      "id" : "51356859-ab94-4367-ac94-eb4c4fda86f6",
+      "name" : "WPF Enterprise Social Media",
+      "description" : "<p>Die interaktiven M&ouml;glichkeiten des heutigen World Wide Web haben inzwischen nahezu jeden Bereich des allt&auml;glichen Lebens erreicht. W&auml;hrend fr&uuml;her h&auml;ufig der etwas unscharfe Begriff &bdquo;Web 2.0&ldquo; Verwendung fand, werden aktuell die neuen Kan&auml;le, die das Kommunizieren und Austauschen von Inhalten erm&ouml;glichen, in der Regel als &bdquo;Social Media&ldquo; bezeichnet. Auch Unternehmen wissen inzwischen dieses Potential im Sinne von &bdquo;Enterprise Social Media&ldquo; im internen sowie externen Umfeld intensiv zu nutzen.<br /><br />So werden innerhalb von Unternehmen an Facebook, Xing und Wikipedia angelehnte soziale Netzwerke oder Wikis implementiert. Die Hoffnung ist nicht zuletzt, dass Mitarbeiter untereinander effektive und effiziente Kommunikationskan&auml;le aufbauen und dem klassischen Gedanken des Wissensmanagements neues Leben einhauchen. <br /><br />Im externen Kontext werden Recruiting-Ma&szlig;nahmen oder das Marketing explizit um Social Media-Komponenten angereichert, da &uuml;ber soziale Netzwerke, Blogs oder Mikro-Blogs so Zielgruppen-spezifisch wir noch nie zuvor das eigene Unternehmen bzw. die eigenen Produkte beworben werden k&ouml;nnen.<br /><br />Generell ist festzustellen, dass Social Media bereits heute f&uuml;r Unternehmen eine immense Bedeutung innehat. In der Zukunft wird dieser Trend jedoch, wie anhand der im WPF zu behandelnden Themen zu erkennen sein wird, noch sp&uuml;rbar zunehmen.</p>\n<p>Innerhalb des Wahlpflichtfachs &bdquo;Enterprise Social Media&ldquo; wird das Thema Social Media mit seinen unterschiedlichen Facetten in Bezug auf Unternehmen beleuchtet. Dies beinhaltet die schon angesprochenen Unternehmens-internen wie -externen Einsatzfelder, wie z.B. Enterprise Social Networking und Collaboration (Wikis, Blogs, Mikro-Blogs), Einsatz von Social Media im Online Marketing oder Einsatz von Social Media im Online Recruiting.<br /><br />Desweiteren werden Themen diskutiert, die in den oben genannten Einsatzfeldern eine wichtige Rolle einnehmen, wie z.B. Social Media Analyse &amp; Monitoring, Gesellschaftliche Implikationen von Social Media Einsatz oder Social Media Guidelines f&uuml;r Mitarbeiter.<br /><br />Ziel des Seminars ist es, ein umfassendes Verst&auml;ndnis f&uuml;r die Vielf&auml;ltigkeit des Themas Social Media und dessen Bedeutung f&uuml;r Unternehmen jeglicher Gr&ouml;&szlig;e zu schaffen.</p>\n<p>WPF-Termine: Werden mit den Studierenden abgestimmt und finden bzgl. der H&auml;ufigkeit in Abh&auml;ngigkeit von der Anzahl der Teilnehmer statt. Bitte beachten Sie: Es handelt sich hier um keine klassische Blockveranstaltung, sondern um eine Kombination aus Terminen unter der Woche w&auml;hrend des Semesters sowie einer Abschlu&szlig;veranstaltung an einem Samstag gegen Ende des Semesters.</p>\n<p>Pr&uuml;fungsleistung: Ausarbeitung &amp; Pr&auml;sentation</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/51356859-ab94-4367-ac94-eb4c4fda86f6"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/51356859-ab94-4367-ac94-eb4c4fda86f6"
+        }
+      }
+    }, {
+      "id" : "7baa8697-0a00-4f92-ad66-7a32ab5e59b1",
+      "name" : "Produktion und Logistik (BWL 4)",
+      "description" : "<p>Vorlesung</p>\r\n<ul>\r\n<li>Grundlagen der Unternehmenslogistik: Definitionen, Inhalte, Funktionen, Ziele und Kennzahlen der Logistik; Kosten der Logistik und Optimierungspotenziale</li>\r\n<li>Einsatz von ERP-Systeme zur operativen Produktionsplanung und &ndash;steuerung</li>\r\n<li>Bestandsmanagement: Zielsetzungen und Funktionen der Lagerhaltung; Ma&szlig;nahmen zur Reduzierung von Bestandskosten; Bestandscontrolling</li>\r\n<li>Funktionsbezogene logistische Systeme &nbsp; Beschaffungslogistik: Funktionen, Ziele und Aufgaben; Beschaffungs-strategien; Beschaffungsdurchf&uuml;hrung; Instrumente und Analysen in der Materialwirtschaft; Beschaffungskennzahlen; Produktionslogistik: Funktionen, Ziele und Aufgaben; Ziele und Aufgaben der Produktionsplanung und &ndash;steuerung; Kernfunktionen und Ablauf der PPS; Lean-Produktion am Beispiel der Automobilindustrie (Toyota Produktionssystem, Kanban-Konzept); Distributionslogistik: Ziele und Aufgaben; Distributionsstrukturen; Distributionskosten und &ndash;kennzahlen; Entsorgungslogistik</li>\r\n<li>Aktuelle Trends in der Logistik (SCM)</li>\r\n<li>Mobile Datenerfassung und Daten&uuml;bertragung am Beispiel von Barcode/RFID</li>\r\n<li>Spezielle Logistikbereiche: Ersatzteile- und Instandhaltungslogistik</li>\r\n</ul>\r\n<p>&Uuml;bungen</p>\r\n<ul>\r\n<li>Vermittlung der Grundlagen eines ERP-Systems</li>\r\n</ul>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/7baa8697-0a00-4f92-ad66-7a32ab5e59b1"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/7baa8697-0a00-4f92-ad66-7a32ab5e59b1"
+        }
+      }
+    }, {
+      "id" : "7b5d900c-bb39-4a4e-bd44-23a7e9cf439e",
+      "name" : "WPF Berufspraxis Informatik",
+      "description" : "<p>Die Veranstaltung soll Studierenden in den Informatik-Studieng&auml;ngen (BSc) des Instituts f&uuml;r Informatik einen qualifizierten Einblick in typische Berufsfelder speziell im Bereich Kommunikationstechnik, allgemein aber auch in der Informatik, geben und ggf. Kontakte zu Unternehmen herstellen (insbesondere f&uuml;r Projekte, Abschlussarbeiten, sp&auml;tere Berufst&auml;tigkeit).<br />Um eine m&ouml;glichst breite Themenpalette zu erm&ouml;glichen, wird sie wie eine Ringvorlesung unter Beteiligung von Unternehmen (je Termin ein anderes Unternehmen) durchgef&uuml;hrt.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/7b5d900c-bb39-4a4e-bd44-23a7e9cf439e"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/7b5d900c-bb39-4a4e-bd44-23a7e9cf439e"
+        }
+      }
+    }, {
+      "id" : "3bec3d62-b722-4273-b4a8-f115a69aa66e",
+      "name" : "Bachelor Arbeit ",
+      "description" : "Selbstständiges wissenschaftliches, fachpraktisches und gestalterisches Bearbeiten einer Aufgabenstellung.",
+      "projectType" : "BA",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/3bec3d62-b722-4273-b4a8-f115a69aa66e"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/3bec3d62-b722-4273-b4a8-f115a69aa66e"
+        }
+      }
+    }, {
+      "id" : "a81d4983-933a-4cc4-839d-d6c5729dd7c2",
+      "name" : "WEB 2.0 im Unternehmen",
+      "description" : "<p>Das Web 2.0 hat neben nahezu jedem Bereich des allt&auml;glichen Lebens auch endg&uuml;ltig unsere Arbeitspl&auml;tze erreicht. Angestellte jeden Alters sehen sich mit Konzepten und Technologien, die dem Internet entspringen, auch im Intranet konfrontiert (Enterprise 2.0). Jedoch wird h&auml;ufig der Fehler gemacht, im offenen Web erfolgreiche Konzepte im Unternehmenskontext lediglich zu kopieren. Ein gutes Beispiel sind an dieser Stelle Wikis: W&auml;hrend im Internet Wikipedia mit Millionen Artikeln von erstaunlicher Qualit&auml;t stetig w&auml;chst, w&uuml;rde eine 1:1-Kopie im Unternehmen sicherlich nur wenig erfolgreich sein k&ouml;nnen. Dass ein Konzept wie das Wiki auch im Unternehmen einzusetzen ist, steht derweil au&szlig;er Frage; es bedarf jedoch keiner ad-hoc Kopie, sondern einer sinnvollen, durchdachten Adaption.<br /><br />Ziel des Seminars ist es, ausgew&auml;hlte Konzepte des Web 2.0 im Unternehmenskontext zu diskutieren. Daf&uuml;r werden zun&auml;chst die Grundlagen erarbeitet, indem die Konzepte und deren Ursprung im World Wide Web n&auml;her betrachtet werden: Wann wurde Wikipedia &uuml;berhaupt gestartet? Wann entstanden die ersten Blogs? Was ist in Abgrenzung dazu unter Micro-Blogging zu verstehen? Wo genau liegen die Anreize im Social Networking? Was ist das besondere an Mashups? Bei der Beantwortung dieser Fragen soll weniger die zugrunde liegende Technologie (Rich Internet Application auf Basis von Java, PHP, ...), sondern vielmehr die ver&auml;nderte Partizipation der Anwender im Vordergrund stehen: Was sind die Erfolgsrezepte von Wikipedia, Blogger.com, Twitter, Xing oder Google Maps?<br /><br />Aufbauend auf diesen Grundlagen soll er&ouml;rtert werden, auf welche Weise die untersuchten Konzepte auch im Unternehmen eingesetzt werden k&ouml;nnen. Dabei ist, wie bereits skizziert, die Abstraktion vom konkreten Beispiel im Internet notwendig, damit eine Adaption (und keine Kopie) im Enterprise 2.0 erfolgreich sein kann.&nbsp;</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/a81d4983-933a-4cc4-839d-d6c5729dd7c2"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/a81d4983-933a-4cc4-839d-d6c5729dd7c2"
+        }
+      }
+    }, {
+      "id" : "bedb68ed-66e5-4710-8cb4-73bac52064fb",
+      "name" : "WPF Compiler und Interpreter",
+      "description" : "<p>Syntaxerkennung, Abstrakter Syntaxbaum, semantische Analyse, Programmstrukturen, Interpretation und &Uuml;bersetzung</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/bedb68ed-66e5-4710-8cb4-73bac52064fb"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/bedb68ed-66e5-4710-8cb4-73bac52064fb"
+        }
+      }
+    }, {
+      "id" : "6cceef2a-f8d9-4c7e-a617-eb05a79be2db",
+      "name" : "Kommunikationstechnik und Netze",
+      "description" : "<ul>\r\n<li>Grundbegriffe und Grundlagen, Kommuni&shy;kations&shy;systeme (Modelle, Grundbegriffe), Protokolle, Schnitt&shy;stellen, Dienste, Architekturmodelle (OSI-Referenz&shy;modell, TCP/IP-Protokollfamilie), Standardisierung</li>\r\n<li>TCP/IP-Protokollfamilie als Grundlage des Internet, Schichten&shy;modell und Protokolle im Detail, Adres&shy;sie&shy;rung, ausgew&auml;hlte Anwendungen</li>\r\n<li>Klassifizierung von Netzen, Topologien, Technik</li>\r\n<li>Wegewahl / Vermittlung / Routing, Vermitt&shy;lungs&shy;prin&shy;zi&shy;pien, Routing-Verfahren und ‑Protokolle, Internet-spezi&shy;fische Verfahren</li>\r\n<li>Multimedia-Netze, Dienstg&uuml;te, Internet-Telefonie, Reali&shy;sierung von Multimedia-Netzen</li>\r\n<li>Netzsicherheit, grundlegende Begriffe der &bdquo;IT-Sicher&shy;heit&ldquo;, typische Bedrohungen in Netzen, Beispielszenarien</li>\r\n</ul>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/6cceef2a-f8d9-4c7e-a617-eb05a79be2db"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/6cceef2a-f8d9-4c7e-a617-eb05a79be2db"
+        }
+      }
+    }, {
+      "id" : "9e26c469-c92f-4abb-9e90-3cb91d5cb30e",
+      "name" : "WPF Mobile IT-Security",
+      "description" : "<p>Inhalt und Gegenstand der Lehrveranstaltung \"Mobile IT-Security\" ist \"mobile\" Informationstechnik und deren sichere Nutzung. Dazu geh&ouml;ren zun&auml;chst Technik, Protokolle, Standards, Anwendungen und Einsatzgebiete. Weiter kommen dazu Grundlagen der IT-Sicherheit und deren Anwendung in mobilen Szenarien sowie die angepasste Gestaltung von mobilen Anwendungen (Apps\").</p>\r\n<p><br />Konkret werden u. a. folgende Themen behandelt: Grundlagen der drahtlosen &Uuml;bertragung, Mobiltelefonie, Technik drahtloser lokaler Netze, spezielle Protokollaspekte (z. B. \"mobile IP\" und DHCP, IPv6 und IPsec), Sicherheit in mobilen Netzen und f&uuml;r mobile Anwendungen, Plattformen und Anwendungen.<br />Als ein Themenfeld wird in diesem WPF auch \"Next Generation Network\" (IPv6 und IPsec) betrachtet, etwa in dem Besonderheiten der Version 6 des Protokolls IP (IPv6) herausgearbeitet und speziell die Verwendung von IPv6 mit dem Sicherheitsprotokoll IPsec in mobilen Szenarien n&auml;her untersucht, denn im Zusammenhang mit mobiler Kommunikation kommen die Vorteile von IPv6 besonders zum Tragen.</p>\r\n<p><br />Schlie&szlig;lich werden auch Grundlagen der Erstellung mobiler Anwendungen f&uuml;r verschiedene Plattformen vorgestellt und mit dem erworbenen Wissen zur Erstellung einer Beispiel-App genutzt.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/9e26c469-c92f-4abb-9e90-3cb91d5cb30e"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/9e26c469-c92f-4abb-9e90-3cb91d5cb30e"
+        }
+      }
+    }, {
+      "id" : "b76db642-9fda-478a-8014-a929a203126b",
+      "name" : "WPF Brain Computer Interfaces",
+      "description" : "<p>&nbsp;In den letzten Jahren wurden gro&szlig;e Fortschritte dabei gemacht, digitale  Ger&auml;te (Tastatur, Maus oder gar Roboter) allein durch die Kraft der  Gedanken zu steuern. Um diese direkte Kommunikation zwischen Hirnstr&ouml;men  und Computer zu bewerkstelligen, muss die Schnittstelle mit einem hohen  Ma&szlig; an k&uuml;nstlicher Intelligenz versehen werden. In diesem WPF werden  zun&auml;chst die relevanten Grundlagen der Neuroanatomie und des  maschinellen Lernens vermittelt. Danach schlie&szlig;en sich Referate &uuml;ber  aktuelle Forschung im Bereich der BCI an.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/b76db642-9fda-478a-8014-a929a203126b"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/b76db642-9fda-478a-8014-a929a203126b"
+        }
+      }
+    }, {
+      "id" : "29a45793-c5bd-45ee-bf9f-189f37f82935",
+      "name" : "Professionelle Fähigkeiten: Kommunikation und Kooperation",
+      "description" : "Der Erfolg im beruflichen Alltag hängt nicht nur vom Fachwissen alleine ab. MitarbeiterInnen benötigen eine Reihe von weiteren Fähigkeiten, damit sich ihr fachliches Know-how wirkungsvoll entfalten kann. Zu diesen professionellen Fähigkeiten gehören insbesondere Kommunikationskompetenzen, Teamfähigkeit und Selbstmanagementkompetenz. In dieser Veranstaltung geht es um diese bedeutsamen überfachlichen Qualifikationen. Es werden wissenschaftliche und praxisbezogene Erkenntnisse dazu vorgestellt, wie diese Qualifikationen beschaffen sind und wie sie erworben werden können. In zahlreichen Übungen haben die Teilnehmenden die Möglichkeit, ihre eigenen professionellen Fähigkeiten auf den Prüfstand zu stellen und am Ausbau dieser Qualifikationen aktiv zu arbeiten. ",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/29a45793-c5bd-45ee-bf9f-189f37f82935"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/29a45793-c5bd-45ee-bf9f-189f37f82935"
+        }
+      }
+    }, {
+      "id" : "00fae5fd-db4d-4cce-ac48-fdb14a8d2b61",
+      "name" : "WPF Künstliche Intelligenz - Logische Agenten und Roboter",
+      "description" : "<p>Thema: SLAM - <span lang=\"en-Latn\" xml:lang=\"en-Latn\">Simultaneous Localization and Mapping</span></p>\r\n<p><span lang=\"en-Latn\" xml:lang=\"en-Latn\">Lokalisierung und Orientierung eines autonomen Roboters in einer unbekannten Umgebung.</span></p>\r\n<p style=\"text-align: left;\"><span lang=\"en-Latn\" xml:lang=\"en-Latn\">Im WPF geht es um ein praktisches SLAM-Problem, das auf&nbsp; EV3-Mindstorm-Robotern der neusten Generation programmiert und gel&ouml;st werden soll.</span></p>\r\n<p><span lang=\"en-Latn\" xml:lang=\"en-Latn\">Parallel dazu wird etwas Hintergrundtheorie vermittelt, aber nur soweit in der Tiefe, um die praktisch angewendeten Methoden zu verstehen.</span></p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/00fae5fd-db4d-4cce-ac48-fdb14a8d2b61"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/00fae5fd-db4d-4cce-ac48-fdb14a8d2b61"
+        }
+      }
+    }, {
+      "id" : "18cb32f0-9de5-479d-a57b-e7e5c8e7b10f",
+      "name" : "Betriebliche Anwendungssysteme I",
+      "description" : "<ul>\r\n<li>Grundlagen betrieblicher Anwendungssysteme</li>\r\n<li>Betriebliche aufgabenbezogene Anwendungen und typische Referenzmodelle (Finanz- und Personalwesen sowie branchenspezifische Referenzmodelle),</li>\r\n<li>Einsatzszenarios f&uuml;r Querschnittsaufgaben,</li>\r\n<li>Praktische &Uuml;bungen mit typischen betrieblichen Anwendungssystemen (zur Zeit SAP ERP und&nbsp; Microsoft Dynamics NAV),</li>\r\n<li>Systemgrundlagen zur Anwendungsentwicklung (am Beispiel von Microsoft Dynamics NAV),</li>\r\n<li>Klassen, Daten- und Kontrollstrukturen in der Entwicklungsumgebung von Dynamics NAV C/SIDE,</li>\r\n<li>Ereignisgesteuerte Tabellenverarbeitung</li>\r\n</ul>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/18cb32f0-9de5-479d-a57b-e7e5c8e7b10f"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/18cb32f0-9de5-479d-a57b-e7e5c8e7b10f"
+        }
+      }
+    }, {
+      "id" : "9fc942bd-382b-46bc-8bd8-8d36a41a9321",
+      "name" : "Algorithmen und Programmierung I",
+      "description" : "<ul>\n<li>Prozedurale Programmierung am Beispiel von C.</li>\n<li>Objektorientierte Programmierung am Beispiel von Java.</li>\n<li>Kontroll- und Datenstrukturen.</li>\n<li>Modularisierungskonzepte.</li>\n<li>Typkonzepte.</li>\n<li>Grundmuster der objektorientierten Programmierung.</li>\n<li>Elementare Algorithmen und Aufwandssch&auml;tzung.</li>\n<li>Entwicklungsumgebungen.</li>\n</ul>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/9fc942bd-382b-46bc-8bd8-8d36a41a9321"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/9fc942bd-382b-46bc-8bd8-8d36a41a9321"
+        }
+      }
+    }, {
+      "id" : "99fc2e4f-c3a5-42f3-8839-5a345c387b67",
+      "name" : "Lineare Algebra und Computergrafik",
+      "description" : "<p>Computergraphik ist eng verbunden mit mathematischen Methoden aus der linearen Algebra. Drehungen, Translationen, Streckungen, Projektionen, Spiegelungen, Skalierungen, Scherungen, &hellip; sind mathematische Operationen, die eine herausragende Rolle in der Computergraphik spielen.</p>\r\n<p>Folgende <strong>Themen</strong> werden unter anderem behandelt:</p>\r\n<p>&bull; Koordinatensysteme</p>\r\n<p>&bull; homogene Koordinaten</p>\r\n<p>&bull; Transformationen (Translationen, Streckungen, Drehungen, &nbsp;Spiegelungen,&hellip;)</p>\r\n<p>&bull; Projektionen</p>\r\n<p>&bull; Anwendungen&nbsp;</p>\r\n<p>In den ersten Sitzungen werden die mathematischen Hilfsmittel aus der linearen Algebra in Vorlesungsform vermittelt. Danach schlie&szlig;en sich Referate &uuml;ber wichtige Anwendungen der linearen Algebra in der Computergrafik an.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/99fc2e4f-c3a5-42f3-8839-5a345c387b67"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/99fc2e4f-c3a5-42f3-8839-5a345c387b67"
+        }
+      }
+    }, {
+      "id" : "ce9f366a-6d46-4e61-a9f0-a6bda732a398",
+      "name" : "WPF Spezielle Aspekte betrieblicher Anwendungssysteme",
+      "description" : "<p>Dieses Wahlpflichtfach findet in Seminarform statt. Die Studierenden halten Vortr&auml;ge und fertigen Ausarbeitungen zu speziellen Gebieten im Umfeld betrieblicher Anwendungssysteme.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/ce9f366a-6d46-4e61-a9f0-a6bda732a398"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/ce9f366a-6d46-4e61-a9f0-a6bda732a398"
+        }
+      }
+    }, {
+      "id" : "aba2c28c-416b-4cce-ad5b-76ba0ece2515",
+      "name" : "WPF Wirtschafts- und Finanzpolitik",
+      "description" : "<p>Grundlagen zu aktuellen Ereignissen: Finanzkrise, Staatsverschuldung, Konjunkturprogramme, Geld- und Finanzpolitik, Arbeitsmarkt usw. Auch denkbar z. B.: Energiepolitik, Wettbewerbspolitik, Geldpolitik. Festlegung der konkreten Themenbereiche nach Vereinbarung. Pruefungsform: Ausarbeitungen und Praesentationen. Bei Interesse: Kommen Sie bitte zur 1. Veranstaltung gem. Stundenplan. Eine Aenderung der Zeit ist auch moeglich. Weitere Info - wenn erforderlich: www.friedrich-wilke.de</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/aba2c28c-416b-4cce-ad5b-76ba0ece2515"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/aba2c28c-416b-4cce-ad5b-76ba0ece2515"
+        }
+      }
+    }, {
+      "id" : "c5af86b9-1b5a-4f2c-924b-afb55ccaf59b",
+      "name" : "WPF Verteilte Systeme",
+      "description" : "<p>Verteilte Systeme, Programmierung paralleler Prozesse, Clusterprogrammierung, effiziente parallele Algorithmen ggf. zur Robotersteuerung/ Bildverarbeitung</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/c5af86b9-1b5a-4f2c-924b-afb55ccaf59b"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/c5af86b9-1b5a-4f2c-924b-afb55ccaf59b"
+        }
+      }
+    }, {
+      "id" : "7042d31e-83d6-4af2-9fbe-4a7af835dbf4",
+      "name" : "Design for User Experience",
+      "description" : "<p>Globalized markets for professional software force the development of interactive systems to go far beyond functional features and to take usability, the users and their positive experiences into account. Although user experience is often (mis)used as a buzzword by marketing experts to sell products, how can we design for an experience?&nbsp;</p>\n<p>By examine several case studies (with concrete applications at hand) we  will identify possible desired experiences and identify components of  users experiences, to provide a starting-point for the (re-)design of  UX.</p>\n<p>&nbsp;</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/7042d31e-83d6-4af2-9fbe-4a7af835dbf4"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/7042d31e-83d6-4af2-9fbe-4a7af835dbf4"
+        }
+      }
+    }, {
+      "id" : "40bc5a72-786e-493e-a4a0-08da08ed6b77",
+      "name" : "Jenseits von Usability-Kreativität und Experience Design",
+      "description" : "<p>Design des Systems zur Praktikums-Online-Anmeldung unter Usability-Aspekten aus der Sicht verschiedener Stakeholder.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/40bc5a72-786e-493e-a4a0-08da08ed6b77"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/40bc5a72-786e-493e-a4a0-08da08ed6b77"
+        }
+      }
+    }, {
+      "id" : "79755a43-be80-43db-9f1b-527d5f2c88ec",
+      "name" : "Informatik, Recht und Gesellschaft",
+      "description" : "IUG:<ul><li>Die Wechselwirkungen zwischen den von Informatikern entwickelten Systemen und ihrem Einsatzumfeld werden in drei großen Themenblöcken behandelt:</li><li>Informatik und soziale Kontexte</li><li>Komplexität und Sicherheit in sozio-technischenen Systemen</li><li>Systemgestaltung und Verantwortung der Informatik.</li><li>Beispielhafte Inhalte: Geschichte der Informatik, Bildung und Wissenschaft, Wissenschaften und Gesellschaft, Digitale Medien und Internet, Datenschutz und Überwachungstechniken, Informatik und Gestaltung, partizipative Systemgestaltung, Open Source, Ethische Leitlinien für Informatiker, Normen und Standards, philosophische Aspekte der Informatik.</li></ul><br />Recht: <ul><li>Einführung in das deutsche Privatrecht, insbesondere in das BGB. Schwerpunkt im Schuldrecht , hier insbesondere im Vertragsrecht. Besondere Aspekte des Verbraucherschutzes und der inhaltlichen Gestaltung von Verträgen. Im Allgemeinen Teil des BGB wird auf den Vertragsschluss, die Willenerklärung als rechtsgeschäftliches Gestaltungsmittel und die allgemeinen Anforderungen an die Vertragspartner eingegangen.</li></ul>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/79755a43-be80-43db-9f1b-527d5f2c88ec"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/79755a43-be80-43db-9f1b-527d5f2c88ec"
+        }
+      }
+    }, {
+      "id" : "8e1e6673-b803-4376-807b-26e6e1311847",
+      "name" : "Praxisprojekt",
+      "description" : "<ul>\n\t<li>\n\t\tAnwendung von Modulinhalten des ersten bis f&uuml;nften Semesters anhand von realen Anforderungen in einem praxisrelevanten Kontext.</li>\n\t<li>\n\t\tDies kann entweder in einem Unternehmen oder in der Hochschule &ndash; dann eingebettet in Forschungsprojekte &ndash; erfolgen.</li>\n</ul>\n",
+      "projectType" : "PP",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/8e1e6673-b803-4376-807b-26e6e1311847"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/8e1e6673-b803-4376-807b-26e6e1311847"
+        }
+      }
+    }, {
+      "id" : "1838c9d6-6925-4640-9a27-6d26c51d00c4",
+      "name" : "Digitale Kommunikation",
+      "description" : "<p>Dieses Modul befasst sich mit verschiedenen Perspektiven der digitalen Kommunikation und bietet Platz zum entwickeln und ausprobieren eigener Ans&auml;tze und L&ouml;sungen in diesem Themenfeld. Das Modul hat eine hohe Praxisorientierung. Als Voraussetzung sollten Sie die Module \"Grundlagen der visuellen Kommunikation\" und \"Audiovisuelle Medienprojekt\" erfolgreich abgeschlossen haben. Auch die erfolgreich abgeschlossenen Module \"Web-basierte Anwendungen 1 + 2\" und \"Computergrafik und Animation\" erh&ouml;hen Ihre Handlungsf&auml;higkeit in diesem Modul.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/1838c9d6-6925-4640-9a27-6d26c51d00c4"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/1838c9d6-6925-4640-9a27-6d26c51d00c4"
+        }
+      }
+    }, {
+      "id" : "2bb261b0-1eef-48a7-aa8f-c71d377b89e1",
+      "name" : "WPF Spiele, Simulation und dynamische Systeme",
+      "description" : "<p>Einf&uuml;hrung Simulation, Diskretisierung der &Uuml;bergangsbeziehung, Analytische Methoden, numerische Programmierung von DGLs. Einf&uuml;hrung <strong>Game Physics</strong>, OpenGL, Kollisionsdetektion, Simulation deformierbarer Objekte, Partikelsystem, Game Physics mit <strong>Kinect </strong>(XBOX). Vorlesung mittels Beamer, Overhead, Skript. Praktische &Uuml;bungen, z.B. mit Excel (Tabellenkalkulation), im GamePhysics-Teil mit <strong>Processing</strong> (www.processing.org). Vorbereitete Workshops, in denen die Studierenden &uuml;ber ihre Themen und Projekte berichten und eigene aktivierende &Uuml;bungseinheiten f&uuml;r die Teilnehmer konzipieren.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/2bb261b0-1eef-48a7-aa8f-c71d377b89e1"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/2bb261b0-1eef-48a7-aa8f-c71d377b89e1"
+        }
+      }
+    }, {
+      "id" : "6249e522-4a0d-4a09-9795-06e1d4e57ba3",
+      "name" : "WPF Deep Learning, Machine Learning und Künstliche Intelligenz",
+      "description" : "<p>Nach einer Einf&uuml;hrung in Machine Learning befassen wir uns besonders mit Deep Learning, also dem Lernen mit sog. 'tiefen' neuronalen Netzen. Hierbei steht besonders die praktische Anwendung mit Python, Jupyter Notebooks, TensorFlow, Keras und Google Colab im Vordergrund.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/6249e522-4a0d-4a09-9795-06e1d4e57ba3"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/6249e522-4a0d-4a09-9795-06e1d4e57ba3"
+        }
+      }
+    }, {
+      "id" : "8104dca4-4bab-4d9c-9b10-a8a75cf55402",
+      "name" : "Finanzierung & Investition (BWL 6)",
+      "description" : "<p>Course is taught in English in Winter, in German in summer</p>\r\n<p>Corpoare Finance</p>\r\n<p>1. Basics / Financial Statements</p>\r\n<p>2. Time Value of Money</p>\r\n<p>3. Bonds</p>\r\n<p>4. Corporate Budgeting / Free Cash Flow Forecasting</p>\r\n<p>5. Investment Analysis</p>\r\n<p>6. CAPM</p>\r\n<p>7. WACC</p>\r\n<p>8. Valuation</p>\r\n<p>Finanzierung</p>\r\n<ol type=\"I\">\r\n<li>Einordnung und Grundlagen</li>\r\n<li>Finanzplanung</li>\r\n<li>Finanzierung\r\n<ol>\r\n<li>Au&szlig;enfinanzierung</li>\r\n<li>Innenfinanzierung</li>\r\n</ol>\r\n</li>\r\n</ol>\r\n<p><br />Investition</p>\r\n<ol type=\"I\">\r\n<li>Grundbegriffe und Einordnung</li>\r\n<li>Verfahren der Investitionsrechnung\r\n<ol>\r\n<li>Statische Verfahren\r\n<ol type=\"a\">\r\n<li>Kostenvergleichsrechnung</li>\r\n<li>Gewinnvergleichsrechnung</li>\r\n<li>Rentabilit&auml;tsvergleichsrechnung</li>\r\n<li>Statische Amortisationsdauer</li>\r\n</ol>\r\n</li>\r\n<li>Dynamische Verfahren\r\n<ol type=\"a\">\r\n<li>Kapitalwertmethode</li>\r\n<li>Interner Zinsfu&szlig;</li>\r\n<li>Annuit&auml;tenmethode</li>\r\n<li>Dynamische Amortisationsdauer</li>\r\n</ol>\r\n</li>\r\n</ol>\r\n</li>\r\n<li>Free Cash Flow Forecasting</li>\r\n<li>CAPM / WACC</li>\r\n<li>Grundz&uuml;ge der Unternehmensbewertung</li>\r\n</ol>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/8104dca4-4bab-4d9c-9b10-a8a75cf55402"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/8104dca4-4bab-4d9c-9b10-a8a75cf55402"
+        }
+      }
+    }, {
+      "id" : "c5607d1c-16bb-49ea-8afd-850310d832db",
+      "name" : "Controlling und Management (BWL 3)",
+      "description" : "<ol>\r\n<li>Grundlagen\r\n<ul>\r\n<li>Entscheidung</li>\r\n<li>Koordination</li>\r\n<li>Controlling Konzept</li>\r\n<li>IT Unterst&uuml;tzung des Controllings</li>\r\n</ul>\r\n</li>\r\n<li>Berichten\r\n<ul>\r\n<li>Kennzahlen</li>\r\n<li>Form und Design</li>\r\n<li>Berichtsplattformen</li>\r\n</ul>\r\n</li>\r\n<li>Unternehmens-Planung\r\n<ul>\r\n<li>&Uuml;berblick</li>\r\n<li>Teilpl&auml;ne</li>\r\n<li>Integrierte Unternehmensplanung</li>\r\n</ul>\r\n</li>\r\n<li>Steuern\r\n<ul>\r\n<li>Prozesskostenrechnung (Activity Based Costing)</li>\r\n<li>Balanced Scorecard</li>\r\n<li>Andere Steuerungskonzepte</li>\r\n</ul>\r\n</li>\r\n<li>Management\r\n<ul>\r\n<li>F&uuml;hrungsprinzipien</li>\r\n<li>Performance Management</li>\r\n<li>Prozessmanagement</li>\r\n<li>Personalmanagement</li>\r\n<li>Risikomanagement</li>\r\n<li>Strategisches Management</li>\r\n</ul>\r\n</li>\r\n</ol>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/c5607d1c-16bb-49ea-8afd-850310d832db"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/c5607d1c-16bb-49ea-8afd-850310d832db"
+        }
+      }
+    }, {
+      "id" : "ee7eac75-5010-434c-ae5d-0603cd3a976f",
+      "name" : "WPF Customizing von ERP-Systemen",
+      "description" : "<p>Die meisten Gesch&auml;ftsprozesse sind in ERP-Systeme \"fest verdrahtet\". Das f&uuml;hrt zu einer hohen Performanz,aber auch zu einer gewissen Inflexibilit&auml;t.<br /><br />Moderne Ans&auml;tze f&uuml;r Unternehmensstrukturen versuchen Gesch&auml;ftsprozesse auf einer separierten Gestaltungsebene abzubilden und daf&uuml;r die Dienste der darunter liegenden ERP-Ebene in Form von Diensten nutzbar zu machen. Dies ist insbesondere dann interessant, wenn man System-&uuml;bergreifende Prozesse, zB in internationalen Konzernen mit einer heterogenen Anwendungslandschaft flexibel steuern will. Dann wird es aber sinnvoll, &uuml;ber \"Best Practices\" nachzudenken, wie man eine Infrastruktur f&uuml;r solche Aufgaben schafft. Dies f&uuml;hrt zu sogenannten Service-orientierten Architekturen (SOA) und der planm&auml;&szlig;igen Gestaltung einer unternehmensweiten IT-Landschaft (Enterprise Architecture Management).<br /><br />Wir werden uns in diesem WPF mit den Grundlagen der Gestaltung flexibler (agiler) IT-Landschaften kritisch auseinandersetzen (SOA-Paradigma) und anhand eines SOA-Referenzentwurfes (GenriCo) konzeptionelle Ans&auml;tzen entwickeln und auf die Umsetzung mittels \"SAP-naher\" Software-Komponenten, wie zB SAP Composition Environment (CE), SAP CAF (Composition Application Framework) projizieren.<br /><br />Auf der Basis dieses WPFs werden im folgenden WS 2012/13 WI-Projekte zur Umsetzung der erarbeiteten Technologien und Konzepte angeboten werden. Das WPF und die Projekte finden in Kooperation mit einem Beratungsunternehmen statt und beinhalten Schulungen unter anderem f&uuml;r SAP CE.<br /><br />Themen:<br /><br />1. Einf&uuml;hrung in SOA und Enterprise Architecture Management<br />2. GeneriCo-Blueprint<br />3. SAP und SOA<br />- BAPIs und WebServices<br />- Enterprise Service Services Repository and Registry<br />- NWDS und NWDI<br />- SAP Netweaver CE<br />- (SAP CAF)<br /><br />Das WPF kann jeder besuchen, der in Technologien und Konzepte zur Gestaltung gro&szlig;er IT-Konzernlandschaften reinschnuppern m&ouml;chte. Wer in diesem Themenbereich eine berufliche Perspektive sieht und die Kenntnisse praktisch vertiefen m&ouml;chte, kann eines der daran ankn&uuml;pfenden WI-Projekte belegen: Fallstudien mit SAP Werkzeugen zur Umsetzung agiler Gesch&auml;ftsprozesse .<br /><br /><br /></p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/ee7eac75-5010-434c-ae5d-0603cd3a976f"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/ee7eac75-5010-434c-ae5d-0603cd3a976f"
+        }
+      }
+    }, {
+      "id" : "1189a9ea-65e7-46b4-b4a7-1c2f3fe4450d",
+      "name" : "Einführung in Betriebssysteme und Rechnerarchitekturen",
+      "description" : "<ul>\n\t<li>\n\t\tGrundlagen: Geschichte der IT, Zahlen &ndash; und Zeichendarstellung in Rechnersystemen</li>\n\t<li>\n\t\tGrundlagen der Rechnerarchitektur: Von Neumann Architektur, Speicherhierarchie, Physikalischer Aufbau von magnetischen Speichermedien, Physikalischer Aufbau optischer Speichermedien, Busse und Schnittstellen, Beispielarchitekturen</li>\n\t<li>\n\t\tGrundlagen von Betriebssystemen: Schichtenmodell, Betriebsarten, Programmausf&uuml;hrung, Prozesse und Scheduling, Beispiel: Der BSD-Unix Scheduler, Interrupts, Speicherverwaltung: demand paging, working set, Auslagerungsverfahren, Beispiel: demand paging unter BSD-Unix, Dateisysteme, Beispiele: Unix inodes und MSDOS FAT, Rechteverwaltung, Netzwerkbetriebssysteme</li>\n\t<li>\n\t\tIm Mittelpunkt der Veranstaltung steht die Vermittlung von Basiskonzepten und Grundlagen, die sich auf die Benutzung von Betriebssystemen beziehen. Das Design von Betriebssystemen und die Systemprogrammierung werden im Modul Betriebssysteme behandelt, das auf den Grundlagen des Faches EBR aufbaut.</li>\n</ul>\n",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/1189a9ea-65e7-46b4-b4a7-1c2f3fe4450d"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/1189a9ea-65e7-46b4-b4a7-1c2f3fe4450d"
+        }
+      }
+    }, {
+      "id" : "513e3bdc-f2de-4722-aeaf-d6946065d51f",
+      "name" : "WPF Internet of Things",
+      "description" : "<div>In diesem WPF lernen die Teilnehmer das Gebiet Internet of Things und seine Relevanz kennen. Immer mehr Alltagsgegenst&auml;nde werden mit Technologien angereichert, die eine Dienste-Bereitstellung oder Dienst-Nutzung &uuml;ber das Internet erm&ouml;glichen (beispielsweise das Steuern von Gegenst&auml;nden oder das Erfassen von Sensordaten). In diesem WPF werden aktuelle Technologien f&uuml;r Systeme des Internet of Things diskutiert und prototypische Anwendungen realisiert.</div>\r\n<div>&nbsp;</div>\r\n<div>Zu Begin des Moduls findet eine Einf&uuml;hrung durch den Dozenten statt. Danach werden in seminaristischem Unterricht verschiedene aktuelle und relevante Technologie des Internet of Things vermittelt und demonstriert (bspw. Raspberry Pi, Arduino, MQTT, Node-Red, Johnny Five). Diese werden dann in Teams zur Entwicklung eines eigenen IoT-Prototypen eingesetzt.&nbsp;Studierende k&ouml;nnen nach diesem Modul selbstst&auml;ndig IoT Systeme konzipieren und implementieren.</div>\r\n<p><span style=\"text-decoration: underline;\"><a href=\"http://moxd.io/teaching\">Website zur Veranstaltung mit Datum und weiteren Infos</a></span></p>\r\n<div>&nbsp;</div>\r\n<div><img src=\"http://moxd.io/wp-content/uploads/2016/03/iot-teaser-hops.png\" alt=\"\" width=\"450px\" /></div>\r\n<div>&nbsp;</div>\r\n<div><strong>Lernziele:</strong></div>\r\n<div>\r\n<ul>\r\n<li>\r\n<div>Studierende kennen das Gebiet Internet of Things</div>\r\n</li>\r\n<li>\r\n<div>Studierende k&ouml;nnen aktuelle Technologien des&nbsp;Internet of Things einsetzen</div>\r\n</li>\r\n<li>\r\n<div>Studierende k&ouml;nnen Prototypen f&uuml;r cyber-physikalische Produkte entwickeln</div>\r\n</li>\r\n<li>\r\n<div>Studierende k&ouml;nnen anhand von Prototypen pr&auml;sentieren</div>\r\n</li>\r\n</ul>\r\n<p>&nbsp;</p>\r\n</div>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/513e3bdc-f2de-4722-aeaf-d6946065d51f"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/513e3bdc-f2de-4722-aeaf-d6946065d51f"
+        }
+      }
+    }, {
+      "id" : "a9cfdf9b-ac41-471e-a887-4b6270d9cef6",
+      "name" : "Einführung in die Wirtschaftsinformatik",
+      "description" : "<p>Zur grundlegenden Orientierung der Studierenden im Wirtschaftsinformatik-Studium wird vermittelt,</p>\n<ul>\n<li>dass sich Wirtschaftsinformatik als Schnittstellenwissenschaft zwischen der Betriebswirtschaftslehre (BWL) auf der einen und der Informatik auf der anderen Seite mit der Gestaltung computergest&uuml;tzter Information und Kommunikation als soziotechnische Systeme zur Effektivierung der Aufgabenerf&uuml;llung in Unternehmungen befasst;</li>\n<li>dass Unternehmungen Gegenstand der BWL sind, somit betriebswirtschaftliche Fragestellungen sowohl die Dom&auml;ne und den Handlungsrahmen f&uuml;r die Erkenntnisse der Wirtschaftsinformatik bestimmen als auch die Zwecke, Zielrichtungen und Sichtweisen, an denen sich die Gestaltungsaktivit&auml;ten der Wirtschaftsinformatik orientieren;</li>\n<li>dass die Informatik Methoden und Modelle zur Com-puterunterst&uuml;tzung bietet, die die Wirtschaftsinformatik zur Umsetzung betriebswirtschaftlicher Ziele verwendet.</li>\n</ul>\n<p>Im weiteren Verlauf des Studiengangs werden die &uuml;ber-blickartig vermittelten Themengebiete schrittweise vertieft. Neben separaten BWL-Lehrveranstaltungen (Themengebiet 2) und den Informatikf&auml;chern geschieht dies in den Wirtschaftsinformatik-Modulen &bdquo;Betriebliche Anwendungssysteme I&ldquo; &bdquo;Betriebliche Anwendungssysteme II.odellierung von Anwendungssystemen&ldquo;, &bdquo;Informationsmanagement&ldquo; und in einem Wirtschaftsinformatik-Projekt.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/a9cfdf9b-ac41-471e-a887-4b6270d9cef6"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/a9cfdf9b-ac41-471e-a887-4b6270d9cef6"
+        }
+      }
+    }, {
+      "id" : "69ccc846-9fbe-4761-9d23-3ce74be9832b",
+      "name" : "Modellierung von Anwendungssystemen",
+      "description" : "<p>\n\tDie Wirtschaftsinformatik befasst sich mit IT-gest&uuml;tzten Informations- und Kommunikationssystemen (IuK-Systeme) in Wirtschaft und Verwaltung. Anwendungs-systeme gelten als der automatisierte Teil betrieblicher IuK-Systeme. Deren Modellierung beinhaltet die systematische Erstellung und Modifizierung computer-gest&uuml;tzter L&ouml;sungen auf Basis von Abstraktionen betrieb(swirtschaft)licher Realit&auml;tsausschnitte (&bdquo;Software Engineering&ldquo;). F&uuml;r diesen Zweck erfordern Modellierungs-projekte ein nachhaltiges Verst&auml;ndnis des konkreten Gestaltungsbedarfs der Unternehmung (&bdquo;Requirements Engineering&ldquo;) und vertrauensbildende Ma&szlig;nahmen zur Sicherstellung der Gebrauchstauglichkeit der Anwendungen (&bdquo;Usability Engineering&ldquo;).<br />\n\tF&uuml;r die Realisierung m&uuml;ssen solche anforderungs- und nutzungszentrierten Modelle dann sukzessive in technolo-gieunabh&auml;ngige Spezifikationsmodelle und technologie-abh&auml;ngige Entwurfsmodelle umgesetzt werden, auf deren Basis eine Implementierung kanonisch abgeleitet oder sogar generiert werden kann (&bdquo;Modellgetriebene Soft-wareentwicklung&ldquo;).</p>\n<p>\n\tTeil 1 des Moduls gliedert sich in folgende Kapitel:</p>\n<ol>\n\t<li>\n\t\tEinf&uuml;hrung in die Thematik</li>\n\t<li>\n\t\tAspekte des Software Engineering, wobei vermittelt wird, wie gro&szlig;e Anwendungssoftware methodisch entwickelt wird</li>\n\t<li>\n\t\tAspekte des Requirements Engineering, wobei vermittelt wird, wie Anforderungen an komplexe Anwendungssysteme methodisch gewonnen, dokumentiert und abgestimmt werden</li>\n\t<li>\n\t\tAspekte des Usability Engineering, wobei vermittelt wird, wie Vertrauen in die Gebrauchstauglichkeit von Anwendungssystemen methodisch hergestellt wird</li>\n\t<li>\n\t\tZusammenfassung und Ausblick</li>\n</ol>\n<p>\n\t&nbsp;</p>\n<p>\n\tTeil 2 des Moduls gliedert sich in folgende Kapitel:</p>\n<ol>\n\t<li>\n\t\tSoftwareentwicklung im &Uuml;berblick (Komplexit&auml;t gro&szlig;er Software, Kernaktivit&auml;ten und unterst&uuml;tzende Aktivit&auml;ten)</li>\n\t<li>\n\t\tDie Modellierungssprache UML (Strukturmodellierung mit Objekt- und Klassendiagrammen, Funktionsmo-dellierung mit Anwendungsfalldiagrammen, Verhal-tensmodellierung mit Sequenz-, Kommunikations- und Zustandsdiagrammen)</li>\n\t<li>\n\t\tModellbasierte Softwareentwicklung (Anforderungs-ermittlung, Softwarespezifizierung und Architektur-konzeption, Entwurfskonzepte und Grobentwurf, Fein-entwurf)</li>\n\t<li>\n\t\tZusammenfassung und Ausblick (Modellgetriebene Softwareentwicklung).</li>\n</ol>\n",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/69ccc846-9fbe-4761-9d23-3ce74be9832b"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/69ccc846-9fbe-4761-9d23-3ce74be9832b"
+        }
+      }
+    }, {
+      "id" : "10b6168a-3861-48c8-8983-9ca5787bcfb3",
+      "name" : "High Performance Parallel Computing in CI (Computational Intelligence)",
+      "description" : "<p>Realistische Anwendungsprobleme aus den Bereichen Optimierung und Data Mining erfordern oft hohe Rechenleistung, die nur verteilt zu erbringen ist. Im ersten Teil wollen wir uns anschauen, wie und mit welchen Paradigmen verteiltes Rechnen in bekannten Erfolgsprojekten wie Seti@Home, Folding@Home oder IBM.Watson(Jeopardy) funktioniert. In der zweiten H&auml;lfte des WPF wollen wir uns bestimmte Konzepte und Tools zum Parallel Computing, insbesondere in Verbindung mit der Open Source Programmiersprache R (z.B. Snow, Snowfall, sfCluster, GPU-Computing u.a.m.), genauer anschauen. Das WPF wird von Prof. Thomas Bartz-Beielstein und Prof. Wolfgang Konen unter Mitwirkung von Dipl.-Inform. Oliver Flasch, Boris Naujoks und Patrick Koch durchgef&uuml;hrt. Eine Fortsetzung im Folgesemester im Rahmen von Projektarbeiten in den Forschungsprojekten FIWA/SOMA (s. <a href=\"http://www.gociop.de/\">&nbsp;</a><a href=\"http://www.gociop.de/\">http://www.gociop.de</a>) ist bei Interesse und nach Absprache m&ouml;glich.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/10b6168a-3861-48c8-8983-9ca5787bcfb3"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/10b6168a-3861-48c8-8983-9ca5787bcfb3"
+        }
+      }
+    }, {
+      "id" : "594950af-a781-4754-abab-6a4c84e03e52",
+      "name" : "Betriebliche Anwendungssysteme II",
+      "description" : "<ul>\n<li>&Uuml;berblick &uuml;ber die betriebliche Anwendungssysteme</li>\n<li>Auswahlstrategien, Einf&uuml;hrungsstrategien, Customizing und Outsourcing</li>\n<li>Systemgrundlagen zur ABAP-Programmierung</li>\n<li>Daten- und Kontrollstrukturen in ABAP</li>\n<li>Ereignisgesteuerte Tabellenverarbeitung</li>\n<li>Data Dictionary Konzepte</li>\n<li>Entwicklung von Dynpros und Transaktionen</li>\n<li>Vorgehensmodelle zur ERP-Einf&uuml;hrung</li>\n<li>Service Desk Konzepte nach ITIL</li>\n<li>ITIL Change, Release und Configuration Management</li>\n<li>Service Level Agreements und Kennzahlen f&uuml;r den Betrieb von Betrieblichen Anwendungssystemen</li>\n</ul>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/594950af-a781-4754-abab-6a4c84e03e52"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/594950af-a781-4754-abab-6a4c84e03e52"
+        }
+      }
+    }, {
+      "id" : "f276ebf0-ec73-4d20-a837-a92b2d04b4ae",
+      "name" : "IPv6 und IPsec",
+      "description" : "<p>Wird in diesem Semester nicht angeboten bzw. in Kombination mit WPF36 (Mobile IT Security) durchgef&uuml;hrt.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/f276ebf0-ec73-4d20-a837-a92b2d04b4ae"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/f276ebf0-ec73-4d20-a837-a92b2d04b4ae"
+        }
+      }
+    }, {
+      "id" : "6a17d21f-c509-47da-8b02-f33e7b10e690",
+      "name" : "Blockchain Basics",
+      "description" : "<p>Sog. Kryptow&auml;hrungen - wie z. B. Bitcoin, Ethereum, Litecoin u. v. m. - sind derzeit in aller Munde. Ihre Besonderheit im Vergleich zu etablierten klassischen W&auml;hrungen - wie EURO, US-Dollar etc. - ist, dass sie nicht durch M&uuml;nzen und Banknoten realisiert werden, sondern lediglich \"digital\" existieren. Sie werden n&auml;mlich mit Hilfe kryptografischer Verfahren erzeugt und transferiert.</p>\r\n<p><br />Dahinter steckt das Prinzip einer Distributed-Ledger-Technik (DLT), deren bekanntester Vertreter unter dem Begriff \"Blockchain\" bekannt ist. Mittels der Blockchain-Technik lassen sich jedoch nicht nur Kryptow&auml;hrungen herstellen, sondern sie kann auch zum Realisieren revisionssicherer Aufzeichnungen (etwa bei Vertr&auml;gen, Protokollieren technischer Vorg&auml;nge etc.) und anderweitig verwendet werden.</p>\r\n<p><br />Inhalt und Gegenstand der Lehrveranstaltung \"Blockchain Basics\" ist genau diese Blockchain-Technik, die hier n&auml;her betrachtet, hoffentlich verstanden und dann im Rahmen einer exemplarischen Anwendung auch genutzt werden soll. Dabei stehen zwar die Prinzipien und Grundlagen im Vordergrund, aber es wird auch die praktische Umsetzung mit dem Ziel behandelt, dass die Teilnehmerinnen und Teilnehmer der Lehrveranstaltung eine eigene Blockchain-Implementierung erstellen k&ouml;nnen.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/6a17d21f-c509-47da-8b02-f33e7b10e690"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/6a17d21f-c509-47da-8b02-f33e7b10e690"
+        }
+      }
+    }, {
+      "id" : "66731046-1a60-48d7-97ec-01940478e2f7",
+      "name" : "Human Centered System Design",
+      "description" : "<p>Fr&uuml;her standen die Funktionen eines Systems im Vordergrund, wenn es um die Gestaltung eines Systems ging. Ausgehend von diesem \"Werkzeug-Charakter\" wurde das System konzipiert und gestaltet. Das Verst&auml;ndnis von \"Software-Ergonomie\" und \"Usability\" fokussierte dabei besonders auf den Aufgabenbezug und ein hohes Ma&szlig; an \"Effektivit&auml;t\", \"Effizienz\" und \"Zufriedenheit\". Das zugrunde liegende Menschenbild des Erwerbst&auml;tigen war hierbei eher stillschweigend vorausgesetzt; die Produktivit&auml;t der Erwerbst&auml;tigen war von zentraler Bedeutung. Heute werden interaktive Systeme in vielen Kontexten eingesetzt; nicht nur in Produktionsbez&uuml;gen. Damit stellt sich die Frage, ob das damalige Menschenbild (\"homo faber\") noch ausreichend ist. Wir thematisieren eine umfassendere Auseinandersetzung mit der Frage, wie ein interaktives System \"menschen-gerecht\" entwickelt werden kann. Dabei werden pers&ouml;nlichkeitspsychologische, emotionale und sozial/kulturelle Aspekte in den Fokus der Betrachtung r&uuml;cken; auch um die Aspekte in der Bewertung (\"Evaluation\") von Gestaltungsl&ouml;sungen ber&uuml;cksichtigen zu k&ouml;nnen (\"qualitative Erhebungsverfahren\").</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/66731046-1a60-48d7-97ec-01940478e2f7"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/66731046-1a60-48d7-97ec-01940478e2f7"
+        }
+      }
+    }, {
+      "id" : "0a68331e-22a0-41ea-92af-dd1ccfb660aa",
+      "name" : "WPF Praktische IT-Sicherheit",
+      "description" : "<p>Was ist Sicherheit?, Kryptographische Verfahren und ihr Einsatz, Authentisierungsverfahren, Sicherheit in Rechnernetzen, Werkzeuge zur Analyse und Realisierung von Sicherheitsfunktionen.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/0a68331e-22a0-41ea-92af-dd1ccfb660aa"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/0a68331e-22a0-41ea-92af-dd1ccfb660aa"
+        }
+      }
+    }, {
+      "id" : "cf0f5c2d-28ea-4f49-b54c-9fe93210375d",
+      "name" : "WPF System- und Netzmanagement",
+      "description" : "<p>Das Wahlpflichtfach \"Netzbetrieb und -management \" (WPFNBM) vermittelt die Grundlagen des IT-Managements. Dabei werden wichtige praxisrelevante Fragestellungen betrachtet und an Anwendungsbeispielen aufgearbeitet.</p>\r\n<p>Themen u. a.: System- und Netzstrukturen, Benutzer-/SW-/HW-Verwaltung (Methoden und Werkzeuge), Datensicherung, Zugangssicherung, &Uuml;berwachungsmethoden und -werkzeuge, SNMP, Network-Management-Frameworks, Service Level Agreements, Dienstg&uuml;teorientierung, Verteilte Strukturen (Cloud etc.), Virtualisierung</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/cf0f5c2d-28ea-4f49-b54c-9fe93210375d"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/cf0f5c2d-28ea-4f49-b54c-9fe93210375d"
+        }
+      }
+    }, {
+      "id" : "8b119ffa-8fef-4f2f-93b4-d974086c21c5",
+      "name" : "WPF Mobile Datenbanksysteme",
+      "description" : "<p>Die Veranstaltung \"Mobile Datenbanken\" bietet Studierenden die M&ouml;glichkeit, ein noch junges und stetig an Bedeutung wachsendes Gebiet der Datenbanktechnologie kennen zu lernen. Heute reicht das Spektrum mobiler Ger&auml;te von Subnotebooks, PDAs, Smartphones und bis zu Chipkarten, die &uuml;ber drahtlose Netze miteinander kommunizieren. Mobile Ger&auml;te sind zudem mittlerweile so leistungsstark, dass sie immer mehr auch komplexe Dienste erbringen und selber Datenmengen speichern, die den Einsatz mobiler Datenbanken erfordern. Die mobile Informationsverarbeitung er&ouml;ffnet nicht nur die Perspektive f&uuml;r eine Vielzahl spannender und n&uuml;tzlicher Anwendungen,&nbsp; sondern &nbsp;stellt auch neue Herausforderungen an die Forschung und Entwicklung zuk&uuml;nftiger Informationssysteme dar. Es &nbsp;wird eine Einf&uuml;hrung in dieses noch junge Gebiet der Datenbanktechnologie gegeben, Anwendungen aufgezeigt und erste Systeme vorgestellt.</p>\n<p>Inhalt:</p>\n<p>Theoretischer Teil:</p>\n<ul>\n<li>Lokalisationsmanagement</li>\n<li>Mobile Transaktionen</li>\n<li>Semantisches Caching</li>\n<li>Replikation und Synchronisation</li>\n<li>Bewegliche Objekte in Datenbanken</li>\n</ul>\n<p>Praktischer Teil</p>\n<ul>\n<li>&Uuml;berblick verschiedener Vorgehensmodellen (Native Android- und IPhone-Entwicklung, Cross-Plattform-Entwicklung mit HTML5/JavaScript, Hybrid-Anwendungen)</li>\n<li>Live-Tutorials mit Eclipse, xCode und verschiedenen HTML5-Frameworks (jQuery Mobile, Sencha Touch, Cordova ehem. Phonegap u.a.)</li>\n<li>Entwicklung einer eigenen App mit&nbsp;verteilten Datenbanken</li>\n</ul>\n<p>Eigene Leistung:</p>\n<p>Praktisches mobiles Projekt mit Vortrag und m&uuml;ndlicher Pr&uuml;fung</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/8b119ffa-8fef-4f2f-93b4-d974086c21c5"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/8b119ffa-8fef-4f2f-93b4-d974086c21c5"
+        }
+      }
+    }, {
+      "id" : "19278674-4114-45b0-836c-9ceabcc1f9c7",
+      "name" : "WPF Spezielle Aspekte des Business Intelligence",
+      "description" : "<p>Das Modul beschreibt Ziele, Prinzipien, Methoden, Ma&szlig;nahmen sowie Techniken und Werkzeuge zur betriebswirtschaftlichen Anwendung von Business Intelligence. Die Schwerpunkte kommen aus den Bereichen der Data Marts, Planungssysteme, analytischen Applikationen, Analysesystemen und der Predictive Analytics. Sie werden den aktuellen Entwicklungen des Marktes, der Forschung und der praktischen Anwendung jeweils angepasst. Dabei steht die praktische Umsetzung einer konkreten Aufgabenstellung im Vordergrund, deren daf&uuml;r notwendige Fertigkeiten und Kenntnisse seminaristisch vorab vermittelt werden.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/19278674-4114-45b0-836c-9ceabcc1f9c7"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/19278674-4114-45b0-836c-9ceabcc1f9c7"
+        }
+      }
+    }, {
+      "id" : "3bee814b-c200-4975-9561-ee14851899d8",
+      "name" : "WPF Finanzmathematik",
+      "description" : "<p>Die Finanzmathematik untersucht Zahlungsstr&ouml;me, die sich &uuml;ber mehrere Zeitperioden erstrecken. Finanzmathematik ben&ouml;tigt man zur Analyse von Finanzprodukten, beispielsweise von Wertpapieren oder Krediten. Sie hat auch ihre Anwendung im Bereich der Investitionsrechnung.</p>\r\n<p>In der <strong>klassischen Finanzmathematik</strong> spielen vor allem drei Konzepte eine wichtige Rolle, die f&uuml;r sich genommen einfach sind, in ihrer Kombination aber die Analyse sehr unterschiedlicher &ouml;konomischer Fragestellungen erm&ouml;glichen. Der Barwert ist das erste Konzept. Das ist der Wert, den zuk&uuml;nftige Zahlungen in der Gegenwart besitzen. Die finanzmathematische &Auml;quivalenz ist das zweite Konzept. Sie erlaubt, unterschiedliche Zahlungsstr&ouml;me anhand ihrer Barwerte zu vergleichen. Das dritte Konzept bildet die sogenannte Rentenformel, die uns aus der Regelm&auml;&szlig;igkeit von Zahlungsvorg&auml;ngen<span class=\"Apple-converted-space\">&nbsp; </span>einfache Berechnungen finanzrelevanter Werte<span class=\"Apple-converted-space\">&nbsp; </span>erm&ouml;glicht.</p>\r\n<p>In der <strong>statistischen Finanzmathematik</strong> gehen wir davon aus, dass der zuk&uuml;nftige Kursverlauf von Wertpapieren zuf&auml;llig ist. Mithilfe stochastischer und statistischer Methoden werden wir Aussagen &uuml;ber<span class=\"Apple-converted-space\">&nbsp; </span>die zuk&uuml;nftigen Kursschwankungen treffen k&ouml;nnen. Dabei spielen die Begriffe Erwartungswert, Varianz und Kovarianz eine zentrale Rolle.</p>\r\n<p>Die Veranstaltung liefert einen &Uuml;berblick &uuml;ber die am Finanzmarkt verwendeten Methoden.</p>\r\n<p>&nbsp;</p>\r\n<p>Folgende <strong>Themen</strong> werden unter anderem behandelt:</p>\r\n<p>&bull; exponentielle und lineare Verzinsung</p>\r\n<p>&bull; das &Auml;quivalenzprinzip der Finanzmathematik</p>\r\n<p>&bull; Rentenrechnung</p>\r\n<p>&bull; Tilgungsrechnung</p>\r\n<p>&bull; Investitionsrechnung</p>\r\n<p>&bull; festverzinsliche Wertpapiere</p>\r\n<p>&bull; Ermittlung des Effektivzinssatzes</p>\r\n<p>&bull; Rendite und Risikoma&szlig;e</p>\r\n<p>&bull; Risikoanalyse</p>\r\n<p>&bull; Grundlagen der Portfoliotheorie</p>\r\n<p>&bull; &hellip;</p>\r\n<p>In den ersten Sitzungen werden die Grundideen<span class=\"Apple-converted-space\">&nbsp; </span>der Finanzmathematik und die dazu n&ouml;tigen mathematischen Hilfsmittel in Vorlesungsform vermittelt. Danach schlie&szlig;en sich Referate &uuml;ber wichtige Methoden der Finanzmathematik an.<span class=\"Apple-converted-space\">&nbsp;</span></p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/3bee814b-c200-4975-9561-ee14851899d8"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/3bee814b-c200-4975-9561-ee14851899d8"
+        }
+      }
+    }, {
+      "id" : "e444e18c-debe-4d00-92d6-e7c728af13b6",
+      "name" : "WPF Prozedurale Generierung virtueller Welten in Unity",
+      "description" : "<p>Die Erzeugung virtueller Welten f&uuml;r den Einsatz in Spielen und Simulationen umspannt eine Vielzahl an Themen im Bereich der Informatik.</p>\r\n<p>Der Minecraft-Entwickler Mojang wurde von Microsoft f&uuml;r 2,5 Milliarden Dollar gekauft und Microsoft nutzt aktuell diese virtuelle Umgebung zur Forschung auf dem Gebiet der k&uuml;nstlichen Intelligenz.</p>\r\n<p>Titel wie &bdquo;No Man&rsquo;s Sky&ldquo; generieren ganze Universen prozedural und zeigen auf, wie auch kleine Entwickler-Teams Gro&szlig;es erschaffen k&ouml;nnen.</p>\r\n<p>Facebook kaufte Oculus Rift f&uuml;r ca. 2,3 Milliarden Dollar und glaubt an den kommenden Erfolg der virtuellen Realit&auml;t (VR).</p>\r\n<p>Der Erfolg von Oculus Rift, Google Cardboard, Samsung Gear VR usw. l&auml;sst das einst tot-geglaubte Thema \"Virtuelle Realit&auml;t\" neu aufleben. VR bietet auch weiterhin ein interessantes Forschungsfeld und eine Spielwiese f&uuml;r kreative K&ouml;pfe.</p>\r\n<p>---</p>\r\n<p>In diesem Wahlpflichtfach werden relevante Grundlagen vermittelt, Themen gemeinsam erarbeitet und praktische Beispiele entwickelt, um einen Einstieg in das Thema zu geben.</p>\r\n<p>Entwickelt wird auf Basis der GameEngine Unity in C#. Die Veranstaltung beinhaltet einen Anteil an Live-Coding.</p>\r\n<p><strong>Themen:</strong></p>\r\n<ul>\r\n<li>Einf&uuml;hrung in die Game-Engine Unity</li>\r\n<li>Grundlagen 3D-Geometrie</li>\r\n<li>Erweiterung des Unity-Editors</li>\r\n<li>Die Mesh-Datenstruktur der Game-Engine Unity (Vertices, Triangles, UVs, Normals, SubMeshes)</li>\r\n<li>Erstellung eines Debug-Werkzeugs f&uuml;r Meshes</li>\r\n<li>Erzeugung von Primitiven (Triangle, Quad, Cube, Sphere, Torus)</li>\r\n<li>Einf&uuml;hrung in UV-Mapping und Texturierungstechniken/Materialien</li>\r\n<li>Texturgenerierung mit Noise-Algorithmen</li>\r\n<li>Parametrisierung von 3D-Modellen</li>\r\n<li>Kurven und Fl&auml;chen in der Computergrafik</li>\r\n<ul>\r\n<li>Bezier-Kurven</li>\r\n<li>Bilinear-Sufrace</li>\r\n<li>mXn-Grid</li>\r\n<li>Einsatz von Height-Maps</li>\r\n</ul>\r\n<li>L-Systeme und &bdquo;Turtle&ldquo;-Grafik-Renderer</li>\r\n<li>Triangulations-Algorithmen f&uuml;r Polygone</li>\r\n<li>Voxel-Terrain-Generierung im MineCraft-Stil</li>\r\n</ul>\r\n<p>---</p>\r\n<p><strong>Medienformen:</strong></p>\r\n<ul>\r\n<li>Beamer-gest&uuml;tzte Vorlesungen&nbsp;<br />(Folien in elektronischer Form);</li>\r\n<li>Aufgaben/&Uuml;bungen/Handouts&nbsp;<br />(auch in elektronischer Form)&nbsp;</li>\r\n<li>Praktischer Teil aus Live-Coding in der Vorlesung, erweitert durch &Uuml;bungen, deren &bdquo;Musterl&ouml;sung&ldquo; vorgestellt wird.</li>\r\n<li>Kombination aus eigenst&auml;ndigem Projekt (Code-Camp/Hackathon) und Fachgespr&auml;ch als Pr&uuml;fungsform</li>\r\n</ul>\r\n<p>&nbsp;---</p>\r\n<p><strong>Veranstaltungshinweise:</strong></p>\r\n<p>Am Mittwoch 26.04.2017 findet um 13 Uhr in Raum 1511 eine (unverbindliche) Infoveranstaltung statt, in der ein &Uuml;berblick &uuml;ber die Veranstaltung gegeben wird und Fragen zur Veranstaltung gestellt werden k&ouml;nnen.</p>\r\n<p>### TERMIN&Auml;NDERUNG! ###</p>\r\n<p>Das WPF wird in diesem Semester als Block-Kurs in Raum 1511 in LC6 (neues Geb&auml;ude) abgehalten (NICHT in der Profil^2-Woche, SONDERN: 31.07.2017 bis 04.08.2017, Woche nach der Klausurphase) das Pr&uuml;fungs-CodeCamp findet in der Woche danach (07.-09.08.2017) statt.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/e444e18c-debe-4d00-92d6-e7c728af13b6"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/e444e18c-debe-4d00-92d6-e7c728af13b6"
+        }
+      }
+    }, {
+      "id" : "41c70819-d857-4fe1-ae8e-a0c9c64b5b9c",
+      "name" : "Innovationsmanagement",
+      "description" : "",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/41c70819-d857-4fe1-ae8e-a0c9c64b5b9c"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/41c70819-d857-4fe1-ae8e-a0c9c64b5b9c"
+        }
+      }
+    }, {
+      "id" : "a27166a1-b8a7-4bfd-a8b3-d8887e3dd77e",
+      "name" : "Querschnittsqualifikation",
+      "description" : "<ul>\n\t<li>\n\t\tN&auml;here Informationen zu diesem Angebot finden Sie im Selbstbericht, Abschnitt 3.2.1</li>\n\t<li>\n\t\tMit QQ1 sind verschiedene Angebote im SOFT-Skill-Bereich gemeint, mit QQ2 die &Uuml;bernahme eines Projekts, dass die Studenten in die Probleme des Hochschulalltags mit einbezieht.</li>\n\t<li>\n\t\tEs werden jeweils zwei oder drei ECTS-Punkte vergeben, mit denen die Studierenden dann maximal 5 Punkte erreichen k&ouml;nnen.</li>\n</ul>\n",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/a27166a1-b8a7-4bfd-a8b3-d8887e3dd77e"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/a27166a1-b8a7-4bfd-a8b3-d8887e3dd77e"
+        }
+      }
+    }, {
+      "id" : "c223b92c-c27c-4595-8f81-4ab362b98e61",
+      "name" : "WPF Moderne Webanwendungen mit HTML5, CSS3 und JavaScript",
+      "description" : "<p>Das Internet ist mittlerweile nicht mehr wegzudenken. \"googeln\" gilt als Synonym f&uuml;r \"suchen\" und ist teilweise&nbsp;in einigen W&ouml;rterb&uuml;chern aufgenommen, Kurznachrichten werden mit einem Klick an die ganze Welt verschickt (Twitter) und Hobbyfotografen besitzen eh einen Flickr- und/oder Instagram-Account.</p>\r\n<p>Doch statische Webseiten ohne gro&szlig;artige Benutzerinteraktion sind l&auml;ngst out. Ma&szlig;geschneiderter, <strong>dynamischer Inhalt</strong>, der auf die Interaktion mit dem Benutzer reagiert, ist gefragt. Und selbst Arbeitsabl&auml;ufe, f&uuml;r die man sonst Programme installieren musste, werden immer h&auml;ufiger als Online-Service angeboten (Google Docs zum Schreiben von Dokumenten, alle m&ouml;glichen Konvertierungsprogramme f&uuml;r Bilder, Musik oder sogar ganze Videos,&hellip;).</p>\r\n<p>Und die Anforderungen an solche Anwendungen steigen stetig! <strong>Responsive Webdesign</strong> gilt als \"Quasi-Standard\", denn immer mehr Menschen greifen von unterwegs auf dem Smartphone auf das Internet zu. Und Webseiten, die weder responsive sind noch eine (extra) mobile Webseite anbieten, werden von Google schnell abgestraft und landen irgendwo im Sumpf der tausenden Treffer. Dementsprechend sollte sich das Design auf mobilen Ger&auml;ten von selbst so anpassen, dass der Benutzer ohne Probleme Men&uuml;s, Buttons und Links klicken kann (und dabei nicht aus Versehen direkt 10 weitere Links mit anklickt, da die Schrift viel zu klein ist oder die Abst&auml;nde nicht gut gew&auml;hlt sind)!</p>\r\n<p>Und was nutzt das sch&ouml;nste Design, wenn die Webanwendung stetig zu viele Daten sendet und der Benutzer erstens zu lange warten muss und zweitens Mitte des Monats sein Datenvolumen aufgebraucht hat (wer kennt diese tolle Nachricht vom Netzbetreiber nicht: ihr Datenvolumen ist f&uuml;r diesen Monat aufgebraucht, sie surfen mit reduzierter Geschwindigkeit -.-)! Und ein Auftraggeber erwartet sowieso, dass seine neue Anwendung bei Google am liebsten direkt den ersten Platz einnimmt (Stichwort <strong>SEO - Search Engine Optimization/Suchmaschinen-Optimierung</strong>).</p>\r\n<p>Inhalte des WPFs:</p>\r\n<ul>\r\n<li>Grundwissen (die ersten drei bis vier&nbsp;Termine als Einstieg)\r\n<ul>\r\n<li>HTML-Einstieg mit neuen HTML5-Tags</li>\r\n<li>CSS inkl. CSS3-Erweiterungen (z. B. Animationen ohne JS)</li>\r\n<li>PHP und MySQL, Caching in PHP, evtl. auch SQLite3</li>\r\n<li>Einfache JavaScript Funktionen</li>\r\n</ul>\r\n</li>\r\n<li>Tieferer Einblick in die Webentwicklung\r\n<ul>\r\n<li>Caching &uuml;ber HTACCESS</li>\r\n<li>Komprimierung mit Deflate und GZIP (dadurch werden CSS- und JS-Dateien sch&ouml;n klein, auch&nbsp;Bilder etc. k&ouml;nnen komprimiert werden)</li>\r\n<li>Minimierte CSS- und JS-Dateien</li>\r\n<li>Responsive Webdesign leicht gemacht (von Anfang an auf ein paar Dinge geachtet, ist die Webanwendung ohne gro&szlig;artige Mehrarbeit auch mobil nutzbar)</li>\r\n<li>SEO - Suchmaschinen-Optimierung</li>\r\n<li>JavaScript-Frameworks (jQuery, UIKit,&hellip;)</li>\r\n<li>dynamische Inhalte via AJAX</li>\r\n</ul>\r\n</li>\r\n</ul>\r\n<p>Die Reihenfolge kann variieren, je nach dem passt das eine oder andere Thema bereits vorher und wird dann eingebunden!&nbsp;</p>\r\n<p><strong>Start: 10.04.2017</strong></p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/c223b92c-c27c-4595-8f81-4ab362b98e61"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/c223b92c-c27c-4595-8f81-4ab362b98e61"
+        }
+      }
+    }, {
+      "id" : "dab15f10-23b1-490b-9019-7ebdeada076a",
+      "name" : "WPF Identity Management",
+      "description" : "<p>\"<em>Es geht beim Identity Management ... darum, den Benutzern so effizient wie m&ouml;glich genau jene Berechtigungen zuzuteilen, die Sie f&uuml;r ihre Arbeit ben&ouml;tigen, bzw. diese zu entziehen, wenn sie nicht mehr ben&ouml;tigt werden.</em>\" [1]</p>\n<p>Aktuelle L&ouml;sungen f&uuml;r Benutzerverzeichnisse (<em>Active Directory, LDAP</em>) erf&uuml;llen nicht die Anforderungen, die durch Unternehmen und rechtliche Vorschriften gestellt werden, da sie nur der Datenhaltung dienen, aber nicht die Prozesse abilden, die zur Verwaltung eines Mitarbeiter typischer Weise ben&ouml;tigt werden.</p>\n<p>Innerhalb des WPF werden wir uns mit den aktuellen organisatorischen und technischen M&ouml;glichkeiten zum Thema Identity Management auseinander setzen und ein Konzept f&uuml;r den Einsatz innerhalb der Fachhochschule erarbeiten.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/dab15f10-23b1-490b-9019-7ebdeada076a"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/dab15f10-23b1-490b-9019-7ebdeada076a"
+        }
+      }
+    }, {
+      "id" : "0239bfea-d995-4f3a-84b0-f3e46d23018e",
+      "name" : "WPF Globalization",
+      "description" : "<p>Grundlagen zu aktuellen, insbesondere internationalen Ereignissen aus der Finanz- und Wirtschaftswelt unter dem Generalthema der Globalisierung. Festlegung der konkreten Themenbereiche nach Vereinbarung.  Pruefungsform: Ausarbeitungen und Praesentationen. Bei Interesse: Kommen  Sie bitte zur 1. Veranstaltung gem. Stundenplan. Eine Aenderung der  Zeit ist auch moeglich. Weitere Info - wenn erforderlich:  www.friedrich-wilke.de</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/0239bfea-d995-4f3a-84b0-f3e46d23018e"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/0239bfea-d995-4f3a-84b0-f3e46d23018e"
+        }
+      }
+    }, {
+      "id" : "7e613425-2633-4fe8-a213-df8aee8d1d81",
+      "name" : "Cloud-ABC",
+      "description" : "<p>Kl&auml;rung&nbsp;wichtiger&nbsp;Begriffe, Konzepte und Werkzeuge&nbsp;im Zusammenhang mit&nbsp;Cloud Computing.</p>\r\n<p>Der Fokus liegt auf dem PaaS-Angebot namhafter Cloud Service Provider.</p>\r\n<p>&nbsp;</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/7e613425-2633-4fe8-a213-df8aee8d1d81"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/7e613425-2633-4fe8-a213-df8aee8d1d81"
+        }
+      }
+    }, {
+      "id" : "26f3fbf0-34c3-4b32-a63b-cfcffcb1133d",
+      "name" : "Programmiersprachen und Compilerbau",
+      "description" : "<p>- Rekursive Datenstrukturen</p>\r\n<p>- Abstrakte Syntax</p>\r\n<p>-&nbsp;Funktionale Programmierung und Programmiersprachen</p>\r\n<p>- Interpreter</p>\r\n<p>- Typsysteme und Typinferenz</p>\r\n<p>- Lexer und Parser</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/26f3fbf0-34c3-4b32-a63b-cfcffcb1133d"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/26f3fbf0-34c3-4b32-a63b-cfcffcb1133d"
+        }
+      }
+    }, {
+      "id" : "3ff77671-f288-412a-85a5-8aa0fc10311b",
+      "name" : "Projektmanagement",
+      "description" : "<p>\n\tDas Modul befasst sich mit den Managementaspekten der professionellen Entwicklung gro&szlig;er Softwaresysteme.<br />\n\tDer Vorlesungsteil des Moduls gliedert sich in folgende Kapitel:</p>\n<ul>\n\t<li>\n\t\t&Uuml;berblick &ndash; Warum Projektmanagement?</li>\n\t<li>\n\t\tTeamarbeit und Menschenf&uuml;hrung (Kommunikation und F&uuml;hrung)</li>\n\t<li>\n\t\tKosten/Nutzen-Analysen und Entscheidungstechniken</li>\n\t<li>\n\t\tProjektorganisation und Projektplanung (Aufbauorganisation, Ablauforganisation, Prozessmodellierung, Netzplantechnik)</li>\n\t<li>\n\t\tDetaillierte Aufwandssch&auml;tzung und Projektcontrolling (Function Point Analysis, COCOMO, Risikomanagement, Projektpr&auml;sentationen)</li>\n\t<li>\n\t\tInhalte PM-BOK (Project Management - Body of Knowledge)</li>\n\t<li>\n\t\tZusammenfassung und Pr&uuml;fungsvorbereitung</li>\n</ul>\n<p>\n\t<br />\n\tDamit die Studierenden die vorgestellten Methoden und Techniken zum Management von Softwareprojekten anwenden sowie besser analysieren und bewerten k&ouml;nnen, werden im Praktikum die in der Vorlesung vermittelten Inhalte in Teams anhand von in Absprache mit den Dozenten selbst gew&auml;hlten Fallbeispielen eingesetzt. Dazu bilden die Teilnehmenden Teams zu jeweils 6 Studierenden. Im Praktikum werden folgende Bereiche vertieft:</p>\n<ul>\n\t<li>\n\t\tKosten- Nutzenrechnung, Entscheidungstechniken</li>\n\t<li>\n\t\tAufbauorganisation</li>\n\t<li>\n\t\tAufwandssch&auml;tzung (Function-Point-Analyse, COCOMO)</li>\n\t<li>\n\t\tAblauf- und Ressourcenplanung (Netzplantechnik, Einsatz von PM-Software wie z.B. MS-Project)</li>\n\t<li>\n\t\tRisikomanagement.</li>\n</ul>\n",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/3ff77671-f288-412a-85a5-8aa0fc10311b"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/3ff77671-f288-412a-85a5-8aa0fc10311b"
+        }
+      }
+    }, {
+      "id" : "dcc6237d-6846-4df9-9dde-0791491a794d",
+      "name" : "Informationsmanagement",
+      "description" : "<p>\n\tBetriebliches Informationsmanagement (IM) zielt auf die Gestaltung IT-gest&uuml;tzter Informationsverarbeitung und Kommunikation (IuK) in soziotechnischen Systemen zur Effektivierung der Aufgabenerf&uuml;llung in Unternehmungen. IM ist eine F&uuml;hrungsaufgabe, die eine ganzheitliche Computerunterst&uuml;tzung der betrieblichen IuK-Systeme auf Basis der betrieb(swirtschaft)lichen Zielvorgaben der Unternehmung zu erreichen sucht. F&uuml;r die angestrebte Kopplung von Wettbewerbsstrategie und IT nutzen Unternehmungen zunehmend (gesch&auml;fts)prozess-orientierte IM-Ans&auml;tze. Deshalb steht die Gestaltungs-aufgabe des Gesch&auml;ftsprozessmanagements (GPM bzw. BPM f&uuml;r Business Process Management), die mit Hilfe sehr unterschiedlicher Methoden und Modelle des Business Engineering (BE) umgesetzt wird, im Zentrum dieses Moduls.</p>\n<p>\n\tDer Vorlesungsteil des Moduls findet im Sommersemester statt und ist in folgende Kapitel gegliedert:</p>\n<ol>\n\t<li>\n\t\tModul&uuml;berblick</li>\n\t<li>\n\t\tIM-Erkenntnisse</li>\n\t<li>\n\t\tGPM-Konzepte</li>\n\t<li>\n\t\tBE-Fallbeispiele</li>\n\t<li>\n\t\tZusammenfassung und Ausblick</li>\n</ol>\n<p>\n\tDie Praktika des Moduls werden in dem der Vorlesung folgenden Wintersemester als Business Engineering-Projekt durchgef&uuml;hrt, dessen Realisierung den Studierenden folgende Kenntnisse abverlangt:</p>\n<ul>\n\t<li>\n\t\tmethodisches Orientierungs- und Anwendungswissen, das &uuml;ber die Vorlesungsinhalte vermittelt wird,</li>\n\t<li>\n\t\tfachliches Grundverst&auml;ndnis zur Dom&auml;ne, in das sich mit Hilfe von Materialien zu Projektauftrag und Projektgegenstand einzuarbeiten ist, und</li>\n\t<li>\n\t\tFertigkeiten zur Nutzung von GPM-Tools, in die &uuml;ber UserGuides und &Uuml;bungen eingef&uuml;hrt wird.</li>\n</ul>\n",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/dcc6237d-6846-4df9-9dde-0791491a794d"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/dcc6237d-6846-4df9-9dde-0791491a794d"
+        }
+      }
+    }, {
+      "id" : "e758f7e4-034e-4327-ae8e-d225a6b1b150",
+      "name" : "Einführung Docker",
+      "description" : "<p>Einf&uuml;hrung in Docker-Container (Software-Container)</p>\r\n<p>&bull; Was ist Docker?</p>\r\n<p>&bull;&nbsp;Architektur von Docker (Aufbau, Komponenten)</p>\r\n<p>&bull; Struktur und Aufbau von Docker-Images</p>\r\n<p>&bull; Bedeutung und Verwendung von Dockerfiles</p>\r\n<p>&bull; Administration von Docker-Containern</p>\r\n<p>&bull;&nbsp;Services mit Docker Compose</p>\r\n<p>&bull; Orchestreiung von Containern mit Docker Swarm</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/e758f7e4-034e-4327-ae8e-d225a6b1b150"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/e758f7e4-034e-4327-ae8e-d225a6b1b150"
+        }
+      }
+    }, {
+      "id" : "97bd7ca2-8a0f-41db-bb68-891531c4b3e7",
+      "name" : "Advanced Database Themes:  NoSQL-Datenbanksysteme",
+      "description" : "<p>Von der Datenmodellierung &uuml;ber die NoSQL-Klassen bis zu verschiedenen NoSQL-DBS werden spezifische Themen und Fragestellungen aufgegriffen.&nbsp;</p>\r\n<p>NoSQL: Ausarbeiten der Funktionsweise sowie der St&auml;rken und Schw&auml;chen der verschiedenen NoSQL-Datenmodelle und die kritische Auseinandersetzung mit den Modellen sowie deren Implementierungen, wie z.B. Key/Value-Modell mit Dynamo, Redis, ..., spaltenorientiert mit Cassandea, MonetDB, ..., dokumentenorientiert mit CouchDB, MongoDB, ... oder Graphen-Modelle mit Neo4j, SonesDB, ... oder XML-, Grid-DB, ...<br /><br /><strong>Termine, Dauer und Uhrzeiten k&ouml;nnen mit den Teilnehmern dann noch abgestimmt werden.</strong></p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/97bd7ca2-8a0f-41db-bb68-891531c4b3e7"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/97bd7ca2-8a0f-41db-bb68-891531c4b3e7"
+        }
+      }
+    }, {
+      "id" : "de009224-a807-4e26-bd89-302a21021230",
+      "name" : "WPF WPF integrierte ERP-Systeme",
+      "description" : "<p>1.&nbsp;&nbsp; &nbsp;Grundlagen von ERP-Systemen am Beipiel von SAP / Netweaver <br />Grunds&auml;tzlicher Aufbau von SAP-Systemen; SAP NetWeaver als technische Plattform von SAP ERP.<br /><br />2.&nbsp;&nbsp;&nbsp; eine (kleine) Einf&uuml;hrung in das SAP-Finanzwesen an dessen Anbindung an andere SAP-Module; Haupt- und Nebenbuchhaltung; Organisationseinheiten in SAP; Stammdaten; Belege im SAP-System, Verkn&uuml;pfung von SAP FI mit Einkauf und Vertrieb<br /><br />3.&nbsp;&nbsp; &nbsp;Unternehmensf&uuml;hrung mit SAP BW. <br />Informationstechnisch gest&uuml;tzte Management-Prozesse; SAP-BW-Architektur; Datenmodelle und Datenhaltung; Reporting und Auswertungen</p>\n<p>4. Bei Bedarf und Interesse kann die Anwendungssicht mit einer Einf&uuml;hrung in die SAP Dynpro-Programmierung (Benutzerinteraktion) kombiniert werden.</p>\n<p>&nbsp;</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/de009224-a807-4e26-bd89-302a21021230"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/de009224-a807-4e26-bd89-302a21021230"
+        }
+      }
+    }, {
+      "id" : "7ccacda2-90ee-4caf-86c1-ac6a7e526c7b",
+      "name" : "Datenbanken II",
+      "description" : "<ul>\n<li>Einf&uuml;hrung in die Datenbankanwendungsprogrammierung und die Datenbanksprache PL/SQL von Oracle, sowie in die Konzepte aktiver Datenbanksysteme mit der Implementierung der Trigger bei Oracle.</li>\n<li>JDBC als ein Standard zur Verbindung von SQL&ndash;Datenbanken und Java,</li>\n<li>MySQL als alternatives relationales Datenbanksystem mit Verbindungsaufbau, SQL, Trigger- und Stored Routines-Konzepten,</li>\n<li>Grundbegriffe und Architekturen relationaler, objektrelationaler und objektorientierter Datenbanken im Vergleich,</li>\n<li>Datenbanksprache SQL mit ihren&nbsp; objektrelationalen Erweiterungen,</li>\n<li>einen &Uuml;berblick &uuml;ber g&auml;ngige Speicherstrukturen mit ihren Einsatzgebieten sowie deren Realisierung bei Oracle,</li>\n<li>SQL-Tuning und Datenspeicherung als ein Baustein f&uuml;r performante Anwendungen</li>\n<li>ein Einblick in die nichtrelationalen Kategorien und Strategien der NoSQL-DB-Systeme</li>\n</ul>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/7ccacda2-90ee-4caf-86c1-ac6a7e526c7b"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/7ccacda2-90ee-4caf-86c1-ac6a7e526c7b"
+        }
+      }
+    }, {
+      "id" : "179788b5-a8a0-4794-a971-6127915921c7",
+      "name" : "WPF 3D-Modellierung und Virtuelle Realität",
+      "description" : "",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/179788b5-a8a0-4794-a971-6127915921c7"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/179788b5-a8a0-4794-a971-6127915921c7"
+        }
+      }
+    }, {
+      "id" : "a7347f2b-afa5-4a3d-8efc-80719a059534",
+      "name" : "BWL I - Grundlagen",
+      "description" : "<p><span style=\"font-size: 8.5pt; font-family: 'Verdana','sans-serif'; color: black;\">Grundlagen</span></p>\r\n<p style=\"font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; widows: 2; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; word-spacing: 0px;\"><span style=\"font-size: 8.5pt; font-family: 'Verdana','sans-serif'; color: black;\">Unternehmensf&uuml;hrung: Ziele, Planung und Entscheidung, Ausf&uuml;hrung und Kontrolle</span></p>\r\n<p style=\"font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; widows: 2; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; word-spacing: 0px;\"><span style=\"font-size: 8.5pt; font-family: 'Verdana','sans-serif'; color: black;\">Investition und Finanzierung</span></p>\r\n<p style=\"font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; widows: 2; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; word-spacing: 0px;\"><span style=\"font-size: 8.5pt; font-family: 'Verdana','sans-serif'; color: black;\">Konstitutive Entscheidungen</span></p>\r\n<p style=\"font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; widows: 2; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; word-spacing: 0px;\"><span style=\"font-size: 8.5pt; font-family: 'Verdana','sans-serif'; color: black;\">Produktion</span></p>\r\n<p style=\"font-variant-ligatures: normal; font-variant-caps: normal; orphans: 2; text-align: start; widows: 2; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial; word-spacing: 0px;\"><span style=\"font-size: 8.5pt; font-family: 'Verdana','sans-serif'; color: black;\">Absatz und Marketing</span></p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/a7347f2b-afa5-4a3d-8efc-80719a059534"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/a7347f2b-afa5-4a3d-8efc-80719a059534"
+        }
+      }
+    }, {
+      "id" : "c1e01556-d186-4dc0-9d01-ede39cddfc62",
+      "name" : "WPF Musikinformatik",
+      "description" : "<p>Musik / Akustik / Informatik</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/c1e01556-d186-4dc0-9d01-ede39cddfc62"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/c1e01556-d186-4dc0-9d01-ede39cddfc62"
+        }
+      }
+    }, {
+      "id" : "9dfa1199-6c7a-4002-a7db-9124a9e0eea8",
+      "name" : "WPF Achtsamkeit und wertorientierte Entwicklung",
+      "description" : "",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/9dfa1199-6c7a-4002-a7db-9124a9e0eea8"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/9dfa1199-6c7a-4002-a7db-9124a9e0eea8"
+        }
+      }
+    }, {
+      "id" : "c4f0da9c-94d9-44a7-a7fd-c8135dfd9eaf",
+      "name" : "Algorithmen und Programmierung II",
+      "description" : "<p>Typkonzept objektorientierter Programmiersprachen, Vererbung, sp&auml;te Bindung und Polymorphie, effiziente Algorithmen zum Suchen und Sortieren, dynamische Datenstrukturen.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/c4f0da9c-94d9-44a7-a7fd-c8135dfd9eaf"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/c4f0da9c-94d9-44a7-a7fd-c8135dfd9eaf"
+        }
+      }
+    }, {
+      "id" : "c08ac4f7-be0b-4b3c-b48b-61ca91cf2cef",
+      "name" : "WPF Architektur großer Systeme",
+      "description" : "<ul>\n<li>Einordnung der &bdquo;Architektur gro&szlig;er Systeme&ldquo; zwischen Komponenten-Design und Enterprise-Architektur</li>\n<li>Domain-Driven Design: Auswahl des passenden Architekturparadigmas nach gesch&auml;ftlichen Anforderungen und den Spezifika der Dom&auml;ne</li>\n<li>Die f&uuml;nf &bdquo;Problem Frames&ldquo; nach Michael Jackson und die dazu passenden Architektur-Paradigmen</li>\n<li>Management des Architekturprozesses bei gro&szlig;en Systemen</li>\n</ul>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/c08ac4f7-be0b-4b3c-b48b-61ca91cf2cef"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/c08ac4f7-be0b-4b3c-b48b-61ca91cf2cef"
+        }
+      }
+    }, {
+      "id" : "9387b28c-3b46-41a5-a362-1cbbff7e2c64",
+      "name" : "WPF Mobile Computing",
+      "description" : "<p>In diesem Modul erfahren Studierende die Relevanz, Herausforderungen und Techniken der Entwicklung mobiler Software. Sie k&ouml;nnen danach mobile Applikationen f&uuml;r Smartphones entwerfen, implementieren und managen. Das Modul bef&auml;higt Studierende dazu, in weiteren Studienprojekten, der Abschlussarbeit oder im Beruf eigene mobile Systeme zu realisieren.</p>\r\n<p>Um die Lernziele zu erreichen werden Grundlagen und Konzepte in den Veranstaltungen vermittelt und in Teams projektorientiert angewandt und diskutiert. Das Modul verfolgt einen inkrementell-iterativen Ansatz von der Erstellung eines ersten Prototypen, &uuml;ber die Implementierung des User Interface, der Auslagerung von Operationen in den Hintergrund, der Speicherung von strukturierten Daten und dem Management mobiler Software. Dabei werden die f&uuml;nf Bereiche Entwicklung, Management, App Architecture, Communication sowie Sensors &amp; Gadgets behandelt.</p>\r\n<p><span style=\"text-decoration: underline;\"><a href=\"http://moxd.io/teaching\">Website zur Veranstaltung mit Datum und weiteren Infos</a></span></p>\r\n<p><img src=\"http://moxd.io/wp-content/uploads/2016/03/moco-teaser-hops.png\" alt=\"\" width=\"450px\" /></p>\r\n<p><strong>Lernziele:</strong></p>\r\n<ul>\r\n<li>Studierende k&ouml;nnen die Herausforderungen von Mobilit&auml;t in der Entwicklung zu ber&uuml;cksichtigen</li>\r\n<li>Studierende k&ouml;nnen typische nicht-funktionale Anforderungen mobiler Software ber&uuml;cksichtigen</li>\r\n<li>Studierende k&ouml;nnen mobile Software in ihre Hauptbestandteile gliedern</li>\r\n<li>Studierende k&ouml;nnen mobile Software-Architekturen designen und diskutieren</li>\r\n<li>Studierende k&ouml;nnen Software f&uuml;r mobile Endger&auml;te programmieren und managen&nbsp;</li>\r\n</ul>\r\n<p>&nbsp;</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/9387b28c-3b46-41a5-a362-1cbbff7e2c64"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/9387b28c-3b46-41a5-a362-1cbbff7e2c64"
+        }
+      }
+    }, {
+      "id" : "d6aff621-86a2-4aea-a8b0-2c547e308cb7",
+      "name" : "WPF Entwicklung mobiler Anwendungen",
+      "description" : "<div id=\"_mcePaste\" style=\"position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px; overflow: hidden;\">Das WPF \"Entwicklung mobiler Anwendungen\" besch&auml;ftigt sich mit Theorie und Praxis der Entwicklung von Anwendungen f&uuml;r mobile Ger&auml;te wie Smartphones und Tablets, die dieses Semester am Beispiel von Apples iOS (iPhone/iPad) demonstriert wird.&nbsp;</div>\r\n<div id=\"_mcePaste\" style=\"position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px; overflow: hidden;\">Wir beginnen mit einer Einf&uuml;hrung in Objective-C und Xcode. Es folgen die Grundlagen von Cocoa und weiteren Frameworks, verwendete Design-Pattern, UI-Design und -Programmierung, 2D Grafik, Medienwiedergabe, sowie ausgew&auml;hlte APIs zu Themen wie Positionsbestimmung, dem Auslesen von Sensordaten, usw.</div>\r\n<div id=\"_mcePaste\" style=\"position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px; overflow: hidden;\">Das WPF findet als Blockveranstaltung in einem Mix aus Vorlesung und praktischen &Uuml;bungen statt. Im Anschluss erarbeiten Sie ein Projekt, welches die Basis f&uuml;r die Note darstellen wird.&nbsp;</div>\r\n<div id=\"_mcePaste\" style=\"position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px; overflow: hidden;\">Teilnehmer sollten f&uuml;r die Blockveranstaltung m&ouml;glichst ein MacBook f&uuml;r die praktischen &Uuml;bungen mitbringen. Die Blockveranstaltung wird jedoch in einem Mac Rechner-Pool stattfinden, und Sie werden auch im Anschluss im Rahmen des WPFs Zugang zu diesem Pool erhalten.</div>\r\n<div id=\"_mcePaste\" style=\"position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px; overflow: hidden;\">Im WS12/13 wird die Blockveranstaltung voraussichtlich in der QQ-Projektwoche in der ersten Januar-Woche stattfinden. Details werden zeitnah zur Verf&uuml;gung gestellt.</div>\r\n<p>Das WPF \"Entwicklung mobiler Anwendungen\" besch&auml;ftigt sich mit Theorie und Praxis der Entwicklung von Anwendungen f&uuml;r mobile Ger&auml;te wie Smartphones und Tablets, die dieses Semester am Beispiel von Apples iOS (iPhone/iPad) demonstriert wird.</p>\r\n<p>Wir beginnen mit einer Einf&uuml;hrung in Objective-C und Xcode, den Tools f&uuml;r die Programmierung von iOS-Anwendungen. Es folgen die Grundlagen von Cocoa und weiteren Frameworks, verwendete Design-Pattern, UI-Design und -Programmierung, 2D Grafik, Medienwiedergabe, sowie ausgew&auml;hlte APIs zu Themen wie Positionsbestimmung, dem auslesen von Sensordaten, usw.</p>\r\n<p>Das WPF findet als Blockveranstaltung in einem Mix aus Vorlesung und praktischen &Uuml;bungen statt. Im Anschluss erarbeiten Sie ein Projekt, welches die Basis f&uuml;r die Note darstellen wird.</p>\r\n<p>Teilnehmer sollten f&uuml;r die Blockveranstaltung m&ouml;glichst ein MacBook f&uuml;r die praktischen &Uuml;bungen mitbringen. Die Blockveranstaltung wird jedoch in einem Mac Rechner-Pool stattfinden, und Sie werden auch im Anschluss im Rahmen des WPFs Zugang zu diesem Pool erhalten.</p>\r\n<p>Im WS16/17 wird die Blockveranstaltung im Rahmen der Woche f&uuml;r Blockveranstaltungen von 2.1. bis 4.1.2017&nbsp;stattfinden. Details folgen im Laufe des Semesters per E-Mail an alle eigetragenen Interessenten.</p>\r\n<p>Fragen und Feedback bitte an: daniel.klein@gm.fh-koeln.de</p>\r\n<p>Aktuelle Infos auch auf Twitter unter @_dklein</p>\r\n<p>&nbsp;</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/d6aff621-86a2-4aea-a8b0-2c547e308cb7"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/d6aff621-86a2-4aea-a8b0-2c547e308cb7"
+        }
+      }
+    }, {
+      "id" : "bfe5c79b-d8da-4b7e-bcc8-5aa556bf82c3",
+      "name" : "Laser und Elektooptische Systeme",
+      "description" : "",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/bfe5c79b-d8da-4b7e-bcc8-5aa556bf82c3"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/bfe5c79b-d8da-4b7e-bcc8-5aa556bf82c3"
+        }
+      }
+    }, {
+      "id" : "811c9fbb-620e-4bb2-b27b-7ceb180edbb4",
+      "name" : "StartUp Bootcamp ",
+      "description" : "<p class=\"Tabellentext85ptTHlinksbndig\">Ideengenerierung, -bewertung und &ndash;auswahl</p>\r\n<p class=\"Tabellentext85ptTHlinksbndig\">Ideen konkretisieren: Gesch&auml;ftsmodelle und Finanzplan</p>\r\n<p class=\"Tabellentext85ptTHlinksbndig\">Ideen testen: Lean StartUp Logik</p>\r\n<p class=\"Tabellentext85ptTHlinksbndig\">Ideen pr&auml;sentieren</p>\r\n<p class=\"Tabellentext85ptTHlinksbndig\">&nbsp;</p>\r\n<p class=\"Tabellentext85ptTHlinksbndig\">Exkurse: Gr&uuml;ndungs- und Eigentumsrecht, IP Schutz, Marktforschung</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/811c9fbb-620e-4bb2-b27b-7ceb180edbb4"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/811c9fbb-620e-4bb2-b27b-7ceb180edbb4"
+        }
+      }
+    }, {
+      "id" : "e0080cb6-116b-4a9f-9abb-6c7041d62ee4",
+      "name" : "Computergrafik und Animation",
+      "description" : "<p class=\"p1\"><span class=\"s1\">Die Interaktion mit Softwaresystemen erfolgt fast ausschlie&szlig;lich &uuml;ber graphische Anwenderschnittstellen, so dass der Umsetzung abstrakter Konzepte in visuelle Strukturen und Abl&auml;ufe gro&szlig;e Bedeutung zukommt. Die allgemeine Verf&uuml;gbarkeit m&auml;chtiger graphischer API, Anwendungstool und GPUs macht es nicht mehr erforderlich, dass die Studierenden grundlegende Algorithmen selber umsetzen und programmieren k&ouml;nnen, so dass das Schwergewicht der Veranstaltung auf die Funktionsweise der Verfahren und das Verst&auml;ndnis der Prinzipien gelegt werden kann.</span></p>\r\n<p class=\"p1\">&nbsp;</p>\r\n<p class=\"p1\"><span class=\"s1\">Inhalt dieses Faches/Moduls sind deswegen:</span></p>\r\n<p class=\"p1\"><span class=\"s1\">- Graphikkartenprogrammierung</span></p>\r\n<p class=\"p1\"><span class=\"s1\">- Transformationen</span></p>\r\n<p class=\"p1\"><span class=\"s1\">- Rasterisierungspipeline</span></p>\r\n<p class=\"p1\"><span class=\"s1\">- Licht, Materialien, Texturierung</span></p>\r\n<p class=\"p1\"><span class=\"s1\">- Deferred Shading und Schatten</span></p>\r\n<p class=\"p1\"><span class=\"s1\">- Animation</span></p>\r\n<p class=\"p1\"><span class=\"s1\">- Ray Tracing</span></p>\r\n<p class=\"p1\"><span class=\"s1\">-&nbsp;Image-based Rendering</span></p>\r\n<p class=\"p1\"><span class=\"s1\">- Visualisierung</span></p>\r\n<p class=\"p1\"><span class=\"s1\">- sowie aktuelle und weiterf&uuml;hrende Themen der Computergraphik</span></p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/e0080cb6-116b-4a9f-9abb-6c7041d62ee4"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/e0080cb6-116b-4a9f-9abb-6c7041d62ee4"
+        }
+      }
+    }, {
+      "id" : "ceed348e-0553-491b-9419-549bed22ca4c",
+      "name" : "WPF Software-Qualitaetssicherung (Nur im WS)",
+      "description" : "<ol>\n<li>Grundlagen des Softwaretestens (Warum sind Softwaretests notwendig?  Was ist Softwaretesten? Allgemeine Prinzipien des Softwaretestens;  Fundamentaler Testprozess; Die Psychologie des Testens);</li>\n<li>Testen im Softwarelebenszyklus (Softwareentwicklungsmodelle; Teststufen; Testziele&nbsp; und Testarten);</li>\n<li>Statischer Test (Reviews; Werkzeuggest&uuml;tzte statische Analyse);</li>\n<li>Testfallentwurfsverfahren (Spezifikationsorientierte oder Blackbox  Verfahren; Strukturorientierte oder Whitebox Verfahren;  Erfahrungsbasierte Verfahren; Auswahl von Testverfahren); </li>\n<li>Testmanagement (Testorganisation; Testplanung und &ndash;sch&auml;tzung;  Testfortschritts&uuml;berwachung und &ndash;steuerung; Konfigurationsmanagement;  Risiko und Testen; Abweichungsmanagement / Fehlermanagement);</li>\n<li> Testwerkzeuge (Typen von Testwerkzeugen; Effektive Anwendung von Werkzeugen; Spezielle Betrachtungen zu einigen Werkzeugarten).</li>\n</ol>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/ceed348e-0553-491b-9419-549bed22ca4c"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/ceed348e-0553-491b-9419-549bed22ca4c"
+        }
+      }
+    }, {
+      "id" : "815ed8ca-b4fc-4bdf-8138-7da3c753ee4d",
+      "name" : "Virtualisierung",
+      "description" : "<p>Virtualisierung von Rechenkapazit&auml;ten (Compute), Massenspaeichern (Storage) und Netzwerken (Network) werden behandelt. Virtualisierungsl&ouml;sungen sind ein Grundpfeiler f&uuml;r Cloud-Computing-L&ouml;sungen.</p>",
+      "projectType" : "UNDEFINED",
+      "_links" : {
+        "self" : {
+          "href" : "{{request.baseUrl}}/modules/815ed8ca-b4fc-4bdf-8138-7da3c753ee4d"
+        },
+        "module" : {
+          "href" : "{{request.baseUrl}}/modules/815ed8ca-b4fc-4bdf-8138-7da3c753ee4d"
+        }
+      }
+    } ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "{{request.baseUrl}}/studyCourses/2190d4e7-9336-4d65-b52f-bf1b83d0cfc4/modules"
+    }
+  }
+}
