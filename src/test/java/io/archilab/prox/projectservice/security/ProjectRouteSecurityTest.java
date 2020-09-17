@@ -24,12 +24,9 @@
 
 package io.archilab.prox.projectservice.security;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -66,7 +63,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ProjectRouteSecurityTest {
+class ProjectRouteSecurityTest {
 
   private static final String PROJECTS_ROUTE = "/projects";
   private static final String PROJECTS_ID_ROUTE = "/projects/{id}";
@@ -107,6 +104,7 @@ public class ProjectRouteSecurityTest {
       throws Exception {
     mockMvc.perform(request(httpMethod, url)
         .accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON)
         .content(new ObjectMapper().writeValueAsString(content)))
         .andDo(print())
         .andExpect(expectedResult);
@@ -119,7 +117,7 @@ public class ProjectRouteSecurityTest {
   @WithMockUser(roles = {"professor"})
   @Test
   void when_authenticated_user_has_role_professor_performs_post_project_then_is_created() throws Exception {
-    Project project = createTestProject(UUID.randomUUID());
+    Project project = createTestProject(USER_ID);
 
     performRequest(HttpMethod.POST, PROJECTS_ROUTE, project, status().isCreated());
   }
@@ -189,6 +187,49 @@ public class ProjectRouteSecurityTest {
     Project project = projectRepository.save(createTestProject(UUID.randomUUID()));
 
     performRequest(HttpMethod.PATCH, buildUrl(PROJECTS_ID_ROUTE, project.getId()), project, status().isForbidden());
+  }
+
+  @WithMockUser(roles = {"professor"})
+  @Test
+  void when_authenticated_user_has_role_professor_performs_post_project_with_invalid_creatorid_then_is_replaced() throws Exception {
+    Project project = createTestProject(USER_ID);
+    Project expectedProject = project;
+    project.setCreatorID(new CreatorID(UUID.randomUUID()));
+
+    performRequest(HttpMethod.POST, PROJECTS_ROUTE, project, status().isCreated());
+
+    Optional<Project> optionalProject = projectRepository.findById(project.getId());
+    assertTrue(optionalProject.isPresent());
+    Project foundProject = optionalProject.get();
+    assertEquals(USER_ID, foundProject.getCreatorID().getCreatorID());
+  }
+
+  @WithMockUser(roles = {"professor"})
+  @Test
+  void when_authenticated_user_has_role_professor_performs_put_project_id_with_invalid_creatorid_then_is_replaced() throws Exception {
+    Project project = createTestProject(USER_ID);
+    Project expectedProject = projectRepository.save(project);
+    project.setCreatorID(new CreatorID(UUID.randomUUID()));
+
+    performRequest(HttpMethod.PUT, buildUrl(PROJECTS_ID_ROUTE, project.getId()), project, status().isOk());
+
+    Optional<Project> foundProject = projectRepository.findById(project.getId());
+    assertTrue(foundProject.isPresent());
+    assertEquals(expectedProject, foundProject.get());
+  }
+
+  @WithMockUser(roles = {"professor"})
+  @Test
+  void when_authenticated_user_has_role_professor_performs_patch_project_id_with_invalid_creatorid_then_is_replaced() throws Exception {
+    Project project = createTestProject(USER_ID);
+    Project expectedProject = projectRepository.save(project);
+    project.setCreatorID(new CreatorID(UUID.randomUUID()));
+
+    performRequest(HttpMethod.PATCH, buildUrl(PROJECTS_ID_ROUTE, project.getId()), project, status().isOk());
+
+    Optional<Project> foundProject = projectRepository.findById(project.getId());
+    assertTrue(foundProject.isPresent());
+    assertEquals(expectedProject, foundProject.get());
   }
 
 }
