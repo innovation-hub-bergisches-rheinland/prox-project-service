@@ -8,4 +8,4 @@ COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY ${DEPENDENCY}/META-INF /app/META-INF
 COPY ${DEPENDENCY}/BOOT-INF/classes /app
 
-ENTRYPOINT ["java","-cp","app:app/lib/*","io.archilab.prox.projectservice.ProjectService"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","de.innovationhub.prox.projectservice.ProjectService"]
