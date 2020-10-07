@@ -63,7 +63,6 @@ public class Project extends AbstractEntity {
   @NotNull
   @Setter
   @JsonUnwrapped
-  @Column(updatable = false)
   private CreatorID creatorID;
 
   @NotNull @Setter @JsonUnwrapped private CreatorName creatorName;

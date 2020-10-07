@@ -25,6 +25,7 @@
 package de.innovationhub.prox.projectservice.project;
 
 import java.util.UUID;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -37,6 +38,7 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CreatorID {
 
+  @Column(updatable = false)
   private UUID creatorID;
 
   public CreatorID(UUID creatorID) {
