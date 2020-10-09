@@ -4,6 +4,7 @@ import de.innovationhub.prox.projectservice.utils.AuthenticationUtils;
 import java.util.Optional;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
@@ -11,6 +12,9 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +26,19 @@ public class ProjectController {
 
   @Autowired AuthenticationUtils authenticationUtils;
 
+  /* Start Workaround
+    Workaround since Validation is not available in RepositoryRestController
+    https://stackoverflow.com/a/44304198/4567795
+   */
+  @Autowired
+  private LocalValidatorFactoryBean validator;
+
+  @InitBinder
+  protected void initBinder(WebDataBinder binder) {
+    binder.addValidators(validator);
+  }
+  //End Workaround
+
   /**
    * Replace Spring Data Rest POST Mapping with custom POST Mapping which defaults the Project
    * CreatorID
@@ -31,7 +48,7 @@ public class ProjectController {
       consumes = {MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE})
   public @ResponseBody ResponseEntity<?> postProject(
       HttpServletRequest request,
-      @RequestBody Project project,
+      @Valid @RequestBody Project project,
       PersistentEntityResourceAssembler resourceAssembler) {
     Optional<UUID> requestUUID = authenticationUtils.getUserUUIDFromRequest(request);
     if (requestUUID.isEmpty()) {
@@ -44,4 +61,5 @@ public class ProjectController {
     Project savedProject = projectRepository.save(project);
     return new ResponseEntity<>(resourceAssembler.toFullResource(savedProject), HttpStatus.CREATED);
   }
+
 }
