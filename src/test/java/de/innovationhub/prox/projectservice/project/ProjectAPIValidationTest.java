@@ -41,7 +41,7 @@ class ProjectAPIValidationTest {
 
   Project validProject = new Project(
           new ProjectName("Test Project"),
-          new ProjectShortDescription("This is a short description"),
+          new ProjectShortDescription("This is a\n short description"),
           new ProjectDescription("This is a description"),
           ProjectStatus.LAUFEND,
           new ProjectRequirement("This is a requirement"),
@@ -63,6 +63,17 @@ class ProjectAPIValidationTest {
         new CreatorName(""),
         new SupervisorName("   ")
     );
+
+  private Project zwspValueProject = new Project(
+      new ProjectName("Project\u200B"),
+      new ProjectShortDescription("Project\u200B"),
+      new ProjectDescription("Project\u200B"),
+      ProjectStatus.LAUFEND,
+      new ProjectRequirement("\n \t"),
+      new CreatorID(UUID.randomUUID()),
+      new CreatorName(""),
+      new SupervisorName("Project\u200B")
+  );
 
   private Project longValueProject = new Project(
       new ProjectName(createLongString(255)),
@@ -125,6 +136,15 @@ class ProjectAPIValidationTest {
   }
 
   @Test
+  void when_post_zwsp_value_project_then_is_bad_request() throws Exception {
+    mockMvc.perform(post(PROJECTS_ROUTE)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsString(zwspValueProject)))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
   void when_put_empty_body_then_is_bad_request() throws Exception {
     Project savedProject = projectRepository.save(validProject);
 
@@ -180,6 +200,17 @@ class ProjectAPIValidationTest {
   }
 
   @Test
+  void when_put_zwsp_value_project_then_is_bad_request() throws Exception {
+    Project savedProject = projectRepository.save(validProject);
+
+    mockMvc.perform(put(PROJECTS_ID_ROUTE, savedProject.getId())
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsString(zwspValueProject)))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
   void when_patch_empty_body_then_is_bad_request() throws Exception {
     Project savedProject = projectRepository.save(validProject);
 
@@ -230,6 +261,17 @@ class ProjectAPIValidationTest {
     mockMvc.perform(patch(PROJECTS_ID_ROUTE, savedProject.getId())
         .contentType(MediaType.APPLICATION_JSON)
         .content(new ObjectMapper().writeValueAsString(longValueProject)))
+        .andDo(print())
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  void when_patch_zwsp_value_project_then_is_bad_request() throws Exception {
+    Project savedProject = projectRepository.save(validProject);
+
+    mockMvc.perform(patch(PROJECTS_ID_ROUTE, savedProject.getId())
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsString(zwspValueProject)))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }

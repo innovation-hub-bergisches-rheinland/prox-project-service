@@ -35,6 +35,15 @@ class ProjectValidationTest {
   }
 
   @Test
+  void when_project_name_has_zwsp_should_return_violation() {
+    Project project = new Project();
+    project.setName(new ProjectName("Very serious\u200B project name"));
+
+    Set<ConstraintViolation<Project>> violationSet = localValidatorFactoryBean.validate(project);
+    assertFalse(violationSet.isEmpty());
+  }
+
+  @Test
   void when_project_short_description_is_null_should_return_violation() {
     Project project = new Project();
     project.setShortDescription(null);
@@ -53,6 +62,15 @@ class ProjectValidationTest {
   }
 
   @Test
+  void when_project_short_description_has_zwsp_should_return_violation() {
+    Project project = new Project();
+    project.setShortDescription(new ProjectShortDescription("Very serious\u200B project description"));
+
+    Set<ConstraintViolation<Project>> violationSet = localValidatorFactoryBean.validate(project);
+    assertFalse(violationSet.isEmpty());
+  }
+
+  @Test
   void when_project_description_is_null_should_return_violation() {
     Project project = new Project();
     project.setDescription(null);
@@ -65,6 +83,15 @@ class ProjectValidationTest {
   void when_project_description_is_blank_should_return_violation() {
     Project project = new Project();
     project.setDescription(new ProjectDescription("    "));
+
+    Set<ConstraintViolation<Project>> violationSet = localValidatorFactoryBean.validate(project);
+    assertFalse(violationSet.isEmpty());
+  }
+
+  @Test
+  void when_project_description_has_zwsp_should_return_violation() {
+    Project project = new Project();
+    project.setDescription(new ProjectDescription("Very serious\u200B project description"));
 
     Set<ConstraintViolation<Project>> violationSet = localValidatorFactoryBean.validate(project);
     assertFalse(violationSet.isEmpty());
@@ -128,6 +155,15 @@ class ProjectValidationTest {
   void when_project_supervisorname_is_blank_should_return_violation() {
     Project project = new Project();
     project.setSupervisorName(new SupervisorName(" "));
+
+    Set<ConstraintViolation<Project>> violationSet = localValidatorFactoryBean.validate(project);
+    assertFalse(violationSet.isEmpty());
+  }
+
+  @Test
+  void when_project_supervisorname_has_zwsp_should_return_violation() {
+    Project project = new Project();
+    project.setSupervisorName(new SupervisorName("Very serious\u200B project supervisor"));
 
     Set<ConstraintViolation<Project>> violationSet = localValidatorFactoryBean.validate(project);
     assertFalse(violationSet.isEmpty());
