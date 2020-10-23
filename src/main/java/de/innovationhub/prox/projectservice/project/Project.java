@@ -35,6 +35,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -46,31 +47,52 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Getter
+@Setter
 @ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Project extends AbstractEntity {
 
-  @Setter @JsonUnwrapped private ProjectName name;
-
-  @Setter @JsonUnwrapped private ProjectDescription description;
-
-  @Setter @JsonUnwrapped private ProjectShortDescription shortDescription;
-
-  @Setter @JsonUnwrapped private ProjectRequirement requirement;
-
-  @Setter private ProjectStatus status;
-
   @NotNull
-  @Setter
+  @Valid
   @JsonUnwrapped
-  @Column(updatable = false)
+  private ProjectName name;
+
+  @JsonUnwrapped
+  @Valid
+  @NotNull
+  private ProjectDescription description;
+
+  @JsonUnwrapped
+  @Valid
+  @NotNull
+  private ProjectShortDescription shortDescription;
+
+  @JsonUnwrapped
+  @Valid
+  private ProjectRequirement requirement;
+
+  @JsonUnwrapped
+  @Valid
+  @NotNull
+  private ProjectStatus status;
+
+  @JsonUnwrapped
+  @Valid
+  @NotNull
   private CreatorID creatorID;
 
-  @NotNull @Setter @JsonUnwrapped private CreatorName creatorName;
+  @JsonUnwrapped
+  @Valid
+  @NotNull
+  private CreatorName creatorName;
 
-  @NotNull @Setter @JsonUnwrapped private SupervisorName supervisorName;
+  @JsonUnwrapped
+  @Valid
+  @NotNull
+  private SupervisorName supervisorName;
 
-  @Getter @ManyToMany private List<Module> modules = new ArrayList<>();
+  @ManyToMany
+  private List<Module> modules = new ArrayList<>(); //TODO Validation
 
   @Basic
   @Temporal(TemporalType.TIMESTAMP)
@@ -89,9 +111,9 @@ public class Project extends AbstractEntity {
       ProjectDescription description,
       ProjectStatus status,
       ProjectRequirement requirement,
-      @NotNull CreatorID creatorID,
-      @NotNull CreatorName creatorName,
-      @NotNull SupervisorName supervisorName,
+      CreatorID creatorID,
+      CreatorName creatorName,
+      SupervisorName supervisorName,
       List<Module> modules) {
     this.requirement = requirement;
     this.name = name;
@@ -110,9 +132,9 @@ public class Project extends AbstractEntity {
       ProjectDescription description,
       ProjectStatus status,
       ProjectRequirement requirement,
-      @NotNull CreatorID creatorID,
-      @NotNull CreatorName creatorName,
-      @NotNull SupervisorName supervisorName) {
+      CreatorID creatorID,
+      CreatorName creatorName,
+      SupervisorName supervisorName) {
     this.requirement = requirement;
     this.name = name;
     this.shortDescription = shortDescription;

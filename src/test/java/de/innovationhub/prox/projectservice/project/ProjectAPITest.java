@@ -177,7 +177,7 @@ class ProjectAPITest {
         .perform(
             patch(PROJECTS_ID_ROUTE, sampleProject.getId())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(updatedDescription)))
+                .content(new ObjectMapper().writeValueAsString(copiedProject)))
         .andDo(print())
         .andExpect(status().isNoContent());
 

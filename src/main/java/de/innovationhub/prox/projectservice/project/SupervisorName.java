@@ -26,6 +26,10 @@ package de.innovationhub.prox.projectservice.project;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Pattern.Flag;
+import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,19 +44,12 @@ public class SupervisorName {
   private static final int MAX_LENGTH = 255;
 
   @Column(length = MAX_LENGTH)
+  @Size(min = 1, max = MAX_LENGTH)
+  @Pattern(regexp = "^\\P{C}*[^\\p{Z}\\p{C}]+\\P{C}*$", flags = {Flag.UNICODE_CASE})
+  @NotBlank
   private String supervisorName;
 
   public SupervisorName(String supervisorName) {
-    if (!SupervisorName.isValid(supervisorName)) {
-      throw new IllegalArgumentException(
-          String.format(
-              "Name %s exceeded maximum number of %d allowed characters",
-              supervisorName, SupervisorName.MAX_LENGTH));
-    }
     this.supervisorName = supervisorName;
-  }
-
-  public static boolean isValid(String name) {
-    return name != null && name.length() <= SupervisorName.MAX_LENGTH;
   }
 }

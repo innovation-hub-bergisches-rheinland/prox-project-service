@@ -26,6 +26,11 @@ package de.innovationhub.prox.projectservice.project;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Pattern.Flag;
+import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,19 +45,13 @@ public class ProjectName {
   private static final int MAX_LENGTH = 255;
 
   @Column(length = MAX_LENGTH)
+  @Size(min = 1, max = MAX_LENGTH)
+  @Pattern(regexp = "^\\P{C}*[^\\p{Z}\\p{C}]+\\P{C}*$", flags = {Flag.UNICODE_CASE})
+  @NotBlank
+  @NotNull
   private String name;
 
   public ProjectName(String name) {
-    if (!ProjectName.isValid(name)) {
-      throw new IllegalArgumentException(
-          String.format(
-              "Name %s exceeded maximum number of %d allowed characters",
-              name, ProjectName.MAX_LENGTH));
-    }
     this.name = name;
-  }
-
-  public static boolean isValid(String name) {
-    return name != null && name.length() <= ProjectName.MAX_LENGTH;
   }
 }

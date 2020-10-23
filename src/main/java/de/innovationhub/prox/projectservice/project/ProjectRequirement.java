@@ -42,17 +42,6 @@ public class ProjectRequirement {
   private String requirement;
 
   public ProjectRequirement(String requirement) {
-    if (!ProjectRequirement.isValid(requirement)) {
-      throw new IllegalArgumentException(
-          String.format(
-              "Requirement %s exceeded maximum number of %d allowed characters",
-              requirement, ProjectRequirement.MAX_LENGTH));
-    }
-
     this.requirement = requirement;
-  }
-
-  public static boolean isValid(String name) {
-    return name != null && name.length() <= ProjectRequirement.MAX_LENGTH;
   }
 }
