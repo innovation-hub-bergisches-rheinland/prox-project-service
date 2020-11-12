@@ -42,8 +42,6 @@ public class ProjectDescription {
   private static final int MAX_LENGTH = 10000;
 
   @Column(length = MAX_LENGTH)
-  @Size(min = 1, max = MAX_LENGTH)
-  @NotBlank
   private String description;
 
   public ProjectDescription(String description) {
