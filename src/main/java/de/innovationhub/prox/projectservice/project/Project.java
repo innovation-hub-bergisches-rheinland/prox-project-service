@@ -59,7 +59,6 @@ public class Project extends AbstractEntity {
 
   @JsonUnwrapped
   @Valid
-  @NotNull
   private ProjectDescription description;
 
   @JsonUnwrapped
