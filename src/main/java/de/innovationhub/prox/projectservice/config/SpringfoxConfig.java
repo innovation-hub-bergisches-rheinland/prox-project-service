@@ -43,9 +43,7 @@ public class SpringfoxConfig {
     return new Predicate<>() {
       @Override
       public boolean apply(@Nullable RequestHandler input) {
-        System.out.println(input.getName());
-        System.out.println(input);
-        if(ArrayUtils.contains(PREDICATE_NAMES, input.getName())) {
+        if(input != null && input.getName() != null && ArrayUtils.contains(PREDICATE_NAMES, input.getName())) {
           Set<RequestMethod> methodSet = input.supportedMethods();
           return methodSet.contains(RequestMethod.GET)
               || methodSet.contains(RequestMethod.HEAD)
