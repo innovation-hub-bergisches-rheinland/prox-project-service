@@ -28,6 +28,9 @@
     <sortpom-maven-plugin.version>2.12.0</sortpom-maven-plugin.version>
     <spotless-maven-plugin.version>2.5.0</spotless-maven-plugin.version>
     <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
+    <springfox.version>3.0.0</springfox.version>
+    <wiremock.version>2.27.2</wiremock.version>
+    <javers.version>5.13.2</javers.version>
   </properties>
 
   <dependencyManagement>
@@ -49,6 +52,11 @@
     </dependencies>
   </dependencyManagement>
   <dependencies>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-boot-starter</artifactId>
+      <version>${springfox.version}</version>
+    </dependency>
     <dependency>
       <groupId>com.jayway.jsonpath</groupId>
       <artifactId>json-path</artifactId>
@@ -115,13 +123,13 @@
     <dependency>
       <groupId>com.github.tomakehurst</groupId>
       <artifactId>wiremock-jre8</artifactId>
-      <version>2.27.2</version>
+      <version>${wiremock.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.javers</groupId>
       <artifactId>javers-spring-boot-starter-sql</artifactId>
-      <version>5.13.2</version>
+      <version>${javers.version}</version>
       <scope>test</scope>
     </dependency>
 

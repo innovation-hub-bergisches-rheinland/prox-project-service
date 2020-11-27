@@ -46,6 +46,14 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
   private static final String PROJPROJECT_STUDY_COURSESECTS_PATTERN =
       "/projprojectStudyCoursesects/**";
   private static final String PROFILE_PATTERN = "/profile/**";
+  public static final String[] SWAGGER_PATHS = {
+      "/swagger-resources/**",
+      "/swagger-ui/**",
+      "/swagger-ui/",
+      "/v2/api-docs",
+      "/v3/api-docs"
+
+  };
 
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) {
@@ -101,6 +109,8 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         .antMatchers(SecurityConfig.PROJECT_MODULES_PATTERN)
         .denyAll()
         .antMatchers(SecurityConfig.PROFILE_PATTERN)
+        .permitAll()
+        .antMatchers(HttpMethod.GET, SecurityConfig.SWAGGER_PATHS)
         .permitAll()
         .anyRequest()
         .denyAll();
