@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.PathSelectors;
@@ -35,11 +37,22 @@ public class SpringfoxConfig {
   };
 
   @Bean
+  public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurer() {
+      @Override
+      public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("*");
+      }
+    };
+  }
+
+  @Bean
   public Docket api() {
     return new Docket(DocumentationType.OAS_30)
         .forCodeGeneration(true)
         .securitySchemes(Collections.singletonList(jwtScheme()))
         .securityContexts(Collections.singletonList(securityContext()))
+        .groupName("prox-project-service")
         .select()
         .paths(PathSelectors.ant("/projects/**")
             .or(PathSelectors.ant("/projectStudyCourses/**"))
