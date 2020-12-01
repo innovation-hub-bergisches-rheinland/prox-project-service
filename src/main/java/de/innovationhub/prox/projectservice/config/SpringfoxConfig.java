@@ -52,7 +52,7 @@ public class SpringfoxConfig {
         .forCodeGeneration(true)
         .securitySchemes(Collections.singletonList(jwtScheme()))
         .securityContexts(Collections.singletonList(securityContext()))
-        .groupName("prox-project-service")
+        .groupName("project-service")
         .select()
         .paths(PathSelectors.ant("/projects/**")
             .or(PathSelectors.ant("/projectStudyCourses/**"))
