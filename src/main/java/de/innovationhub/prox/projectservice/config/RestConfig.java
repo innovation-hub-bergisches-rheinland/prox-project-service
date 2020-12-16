@@ -42,16 +42,19 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponents;
 
+//TODO Refactor: Better use eureka
 @Configuration
 public class RestConfig implements RepositoryRestConfigurer {
 
   private final EntityManager entityManager;
   private Environment env;
-  private String portLokal = "";
+  private String tagServicePort = "";
+  private String professorServicePort = "";
 
   public RestConfig(Environment env, EntityManager entityManager) {
     this.env = env;
-    this.portLokal = env.getProperty("tagServiceLink.port");
+    this.tagServicePort = env.getProperty("tagServiceLink.port");
+    this.professorServicePort = env.getProperty("professorServiceLink.port");
     this.entityManager = entityManager;
   }
 
@@ -83,29 +86,44 @@ public class RestConfig implements RepositoryRestConfigurer {
       public EntityModel<Project> process(EntityModel<Project> resource) {
 
         String projectID = resource.getContent().getId().toString();
+        String creatorID = resource.getContent().getCreatorID().getCreatorID().toString();
 
         UriComponents request = ServletUriComponentsBuilder.fromCurrentRequest().build();
         String scheme = request.getScheme() + "://";
         String serverName = request.getHost();
-        String serverPort = "";
+        String tagServicePort2 = "";
+        String professorServicePot = "";
 
         if (request.getPort() == 8081) {
-          serverPort = ":" + request.getPort();
+          tagServicePort2 = ":" + request.getPort();
+          professorServicePot = ":" + request.getPort();
         } else if (request.getPort() == 9002) {
-          serverPort = ":" + RestConfig.this.portLokal;
+          tagServicePort2 = ":" + RestConfig.this.tagServicePort;
+          professorServicePot = ":" + RestConfig.this.professorServicePort;
         }
 
         resource.add(
-            new Link(
+            Link.of(
                 scheme
                     + serverName
-                    + serverPort
+                    + tagServicePort2
                     + "/"
                     + RestConfig.this.env.getProperty("tagServiceLink.tag-collection")
                     + "/"
                     + projectID
                     + "/tags",
                 "tagCollection"));
+        resource.add(
+            Link.of(
+                scheme
+                + serverName
+                + professorServicePot
+                + "/"
+                + RestConfig.this.env.getProperty("professorServiceLink.professor-resource")
+                + "/"
+                + creatorID, "professor"
+            )
+        );
         return resource;
       }
     };
