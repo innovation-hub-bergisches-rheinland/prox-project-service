@@ -25,10 +25,18 @@
 package de.innovationhub.prox.projectservice.project;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.web.bind.annotation.RequestParam;
 
 public interface ProjectRepositoryCustom {
 
   List<Project> findAllByIds(@RequestParam("projectIds") UUID[] projectIds);
+
+  @RestResource(exported = true, path = "findAvailableProjectsOfCreator")
+  Set<Project> findAvailableProjectsOfCreator(final UUID creatorId);
+
+  @RestResource(exported = true, path = "findRunningAndFinishedProjectsOfCreator")
+  Set<Project> findRunningAndFinishedProjectsOfCreator(final UUID creatorId);
 }

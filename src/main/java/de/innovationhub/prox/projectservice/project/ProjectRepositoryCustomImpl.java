@@ -27,6 +27,7 @@ package de.innovationhub.prox.projectservice.project;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -46,5 +47,15 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
       }
     }
     return specificProjects;
+  }
+
+  @Override
+  public Set<Project> findAvailableProjectsOfCreator(UUID creatorId) {
+    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(creatorId, ProjectStatus.VERFÜGBAR);
+  }
+
+  @Override
+  public Set<Project> findRunningAndFinishedProjectsOfCreator(UUID creatorId) {
+    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(creatorId, ProjectStatus.ABGESCHLOSSEN, ProjectStatus.LAUFEND);
   }
 }
