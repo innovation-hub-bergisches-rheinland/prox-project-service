@@ -58,4 +58,14 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
   public Set<Project> findRunningAndFinishedProjectsOfCreator(UUID creatorId) {
     return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(creatorId, ProjectStatus.ABGESCHLOSSEN, ProjectStatus.LAUFEND);
   }
+
+  @Override
+  public Set<Project> findRunningProjectsOfCreator(UUID creatorId) {
+    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(creatorId, ProjectStatus.LAUFEND);
+  }
+
+  @Override
+  public Set<Project> findinishedProjectsOfCreator(UUID creatorId) {
+    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(creatorId, ProjectStatus.ABGESCHLOSSEN);
+  }
 }
