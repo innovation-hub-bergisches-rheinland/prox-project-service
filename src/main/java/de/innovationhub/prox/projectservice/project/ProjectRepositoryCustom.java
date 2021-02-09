@@ -45,4 +45,7 @@ public interface ProjectRepositoryCustom {
 
   @RestResource(exported = true, path = "findRunningAndFinishedProjectsOfCreator")
   Set<Project> findRunningAndFinishedProjectsOfCreator(final UUID creatorId);
+
+  @RestResource(exported = true, path = "findProjectStatsOfCreator")
+  ProjectStats findProjectStatsOfCreator(final UUID creatorId);
 }
