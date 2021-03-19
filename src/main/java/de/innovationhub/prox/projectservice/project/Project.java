@@ -26,7 +26,7 @@ package de.innovationhub.prox.projectservice.project;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import de.innovationhub.prox.projectservice.core.AbstractEntity;
-import de.innovationhub.prox.projectservice.module.Module;
+import de.innovationhub.prox.projectservice.module.ModuleType;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
@@ -91,7 +91,7 @@ public class Project extends AbstractEntity {
   private SupervisorName supervisorName;
 
   @ManyToMany
-  private List<Module> modules = new ArrayList<>(); //TODO Validation
+  private List<ModuleType> modules = new ArrayList<>();
 
   @Basic
   @Temporal(TemporalType.TIMESTAMP)
@@ -113,7 +113,7 @@ public class Project extends AbstractEntity {
       CreatorID creatorID,
       CreatorName creatorName,
       SupervisorName supervisorName,
-      List<Module> modules) {
+      List<ModuleType> modules) {
     this.requirement = requirement;
     this.name = name;
     this.shortDescription = shortDescription;

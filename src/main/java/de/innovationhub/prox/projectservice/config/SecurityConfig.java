@@ -39,6 +39,8 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @KeycloakConfiguration
 class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
+  private static final String STUDY_PROGRAM_PATTERN = "/studyPrograms/**";
+  private static final String MODULE_TYPE_PATTERN = "/moduleTypes/**";
   private static final String PROJECTS_PATTERN = "/projects/**";
   private static final String PROJECT_STUDY_COURSES_PATTERN = "/projectStudyCourses/**";
   private static final String PROJECTS_ID_PATTERN = "/projects/{id}/**";
@@ -111,6 +113,10 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         .antMatchers(SecurityConfig.PROFILE_PATTERN)
         .permitAll()
         .antMatchers(HttpMethod.GET, SecurityConfig.SWAGGER_PATHS)
+        .permitAll()
+        .antMatchers(SecurityConfig.MODULE_TYPE_PATTERN)
+        .permitAll()
+        .antMatchers(SecurityConfig.STUDY_PROGRAM_PATTERN)
         .permitAll()
         .anyRequest()
         .denyAll();

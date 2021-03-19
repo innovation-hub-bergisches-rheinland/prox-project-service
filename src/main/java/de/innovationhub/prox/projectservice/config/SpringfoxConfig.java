@@ -28,12 +28,13 @@ import springfox.documentation.spring.web.plugins.Docket;
 public class SpringfoxConfig {
 
   private static final String[] PREDICATE_NAMES = {
-      "saveStudyCourse",
-      "deleteStudyCourse",
-      "studyCourseModules",
-      "saveModule",
-      "deleteModule",
-      "moduleStudyCourse"
+      "saveStudyProgram",
+      "deleteStudyProgram",
+      "studyProgramModuleTypes",
+      "saveModuleType",
+      "deleteModuleType",
+      "moduleTypeStudyPrograms",
+      "studyProgramModules"
   };
 
   @Bean
@@ -55,8 +56,8 @@ public class SpringfoxConfig {
         .groupName("project-service")
         .select()
         .paths(PathSelectors.ant("/projects/**")
-            .or(PathSelectors.ant("/projectStudyCourses/**"))
-            .or(PathSelectors.ant("/projectModules/**")))
+          .or(PathSelectors.ant("/moduleTypes/**"))
+          .or(PathSelectors.ant("/studyPrograms/**")))
         .apis(customRequestHandlers())
         .build();
   }
