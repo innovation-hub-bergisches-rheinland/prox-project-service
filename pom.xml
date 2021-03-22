@@ -24,7 +24,7 @@
     <frontend-maven-plugin.version>1.11.2</frontend-maven-plugin.version>
     <java.version>11</java.version>
     <javers.version>5.15.0</javers.version>
-    <keycloak.version>11.0.3</keycloak.version>
+    <keycloak.version>12.0.4</keycloak.version>
     <maven-toolchains-plugin.version>3.0.0</maven-toolchains-plugin.version>
     <revision>0.1.0</revision>
     <sortpom-maven-plugin.version>2.12.0</sortpom-maven-plugin.version>
