@@ -25,39 +25,52 @@
 package de.innovationhub.prox.projectservice.project;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-//@DataJpaTest
-//public class ProjectTest {
-//
-//  @Autowired
-//  ModuleTypeRepository moduleTypeRepository;
-//
-//  @Autowired ProjectRepository projectRepository;
-//
-//  @Test
-//  public void equality() {
-//    // Create Modules for Project
-//    List<ModuleType> modules = new ArrayList<>();
-//    modules.add(new ModuleType("M1", "Module 1", Collections.emptyList()));
-//    modules.add(new ModuleType("M2", "Module 2", Collections.emptyList()));
-//    modules.add(new ModuleType("M3", "Module 3", Collections.emptyList()));
-//    this.moduleTypeRepository.saveAll(modules);
-//    assertThat(this.moduleTypeRepository.count()).isEqualTo(3);
-//
-//    // Create Project
-//    Project project =
-//        new Project(
-//            new ProjectName("Testprojekt"),
-//            new ProjectShortDescription("Best Proj."),
-//            new ProjectDescription("Bestes Projekt"),
-//            ProjectStatus.LAUFEND,
-//            new ProjectRequirement("PhD"),
-//            new CreatorID(UUID.randomUUID()),
-//            new CreatorName("Jann"),
-//            new SupervisorName("Jann"),
-//            modules);
-//
-//    this.projectRepository.save(project);
-//    assertThat(this.projectRepository.findById(project.getId()).isPresent()).isEqualTo(true);
-//  }
-//}
+import de.innovationhub.prox.projectservice.module.ModuleType;
+import de.innovationhub.prox.projectservice.module.ModuleTypeRepository;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+@DataJpaTest
+public class ProjectTest {
+
+  @Autowired
+  ModuleTypeRepository moduleTypeRepository;
+
+  @Autowired ProjectRepository projectRepository;
+
+  @Test
+  public void equality() {
+    // Create Modules for Project
+    Set<ModuleType> modules = new HashSet<>();
+    modules.add(new ModuleType("M1", "Module 1"));
+    modules.add(new ModuleType("M2", "Module 2"));
+    modules.add(new ModuleType("M3", "Module 3"));
+    this.moduleTypeRepository.saveAll(modules);
+    assertThat(this.moduleTypeRepository.count()).isEqualTo(3);
+
+    // Create Project
+    Project project =
+        new Project(
+            new ProjectName("Testprojekt"),
+            new ProjectShortDescription("Best Proj."),
+            new ProjectDescription("Bestes Projekt"),
+            ProjectStatus.LAUFEND,
+            new ProjectRequirement("PhD"),
+            new CreatorID(UUID.randomUUID()),
+            new CreatorName("Jann"),
+            new SupervisorName("Jann"),
+            modules);
+
+    this.projectRepository.save(project);
+    assertTrue(this.projectRepository.findById(project.getId()).isPresent());
+  }
+}

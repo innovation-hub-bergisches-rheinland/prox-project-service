@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,11 +23,11 @@ import org.hibernate.annotations.NaturalId;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ModuleType extends AbstractEntity {
   @NotBlank
-  @Max(value = 10)
+  @Size(max = 10)
   @NaturalId
   private String key;
 
   @NotBlank
-  @Max(value = 255)
+  @Size(max = 255)
   private String name;
 }

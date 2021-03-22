@@ -1,12 +1,15 @@
 package de.innovationhub.prox.projectservice.module;
 
 import de.innovationhub.prox.projectservice.core.AbstractEntity;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,14 +24,14 @@ import org.hibernate.annotations.NaturalId;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StudyProgram extends AbstractEntity {
   @NotBlank
-  @Max(value = 10)
+  @Size(max = 10)
   @NaturalId
   private String key;
 
   @NotBlank
-  @Max(value = 255)
+  @Size(max = 255)
   private String name;
 
-  @OneToMany
-  private List<ModuleType> modules;
+  @ManyToMany
+  private Set<ModuleType> modules = new HashSet<>();
 }

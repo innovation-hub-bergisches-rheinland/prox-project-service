@@ -28,7 +28,9 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import de.innovationhub.prox.projectservice.core.AbstractEntity;
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -91,7 +93,7 @@ public class Project extends AbstractEntity {
   private SupervisorName supervisorName;
 
   @ManyToMany
-  private List<ModuleType> modules = new ArrayList<>();
+  private Set<ModuleType> modules = new HashSet<>();
 
   @Basic
   @Temporal(TemporalType.TIMESTAMP)
@@ -113,7 +115,7 @@ public class Project extends AbstractEntity {
       CreatorID creatorID,
       CreatorName creatorName,
       SupervisorName supervisorName,
-      List<ModuleType> modules) {
+      Set<ModuleType> modules) {
     this.requirement = requirement;
     this.name = name;
     this.shortDescription = shortDescription;
