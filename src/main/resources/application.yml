@@ -13,6 +13,9 @@ moduleImport:
 tagServiceLink:
   port: 9003
   tag-collection: tagCollections
+professorServiceLink:
+  port: 9005
+  professor-resource: professors
 keycloak:
   auth-server-url: https://login.archi-lab.io/auth
   bearer-only: true

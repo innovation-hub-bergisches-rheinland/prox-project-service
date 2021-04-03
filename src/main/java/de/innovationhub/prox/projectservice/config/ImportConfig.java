@@ -24,7 +24,6 @@
 
 package de.innovationhub.prox.projectservice.config;
 
-import de.innovationhub.prox.projectservice.module.StudyCourseService;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.concurrent.Executor;
@@ -37,7 +36,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
-@Configuration
+/*@Configuration
 @Slf4j
 public class ImportConfig implements SchedulingConfigurer {
 
@@ -85,4 +84,4 @@ public class ImportConfig implements SchedulingConfigurer {
           return nextExecutionTime.getTime();
         });
   }
-}
+}*/

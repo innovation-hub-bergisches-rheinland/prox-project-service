@@ -5,14 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import de.innovationhub.prox.projectservice.module.Module;
-import de.innovationhub.prox.projectservice.module.ModuleName;
-import de.innovationhub.prox.projectservice.module.ModuleRepository;
-import de.innovationhub.prox.projectservice.module.ProjectType;
+import de.innovationhub.prox.projectservice.module.ModuleType;
+import de.innovationhub.prox.projectservice.module.ModuleTypeRepository;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -25,12 +25,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
-public class ProjectRepositoryTest {
+class ProjectRepositoryTest {
   @Autowired ProjectRepository projectRepository;
 
-  @Autowired ModuleRepository moduleRepository;
+  @Autowired
+  ModuleTypeRepository moduleTypeRepository;
 
-  static List<Module> sampleModules = new ArrayList<>();
+  static Set<ModuleType> sampleModules = new HashSet<>();
   static Project sampleProject;
   static List<Project> sampleProjects = new ArrayList<>();
 
@@ -39,7 +40,7 @@ public class ProjectRepositoryTest {
   static void createSampleData() {
 
     // Create new sample Modules and add them to list
-    Module module = new Module(new ModuleName("Module 1"), ProjectType.UNDEFINED);
+    ModuleType module = new ModuleType("M1", "Module 1");
     sampleModules.add(module);
 
     // Create new sample Project
@@ -76,8 +77,8 @@ public class ProjectRepositoryTest {
   @BeforeEach
   void save_nested_entities() {
     // Save SampleModules and check if save was successful
-    moduleRepository.saveAll(sampleModules);
-    assertEquals(sampleModules.size(), moduleRepository.count());
+    moduleTypeRepository.saveAll(sampleModules);
+    assertEquals(sampleModules.size(), moduleTypeRepository.count());
   }
 
   /** Saves the sample project and verifies it is saved / found by its id */
@@ -222,5 +223,18 @@ public class ProjectRepositoryTest {
         projectRepository.findBySupervisorName_SupervisorNameContaining(
             UUID.randomUUID().toString());
     assertEquals(0, projects.size());
+  }
+
+  @Test
+  void when_projects_saved_then_find_all_by_ids_find_all() {
+    projectRepository.saveAll(sampleProjects);
+    UUID[] uuids = new UUID[sampleProjects.size()];
+    for (int i = 0; i < sampleProjects.size(); i++) {
+      uuids[i] = sampleProjects.get(i).getId();
+    }
+
+    List<Project> foundProjects = projectRepository.findAllByIds(uuids);
+
+    assertEquals(sampleProjects.size(), foundProjects.size());
   }
 }

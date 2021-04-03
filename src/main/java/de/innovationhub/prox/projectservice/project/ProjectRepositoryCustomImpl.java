@@ -27,9 +27,11 @@ package de.innovationhub.prox.projectservice.project;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.util.Streamable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
@@ -46,5 +48,38 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
       }
     }
     return specificProjects;
+  }
+
+  @Override
+  public Set<Project> findAvailableProjectsOfCreator(UUID creatorId) {
+    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(creatorId, ProjectStatus.VERFÜGBAR);
+  }
+
+  @Override
+  public Set<Project> findRunningAndFinishedProjectsOfCreator(UUID creatorId) {
+    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(creatorId, ProjectStatus.ABGESCHLOSSEN, ProjectStatus.LAUFEND);
+  }
+
+  @Override
+  public ProjectStats findProjectStatsOfCreator(UUID creatorId) {
+    var projects = this.projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(creatorId, ProjectStatus.LAUFEND, ProjectStatus.VERFÜGBAR, ProjectStatus.ABGESCHLOSSEN);
+    return new ProjectStats(
+        filterByStatusAndCount(projects, ProjectStatus.VERFÜGBAR),
+        filterByStatusAndCount(projects, ProjectStatus.ABGESCHLOSSEN),
+        filterByStatusAndCount(projects, ProjectStatus.LAUFEND));
+  }
+
+  private int filterByStatusAndCount(Set<Project> projects, ProjectStatus projectStatus) {
+    return Math.toIntExact(projects.stream().filter(p -> p.getStatus() == projectStatus).count());
+  }
+
+  @Override
+  public Set<Project> findRunningProjectsOfCreator(UUID creatorId) {
+    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(creatorId, ProjectStatus.LAUFEND);
+  }
+
+  @Override
+  public Set<Project> findinishedProjectsOfCreator(UUID creatorId) {
+    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(creatorId, ProjectStatus.ABGESCHLOSSEN);
   }
 }

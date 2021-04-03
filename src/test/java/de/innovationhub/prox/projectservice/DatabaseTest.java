@@ -26,14 +26,10 @@ package de.innovationhub.prox.projectservice;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.innovationhub.prox.projectservice.module.AcademicDegree;
-import de.innovationhub.prox.projectservice.module.Module;
-import de.innovationhub.prox.projectservice.module.ModuleName;
-import de.innovationhub.prox.projectservice.module.ModuleRepository;
-import de.innovationhub.prox.projectservice.module.ProjectType;
-import de.innovationhub.prox.projectservice.module.StudyCourse;
-import de.innovationhub.prox.projectservice.module.StudyCourseName;
-import de.innovationhub.prox.projectservice.module.StudyCourseRepository;
+import de.innovationhub.prox.projectservice.module.ModuleType;
+import de.innovationhub.prox.projectservice.module.ModuleTypeRepository;
+import de.innovationhub.prox.projectservice.module.StudyProgram;
+import de.innovationhub.prox.projectservice.module.StudyProgramRepository;
 import de.innovationhub.prox.projectservice.project.CreatorID;
 import de.innovationhub.prox.projectservice.project.CreatorName;
 import de.innovationhub.prox.projectservice.project.Project;
@@ -45,56 +41,52 @@ import de.innovationhub.prox.projectservice.project.ProjectShortDescription;
 import de.innovationhub.prox.projectservice.project.ProjectStatus;
 import de.innovationhub.prox.projectservice.project.SupervisorName;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
-public class DatabaseTest {
+class DatabaseTest {
+  @Autowired
+  ProjectRepository projectRepository;
 
-  @Autowired ProjectRepository projectRepository;
+  @Autowired
+  ModuleTypeRepository moduleTypeRepository;
 
-  @Autowired ModuleRepository moduleRepository;
-
-  @Autowired StudyCourseRepository studyCourseRepository;
+  @Autowired
+  StudyProgramRepository studyProgramRepository;
 
   @Test
-  public void creation() {
-    StudyCourse computerScience =
-        new StudyCourse(new StudyCourseName("Computer Science"), AcademicDegree.MASTER);
-    StudyCourse softwareEngineering =
-        new StudyCourse(new StudyCourseName("Software Engineering"), AcademicDegree.MASTER);
-    StudyCourse informationSystems =
-        new StudyCourse(new StudyCourseName("Information Systems"), AcademicDegree.MASTER);
+  void creation() {
 
-    Module am = new Module(new ModuleName("Anforderungsmanagement"), ProjectType.UNDEFINED);
-    Module fae =
-        new Module(new ModuleName("Fachspezifischer Architekturentwurf"), ProjectType.UNDEFINED);
-    Module bi = new Module(new ModuleName("Business Intelligence"), ProjectType.UNDEFINED);
-    Module eam =
-        new Module(new ModuleName("Enterprise Architecture Management"), ProjectType.UNDEFINED);
+    ModuleType am = new ModuleType("AM", "Anforderungsmanagement");
+    ModuleType fae = new ModuleType("FAE", "Fachspezifischer Architekturentwurf");
+    ModuleType eam = new ModuleType("EAM", "Enterprise Architecture Management");
 
-    this.moduleRepository.save(am);
-    this.moduleRepository.save(fae);
-    this.moduleRepository.save(bi);
-    this.moduleRepository.save(eam);
 
-    softwareEngineering.addModule(am);
-    softwareEngineering.addModule(fae);
+    StudyProgram computerScience = new StudyProgram("CS", "Master Computer Science", Set.of(am, fae));
+    StudyProgram softwareEngineering = new StudyProgram("SE", "Master Software Engineering", Set.of(am, fae));
+    StudyProgram informationSystems = new StudyProgram("IS", "Master Information Systems",
+        Collections.singleton(eam));
 
-    informationSystems.addModule(bi);
-    informationSystems.addModule(eam);
+    this.moduleTypeRepository.save(am);
+    this.moduleTypeRepository.save(fae);
+    this.moduleTypeRepository.save(eam);
 
-    this.studyCourseRepository.save(computerScience);
-    this.studyCourseRepository.save(softwareEngineering);
-    this.studyCourseRepository.save(informationSystems);
+    this.studyProgramRepository.save(computerScience);
+    this.studyProgramRepository.save(softwareEngineering);
+    this.studyProgramRepository.save(informationSystems);
 
-    assertThat(this.studyCourseRepository.findAll())
+    assertThat(this.studyProgramRepository.findAll())
         .contains(computerScience, softwareEngineering, informationSystems);
-    assertThat(this.moduleRepository.findAll()).contains(am, fae, bi, eam);
+    assertThat(this.moduleTypeRepository.findAll()).contains(am, fae, eam);
 
-    ArrayList<Module> modules = new ArrayList<>();
+    Set<ModuleType> modules = new HashSet<>();
     modules.add(am);
     Project p1 =
         new Project(
@@ -108,7 +100,7 @@ public class DatabaseTest {
             new SupervisorName("Supervisor Professor 1"),
             modules);
 
-    modules = new ArrayList<>();
+    modules = new HashSet<>();
     modules.add(fae);
     Project p2 =
         new Project(
@@ -122,7 +114,7 @@ public class DatabaseTest {
             new SupervisorName("Supervisor Professor 3"),
             modules);
 
-    modules = new ArrayList<>();
+    modules = new HashSet<>();
     modules.add(eam);
     Project p3 =
         new Project(

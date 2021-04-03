@@ -25,13 +25,15 @@
 package de.innovationhub.prox.projectservice.project;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import de.innovationhub.prox.projectservice.module.Module;
-import de.innovationhub.prox.projectservice.module.ModuleName;
-import de.innovationhub.prox.projectservice.module.ModuleRepository;
-import de.innovationhub.prox.projectservice.module.ProjectType;
+import de.innovationhub.prox.projectservice.module.ModuleType;
+import de.innovationhub.prox.projectservice.module.ModuleTypeRepository;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,19 +42,20 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 @DataJpaTest
 public class ProjectTest {
 
-  @Autowired ModuleRepository moduleRepository;
+  @Autowired
+  ModuleTypeRepository moduleTypeRepository;
 
   @Autowired ProjectRepository projectRepository;
 
   @Test
   public void equality() {
     // Create Modules for Project
-    List<Module> modules = new ArrayList<>();
-    modules.add(new Module(new ModuleName("Module 1"), ProjectType.UNDEFINED));
-    modules.add(new Module(new ModuleName("Module 2"), ProjectType.UNDEFINED));
-    modules.add(new Module(new ModuleName("Module 3"), ProjectType.UNDEFINED));
-    this.moduleRepository.saveAll(modules);
-    assertThat(this.moduleRepository.count()).isEqualTo(3);
+    Set<ModuleType> modules = new HashSet<>();
+    modules.add(new ModuleType("M1", "Module 1"));
+    modules.add(new ModuleType("M2", "Module 2"));
+    modules.add(new ModuleType("M3", "Module 3"));
+    this.moduleTypeRepository.saveAll(modules);
+    assertThat(this.moduleTypeRepository.count()).isEqualTo(3);
 
     // Create Project
     Project project =
@@ -68,6 +71,6 @@ public class ProjectTest {
             modules);
 
     this.projectRepository.save(project);
-    assertThat(this.projectRepository.findById(project.getId()).isPresent()).isEqualTo(true);
+    assertTrue(this.projectRepository.findById(project.getId()).isPresent());
   }
 }
