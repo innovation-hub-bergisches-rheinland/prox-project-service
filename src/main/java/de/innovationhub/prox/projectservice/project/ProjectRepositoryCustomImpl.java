@@ -64,9 +64,9 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
   public ProjectStats findProjectStatsOfCreator(UUID creatorId) {
     var projects = this.projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(creatorId, ProjectStatus.LAUFEND, ProjectStatus.VERFÜGBAR, ProjectStatus.ABGESCHLOSSEN);
     return new ProjectStats(
-        filterByStatusAndCount(projects, ProjectStatus.VERFÜGBAR),
+        filterByStatusAndCount(projects, ProjectStatus.LAUFEND),
         filterByStatusAndCount(projects, ProjectStatus.ABGESCHLOSSEN),
-        filterByStatusAndCount(projects, ProjectStatus.LAUFEND));
+        filterByStatusAndCount(projects, ProjectStatus.VERFÜGBAR));
   }
 
   private int filterByStatusAndCount(Set<Project> projects, ProjectStatus projectStatus) {
