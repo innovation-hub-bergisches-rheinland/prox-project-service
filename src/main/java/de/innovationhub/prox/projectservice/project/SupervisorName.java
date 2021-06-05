@@ -42,7 +42,7 @@ public class SupervisorName {
   private static final int MAX_LENGTH = 255;
 
   @Column(length = MAX_LENGTH)
-  @Size(min = 1, max = MAX_LENGTH)
+  @Size(max = MAX_LENGTH)
   private String supervisorName;
 
   public SupervisorName(String supervisorName) {
