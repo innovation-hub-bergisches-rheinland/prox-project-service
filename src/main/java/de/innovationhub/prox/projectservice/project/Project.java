@@ -89,7 +89,6 @@ public class Project extends AbstractEntity {
 
   @JsonUnwrapped
   @Valid
-  @NotNull
   private SupervisorName supervisorName;
 
   @ManyToMany

@@ -111,22 +111,4 @@ class ProjectValidationTest {
     Set<ConstraintViolation<Project>> violationSet = localValidatorFactoryBean.validate(project);
     assertFalse(violationSet.isEmpty());
   }
-
-  @Test
-  void when_project_supervisorname_is_null_should_return_violation() {
-    Project project = new Project();
-    project.setSupervisorName(null);
-
-    Set<ConstraintViolation<Project>> violationSet = localValidatorFactoryBean.validate(project);
-    assertFalse(violationSet.isEmpty());
-  }
-
-  @Test
-  void when_project_supervisorname_is_blank_should_return_violation() {
-    Project project = new Project();
-    project.setSupervisorName(new SupervisorName(" "));
-
-    Set<ConstraintViolation<Project>> violationSet = localValidatorFactoryBean.validate(project);
-    assertFalse(violationSet.isEmpty());
-  }
 }

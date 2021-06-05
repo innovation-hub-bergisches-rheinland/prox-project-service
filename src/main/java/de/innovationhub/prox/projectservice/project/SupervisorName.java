@@ -43,7 +43,6 @@ public class SupervisorName {
 
   @Column(length = MAX_LENGTH)
   @Size(min = 1, max = MAX_LENGTH)
-  @NotBlank
   private String supervisorName;
 
   public SupervisorName(String supervisorName) {
