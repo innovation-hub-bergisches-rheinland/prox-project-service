@@ -72,13 +72,11 @@ public class Project extends AbstractEntity {
   @Valid
   private ProjectRequirement requirement;
 
-  @JsonUnwrapped
   @Valid
   @NotNull
   private ProjectStatus status;
 
   @Column(updatable = false)
-  @JsonUnwrapped
   @Valid
   @NotNull
   private ProjectContext context;
