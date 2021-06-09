@@ -74,27 +74,27 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
         .filter(p -> moduleTypeKeys != null && moduleTypeKeys.length > 0 ? StreamSupport.stream(p.getModules().spliterator(), false)
             .anyMatch(m -> Arrays.stream(moduleTypeKeys).anyMatch(k -> k.equalsIgnoreCase(m.getKey()))) : true)
         .filter(p -> {
-          if(text == null || text.length() > 0) {
+          if(text == null || text.length() <= 0) {
             return true;
           }
           var match = false;
           if(p.getCreatorName() != null && p.getCreatorName().getCreatorName() != null) {
-            match = p.getCreatorName().getCreatorName().toLowerCase().contains(text.toLowerCase());
+            match |= p.getCreatorName().getCreatorName().toLowerCase().contains(text.toLowerCase());
           }
-          if(p.getDescription() != null && p.getDescription().getDescription() != null) {
-            match = p.getDescription().getDescription().toLowerCase().contains(text.toLowerCase());
+          if(match == false && p.getDescription() != null && p.getDescription().getDescription() != null) {
+            match |= p.getDescription().getDescription().toLowerCase().contains(text.toLowerCase());
           }
-          if(p.getShortDescription() != null && p.getShortDescription().getShortDescription() != null) {
-            match = p.getShortDescription().getShortDescription().toLowerCase().contains(text.toLowerCase());
+          if(match == false && p.getShortDescription() != null && p.getShortDescription().getShortDescription() != null) {
+            match |= p.getShortDescription().getShortDescription().toLowerCase().contains(text.toLowerCase());
           }
-          if(p.getName() != null && p.getName().getName() != null) {
-            match = p.getName().getName().toLowerCase().contains(text.toLowerCase());
+          if(match == false && p.getName() != null && p.getName().getName() != null) {
+            match |= p.getName().getName().toLowerCase().contains(text.toLowerCase());
           }
-          if(p.getRequirement() != null && p.getRequirement().getRequirement() != null) {
-            match = p.getRequirement().getRequirement().toLowerCase().contains(text.toLowerCase());
+          if(match == false && p.getRequirement() != null && p.getRequirement().getRequirement() != null) {
+            match |= p.getRequirement().getRequirement().toLowerCase().contains(text.toLowerCase());
           }
-          if(p.getSupervisorName() != null && p.getSupervisorName().getSupervisorName() != null) {
-            match = p.getSupervisorName().getSupervisorName().toLowerCase().contains(text.toLowerCase());
+          if(match == false && p.getSupervisorName() != null && p.getSupervisorName().getSupervisorName() != null) {
+            match |= p.getSupervisorName().getSupervisorName().toLowerCase().contains(text.toLowerCase());
           }
           return match;
         })
