@@ -43,11 +43,12 @@ class ProjectAPIValidationTest {
           new ProjectRequirement("This is a requirement"),
           new CreatorID(UUID.randomUUID()),
           new CreatorName("Mock User"),
-          new SupervisorName("Supervisor"));
+          new SupervisorName("Supervisor"),
+          ProjectContext.PROFESSOR);
 
   private Project emptyProject = new Project();
 
-  private Project nullProject = new Project(null, null, null, null, null, null, null, null);
+  private Project nullProject = new Project(null, null, null, null, null, null, null, null, null);
 
   private Project emptyValueProject =
       new Project(
@@ -58,7 +59,8 @@ class ProjectAPIValidationTest {
           new ProjectRequirement("\n \t"),
           new CreatorID(UUID.randomUUID()),
           new CreatorName(""),
-          new SupervisorName("   "));
+          new SupervisorName("   "),
+          ProjectContext.PROFESSOR);
 
   private Project longValueProject =
       new Project(
@@ -69,7 +71,8 @@ class ProjectAPIValidationTest {
           new ProjectRequirement(createLongString(10000)),
           new CreatorID(UUID.randomUUID()),
           new CreatorName(createLongString(10000)),
-          new SupervisorName(createLongString(255)));
+          new SupervisorName(createLongString(255)),
+          ProjectContext.PROFESSOR);
 
   String createLongString(int max) {
     return "a".repeat(Math.max(0, max + 1));

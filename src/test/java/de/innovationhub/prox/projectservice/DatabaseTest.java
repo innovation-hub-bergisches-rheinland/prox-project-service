@@ -33,6 +33,7 @@ import de.innovationhub.prox.projectservice.module.StudyProgramRepository;
 import de.innovationhub.prox.projectservice.project.CreatorID;
 import de.innovationhub.prox.projectservice.project.CreatorName;
 import de.innovationhub.prox.projectservice.project.Project;
+import de.innovationhub.prox.projectservice.project.ProjectContext;
 import de.innovationhub.prox.projectservice.project.ProjectDescription;
 import de.innovationhub.prox.projectservice.project.ProjectName;
 import de.innovationhub.prox.projectservice.project.ProjectRepository;
@@ -98,7 +99,8 @@ class DatabaseTest {
             new CreatorID(UUID.randomUUID()),
             new CreatorName("Creator 1"),
             new SupervisorName("Supervisor Professor 1"),
-            modules);
+            modules,
+            ProjectContext.PROFESSOR);
 
     modules = new HashSet<>();
     modules.add(fae);
@@ -112,7 +114,8 @@ class DatabaseTest {
             new CreatorID(UUID.randomUUID()),
             new CreatorName("Creator 3"),
             new SupervisorName("Supervisor Professor 3"),
-            modules);
+            modules,
+            ProjectContext.PROFESSOR);
 
     modules = new HashSet<>();
     modules.add(eam);
@@ -126,7 +129,8 @@ class DatabaseTest {
             new CreatorID(UUID.randomUUID()),
             new CreatorName("Creator 4"),
             new SupervisorName("Supervisor Professor 4"),
-            modules);
+            modules,
+            ProjectContext.PROFESSOR);
 
     this.projectRepository.save(p1);
     this.projectRepository.save(p2);

@@ -68,7 +68,8 @@ public class ProjectTest {
             new CreatorID(UUID.randomUUID()),
             new CreatorName("Jann"),
             new SupervisorName("Jann"),
-            modules);
+            modules,
+            ProjectContext.PROFESSOR);
 
     this.projectRepository.save(project);
     assertTrue(this.projectRepository.findById(project.getId()).isPresent());
