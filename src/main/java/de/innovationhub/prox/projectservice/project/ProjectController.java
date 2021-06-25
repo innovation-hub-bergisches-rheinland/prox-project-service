@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
 @RepositoryRestController
 public class ProjectController {
@@ -58,6 +59,15 @@ public class ProjectController {
     }
     UUID uuid = requestUUID.get();
     project.setCreatorID(new CreatorID(uuid));
+
+    if(authenticationUtils.authenticatedUserIsInRole("PROFESSOR")) {
+      project.setContext(ProjectContext.PROFESSOR);
+    } else if(authenticationUtils.authenticatedUserIsInRole("COMPANY-MANAGER")) {
+      project.setContext(ProjectContext.COMPANY);
+    } else {
+      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No matching role for project context found");
+    }
+
     Project savedProject = projectRepository.save(project);
     return new ResponseEntity<>(resourceAssembler.toFullResource(savedProject), HttpStatus.CREATED);
   }

@@ -3,6 +3,8 @@ package de.innovationhub.prox.projectservice.project;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -62,7 +64,8 @@ class ProjectAPITest {
           new ProjectRequirement("This is a requirement"),
           new CreatorID(UUID.randomUUID()),
           new CreatorName("Mock User"),
-          new SupervisorName("Supervisor"));
+          new SupervisorName("Supervisor"),
+          ProjectContext.PROFESSOR);
 
   // GET /projects/{id}
   @Test
@@ -91,9 +94,12 @@ class ProjectAPITest {
      Since the default Spring Data REST POST Mapping is replaced and relies on AuthenticationUtils
      it needs to be mocked to obtain a valid UserID while setting CreatorID
     */
-    Mockito.when(authenticationUtils.getUserUUIDFromRequest(Mockito.any(HttpServletRequest.class)))
+    Mockito.when(authenticationUtils.getUserUUIDFromRequest(any(HttpServletRequest.class)))
         .thenReturn(Optional.of(USER_ID));
+    Mockito.when(authenticationUtils.authenticatedUserIsInRole(eq("PROFESSOR"))).thenReturn(true);
     sampleProject.setCreatorID(new CreatorID(USER_ID));
+    //Set other non-matching context, in order to check whether it was set correctly
+    sampleProject.setContext(ProjectContext.COMPANY);
 
     mockMvc
         .perform(
@@ -104,6 +110,9 @@ class ProjectAPITest {
         .andExpect(status().isCreated());
 
     Optional<Project> foundProject = projectRepository.findById(sampleProject.getId());
+
+    //Set matching context
+    sampleProject.setContext(ProjectContext.PROFESSOR);
 
     assertTrue(foundProject.isPresent());
     assertEquals(sampleProject, foundProject.get());

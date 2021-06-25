@@ -24,6 +24,7 @@
 
 package de.innovationhub.prox.projectservice.project;
 
+import de.innovationhub.prox.projectservice.module.ModuleType;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -45,6 +46,9 @@ public interface ProjectRepositoryCustom {
 
   @RestResource(exported = true, path = "findRunningAndFinishedProjectsOfCreator")
   Set<Project> findRunningAndFinishedProjectsOfCreator(final UUID creatorId);
+
+  @RestResource(exported = true, path = "filterProjects")
+  Set<Project> filterProjects(ProjectStatus status, String[] moduleTypeKeys, String text);
 
   @RestResource(exported = true, path = "findProjectStatsOfCreator")
   ProjectStats findProjectStatsOfCreator(final UUID creatorId);

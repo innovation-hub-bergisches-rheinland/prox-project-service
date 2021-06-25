@@ -72,10 +72,14 @@ public class Project extends AbstractEntity {
   @Valid
   private ProjectRequirement requirement;
 
-  @JsonUnwrapped
   @Valid
   @NotNull
   private ProjectStatus status;
+
+  @Column(updatable = false)
+  @Valid
+  @NotNull
+  private ProjectContext context;
 
   @JsonUnwrapped
   @Valid
@@ -89,7 +93,6 @@ public class Project extends AbstractEntity {
 
   @JsonUnwrapped
   @Valid
-  @NotNull
   private SupervisorName supervisorName;
 
   @ManyToMany
@@ -115,7 +118,8 @@ public class Project extends AbstractEntity {
       CreatorID creatorID,
       CreatorName creatorName,
       SupervisorName supervisorName,
-      Set<ModuleType> modules) {
+      Set<ModuleType> modules,
+      ProjectContext projectContext) {
     this.requirement = requirement;
     this.name = name;
     this.shortDescription = shortDescription;
@@ -125,6 +129,7 @@ public class Project extends AbstractEntity {
     this.creatorName = creatorName;
     this.supervisorName = supervisorName;
     this.modules = modules;
+    this.context = projectContext;
   }
 
   public Project(
@@ -135,7 +140,8 @@ public class Project extends AbstractEntity {
       ProjectRequirement requirement,
       CreatorID creatorID,
       CreatorName creatorName,
-      SupervisorName supervisorName) {
+      SupervisorName supervisorName,
+      ProjectContext projectContext) {
     this.requirement = requirement;
     this.name = name;
     this.shortDescription = shortDescription;
@@ -144,5 +150,6 @@ public class Project extends AbstractEntity {
     this.creatorID = creatorID;
     this.creatorName = creatorName;
     this.supervisorName = supervisorName;
+    this.context = projectContext;
   }
 }

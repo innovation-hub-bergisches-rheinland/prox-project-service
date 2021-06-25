@@ -54,7 +54,8 @@ class ProjectRepositoryTest {
             new CreatorID(UUID.randomUUID()),
             new CreatorName("Karl Peter"),
             new SupervisorName("Karl Peter"),
-            sampleModules);
+            sampleModules,
+            ProjectContext.PROFESSOR);
 
     sampleProjects.add(sampleProject);
     sampleProjects.add(
@@ -67,7 +68,8 @@ class ProjectRepositoryTest {
             new CreatorID(UUID.randomUUID()),
             new CreatorName("Karl Peter"),
             new SupervisorName("Karl Peter"),
-            sampleModules));
+            sampleModules,
+            ProjectContext.PROFESSOR));
   }
 
   /**

@@ -26,6 +26,7 @@ package de.innovationhub.prox.projectservice.security;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -35,6 +36,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.innovationhub.prox.projectservice.project.CreatorID;
 import de.innovationhub.prox.projectservice.project.CreatorName;
 import de.innovationhub.prox.projectservice.project.Project;
+import de.innovationhub.prox.projectservice.project.ProjectContext;
 import de.innovationhub.prox.projectservice.project.ProjectDescription;
 import de.innovationhub.prox.projectservice.project.ProjectName;
 import de.innovationhub.prox.projectservice.project.ProjectRepository;
@@ -84,6 +86,7 @@ class ProjectRouteSecurityTest {
     MockitoAnnotations.initMocks(ProjectRouteSecurityTest.class);
     Mockito.when(authenticationUtils.getUserUUIDFromRequest(Mockito.any(HttpServletRequest.class)))
         .thenReturn(Optional.of(USER_ID));
+    Mockito.when(authenticationUtils.authenticatedUserIsInRole(eq("PROFESSOR"))).thenReturn(true);
   }
 
   private Project createTestProject(UUID creatorId) {
@@ -95,7 +98,8 @@ class ProjectRouteSecurityTest {
         new ProjectRequirement("This is a requirement"),
         new CreatorID(creatorId),
         new CreatorName("Mock User"),
-        new SupervisorName("Supervisor"));
+        new SupervisorName("Supervisor"),
+        ProjectContext.PROFESSOR);
   }
 
   private void performRequest(
