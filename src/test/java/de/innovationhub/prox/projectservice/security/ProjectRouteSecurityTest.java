@@ -59,7 +59,6 @@ class ProjectRouteSecurityTest {
 
   @BeforeEach
   void init() {
-    MockitoAnnotations.initMocks(ProjectRouteSecurityTest.class);
     Mockito.when(authenticationUtils.getUserUUIDFromRequest(Mockito.any(HttpServletRequest.class)))
         .thenReturn(Optional.of(USER_ID));
     Mockito.when(authenticationUtils.authenticatedUserIsInRole(eq("PROFESSOR"))).thenReturn(true);
