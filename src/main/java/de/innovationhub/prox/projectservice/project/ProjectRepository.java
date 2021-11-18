@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.project;
 
+
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -22,7 +23,6 @@ public interface ProjectRepository
       @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") @Param(value = "modified") Date modified);
 
   @RestResource(exported = false)
-  Set<Project> findAllByCreatorID_CreatorIDAndStatusIn(final UUID creatorId, ProjectStatus... status);
-
-
+  Set<Project> findAllByCreatorID_CreatorIDAndStatusIn(
+      final UUID creatorId, ProjectStatus... status);
 }

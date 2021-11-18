@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.config;
 
+
 import com.google.common.base.Predicate;
 import java.util.Collections;
 import java.util.List;
@@ -10,12 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.HttpAuthenticationScheme;
 import springfox.documentation.service.SecurityReference;
@@ -28,13 +25,13 @@ import springfox.documentation.spring.web.plugins.Docket;
 public class SpringfoxConfig {
 
   private static final String[] PREDICATE_NAMES = {
-      "saveStudyProgram",
-      "deleteStudyProgram",
-      "studyProgramModuleTypes",
-      "saveModuleType",
-      "deleteModuleType",
-      "moduleTypeStudyPrograms",
-      "studyProgramModules"
+    "saveStudyProgram",
+    "deleteStudyProgram",
+    "studyProgramModuleTypes",
+    "saveModuleType",
+    "deleteModuleType",
+    "moduleTypeStudyPrograms",
+    "studyProgramModules"
   };
 
   @Bean
@@ -45,9 +42,10 @@ public class SpringfoxConfig {
         .securityContexts(Collections.singletonList(securityContext()))
         .groupName("project-service")
         .select()
-        .paths(PathSelectors.ant("/projects/**")
-          .or(PathSelectors.ant("/moduleTypes/**"))
-          .or(PathSelectors.ant("/studyPrograms/**")))
+        .paths(
+            PathSelectors.ant("/projects/**")
+                .or(PathSelectors.ant("/moduleTypes/**"))
+                .or(PathSelectors.ant("/studyPrograms/**")))
         .apis(customRequestHandlers())
         .build();
   }
@@ -60,24 +58,21 @@ public class SpringfoxConfig {
   }
 
   private SecurityReference defaultAuth() {
-    return SecurityReference.builder()
-        .scopes(new AuthorizationScope[0])
-        .reference("JWT")
-        .build();
+    return SecurityReference.builder().scopes(new AuthorizationScope[0]).reference("JWT").build();
   }
 
   private SecurityScheme jwtScheme() {
-    return HttpAuthenticationScheme.JWT_BEARER_BUILDER
-        .name("JWT")
-        .build();
+    return HttpAuthenticationScheme.JWT_BEARER_BUILDER.name("JWT").build();
   }
 
-  //TODO Remove when Controllers are implemented and use Swagger/Springfox annotations instead
+  // TODO Remove when Controllers are implemented and use Swagger/Springfox annotations instead
   private java.util.function.Predicate<RequestHandler> customRequestHandlers() {
     return new Predicate<>() {
       @Override
       public boolean apply(@Nullable RequestHandler input) {
-        if(input != null && input.getName() != null && ArrayUtils.contains(PREDICATE_NAMES, input.getName())) {
+        if (input != null
+            && input.getName() != null
+            && ArrayUtils.contains(PREDICATE_NAMES, input.getName())) {
           Set<RequestMethod> methodSet = input.supportedMethods();
           return methodSet.contains(RequestMethod.GET)
               || methodSet.contains(RequestMethod.HEAD)

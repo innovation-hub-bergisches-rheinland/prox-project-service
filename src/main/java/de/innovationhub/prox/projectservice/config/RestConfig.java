@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.config;
 
+
 import de.innovationhub.prox.projectservice.project.Project;
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.Type;
@@ -19,7 +20,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponents;
 
-//TODO Refactor: Better use eureka
+// TODO Refactor: Better use eureka
 @Configuration
 public class RestConfig implements RepositoryRestConfigurer {
 
@@ -35,8 +36,7 @@ public class RestConfig implements RepositoryRestConfigurer {
     this.entityManager = entityManager;
   }
 
-  @Autowired
-  private LocalValidatorFactoryBean validator;
+  @Autowired private LocalValidatorFactoryBean validator;
 
   @Override
   public void configureValidatingRepositoryEventListener(
@@ -46,8 +46,8 @@ public class RestConfig implements RepositoryRestConfigurer {
   }
 
   @Override
-  public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config,
-      CorsRegistry cors) {
+  public void configureRepositoryRestConfiguration(
+      RepositoryRestConfiguration config, CorsRegistry cors) {
     config.exposeIdsFor(
         this.entityManager.getMetamodel().getEntities().stream()
             .map(Type::getJavaType)
@@ -94,14 +94,13 @@ public class RestConfig implements RepositoryRestConfigurer {
         resource.add(
             Link.of(
                 scheme
-                + serverName
-                + professorServicePot
-                + "/"
-                + RestConfig.this.env.getProperty("professorServiceLink.professor-resource")
-                + "/"
-                + creatorID, "professor"
-            )
-        );
+                    + serverName
+                    + professorServicePot
+                    + "/"
+                    + RestConfig.this.env.getProperty("professorServiceLink.professor-resource")
+                    + "/"
+                    + creatorID,
+                "professor"));
         return resource;
       }
     };

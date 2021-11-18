@@ -10,7 +10,6 @@ import de.innovationhub.prox.projectservice.module.ModuleTypeRepository;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -28,8 +27,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 class ProjectRepositoryTest {
   @Autowired ProjectRepository projectRepository;
 
-  @Autowired
-  ModuleTypeRepository moduleTypeRepository;
+  @Autowired ModuleTypeRepository moduleTypeRepository;
 
   static Set<ModuleType> sampleModules = new HashSet<>();
   static Project sampleProject;

@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.project;
 
+
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

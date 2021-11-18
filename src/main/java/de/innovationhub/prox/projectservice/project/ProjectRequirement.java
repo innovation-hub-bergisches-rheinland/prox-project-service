@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.project;
 
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;

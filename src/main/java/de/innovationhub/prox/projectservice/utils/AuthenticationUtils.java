@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.utils;
 
+
 import java.util.Optional;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
@@ -17,16 +18,15 @@ public interface AuthenticationUtils {
 
   /**
    * Checks whether the authenticated user is in role
+   *
    * @param role
    * @return
    */
   default boolean authenticatedUserIsInRole(String role) {
     var roleMatch = role.trim().startsWith("ROLE_") ? role.trim() : "ROLE_" + role.trim();
     var authentication = SecurityContextHolder.getContext().getAuthentication();
-    if(authentication != null) {
-      return authentication
-          .getAuthorities()
-          .stream()
+    if (authentication != null) {
+      return authentication.getAuthorities().stream()
           .anyMatch(r -> r.getAuthority().equalsIgnoreCase(roleMatch));
     }
     return false;

@@ -1,6 +1,6 @@
 package de.innovationhub.prox.projectservice.project;
 
-import de.innovationhub.prox.projectservice.module.ModuleType;
+
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;

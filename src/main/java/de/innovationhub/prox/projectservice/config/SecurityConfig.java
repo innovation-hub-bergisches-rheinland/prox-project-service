@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.config;
 
+
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
@@ -25,12 +26,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
       "/projprojectStudyCoursesects/**";
   private static final String PROFILE_PATTERN = "/profile/**";
   public static final String[] SWAGGER_PATHS = {
-      "/swagger-resources/**",
-      "/swagger-ui/**",
-      "/swagger-ui/",
-      "/v2/api-docs",
-      "/v3/api-docs"
-
+    "/swagger-resources/**", "/swagger-ui/**", "/swagger-ui/", "/v2/api-docs", "/v3/api-docs"
   };
 
   @Autowired

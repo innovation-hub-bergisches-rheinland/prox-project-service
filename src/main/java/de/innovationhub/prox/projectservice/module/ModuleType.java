@@ -1,12 +1,8 @@
 package de.innovationhub.prox.projectservice.module;
 
+
 import de.innovationhub.prox.projectservice.core.AbstractEntity;
-import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.AccessLevel;

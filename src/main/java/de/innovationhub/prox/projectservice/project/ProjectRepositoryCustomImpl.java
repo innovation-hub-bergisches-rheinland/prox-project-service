@@ -1,19 +1,16 @@
 package de.innovationhub.prox.projectservice.project;
 
-import de.innovationhub.prox.projectservice.module.ModuleType;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.util.Streamable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
@@ -34,52 +31,83 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
 
   @Override
   public Set<Project> findAvailableProjectsOfCreator(UUID creatorId) {
-    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(creatorId, ProjectStatus.VERFÜGBAR);
+    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(
+        creatorId, ProjectStatus.VERFÜGBAR);
   }
 
   @Override
   public Set<Project> findRunningAndFinishedProjectsOfCreator(UUID creatorId) {
-    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(creatorId, ProjectStatus.ABGESCHLOSSEN, ProjectStatus.LAUFEND);
+    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(
+        creatorId, ProjectStatus.ABGESCHLOSSEN, ProjectStatus.LAUFEND);
   }
 
   @Override
   public Set<Project> filterProjects(ProjectStatus status, String[] moduleTypeKeys, String text) {
-    //TODO refactor and use fuzzy search or something similar which does not require hardcoding
+    // TODO refactor and use fuzzy search or something similar which does not require hardcoding
     return StreamSupport.stream(this.projectRepository.findAll().spliterator(), false)
         .filter(p -> status != null ? p.getStatus() == status : true)
-        .filter(p -> moduleTypeKeys != null && moduleTypeKeys.length > 0 ? StreamSupport.stream(p.getModules().spliterator(), false)
-            .anyMatch(m -> Arrays.stream(moduleTypeKeys).anyMatch(k -> k.equalsIgnoreCase(m.getKey()))) : true)
-        .filter(p -> {
-          if(text == null || text.length() <= 0) {
-            return true;
-          }
-          var match = false;
-          if(p.getCreatorName() != null && p.getCreatorName().getCreatorName() != null) {
-            match |= p.getCreatorName().getCreatorName().toLowerCase().contains(text.toLowerCase());
-          }
-          if(match == false && p.getDescription() != null && p.getDescription().getDescription() != null) {
-            match |= p.getDescription().getDescription().toLowerCase().contains(text.toLowerCase());
-          }
-          if(match == false && p.getShortDescription() != null && p.getShortDescription().getShortDescription() != null) {
-            match |= p.getShortDescription().getShortDescription().toLowerCase().contains(text.toLowerCase());
-          }
-          if(match == false && p.getName() != null && p.getName().getName() != null) {
-            match |= p.getName().getName().toLowerCase().contains(text.toLowerCase());
-          }
-          if(match == false && p.getRequirement() != null && p.getRequirement().getRequirement() != null) {
-            match |= p.getRequirement().getRequirement().toLowerCase().contains(text.toLowerCase());
-          }
-          if(match == false && p.getSupervisorName() != null && p.getSupervisorName().getSupervisorName() != null) {
-            match |= p.getSupervisorName().getSupervisorName().toLowerCase().contains(text.toLowerCase());
-          }
-          return match;
-        })
+        .filter(
+            p ->
+                moduleTypeKeys != null && moduleTypeKeys.length > 0
+                    ? StreamSupport.stream(p.getModules().spliterator(), false)
+                        .anyMatch(
+                            m ->
+                                Arrays.stream(moduleTypeKeys)
+                                    .anyMatch(k -> k.equalsIgnoreCase(m.getKey())))
+                    : true)
+        .filter(
+            p -> {
+              if (text == null || text.length() <= 0) {
+                return true;
+              }
+              var match = false;
+              if (p.getCreatorName() != null && p.getCreatorName().getCreatorName() != null) {
+                match |=
+                    p.getCreatorName().getCreatorName().toLowerCase().contains(text.toLowerCase());
+              }
+              if (match == false
+                  && p.getDescription() != null
+                  && p.getDescription().getDescription() != null) {
+                match |=
+                    p.getDescription().getDescription().toLowerCase().contains(text.toLowerCase());
+              }
+              if (match == false
+                  && p.getShortDescription() != null
+                  && p.getShortDescription().getShortDescription() != null) {
+                match |=
+                    p.getShortDescription()
+                        .getShortDescription()
+                        .toLowerCase()
+                        .contains(text.toLowerCase());
+              }
+              if (match == false && p.getName() != null && p.getName().getName() != null) {
+                match |= p.getName().getName().toLowerCase().contains(text.toLowerCase());
+              }
+              if (match == false
+                  && p.getRequirement() != null
+                  && p.getRequirement().getRequirement() != null) {
+                match |=
+                    p.getRequirement().getRequirement().toLowerCase().contains(text.toLowerCase());
+              }
+              if (match == false
+                  && p.getSupervisorName() != null
+                  && p.getSupervisorName().getSupervisorName() != null) {
+                match |=
+                    p.getSupervisorName()
+                        .getSupervisorName()
+                        .toLowerCase()
+                        .contains(text.toLowerCase());
+              }
+              return match;
+            })
         .collect(Collectors.toSet());
   }
 
   @Override
   public ProjectStats findProjectStatsOfCreator(UUID creatorId) {
-    var projects = this.projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(creatorId, ProjectStatus.LAUFEND, ProjectStatus.VERFÜGBAR, ProjectStatus.ABGESCHLOSSEN);
+    var projects =
+        this.projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(
+            creatorId, ProjectStatus.LAUFEND, ProjectStatus.VERFÜGBAR, ProjectStatus.ABGESCHLOSSEN);
     return new ProjectStats(
         filterByStatusAndCount(projects, ProjectStatus.LAUFEND),
         filterByStatusAndCount(projects, ProjectStatus.ABGESCHLOSSEN),
@@ -92,11 +120,13 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
 
   @Override
   public Set<Project> findRunningProjectsOfCreator(UUID creatorId) {
-    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(creatorId, ProjectStatus.LAUFEND);
+    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(
+        creatorId, ProjectStatus.LAUFEND);
   }
 
   @Override
   public Set<Project> findinishedProjectsOfCreator(UUID creatorId) {
-    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(creatorId, ProjectStatus.ABGESCHLOSSEN);
+    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(
+        creatorId, ProjectStatus.ABGESCHLOSSEN);
   }
 }

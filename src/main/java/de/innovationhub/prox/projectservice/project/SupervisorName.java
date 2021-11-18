@@ -1,8 +1,8 @@
 package de.innovationhub.prox.projectservice.project;
 
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Data;

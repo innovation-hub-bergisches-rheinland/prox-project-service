@@ -1,17 +1,5 @@
 package de.innovationhub.prox.projectservice.config;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
-import org.springframework.scheduling.annotation.SchedulingConfigurer;
-import org.springframework.scheduling.config.ScheduledTaskRegistrar;
-
 /*@Configuration
 @Slf4j
 public class ImportConfig implements SchedulingConfigurer {

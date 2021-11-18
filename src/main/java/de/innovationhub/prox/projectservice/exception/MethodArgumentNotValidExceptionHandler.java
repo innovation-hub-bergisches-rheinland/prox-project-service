@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.exception;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.HttpHeaders;
@@ -29,7 +30,6 @@ public class MethodArgumentNotValidExceptionHandler extends ResponseEntityExcept
     }
 
     ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, errors);
-    return handleExceptionInternal(
-        ex, apiError, headers, apiError.getStatus(), request);
+    return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
   }
 }

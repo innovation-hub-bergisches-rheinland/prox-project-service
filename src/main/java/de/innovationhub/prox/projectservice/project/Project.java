@@ -1,11 +1,10 @@
 package de.innovationhub.prox.projectservice.project;
 
+
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import de.innovationhub.prox.projectservice.core.AbstractEntity;
 import de.innovationhub.prox.projectservice.module.ModuleType;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -30,49 +29,28 @@ import org.hibernate.annotations.UpdateTimestamp;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Project extends AbstractEntity {
 
-  @NotNull
-  @Valid
-  @JsonUnwrapped
-  private ProjectName name;
+  @NotNull @Valid @JsonUnwrapped private ProjectName name;
 
-  @JsonUnwrapped
-  @Valid
-  private ProjectDescription description;
+  @JsonUnwrapped @Valid private ProjectDescription description;
 
-  @JsonUnwrapped
-  @Valid
-  @NotNull
-  private ProjectShortDescription shortDescription;
+  @JsonUnwrapped @Valid @NotNull private ProjectShortDescription shortDescription;
 
-  @JsonUnwrapped
-  @Valid
-  private ProjectRequirement requirement;
+  @JsonUnwrapped @Valid private ProjectRequirement requirement;
 
-  @Valid
-  @NotNull
-  private ProjectStatus status;
+  @Valid @NotNull private ProjectStatus status;
 
   @Column(updatable = false)
   @Valid
   @NotNull
   private ProjectContext context;
 
-  @JsonUnwrapped
-  @Valid
-  @NotNull
-  private CreatorID creatorID;
+  @JsonUnwrapped @Valid @NotNull private CreatorID creatorID;
 
-  @JsonUnwrapped
-  @Valid
-  @NotNull
-  private CreatorName creatorName;
+  @JsonUnwrapped @Valid @NotNull private CreatorName creatorName;
 
-  @JsonUnwrapped
-  @Valid
-  private SupervisorName supervisorName;
+  @JsonUnwrapped @Valid private SupervisorName supervisorName;
 
-  @ManyToMany
-  private Set<ModuleType> modules = new HashSet<>();
+  @ManyToMany private Set<ModuleType> modules = new HashSet<>();
 
   @Basic
   @Temporal(TemporalType.TIMESTAMP)

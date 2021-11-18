@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.project;
 
+
 import de.innovationhub.prox.projectservice.utils.AuthenticationUtils;
 import java.util.Optional;
 import java.util.UUID;
@@ -28,17 +29,16 @@ public class ProjectController {
   @Autowired AuthenticationUtils authenticationUtils;
 
   /* Start Workaround
-    Workaround since Validation is not available in RepositoryRestController
-    https://stackoverflow.com/a/44304198/4567795
-   */
-  @Autowired
-  private LocalValidatorFactoryBean validator;
+   Workaround since Validation is not available in RepositoryRestController
+   https://stackoverflow.com/a/44304198/4567795
+  */
+  @Autowired private LocalValidatorFactoryBean validator;
 
   @InitBinder
   protected void initBinder(WebDataBinder binder) {
     binder.addValidators(validator);
   }
-  //End Workaround
+  // End Workaround
 
   /**
    * Replace Spring Data Rest POST Mapping with custom POST Mapping which defaults the Project
@@ -60,16 +60,16 @@ public class ProjectController {
     UUID uuid = requestUUID.get();
     project.setCreatorID(new CreatorID(uuid));
 
-    if(authenticationUtils.authenticatedUserIsInRole("PROFESSOR")) {
+    if (authenticationUtils.authenticatedUserIsInRole("PROFESSOR")) {
       project.setContext(ProjectContext.PROFESSOR);
-    } else if(authenticationUtils.authenticatedUserIsInRole("COMPANY-MANAGER")) {
+    } else if (authenticationUtils.authenticatedUserIsInRole("COMPANY-MANAGER")) {
       project.setContext(ProjectContext.COMPANY);
     } else {
-      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No matching role for project context found");
+      throw new ResponseStatusException(
+          HttpStatus.INTERNAL_SERVER_ERROR, "No matching role for project context found");
     }
 
     Project savedProject = projectRepository.save(project);
     return new ResponseEntity<>(resourceAssembler.toFullResource(savedProject), HttpStatus.CREATED);
   }
-
 }

@@ -98,7 +98,7 @@ class ProjectAPITest {
         .thenReturn(Optional.of(USER_ID));
     Mockito.when(authenticationUtils.authenticatedUserIsInRole(eq("PROFESSOR"))).thenReturn(true);
     sampleProject.setCreatorID(new CreatorID(USER_ID));
-    //Set other non-matching context, in order to check whether it was set correctly
+    // Set other non-matching context, in order to check whether it was set correctly
     sampleProject.setContext(ProjectContext.COMPANY);
 
     mockMvc
@@ -111,7 +111,7 @@ class ProjectAPITest {
 
     Optional<Project> foundProject = projectRepository.findById(sampleProject.getId());
 
-    //Set matching context
+    // Set matching context
     sampleProject.setContext(ProjectContext.PROFESSOR);
 
     assertTrue(foundProject.isPresent());

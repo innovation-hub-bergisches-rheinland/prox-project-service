@@ -17,8 +17,6 @@ import de.innovationhub.prox.projectservice.project.ProjectRequirement;
 import de.innovationhub.prox.projectservice.project.ProjectShortDescription;
 import de.innovationhub.prox.projectservice.project.ProjectStatus;
 import de.innovationhub.prox.projectservice.project.SupervisorName;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,14 +27,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
 class DatabaseTest {
-  @Autowired
-  ProjectRepository projectRepository;
+  @Autowired ProjectRepository projectRepository;
 
-  @Autowired
-  ModuleTypeRepository moduleTypeRepository;
+  @Autowired ModuleTypeRepository moduleTypeRepository;
 
-  @Autowired
-  StudyProgramRepository studyProgramRepository;
+  @Autowired StudyProgramRepository studyProgramRepository;
 
   @Test
   void creation() {
@@ -45,11 +40,12 @@ class DatabaseTest {
     ModuleType fae = new ModuleType("FAE", "Fachspezifischer Architekturentwurf");
     ModuleType eam = new ModuleType("EAM", "Enterprise Architecture Management");
 
-
-    StudyProgram computerScience = new StudyProgram("CS", "Master Computer Science", Set.of(am, fae));
-    StudyProgram softwareEngineering = new StudyProgram("SE", "Master Software Engineering", Set.of(am, fae));
-    StudyProgram informationSystems = new StudyProgram("IS", "Master Information Systems",
-        Collections.singleton(eam));
+    StudyProgram computerScience =
+        new StudyProgram("CS", "Master Computer Science", Set.of(am, fae));
+    StudyProgram softwareEngineering =
+        new StudyProgram("SE", "Master Software Engineering", Set.of(am, fae));
+    StudyProgram informationSystems =
+        new StudyProgram("IS", "Master Information Systems", Collections.singleton(eam));
 
     this.moduleTypeRepository.save(am);
     this.moduleTypeRepository.save(fae);

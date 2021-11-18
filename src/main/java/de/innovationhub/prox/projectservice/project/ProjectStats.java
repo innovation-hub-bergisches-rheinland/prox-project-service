@@ -1,6 +1,6 @@
 package de.innovationhub.prox.projectservice.project;
 
-import java.util.HashMap;
+
 import lombok.Value;
 
 @Value
