@@ -10,7 +10,7 @@
 
   <groupId>de.innovation-hub.prox</groupId>
   <artifactId>prox-project-service</artifactId>
-  <version>${revision}${changelist}</version>
+  <version>0.1.0-SNAPSHOT</version>
 
   <name>prox-project-service</name>
   <description>Prox Project Service</description>
@@ -23,7 +23,6 @@
   </scm>
 
   <properties>
-    <changelist>-SNAPSHOT</changelist>
     <docker.image.prefix>quay.io/innovation-hub-bergisches-rheinland</docker.image.prefix>
     <frontend-maven-plugin.nodeVersion>v16.13.0</frontend-maven-plugin.nodeVersion>
     <frontend-maven-plugin.version>1.12.0</frontend-maven-plugin.version>
@@ -31,7 +30,6 @@
     <javers.version>6.2.2</javers.version>
     <keycloak.version>11.0.3</keycloak.version>
     <maven-toolchains-plugin.version>3.0.0</maven-toolchains-plugin.version>
-    <revision>0.1.0</revision>
     <spotless-maven-plugin.version>2.17.4</spotless-maven-plugin.version>
     <spring-cloud.version>2020.0.4</spring-cloud.version>
     <springfox.version>3.0.0</springfox.version>
