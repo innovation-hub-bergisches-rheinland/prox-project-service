@@ -15,6 +15,13 @@
   <name>prox-project-service</name>
   <description>Prox Project Service</description>
 
+  <scm>
+    <!-- Probably it would be better to use SSH here, but that's out of scope for now -->
+    <developerConnection>scm:git:https://github.com/innovation-hub-bergisches-rheinland/prox-project-service.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/innovation-hub-bergisches-rheinland/prox-project-service</url>
+  </scm>
+
   <properties>
     <changelist>-SNAPSHOT</changelist>
     <docker.image.prefix>quay.io/innovation-hub-bergisches-rheinland</docker.image.prefix>
