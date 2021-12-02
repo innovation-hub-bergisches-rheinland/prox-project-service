@@ -10,7 +10,7 @@
 
   <groupId>de.innovation-hub.prox</groupId>
   <artifactId>prox-project-service</artifactId>
-  <version>0.3.2</version>
+  <version>0.3.3-SNAPSHOT</version>
 
   <name>prox-project-service</name>
   <description>Prox Project Service</description>
@@ -18,7 +18,7 @@
   <scm>
     <!-- Probably it would be better to use SSH here, but that's out of scope for now -->
     <developerConnection>scm:git:https://github.com/innovation-hub-bergisches-rheinland/prox-project-service.git</developerConnection>
-    <tag>v0.3.2</tag>
+    <tag>HEAD</tag>
     <url>https://github.com/innovation-hub-bergisches-rheinland/prox-project-service</url>
   </scm>
 
