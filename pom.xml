@@ -10,7 +10,7 @@
 
   <groupId>de.innovation-hub.prox</groupId>
   <artifactId>prox-project-service</artifactId>
-  <version>0.3.3-SNAPSHOT</version>
+  <version>1.0.0</version>
 
   <name>prox-project-service</name>
   <description>Prox Project Service</description>
