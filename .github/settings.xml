@@ -20,7 +20,7 @@
       <id>sonar</id>
 
       <properties>
-        <sonar.projectKey>innovation-hub-bergisches-rheinland_prox-service-discovery</sonar.projectKey>
+        <sonar.projectKey>innovation-hub-bergisches-rheinland_prox-project-service</sonar.projectKey>
         <sonar.organization>innovation-hub-bergisches-rheinland</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
       </properties>
