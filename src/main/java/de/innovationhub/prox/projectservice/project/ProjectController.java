@@ -13,6 +13,7 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -49,8 +50,9 @@ public class ProjectController {
       consumes = {MediaType.APPLICATION_JSON_VALUE, MediaTypes.HAL_JSON_VALUE})
   public @ResponseBody ResponseEntity<?> postProject(
       HttpServletRequest request,
-      @Valid @RequestBody Project project,
-      PersistentEntityResourceAssembler resourceAssembler) {
+      @RequestBody Project project,
+      PersistentEntityResourceAssembler resourceAssembler,
+      BindingResult result) {
     Optional<UUID> requestUUID = authenticationUtils.getUserUUIDFromRequest(request);
     if (requestUUID.isEmpty()) {
       return new ResponseEntity<>(
@@ -67,6 +69,12 @@ public class ProjectController {
     } else {
       throw new ResponseStatusException(
           HttpStatus.INTERNAL_SERVER_ERROR, "No matching role for project context found");
+    }
+
+    this.validator.validate(project, result);
+
+    if(result.hasErrors()) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There were validation errors");
     }
 
     Project savedProject = projectRepository.save(project);

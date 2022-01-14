@@ -1,5 +1,7 @@
 package de.innovationhub.prox.projectservice.project;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -8,7 +10,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.innovationhub.prox.projectservice.utils.AuthenticationUtils;
+import java.util.Optional;
 import java.util.UUID;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
@@ -76,6 +80,12 @@ class ProjectAPIValidationTest {
 
   String createLongString(int max) {
     return "a".repeat(Math.max(0, max + 1));
+  }
+
+  @BeforeEach
+  void setup() {
+    when(authenticationUtils.getUserUUIDFromRequest(any())).thenReturn(Optional.of(UUID.randomUUID()));
+    when(authenticationUtils.authenticatedUserIsInRole(any())).thenReturn(true);
   }
 
   @Test
