@@ -112,7 +112,10 @@ class ProjectRouteSecurityTest {
 
   @Test
   void when_unauthenticated_user_performs_get_projects_then_is_ok() throws Exception {
-    performRequest(HttpMethod.GET, PROJECTS_ROUTE, null, status().isOk());
+    mockMvc
+        .perform(get(PROJECTS_ROUTE))
+        .andDo(print())
+        .andExpect(status().isOk());
   }
 
   @Test
