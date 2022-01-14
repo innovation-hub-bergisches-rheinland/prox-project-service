@@ -13,6 +13,8 @@ import org.springframework.data.rest.core.config.Projection;
     name = "withModules",
     types = {Project.class})
 public interface ProjectWithModulesProjection {
+  String getId();
+
   @Value("#{target.name.name}")
   String getName();
 
