@@ -25,7 +25,6 @@ import java.util.Optional;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.mockito.Mockito;
@@ -113,12 +112,12 @@ class ProjectRouteSecurityTest {
   }
 
   @Test
-  @DisabledIfEnvironmentVariable(named = "CI", matches = "true", disabledReason = "For whatever reason this tests fails in CI")
+  @DisabledIfEnvironmentVariable(
+      named = "CI",
+      matches = "true",
+      disabledReason = "For whatever reason this tests fails in CI")
   void when_unauthenticated_user_performs_get_projects_then_is_ok() throws Exception {
-    mockMvc
-        .perform(get(PROJECTS_ROUTE))
-        .andDo(print())
-        .andExpect(status().isOk());
+    mockMvc.perform(get(PROJECTS_ROUTE)).andDo(print()).andExpect(status().isOk());
   }
 
   @Test
