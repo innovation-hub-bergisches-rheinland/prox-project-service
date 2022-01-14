@@ -5,7 +5,6 @@ import de.innovationhub.prox.projectservice.utils.AuthenticationUtils;
 import java.util.Optional;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
@@ -73,7 +72,7 @@ public class ProjectController {
 
     this.validator.validate(project, result);
 
-    if(result.hasErrors()) {
+    if (result.hasErrors()) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There were validation errors");
     }
 

@@ -84,7 +84,8 @@ class ProjectAPIValidationTest {
 
   @BeforeEach
   void setup() {
-    when(authenticationUtils.getUserUUIDFromRequest(any())).thenReturn(Optional.of(UUID.randomUUID()));
+    when(authenticationUtils.getUserUUIDFromRequest(any()))
+        .thenReturn(Optional.of(UUID.randomUUID()));
     when(authenticationUtils.authenticatedUserIsInRole(any())).thenReturn(true);
   }
 
