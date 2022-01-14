@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.2.0...v1.2.1) (2022-01-14)
+
+
+### Bug Fixes
+
+* include ID in projection ([d32cec1](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/d32cec1c09570a98c0bab625480ecfb7be01f7cf))
+
 ## [1.2.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.1.0...v1.2.0) (2022-01-14)
 
 
