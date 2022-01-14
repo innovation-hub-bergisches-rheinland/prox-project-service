@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.0.1...v1.1.0) (2022-01-14)
+
+
+### Features
+
+* add a projection which includes modules in study programs ([e169b56](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/e169b56b9a34bee76192a122f26ae3073127a42e))
+
 ### [1.0.1](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.0.0...v1.0.1) (2022-01-14)
 
 ## 1.0.0 (2021-12-11)
