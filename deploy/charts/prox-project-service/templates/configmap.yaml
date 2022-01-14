@@ -56,4 +56,4 @@ data:
             jdbc:
               lob:
                 non_contextual_creation: true
-{{- end }}
+  {{- end }}
