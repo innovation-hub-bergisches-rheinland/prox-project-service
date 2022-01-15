@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.2](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.2.1...v1.2.2) (2022-01-15)
+
+
+### Bug Fixes
+
+* remove validations for auto-generated properties ([4735ef0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/4735ef0729e9ed4ff5ab34df78533e4277a36ab4))
+
 ### [1.2.1](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.2.0...v1.2.1) (2022-01-14)
 
 
