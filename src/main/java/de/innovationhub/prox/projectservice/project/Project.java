@@ -40,13 +40,11 @@ public class Project extends AbstractEntity {
   @Valid @NotNull private ProjectStatus status;
 
   @Column(updatable = false)
-  @Valid
-  @NotNull
   private ProjectContext context;
 
-  @JsonUnwrapped @Valid @NotNull private CreatorID creatorID;
+  @JsonUnwrapped private CreatorID creatorID;
 
-  @JsonUnwrapped @Valid @NotNull private CreatorName creatorName;
+  @JsonUnwrapped private CreatorName creatorName;
 
   @JsonUnwrapped @Valid private SupervisorName supervisorName;
 

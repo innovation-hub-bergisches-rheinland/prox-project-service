@@ -17,7 +17,6 @@ import lombok.Setter;
 public class CreatorID {
 
   @Column(updatable = false)
-  @NotNull
   private UUID creatorID;
 
   public CreatorID(UUID creatorID) {
