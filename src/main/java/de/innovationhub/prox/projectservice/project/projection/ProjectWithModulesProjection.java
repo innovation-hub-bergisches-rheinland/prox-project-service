@@ -15,29 +15,29 @@ import org.springframework.data.rest.core.config.Projection;
 public interface ProjectWithModulesProjection {
   String getId();
 
-  @Value("#{target.name.name}")
+  @Value("#{target.name?.name}")
   String getName();
 
-  @Value("#{target.description.description}")
+  @Value("#{target.description?.description}")
   String getDescription();
 
-  @Value("#{target.shortDescription.shortDescription}")
+  @Value("#{target.shortDescription?.shortDescription}")
   String getShortDescription();
 
-  @Value("#{target.requirement.requirement}")
+  @Value("#{target.requirement?.requirement}")
   String getRequirement();
 
   ProjectStatus getStatus();
 
   ProjectContext getContext();
 
-  @Value("#{target.creatorID.creatorID}")
+  @Value("#{target.creatorID?.creatorID}")
   String getCreatorID();
 
-  @Value("#{target.creatorName.creatorName}")
+  @Value("#{target.creatorName?.creatorName}")
   String getCreatorName();
 
-  @Value("#{target.supervisorName.supervisorName}")
+  @Value("#{target.supervisorName?.supervisorName}")
   String getSupervisorName();
 
   Set<ModuleType> getModules();

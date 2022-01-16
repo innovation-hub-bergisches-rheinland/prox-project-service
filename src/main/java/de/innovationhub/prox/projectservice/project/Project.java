@@ -25,7 +25,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 @Getter
 @Setter
-@ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Project extends AbstractEntity {
 
