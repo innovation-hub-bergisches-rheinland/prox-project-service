@@ -4,26 +4,18 @@ services:
 
   project-service:
     image: ${REPOSITORY}/${IMAGE}:${TAG}
-    networks:
-      - prox
-      - project-db
 
   project-db:
     image: postgres:11.3-alpine
     volumes:
       - project-db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_USER=project-service
       - POSTGRES_PASSWORD=project-service
       - POSTGRES_DB=project-db
       - PGDATA=/var/lib/postgresql/data/pgdata
-    networks:
-      - project-db
 
 volumes:
   project-db-data:
-
-networks:
-  prox:
-    external: true
-  project-db:

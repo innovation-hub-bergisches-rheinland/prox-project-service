@@ -1,7 +1,6 @@
 package de.innovationhub.prox.projectservice.config;
 
 
-import de.innovationhub.prox.projectservice.project.Project;
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.Type;
 import javax.servlet.http.HttpServletRequest;
@@ -52,57 +51,5 @@ public class RestConfig implements RepositoryRestConfigurer {
         this.entityManager.getMetamodel().getEntities().stream()
             .map(Type::getJavaType)
             .toArray(Class[]::new));
-  }
-
-  @Bean
-  public RepresentationModelProcessor<EntityModel<Project>> personProcessor(
-      HttpServletRequest request) {
-
-    return new RepresentationModelProcessor<>() {
-
-      @Override
-      public EntityModel<Project> process(EntityModel<Project> resource) {
-
-        String projectID = resource.getContent().getId().toString();
-        String creatorID = resource.getContent().getCreatorID().getCreatorID().toString();
-
-        UriComponents request = ServletUriComponentsBuilder.fromCurrentRequest().build();
-        String scheme = request.getScheme() + "://";
-        String serverName = request.getHost();
-        String tagServicePort2 = "";
-        String professorServicePot = "";
-
-        if (request.getPort() == 8081) {
-          tagServicePort2 = ":" + request.getPort();
-          professorServicePot = ":" + request.getPort();
-        } else if (request.getPort() == 9002) {
-          tagServicePort2 = ":" + RestConfig.this.tagServicePort;
-          professorServicePot = ":" + RestConfig.this.professorServicePort;
-        }
-
-        resource.add(
-            Link.of(
-                scheme
-                    + serverName
-                    + tagServicePort2
-                    + "/"
-                    + RestConfig.this.env.getProperty("tagServiceLink.tag-collection")
-                    + "/"
-                    + projectID
-                    + "/tags",
-                "tagCollection"));
-        resource.add(
-            Link.of(
-                scheme
-                    + serverName
-                    + professorServicePot
-                    + "/"
-                    + RestConfig.this.env.getProperty("professorServiceLink.professor-resource")
-                    + "/"
-                    + creatorID,
-                "professor"));
-        return resource;
-      }
-    };
   }
 }

@@ -1,7 +1,0 @@
-version: "3.7"
-
-services:
-
-  project-service:
-    environment:
-      SPRING_PROFILES_ACTIVE: db-migration

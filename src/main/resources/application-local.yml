@@ -9,11 +9,16 @@ moduleImport:
 spring:
   datasource:
     password: project-service
-    url: jdbc:h2:mem:testdb
+    url: jdbc:postgresql://localhost:5432/project-db
     username: project-service
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
   flyway:
-    enabled: false
+    enabled: true
