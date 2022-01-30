@@ -16,17 +16,8 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @KeycloakConfiguration
 class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
-  private static final String STUDY_PROGRAM_PATTERN = "/studyPrograms/**";
-  private static final String MODULE_TYPE_PATTERN = "/moduleTypes/**";
-  private static final String PROJECTS_PATTERN = "/projects/**";
-  private static final String PROJECT_STUDY_COURSES_PATTERN = "/projectStudyCourses/**";
-  private static final String PROJECTS_ID_PATTERN = "/projects/{id}/**";
-  private static final String PROJECT_MODULES_PATTERN = "/projectModules/**";
-  private static final String PROJPROJECT_STUDY_COURSESECTS_PATTERN =
-      "/projprojectStudyCoursesects/**";
-  private static final String PROFILE_PATTERN = "/profile/**";
-  public static final String[] SWAGGER_PATHS = {
-    "/swagger-ui.html", "/swagger-ui/**", "/swagger-ui/*", "/v3/api-docs/*", "/v3/api-docs/**"
+  private static final String[] PUBLIC_READ_PATHS = {
+      "/projects/**", "/moduleTypes/**", "/studyPrograms/**", "/profile/**", "/swagger-ui/**", "/v3/api-docs/**"
   };
 
   @Autowired
@@ -51,47 +42,20 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         .csrf()
         .disable()
         .authorizeRequests()
-        .antMatchers(HttpMethod.GET, SecurityConfig.PROJECTS_PATTERN)
+        .mvcMatchers(HttpMethod.GET, PUBLIC_READ_PATHS)
         .permitAll()
-        .antMatchers(HttpMethod.HEAD, SecurityConfig.PROJECTS_PATTERN)
+        .mvcMatchers(HttpMethod.HEAD, PUBLIC_READ_PATHS)
         .permitAll()
-        .antMatchers(HttpMethod.OPTIONS, SecurityConfig.PROJECTS_PATTERN)
+        .mvcMatchers(HttpMethod.OPTIONS, PUBLIC_READ_PATHS)
         .permitAll()
-        .antMatchers(HttpMethod.POST, SecurityConfig.PROJECTS_PATTERN)
+        .mvcMatchers(HttpMethod.POST, "/projects/**")
         .access("hasAnyRole('professor', 'company-manager')")
-        .antMatchers(HttpMethod.GET, SecurityConfig.PROJECTS_ID_PATTERN)
-        .permitAll()
-        .antMatchers(HttpMethod.HEAD, SecurityConfig.PROJECTS_ID_PATTERN)
-        .permitAll()
-        .antMatchers(HttpMethod.OPTIONS, SecurityConfig.PROJECTS_ID_PATTERN)
-        .permitAll()
-        .antMatchers(SecurityConfig.PROJECTS_ID_PATTERN)
-        .access(
-            "hasAnyRole('professor', 'company-manager') and hasPermission(#id, 'Project', 'WRITE')")
-        .antMatchers(HttpMethod.GET, SecurityConfig.PROJECT_STUDY_COURSES_PATTERN)
-        .permitAll()
-        .antMatchers(HttpMethod.HEAD, SecurityConfig.PROJECT_STUDY_COURSES_PATTERN)
-        .permitAll()
-        .antMatchers(HttpMethod.OPTIONS, SecurityConfig.PROJPROJECT_STUDY_COURSESECTS_PATTERN)
-        .permitAll()
-        .antMatchers(SecurityConfig.PROJECT_STUDY_COURSES_PATTERN)
-        .denyAll()
-        .antMatchers(HttpMethod.GET, SecurityConfig.PROJECT_MODULES_PATTERN)
-        .permitAll()
-        .antMatchers(HttpMethod.HEAD, SecurityConfig.PROJECT_MODULES_PATTERN)
-        .permitAll()
-        .antMatchers(HttpMethod.OPTIONS, SecurityConfig.PROJECT_MODULES_PATTERN)
-        .permitAll()
-        .antMatchers(SecurityConfig.PROJECT_MODULES_PATTERN)
-        .denyAll()
-        .antMatchers(SecurityConfig.PROFILE_PATTERN)
-        .permitAll()
-        .antMatchers(HttpMethod.GET, SecurityConfig.SWAGGER_PATHS)
-        .permitAll()
-        .antMatchers(SecurityConfig.MODULE_TYPE_PATTERN)
-        .permitAll()
-        .antMatchers(SecurityConfig.STUDY_PROGRAM_PATTERN)
-        .permitAll()
+        .mvcMatchers(HttpMethod.PUT, "/projects/{id}/**")
+        .access("hasAnyRole('professor', 'company-manager') and hasPermission(#id, 'Project', 'WRITE')")
+        .mvcMatchers(HttpMethod.PATCH, "/projects/{id}/**")
+        .access("hasAnyRole('professor', 'company-manager') and hasPermission(#id, 'Project', 'WRITE')")
+        .mvcMatchers(HttpMethod.DELETE, "/projects/{id}/**")
+        .access("hasAnyRole('professor', 'company-manager') and hasPermission(#id, 'Project', 'WRITE')")
         .anyRequest()
         .denyAll();
   }
