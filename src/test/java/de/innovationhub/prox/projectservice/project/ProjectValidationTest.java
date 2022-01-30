@@ -88,7 +88,7 @@ class ProjectValidationTest {
   @Test
   void when_project_creatorId_id_is_null_should_return_violation() {
     Project project = new Project();
-    project.setCreatorID(new CreatorID(null));
+    project.setCreatorID(null);
 
     Set<ConstraintViolation<Project>> violationSet = localValidatorFactoryBean.validate(project);
     assertFalse(violationSet.isEmpty());

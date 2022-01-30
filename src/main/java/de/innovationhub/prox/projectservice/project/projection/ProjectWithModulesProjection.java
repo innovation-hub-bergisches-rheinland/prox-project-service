@@ -6,6 +6,7 @@ import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.ProjectContext;
 import de.innovationhub.prox.projectservice.project.ProjectStatus;
 import java.util.Set;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 
@@ -31,8 +32,8 @@ public interface ProjectWithModulesProjection {
 
   ProjectContext getContext();
 
-  @Value("#{target.creatorID?.creatorID}")
-  String getCreatorID();
+  @Value("#{target.creatorID}")
+  UUID getCreatorID();
 
   @Value("#{target.creatorName?.creatorName}")
   String getCreatorName();

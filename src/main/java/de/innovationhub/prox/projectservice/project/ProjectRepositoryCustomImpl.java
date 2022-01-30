@@ -31,13 +31,12 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
 
   @Override
   public Set<Project> findAvailableProjectsOfCreator(UUID creatorId) {
-    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(
-        creatorId, ProjectStatus.VERFÜGBAR);
+    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId, ProjectStatus.VERFÜGBAR);
   }
 
   @Override
   public Set<Project> findRunningAndFinishedProjectsOfCreator(UUID creatorId) {
-    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(
+    return projectRepository.findAllByCreatorIDAndStatusIn(
         creatorId, ProjectStatus.ABGESCHLOSSEN, ProjectStatus.LAUFEND);
   }
 
@@ -106,7 +105,7 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
   @Override
   public ProjectStats findProjectStatsOfCreator(UUID creatorId) {
     var projects =
-        this.projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(
+        this.projectRepository.findAllByCreatorIDAndStatusIn(
             creatorId, ProjectStatus.LAUFEND, ProjectStatus.VERFÜGBAR, ProjectStatus.ABGESCHLOSSEN);
     return new ProjectStats(
         filterByStatusAndCount(projects, ProjectStatus.LAUFEND),
@@ -120,13 +119,11 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
 
   @Override
   public Set<Project> findRunningProjectsOfCreator(UUID creatorId) {
-    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(
-        creatorId, ProjectStatus.LAUFEND);
+    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId, ProjectStatus.LAUFEND);
   }
 
   @Override
   public Set<Project> findinishedProjectsOfCreator(UUID creatorId) {
-    return projectRepository.findAllByCreatorID_CreatorIDAndStatusIn(
-        creatorId, ProjectStatus.ABGESCHLOSSEN);
+    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId, ProjectStatus.ABGESCHLOSSEN);
   }
 }

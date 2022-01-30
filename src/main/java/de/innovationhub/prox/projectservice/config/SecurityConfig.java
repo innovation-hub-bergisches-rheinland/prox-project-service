@@ -67,7 +67,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         .permitAll()
         .antMatchers(SecurityConfig.PROJECTS_ID_PATTERN)
         .access(
-            "hasAnyRole('professor', 'company-manager') and @webSecurity.checkProjectCreator(request, #id, @projectRepository)")
+            "hasAnyRole('professor', 'company-manager') and hasPermission(#id, 'Project', 'WRITE')")
         .antMatchers(HttpMethod.GET, SecurityConfig.PROJECT_STUDY_COURSES_PATTERN)
         .permitAll()
         .antMatchers(HttpMethod.HEAD, SecurityConfig.PROJECT_STUDY_COURSES_PATTERN)

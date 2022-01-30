@@ -64,7 +64,7 @@ public class RestConfig implements RepositoryRestConfigurer {
       public EntityModel<Project> process(EntityModel<Project> resource) {
 
         String projectID = resource.getContent().getId().toString();
-        String creatorID = resource.getContent().getCreatorID().getCreatorID().toString();
+        String creatorID = resource.getContent().getCreatorID().toString();
 
         UriComponents request = ServletUriComponentsBuilder.fromCurrentRequest().build();
         String scheme = request.getScheme() + "://";

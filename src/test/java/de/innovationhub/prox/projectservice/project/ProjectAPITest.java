@@ -3,8 +3,7 @@ package de.innovationhub.prox.projectservice.project;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -14,17 +13,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.innovationhub.prox.projectservice.utils.AuthenticationUtils;
 import java.util.Optional;
 import java.util.UUID;
-import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -40,6 +39,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @AutoConfigureDataJpa
+@Transactional
 class ProjectAPITest {
   private static final String PROJECTS_ROUTE = "/projects";
   private static final String PROJECTS_ID_ROUTE = "/projects/{id}";
@@ -48,7 +48,7 @@ class ProjectAPITest {
 
   @Autowired ProjectRepository projectRepository;
 
-  @MockBean AuthenticationUtils authenticationUtils;
+  @MockBean AuditorAware<UUID> auditorAware;
 
   // Generating a User ID which is used for performing authorized requests that depend on the
   // requesting User ID
@@ -62,10 +62,15 @@ class ProjectAPITest {
           new ProjectDescription("This is a description"),
           ProjectStatus.LAUFEND,
           new ProjectRequirement("This is a requirement"),
-          new CreatorID(UUID.randomUUID()),
+          UUID.randomUUID(),
           new CreatorName("Mock User"),
           new SupervisorName("Supervisor"),
           ProjectContext.PROFESSOR);
+
+  @BeforeEach
+  void setUp() {
+    when(auditorAware.getCurrentAuditor()).thenReturn(Optional.of(USER_ID));
+  }
 
   // GET /projects/{id}
   @Test
@@ -81,7 +86,8 @@ class ProjectAPITest {
   // GET /projects
   @Test
   void when_get_to_projects_then_is_ok() throws Exception {
-    projectRepository.save(sampleProject);
+    var res = projectRepository.save(sampleProject);
+    var all = projectRepository.findAll();
 
     mockMvc.perform(get(PROJECTS_ROUTE)).andDo(print()).andExpect(status().isOk());
   }
@@ -89,15 +95,6 @@ class ProjectAPITest {
   // POST /projects
   @Test
   void when_valid_post_to_projects_then_project_is_saved() throws Exception {
-
-    /*
-     Since the default Spring Data REST POST Mapping is replaced and relies on AuthenticationUtils
-     it needs to be mocked to obtain a valid UserID while setting CreatorID
-    */
-    Mockito.when(authenticationUtils.getUserUUIDFromRequest(any(HttpServletRequest.class)))
-        .thenReturn(Optional.of(USER_ID));
-    Mockito.when(authenticationUtils.authenticatedUserIsInRole(eq("PROFESSOR"))).thenReturn(true);
-    sampleProject.setCreatorID(new CreatorID(USER_ID));
     // Set other non-matching context, in order to check whether it was set correctly
     sampleProject.setContext(ProjectContext.COMPANY);
 

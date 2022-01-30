@@ -1,7 +1,5 @@
 package de.innovationhub.prox.projectservice.project;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -9,16 +7,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.innovationhub.prox.projectservice.utils.AuthenticationUtils;
-import java.util.Optional;
 import java.util.UUID;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,8 +30,6 @@ class ProjectAPIValidationTest {
 
   @Autowired ProjectRepository projectRepository;
 
-  @MockBean AuthenticationUtils authenticationUtils;
-
   Project validProject =
       new Project(
           new ProjectName("Test Project"),
@@ -45,7 +37,7 @@ class ProjectAPIValidationTest {
           new ProjectDescription("This is a description"),
           ProjectStatus.LAUFEND,
           new ProjectRequirement("This is a requirement"),
-          new CreatorID(UUID.randomUUID()),
+          UUID.randomUUID(),
           new CreatorName("Mock User"),
           new SupervisorName("Supervisor"),
           ProjectContext.PROFESSOR);
@@ -61,7 +53,7 @@ class ProjectAPIValidationTest {
           new ProjectDescription("    "),
           ProjectStatus.LAUFEND,
           new ProjectRequirement("\n \t"),
-          new CreatorID(UUID.randomUUID()),
+          UUID.randomUUID(),
           new CreatorName(""),
           new SupervisorName("   "),
           ProjectContext.PROFESSOR);
@@ -73,20 +65,13 @@ class ProjectAPIValidationTest {
           new ProjectDescription(createLongString(10000)),
           ProjectStatus.LAUFEND,
           new ProjectRequirement(createLongString(10000)),
-          new CreatorID(UUID.randomUUID()),
+          UUID.randomUUID(),
           new CreatorName(createLongString(10000)),
           new SupervisorName(createLongString(255)),
           ProjectContext.PROFESSOR);
 
   String createLongString(int max) {
     return "a".repeat(Math.max(0, max + 1));
-  }
-
-  @BeforeEach
-  void setup() {
-    when(authenticationUtils.getUserUUIDFromRequest(any()))
-        .thenReturn(Optional.of(UUID.randomUUID()));
-    when(authenticationUtils.authenticatedUserIsInRole(any())).thenReturn(true);
   }
 
   @Test

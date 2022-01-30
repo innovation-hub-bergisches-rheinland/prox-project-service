@@ -6,7 +6,6 @@ import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.ModuleTypeRepository;
 import de.innovationhub.prox.projectservice.module.StudyProgram;
 import de.innovationhub.prox.projectservice.module.StudyProgramRepository;
-import de.innovationhub.prox.projectservice.project.CreatorID;
 import de.innovationhub.prox.projectservice.project.CreatorName;
 import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.ProjectContext;
@@ -68,7 +67,7 @@ class DatabaseTest {
             new ProjectDescription("Ein neues Projekt 1"),
             ProjectStatus.VERFÜGBAR,
             new ProjectRequirement("R1"),
-            new CreatorID(UUID.randomUUID()),
+            UUID.randomUUID(),
             new CreatorName("Creator 1"),
             new SupervisorName("Supervisor Professor 1"),
             modules,
@@ -83,7 +82,7 @@ class DatabaseTest {
             new ProjectDescription("Ein neues Projekt 2"),
             ProjectStatus.VERFÜGBAR,
             new ProjectRequirement("R2"),
-            new CreatorID(UUID.randomUUID()),
+            UUID.randomUUID(),
             new CreatorName("Creator 3"),
             new SupervisorName("Supervisor Professor 3"),
             modules,
@@ -98,7 +97,7 @@ class DatabaseTest {
             new ProjectDescription("Ein neues Projekt 3"),
             ProjectStatus.VERFÜGBAR,
             new ProjectRequirement("R3"),
-            new CreatorID(UUID.randomUUID()),
+            UUID.randomUUID(),
             new CreatorName("Creator 4"),
             new SupervisorName("Supervisor Professor 4"),
             modules,

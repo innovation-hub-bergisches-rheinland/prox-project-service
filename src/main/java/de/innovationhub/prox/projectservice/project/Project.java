@@ -1,14 +1,18 @@
 package de.innovationhub.prox.projectservice.project;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import de.innovationhub.prox.projectservice.core.AbstractEntity;
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,14 +22,16 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 public class Project extends AbstractEntity {
 
   @NotNull @Valid @JsonUnwrapped private ProjectName name;
@@ -41,21 +47,26 @@ public class Project extends AbstractEntity {
   @Column(updatable = false)
   private ProjectContext context;
 
-  @JsonUnwrapped private CreatorID creatorID;
-
   @JsonUnwrapped private CreatorName creatorName;
 
   @JsonUnwrapped @Valid private SupervisorName supervisorName;
 
   @ManyToMany private Set<ModuleType> modules = new HashSet<>();
 
+  @CreatedBy
+  @JsonProperty(access = Access.READ_ONLY)
+  @Column(updatable = false)
+  private UUID creatorID;
+
   @Basic
+  @JsonProperty(access = Access.READ_ONLY)
   @Temporal(TemporalType.TIMESTAMP)
   @Column(updatable = false)
   @CreationTimestamp
   private java.util.Date created;
 
   @Basic
+  @JsonProperty(access = Access.READ_ONLY)
   @Temporal(TemporalType.TIMESTAMP)
   @UpdateTimestamp
   private java.util.Date modified;
@@ -66,7 +77,7 @@ public class Project extends AbstractEntity {
       ProjectDescription description,
       ProjectStatus status,
       ProjectRequirement requirement,
-      CreatorID creatorID,
+      UUID creatorID,
       CreatorName creatorName,
       SupervisorName supervisorName,
       Set<ModuleType> modules,
@@ -89,7 +100,7 @@ public class Project extends AbstractEntity {
       ProjectDescription description,
       ProjectStatus status,
       ProjectRequirement requirement,
-      CreatorID creatorID,
+      UUID creatorID,
       CreatorName creatorName,
       SupervisorName supervisorName,
       ProjectContext projectContext) {

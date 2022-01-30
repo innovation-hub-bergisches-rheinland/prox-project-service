@@ -49,7 +49,7 @@ class ProjectRepositoryTest {
             new ProjectDescription("Bestes Projekt"),
             ProjectStatus.LAUFEND,
             new ProjectRequirement("PhD"),
-            new CreatorID(UUID.randomUUID()),
+            UUID.randomUUID(),
             new CreatorName("Karl Peter"),
             new SupervisorName("Karl Peter"),
             sampleModules,
@@ -63,7 +63,7 @@ class ProjectRepositoryTest {
             new ProjectDescription("Bestes Projekt 2"),
             ProjectStatus.LAUFEND,
             new ProjectRequirement("PhD"),
-            new CreatorID(UUID.randomUUID()),
+            UUID.randomUUID(),
             new CreatorName("Karl Peter"),
             new SupervisorName("Karl Peter"),
             sampleModules,
@@ -104,7 +104,7 @@ class ProjectRepositoryTest {
     Project copiedProject = sampleProject;
 
     copiedProject.setName(new ProjectName("ChangedName"));
-    copiedProject.setCreatorID(new CreatorID(UUID.randomUUID()));
+    copiedProject.setCreatorID(UUID.randomUUID());
 
     projectRepository.save(copiedProject);
     Optional<Project> optionalProjectFound = projectRepository.findById(copiedProject.getId());

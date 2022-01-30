@@ -37,7 +37,7 @@ public class ProjectTest {
             new ProjectDescription("Bestes Projekt"),
             ProjectStatus.LAUFEND,
             new ProjectRequirement("PhD"),
-            new CreatorID(UUID.randomUUID()),
+            UUID.randomUUID(),
             new CreatorName("Jann"),
             new SupervisorName("Jann"),
             modules,
