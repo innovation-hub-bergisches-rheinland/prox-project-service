@@ -1,12 +1,12 @@
 package de.innovationhub.prox.projectservice.config;
 
 
-import com.google.common.base.Predicate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
+import javax.annotation.Nullable;
 import org.apache.commons.lang.ArrayUtils;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -66,20 +66,17 @@ public class SpringfoxConfig {
   }
 
   // TODO Remove when Controllers are implemented and use Swagger/Springfox annotations instead
-  private java.util.function.Predicate<RequestHandler> customRequestHandlers() {
-    return new Predicate<>() {
-      @Override
-      public boolean apply(@Nullable RequestHandler input) {
-        if (input != null
-            && input.getName() != null
-            && ArrayUtils.contains(PREDICATE_NAMES, input.getName())) {
-          Set<RequestMethod> methodSet = input.supportedMethods();
-          return methodSet.contains(RequestMethod.GET)
-              || methodSet.contains(RequestMethod.HEAD)
-              || methodSet.contains(RequestMethod.OPTIONS);
-        }
-        return true;
+  private Predicate<RequestHandler> customRequestHandlers() {
+    return input -> {
+      if (input != null
+          && input.getName() != null
+          && ArrayUtils.contains(PREDICATE_NAMES, input.getName())) {
+        Set<RequestMethod> methodSet = input.supportedMethods();
+        return methodSet.contains(RequestMethod.GET)
+            || methodSet.contains(RequestMethod.HEAD)
+            || methodSet.contains(RequestMethod.OPTIONS);
       }
+      return true;
     };
   }
 }
