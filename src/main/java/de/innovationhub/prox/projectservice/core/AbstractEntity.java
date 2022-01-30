@@ -1,6 +1,8 @@
 package de.innovationhub.prox.projectservice.core;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.util.UUID;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -13,7 +15,9 @@ import lombok.Setter;
 @Setter(AccessLevel.NONE)
 public class AbstractEntity {
 
-  @Id private UUID id;
+  @Id
+  @JsonProperty(access = Access.READ_ONLY)
+  private UUID id;
 
   protected AbstractEntity() {
     this.id = UUID.randomUUID();

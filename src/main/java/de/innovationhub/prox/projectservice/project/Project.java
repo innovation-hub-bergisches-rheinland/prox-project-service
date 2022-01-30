@@ -1,6 +1,7 @@
 package de.innovationhub.prox.projectservice.project;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
@@ -21,6 +22,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,6 +36,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
+@AllArgsConstructor
 public class Project extends AbstractEntity {
 
   @Column(length = 255)
@@ -55,7 +58,7 @@ public class Project extends AbstractEntity {
 
   @NotNull private ProjectStatus status;
 
-  @Column(updatable = false)
+  @Column
   private ProjectContext context;
 
   @JsonProperty(access = Access.READ_ONLY)
@@ -66,7 +69,9 @@ public class Project extends AbstractEntity {
   @Size(max = 255)
   private String supervisorName;
 
-  @ManyToMany private Set<ModuleType> modules = new HashSet<>();
+  @JsonIgnore
+  @ManyToMany
+  private Set<ModuleType> modules = new HashSet<>();
 
   @CreatedBy
   @JsonProperty(access = Access.READ_ONLY)
