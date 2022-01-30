@@ -12,7 +12,8 @@ import org.springframework.boot.test.json.JacksonTester;
 @JsonTest
 public class ProjectJsonTest {
 
-  @Autowired JacksonTester<Project> json;
+  @Autowired
+  JacksonTester<Project> json;
 
   @Test
   void serialize() throws Exception {
@@ -54,8 +55,8 @@ public class ProjectJsonTest {
     assertThat(serialized)
         .extractingJsonPathStringValue("@.creatorID")
         .isEqualTo(randomProject.getCreatorID().toString());
-    assertThat(serialized).extractingJsonPathStringValue("@.created").isNotBlank();
-    assertThat(serialized).extractingJsonPathStringValue("@.modified").isNotBlank();
+    assertThat(serialized).extractingJsonPathStringValue("@.createdAt").isNotBlank();
+    assertThat(serialized).extractingJsonPathStringValue("@.modifiedAt").isNotBlank();
   }
 
   @Test
@@ -63,21 +64,21 @@ public class ProjectJsonTest {
     // Given
     var jsonStr =
         """
-        {
-          "id":"1c57e910-ac3c-4d72-8e11-961ef07cdf44",
-          "name":"tg",
-          "description":"eOMtThyhVNLWUZNRcBaQKxI",
-          "shortDescription":"LRHCsQ",
-          "requirement":"yedUsFwdkelQbxeTeQOvaScfqIOOmaa",
-          "status":"ABGESCHLOSSEN",
-          "context":"PROFESSOR",
-          "creatorName":"JxkyvRnL",
-          "supervisorName":"tguuayKsvm",
-          "creatorID":"b921f1dd-3cbc-0495-fdab-8cd14d33f0aa",
-          "created":"2024-06-18T17:54:04.570+00:00",
-          "modified":"2029-10-26T11:23:40.498+00:00"
-        }
-        """;
+            {
+              "id":"1c57e910-ac3c-4d72-8e11-961ef07cdf44",
+              "name":"tg",
+              "description":"eOMtThyhVNLWUZNRcBaQKxI",
+              "shortDescription":"LRHCsQ",
+              "requirement":"yedUsFwdkelQbxeTeQOvaScfqIOOmaa",
+              "status":"ABGESCHLOSSEN",
+              "context":"PROFESSOR",
+              "creatorName":"JxkyvRnL",
+              "supervisorName":"tguuayKsvm",
+              "creatorID":"b921f1dd-3cbc-0495-fdab-8cd14d33f0aa",
+              "createdAt":"2024-06-18T17:54:04.570+00:00",
+              "modifiedAt":"2029-10-26T11:23:40.498+00:00"
+            }
+            """;
 
     // When
     var deserializedResult = this.json.parseObject(jsonStr);

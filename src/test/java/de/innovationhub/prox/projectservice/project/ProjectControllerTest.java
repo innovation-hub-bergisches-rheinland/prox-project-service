@@ -28,9 +28,11 @@ import org.springframework.test.web.servlet.MockMvc;
 @SuppressWarnings("java:S2699")
 class ProjectControllerTest {
 
-  @Autowired MockMvc mockMvc;
+  @Autowired
+  MockMvc mockMvc;
 
-  @Autowired EntityManager entityManager;
+  @Autowired
+  EntityManager entityManager;
 
   @BeforeEach
   void setup() {
@@ -146,7 +148,7 @@ class ProjectControllerTest {
     assertThat(found).isNotNull();
     assertThat(found)
         .usingRecursiveComparison()
-        .ignoringFields("id", "created", "creatorName", "modified", "creatorID", "modules")
+        .ignoringFields("id", "createdAt", "creatorName", "modifiedAt", "creatorID", "modules")
         .isEqualTo(updatedProject);
   }
 
