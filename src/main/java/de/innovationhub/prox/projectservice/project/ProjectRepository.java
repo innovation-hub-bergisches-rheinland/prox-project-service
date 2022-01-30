@@ -16,7 +16,7 @@ public interface ProjectRepository
 
   Set<Project> findByStatus(@Param(value = "status") ProjectStatus status);
 
-  Set<Project> findBySupervisorName_SupervisorNameContaining(
+  Set<Project> findBySupervisorNameContaining(
       @Param(value = "supervisorName") String supervisorName);
 
   Set<Project> findAllByModifiedAfter(

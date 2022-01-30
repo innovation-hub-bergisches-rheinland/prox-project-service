@@ -32,14 +32,14 @@ public class ProjectTest {
     // Create Project
     Project project =
         new Project(
-            new ProjectName("Testprojekt"),
-            new ProjectShortDescription("Best Proj."),
-            new ProjectDescription("Bestes Projekt"),
+            "Testprojekt",
+            "Best Proj.",
+            "Bestes Projekt",
             ProjectStatus.LAUFEND,
-            new ProjectRequirement("PhD"),
+            "PhD",
             UUID.randomUUID(),
-            new CreatorName("Jann"),
-            new SupervisorName("Jann"),
+            "Jann",
+            "Jann",
             modules,
             ProjectContext.PROFESSOR);
 

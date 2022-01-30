@@ -17,7 +17,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,22 +36,35 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class Project extends AbstractEntity {
 
-  @NotNull @Valid @JsonUnwrapped private ProjectName name;
+  @Column(length = 255)
+  @Size(min = 1, max = 255)
+  @NotBlank
+  @NotNull
+  private String name;
 
-  @JsonUnwrapped @Valid private ProjectDescription description;
+  @Column(length = 10000)
+  private String description;
 
-  @JsonUnwrapped @Valid @NotNull private ProjectShortDescription shortDescription;
+  @Column(length = 10000)
+  @Size(min = 1, max = 10000)
+  @NotBlank
+  private String shortDescription;
 
-  @JsonUnwrapped @Valid private ProjectRequirement requirement;
+  @Column(length = 10000)
+  private String requirement;
 
-  @Valid @NotNull private ProjectStatus status;
+  @NotNull private ProjectStatus status;
 
   @Column(updatable = false)
   private ProjectContext context;
 
-  @JsonUnwrapped private CreatorName creatorName;
+  @JsonProperty(access = Access.READ_ONLY)
+  @Column(length = 255)
+  private String creatorName;
 
-  @JsonUnwrapped @Valid private SupervisorName supervisorName;
+  @Column(length = 255)
+  @Size(max = 255)
+  private String supervisorName;
 
   @ManyToMany private Set<ModuleType> modules = new HashSet<>();
 
@@ -72,14 +87,14 @@ public class Project extends AbstractEntity {
   private java.util.Date modified;
 
   public Project(
-      ProjectName name,
-      ProjectShortDescription shortDescription,
-      ProjectDescription description,
+      String name,
+      String shortDescription,
+      String description,
       ProjectStatus status,
-      ProjectRequirement requirement,
+      String requirement,
       UUID creatorID,
-      CreatorName creatorName,
-      SupervisorName supervisorName,
+      String creatorName,
+      String supervisorName,
       Set<ModuleType> modules,
       ProjectContext projectContext) {
     this.requirement = requirement;
@@ -95,14 +110,14 @@ public class Project extends AbstractEntity {
   }
 
   public Project(
-      ProjectName name,
-      ProjectShortDescription shortDescription,
-      ProjectDescription description,
+      String name,
+      String shortDescription,
+      String description,
       ProjectStatus status,
-      ProjectRequirement requirement,
+      String requirement,
       UUID creatorID,
-      CreatorName creatorName,
-      SupervisorName supervisorName,
+      String creatorName,
+      String supervisorName,
       ProjectContext projectContext) {
     this.requirement = requirement;
     this.name = name;

@@ -6,16 +6,10 @@ import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.ModuleTypeRepository;
 import de.innovationhub.prox.projectservice.module.StudyProgram;
 import de.innovationhub.prox.projectservice.module.StudyProgramRepository;
-import de.innovationhub.prox.projectservice.project.CreatorName;
 import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.ProjectContext;
-import de.innovationhub.prox.projectservice.project.ProjectDescription;
-import de.innovationhub.prox.projectservice.project.ProjectName;
 import de.innovationhub.prox.projectservice.project.ProjectRepository;
-import de.innovationhub.prox.projectservice.project.ProjectRequirement;
-import de.innovationhub.prox.projectservice.project.ProjectShortDescription;
 import de.innovationhub.prox.projectservice.project.ProjectStatus;
-import de.innovationhub.prox.projectservice.project.SupervisorName;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -62,14 +56,14 @@ class DatabaseTest {
     modules.add(am);
     Project p1 =
         new Project(
-            new ProjectName("Projekt 1"),
-            new ProjectShortDescription("P1"),
-            new ProjectDescription("Ein neues Projekt 1"),
+            "Projekt 1",
+            "P1",
+            "Ein neues Projekt 1",
             ProjectStatus.VERFÜGBAR,
-            new ProjectRequirement("R1"),
+            "R1",
             UUID.randomUUID(),
-            new CreatorName("Creator 1"),
-            new SupervisorName("Supervisor Professor 1"),
+            "Creator 1",
+            "Supervisor Professor 1",
             modules,
             ProjectContext.PROFESSOR);
 
@@ -77,14 +71,14 @@ class DatabaseTest {
     modules.add(fae);
     Project p2 =
         new Project(
-            new ProjectName("Projekt 1"),
-            new ProjectShortDescription("P2"),
-            new ProjectDescription("Ein neues Projekt 2"),
+            "Projekt 1",
+            "P2",
+            "Ein neues Projekt 2",
             ProjectStatus.VERFÜGBAR,
-            new ProjectRequirement("R2"),
+            "R2",
             UUID.randomUUID(),
-            new CreatorName("Creator 3"),
-            new SupervisorName("Supervisor Professor 3"),
+            "Creator 3",
+            "Supervisor Professor 3",
             modules,
             ProjectContext.PROFESSOR);
 
@@ -92,14 +86,14 @@ class DatabaseTest {
     modules.add(eam);
     Project p3 =
         new Project(
-            new ProjectName("Projekt 1"),
-            new ProjectShortDescription("P3"),
-            new ProjectDescription("Ein neues Projekt 3"),
+            "Projekt 1",
+            "P3",
+            "Ein neues Projekt 3",
             ProjectStatus.VERFÜGBAR,
-            new ProjectRequirement("R3"),
+            "R3",
             UUID.randomUUID(),
-            new CreatorName("Creator 4"),
-            new SupervisorName("Supervisor Professor 4"),
+            "Creator 4",
+            "Supervisor Professor 4",
             modules,
             ProjectContext.PROFESSOR);
 

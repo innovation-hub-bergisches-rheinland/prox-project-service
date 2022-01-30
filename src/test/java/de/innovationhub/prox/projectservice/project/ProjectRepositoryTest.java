@@ -44,28 +44,28 @@ class ProjectRepositoryTest {
     // Create new sample Project
     sampleProject =
         new Project(
-            new ProjectName("Testprojekt"),
-            new ProjectShortDescription("Best Proj."),
-            new ProjectDescription("Bestes Projekt"),
+            "Testprojekt",
+            "Best Proj.",
+            "Bestes Projekt",
             ProjectStatus.LAUFEND,
-            new ProjectRequirement("PhD"),
+            "PhD",
             UUID.randomUUID(),
-            new CreatorName("Karl Peter"),
-            new SupervisorName("Karl Peter"),
+            "Karl Peter",
+            "Karl Peter",
             sampleModules,
             ProjectContext.PROFESSOR);
 
     sampleProjects.add(sampleProject);
     sampleProjects.add(
         new Project(
-            new ProjectName("Testprojekt 2"),
-            new ProjectShortDescription("Best Proj. 2"),
-            new ProjectDescription("Bestes Projekt 2"),
+            "Testprojekt 2",
+            "Best Proj. 2",
+            "Bestes Projekt 2",
             ProjectStatus.LAUFEND,
-            new ProjectRequirement("PhD"),
+            "PhD",
             UUID.randomUUID(),
-            new CreatorName("Karl Peter"),
-            new SupervisorName("Karl Peter"),
+            "Karl Peter",
+            "Karl Peter",
             sampleModules,
             ProjectContext.PROFESSOR));
   }
@@ -103,7 +103,7 @@ class ProjectRepositoryTest {
     // Copy project to maintain integrity of sampleProject
     Project copiedProject = sampleProject;
 
-    copiedProject.setName(new ProjectName("ChangedName"));
+    copiedProject.setName("ChangedName");
     copiedProject.setCreatorID(UUID.randomUUID());
 
     projectRepository.save(copiedProject);
@@ -190,8 +190,8 @@ class ProjectRepositoryTest {
     saveSampleProject();
 
     Set<Project> projects =
-        projectRepository.findBySupervisorName_SupervisorNameContaining(
-            sampleProject.getSupervisorName().getSupervisorName());
+        projectRepository.findBySupervisorNameContaining(
+            sampleProject.getSupervisorName());
     assertEquals(1, projects.size());
   }
 
@@ -200,10 +200,9 @@ class ProjectRepositoryTest {
     saveSampleProject();
 
     // Get a random substring from supervisor name
-    String fullSupervisorName = sampleProject.getSupervisorName().getSupervisorName();
+    String fullSupervisorName = sampleProject.getSupervisorName();
     String partialSupervisorName =
         sampleProject
-            .getSupervisorName()
             .getSupervisorName()
             .substring(1, fullSupervisorName.length() - 1);
 
@@ -211,7 +210,7 @@ class ProjectRepositoryTest {
     assertTrue(fullSupervisorName.contains(partialSupervisorName));
 
     Set<Project> projects =
-        projectRepository.findBySupervisorName_SupervisorNameContaining(partialSupervisorName);
+        projectRepository.findBySupervisorNameContaining(partialSupervisorName);
     assertEquals(1, projects.size());
   }
 
@@ -220,7 +219,7 @@ class ProjectRepositoryTest {
     saveSampleProject();
 
     Set<Project> projects =
-        projectRepository.findBySupervisorName_SupervisorNameContaining(
+        projectRepository.findBySupervisorNameContaining(
             UUID.randomUUID().toString());
     assertEquals(0, projects.size());
   }

@@ -25,7 +25,7 @@ class ProjectValidationTest {
   @Test
   void when_project_name_is_blank_should_return_violation() {
     Project project = new Project();
-    project.setName(new ProjectName("    "));
+    project.setName("    ");
 
     Set<ConstraintViolation<Project>> violationSet = localValidatorFactoryBean.validate(project);
     assertFalse(violationSet.isEmpty());
@@ -43,7 +43,7 @@ class ProjectValidationTest {
   @Test
   void when_project_short_description_is_blank_should_return_violation() {
     Project project = new Project();
-    project.setShortDescription(new ProjectShortDescription("    "));
+    project.setShortDescription("    ");
 
     Set<ConstraintViolation<Project>> violationSet = localValidatorFactoryBean.validate(project);
     assertFalse(violationSet.isEmpty());
@@ -61,7 +61,7 @@ class ProjectValidationTest {
   @Test
   void when_project_description_is_blank_should_return_violation() {
     Project project = new Project();
-    project.setDescription(new ProjectDescription("    "));
+    project.setDescription("    ");
 
     Set<ConstraintViolation<Project>> violationSet = localValidatorFactoryBean.validate(project);
     assertFalse(violationSet.isEmpty());
@@ -106,7 +106,7 @@ class ProjectValidationTest {
   @Test
   void when_project_creatorname_is_blank_should_return_violation() {
     Project project = new Project();
-    project.setCreatorName(new CreatorName("   "));
+    project.setCreatorName("   ");
 
     Set<ConstraintViolation<Project>> violationSet = localValidatorFactoryBean.validate(project);
     assertFalse(violationSet.isEmpty());

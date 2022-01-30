@@ -32,14 +32,14 @@ class ProjectAPIValidationTest {
 
   Project validProject =
       new Project(
-          new ProjectName("Test Project"),
-          new ProjectShortDescription("This is a\n short description"),
-          new ProjectDescription("This is a description"),
+          "Test Project",
+          "This is a\n short description",
+          "This is a description",
           ProjectStatus.LAUFEND,
-          new ProjectRequirement("This is a requirement"),
+          "This is a requirement",
           UUID.randomUUID(),
-          new CreatorName("Mock User"),
-          new SupervisorName("Supervisor"),
+          "Mock User",
+          "Supervisor",
           ProjectContext.PROFESSOR);
 
   private Project emptyProject = new Project();
@@ -48,26 +48,26 @@ class ProjectAPIValidationTest {
 
   private Project emptyValueProject =
       new Project(
-          new ProjectName("     "),
-          new ProjectShortDescription("  "),
-          new ProjectDescription("    "),
+          "     ",
+          "  ",
+          "    ",
           ProjectStatus.LAUFEND,
-          new ProjectRequirement("\n \t"),
+          "\n \t",
           UUID.randomUUID(),
-          new CreatorName(""),
-          new SupervisorName("   "),
+          "",
+          "   ",
           ProjectContext.PROFESSOR);
 
   private Project longValueProject =
       new Project(
-          new ProjectName(createLongString(255)),
-          new ProjectShortDescription(createLongString(10000)),
-          new ProjectDescription(createLongString(10000)),
+          createLongString(255),
+          createLongString(10000),
+          createLongString(10000),
           ProjectStatus.LAUFEND,
-          new ProjectRequirement(createLongString(10000)),
+          createLongString(10000),
           UUID.randomUUID(),
-          new CreatorName(createLongString(10000)),
-          new SupervisorName(createLongString(255)),
+          createLongString(10000),
+          createLongString(255),
           ProjectContext.PROFESSOR);
 
   String createLongString(int max) {
@@ -187,19 +187,6 @@ class ProjectAPIValidationTest {
             put(PROJECTS_ID_ROUTE, savedProject.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(longValueProject)))
-        .andDo(print())
-        .andExpect(status().isBadRequest());
-  }
-
-  @Test
-  void when_patch_empty_body_then_is_bad_request() throws Exception {
-    Project savedProject = projectRepository.save(validProject);
-
-    mockMvc
-        .perform(
-            patch(PROJECTS_ID_ROUTE, savedProject.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{}"))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }

@@ -57,14 +57,14 @@ class ProjectAPITest {
 
   Project sampleProject =
       new Project(
-          new ProjectName("Test Project"),
-          new ProjectShortDescription("This is a short description"),
-          new ProjectDescription("This is a description"),
+          "Test Project",
+          "This is a short description",
+          "This is a description",
           ProjectStatus.LAUFEND,
-          new ProjectRequirement("This is a requirement"),
+          "This is a requirement",
           UUID.randomUUID(),
-          new CreatorName("Mock User"),
-          new SupervisorName("Supervisor"),
+          "Mock User",
+          "Supervisor",
           ProjectContext.PROFESSOR);
 
   @BeforeEach
@@ -136,8 +136,7 @@ class ProjectAPITest {
     projectRepository.save(sampleProject);
 
     Project copiedProject = sampleProject;
-    ProjectDescription updatedDescription = new ProjectDescription("Updated");
-    copiedProject.setDescription(updatedDescription);
+    copiedProject.setDescription("Updated");
 
     mockMvc
         .perform(
@@ -176,8 +175,7 @@ class ProjectAPITest {
     projectRepository.save(sampleProject);
 
     Project copiedProject = sampleProject;
-    ProjectDescription updatedDescription = new ProjectDescription("Updated");
-    copiedProject.setDescription(updatedDescription);
+    copiedProject.setDescription("Updated");
 
     mockMvc
         .perform(
