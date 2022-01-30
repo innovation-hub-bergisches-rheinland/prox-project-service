@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.hasSize;
 import com.c4_soft.springaddons.security.oauth2.test.annotations.OpenIdClaims;
 import com.c4_soft.springaddons.security.oauth2.test.annotations.keycloak.WithMockKeycloakAuth;
 import de.innovationhub.prox.projectservice.module.ModuleType;
-import io.restassured.internal.http.Status;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -28,6 +27,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @Transactional
 @SuppressWarnings("java:S2699")
 class ProjectControllerTest {
+
   @Autowired
   MockMvc mockMvc;
 
@@ -48,6 +48,7 @@ class ProjectControllerTest {
         .forEach(randomProject -> entityManager.persist(randomProject));
     entityManager.flush();
 
+    // @formatter:off
     given()
         .accept(MediaType.APPLICATION_JSON)
     .when()
@@ -55,6 +56,7 @@ class ProjectControllerTest {
     .then()
         .status(HttpStatus.OK)
         .body("_embedded.projects", hasSize(5));
+    // @formatter:on
   }
 
   @Test
@@ -64,16 +66,19 @@ class ProjectControllerTest {
     this.entityManager.persist(randomProject);
     entityManager.flush();
 
+    // @formatter:off
     given()
         .accept(MediaType.APPLICATION_JSON)
     .when()
         .get("/projects/{id}", randomProject.getId())
     .then()
         .status(HttpStatus.OK);
+    // @formatter:on
   }
 
   @Test
   void shouldReturnUnauthorized() {
+    // @formatter:off
     given()
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -81,18 +86,20 @@ class ProjectControllerTest {
         .post("/projects")
     .then()
         .status(HttpStatus.UNAUTHORIZED);
+    // @formatter:on
   }
 
   @Test
   @WithMockKeycloakAuth(
       authorities = {"ROLE_professor"},
       claims = @OpenIdClaims(
-      sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"
-  ))
+          sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"
+      ))
   void shouldCreateProject() {
     var easyRandom = new EasyRandom();
     var randomProject = easyRandom.nextObject(Project.class);
 
+    // @formatter:off
     var id = given()
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -104,10 +111,12 @@ class ProjectControllerTest {
     .extract()
         .body().jsonPath()
         .getUUID("id");
+    // @formatter:on
 
     var project = this.entityManager.find(Project.class, id);
     assertThat(project).isNotNull();
-    assertThat(project.getCreatorID()).isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    assertThat(project.getCreatorID()).isEqualTo(
+        UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
   }
 
   @Test
@@ -127,6 +136,7 @@ class ProjectControllerTest {
 
     var updatedProject = easyRandom.nextObject(Project.class);
 
+    // @formatter:off
     given()
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -135,6 +145,7 @@ class ProjectControllerTest {
         .put("/projects/{id}", randomProject.getId())
     .then()
         .status(HttpStatus.OK);
+    // @formatter:on
 
     var found = this.entityManager.find(Project.class, randomProject.getId());
     assertThat(found).isNotNull();
@@ -159,6 +170,7 @@ class ProjectControllerTest {
     this.entityManager.persist(randomProject);
     entityManager.flush();
 
+    // @formatter:off
     given()
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -171,6 +183,7 @@ class ProjectControllerTest {
         .patch("/projects/{id}", randomProject.getId())
     .then()
         .status(HttpStatus.OK);
+    // @formatter:on
 
     var found = this.entityManager.find(Project.class, randomProject.getId());
     assertThat(found).isNotNull();
@@ -199,12 +212,14 @@ class ProjectControllerTest {
 
     assertThat(this.entityManager.find(Project.class, randomProject.getId())).isNotNull();
 
+    // @formatter:off
     given()
         .accept(MediaType.APPLICATION_JSON)
     .when()
         .delete("/projects/{id}", randomProject.getId())
     .then()
         .status(HttpStatus.NO_CONTENT);
+    // @formatter:on
 
     assertThat(this.entityManager.find(Project.class, randomProject.getId())).isNull();
   }
@@ -227,7 +242,10 @@ class ProjectControllerTest {
 
     randomModules.forEach(moduleType -> this.entityManager.persist(moduleType));
 
-    var moduleIds = randomModules.stream().map(moduleType -> moduleType.getId().toString()).toList();
+    var moduleIds = randomModules.stream().map(moduleType -> moduleType.getId().toString())
+        .toList();
+
+    // @formatter:off
     given()
         .accept(MediaType.APPLICATION_JSON)
         .contentType("text/uri-list")
@@ -236,6 +254,7 @@ class ProjectControllerTest {
         .put("/projects/{id}/modules", randomProject.getId())
     .then()
         .status(HttpStatus.NO_CONTENT);
+    // @formatter:on
 
     var foundProject = this.entityManager.find(Project.class, randomProject.getId());
     assertThat(foundProject).isNotNull();

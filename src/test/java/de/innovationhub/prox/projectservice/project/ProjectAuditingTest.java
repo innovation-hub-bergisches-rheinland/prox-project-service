@@ -1,6 +1,7 @@
 package de.innovationhub.prox.projectservice.project;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -22,6 +23,7 @@ import org.springframework.data.domain.AuditorAware;
 @AutoConfigureDataJpa
 @Transactional
 class ProjectAuditingTest {
+
   @Autowired
   private EntityManager entityManager;
 

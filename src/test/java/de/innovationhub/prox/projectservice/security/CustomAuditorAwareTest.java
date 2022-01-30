@@ -1,20 +1,17 @@
 package de.innovationhub.prox.projectservice.security;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.c4_soft.springaddons.security.oauth2.test.annotations.OpenIdClaims;
 import com.c4_soft.springaddons.security.oauth2.test.annotations.keycloak.WithMockKeycloakAuth;
-import de.innovationhub.prox.projectservice.config.JpaConfig;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.AuditorAware;
 
 @SpringBootTest
 class CustomAuditorAwareTest {
+
   CustomAuditorAware customAuditorAware = new CustomAuditorAware();
 
   @Test
