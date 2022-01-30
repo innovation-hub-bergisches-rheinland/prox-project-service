@@ -46,6 +46,7 @@ class ProjectControllerTest {
 
     randomProjects
         .forEach(randomProject -> entityManager.persist(randomProject));
+    entityManager.flush();
 
     given()
         .accept(MediaType.APPLICATION_JSON)
@@ -61,6 +62,7 @@ class ProjectControllerTest {
     var easyRandom = new EasyRandom();
     var randomProject = easyRandom.nextObject(Project.class);
     this.entityManager.persist(randomProject);
+    entityManager.flush();
 
     given()
         .accept(MediaType.APPLICATION_JSON)
@@ -121,6 +123,7 @@ class ProjectControllerTest {
     // Ensure that authenticated User is the creator
     randomProject.setCreatorID(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
     this.entityManager.persist(randomProject);
+    entityManager.flush();
 
     var updatedProject = easyRandom.nextObject(Project.class);
 
@@ -154,6 +157,7 @@ class ProjectControllerTest {
     // Ensure that authenticated User is the creator
     randomProject.setCreatorID(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
     this.entityManager.persist(randomProject);
+    entityManager.flush();
 
     given()
         .accept(MediaType.APPLICATION_JSON)
@@ -191,6 +195,8 @@ class ProjectControllerTest {
     // Ensure that authenticated User is the creator
     randomProject.setCreatorID(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
     this.entityManager.persist(randomProject);
+    entityManager.flush();
+
     assertThat(this.entityManager.find(Project.class, randomProject.getId())).isNotNull();
 
     given()
@@ -217,6 +223,8 @@ class ProjectControllerTest {
     // Ensure that authenticated User is the creator
     randomProject.setCreatorID(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
     this.entityManager.persist(randomProject);
+    entityManager.flush();
+
     randomModules.forEach(moduleType -> this.entityManager.persist(moduleType));
 
     var moduleIds = randomModules.stream().map(moduleType -> moduleType.getId().toString()).toList();

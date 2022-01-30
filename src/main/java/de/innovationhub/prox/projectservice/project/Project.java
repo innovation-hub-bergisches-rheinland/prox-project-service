@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import de.innovationhub.prox.projectservice.core.AbstractEntity;
 import de.innovationhub.prox.projectservice.module.ModuleType;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -78,60 +80,12 @@ public class Project extends AbstractEntity {
   @Column(updatable = false)
   private UUID creatorID;
 
-  @Basic
   @JsonProperty(access = Access.READ_ONLY)
-  @Temporal(TemporalType.TIMESTAMP)
   @Column(updatable = false)
   @CreationTimestamp
-  private java.util.Date created;
+  private Instant created;
 
-  @Basic
   @JsonProperty(access = Access.READ_ONLY)
-  @Temporal(TemporalType.TIMESTAMP)
   @UpdateTimestamp
-  private java.util.Date modified;
-
-  public Project(
-      String name,
-      String shortDescription,
-      String description,
-      ProjectStatus status,
-      String requirement,
-      UUID creatorID,
-      String creatorName,
-      String supervisorName,
-      Set<ModuleType> modules,
-      ProjectContext projectContext) {
-    this.requirement = requirement;
-    this.name = name;
-    this.shortDescription = shortDescription;
-    this.description = description;
-    this.status = status;
-    this.creatorID = creatorID;
-    this.creatorName = creatorName;
-    this.supervisorName = supervisorName;
-    this.modules = modules;
-    this.context = projectContext;
-  }
-
-  public Project(
-      String name,
-      String shortDescription,
-      String description,
-      ProjectStatus status,
-      String requirement,
-      UUID creatorID,
-      String creatorName,
-      String supervisorName,
-      ProjectContext projectContext) {
-    this.requirement = requirement;
-    this.name = name;
-    this.shortDescription = shortDescription;
-    this.description = description;
-    this.status = status;
-    this.creatorID = creatorID;
-    this.creatorName = creatorName;
-    this.supervisorName = supervisorName;
-    this.context = projectContext;
-  }
+  private Instant modified;
 }

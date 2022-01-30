@@ -2,8 +2,11 @@ package de.innovationhub.prox.projectservice.project;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.UUID;
 import javax.persistence.EntityManager;
@@ -37,9 +40,49 @@ class ProjectAuditingTest {
 
     // When
     entityManager.persist(randomProject);
+    entityManager.flush();
 
     // Then
     var saved = entityManager.find(Project.class, randomProject.getId());
     assertThat(saved.getCreatorID()).isEqualByComparingTo(creatorId);
+
+    verify(auditorAware).getCurrentAuditor();
+  }
+
+  @Test
+  void shouldSaveCreationDate() {
+    // Given
+    var easyRandom = new EasyRandom();
+    var randomProject = easyRandom.nextObject(Project.class);
+
+    // When
+    entityManager.persist(randomProject);
+    entityManager.flush();
+
+    // Then
+    var saved = entityManager.find(Project.class, randomProject.getId());
+    assertThat(saved.getCreated()).isCloseTo(Instant.now(), within(1, ChronoUnit.SECONDS));
+  }
+
+  @Test
+  void shouldSaveModificationDate() {
+    // Given
+    var easyRandom = new EasyRandom();
+    var randomProject = easyRandom.nextObject(Project.class);
+    entityManager.persist(randomProject);
+    entityManager.flush();
+    var saved = entityManager.find(Project.class, randomProject.getId());
+    var oldModifiedDate = saved.getModified();
+
+    // When
+    saved.setName("Test 123");
+    entityManager.persist(randomProject);
+    entityManager.flush();
+
+    // Then
+    var newSaved = entityManager.find(Project.class, randomProject.getId());
+    assertThat(newSaved.getModified())
+        .isAfter(oldModifiedDate)
+        .isCloseTo(Instant.now(), within(1, ChronoUnit.SECONDS));
   }
 }
