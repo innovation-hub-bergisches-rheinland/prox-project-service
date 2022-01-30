@@ -12,8 +12,7 @@ import org.springframework.boot.test.json.JacksonTester;
 @JsonTest
 public class ProjectJsonTest {
 
-  @Autowired
-  JacksonTester<Project> json;
+  @Autowired JacksonTester<Project> json;
 
   @Test
   void serialize() throws Exception {

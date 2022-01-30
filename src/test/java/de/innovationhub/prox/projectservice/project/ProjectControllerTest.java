@@ -28,11 +28,9 @@ import org.springframework.test.web.servlet.MockMvc;
 @SuppressWarnings("java:S2699")
 class ProjectControllerTest {
 
-  @Autowired
-  MockMvc mockMvc;
+  @Autowired MockMvc mockMvc;
 
-  @Autowired
-  EntityManager entityManager;
+  @Autowired EntityManager entityManager;
 
   @BeforeEach
   void setup() {
