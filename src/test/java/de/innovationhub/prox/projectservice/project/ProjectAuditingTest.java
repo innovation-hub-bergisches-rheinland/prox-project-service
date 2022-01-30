@@ -24,11 +24,9 @@ import org.springframework.data.domain.AuditorAware;
 @Transactional
 class ProjectAuditingTest {
 
-  @Autowired
-  private EntityManager entityManager;
+  @Autowired private EntityManager entityManager;
 
-  @MockBean
-  private AuditorAware<UUID> auditorAware;
+  @MockBean private AuditorAware<UUID> auditorAware;
 
   @Test
   void shouldSaveCreatedBy() {

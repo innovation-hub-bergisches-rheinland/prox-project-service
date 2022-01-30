@@ -61,39 +61,26 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
               }
               var match = false;
               if (p.getCreatorName() != null && p.getCreatorName() != null) {
-                match |=
-                    p.getCreatorName().toLowerCase().contains(text.toLowerCase());
+                match |= p.getCreatorName().toLowerCase().contains(text.toLowerCase());
               }
-              if (match == false
-                  && p.getDescription() != null
-                  && p.getDescription() != null) {
-                match |=
-                    p.getDescription().toLowerCase().contains(text.toLowerCase());
+              if (match == false && p.getDescription() != null && p.getDescription() != null) {
+                match |= p.getDescription().toLowerCase().contains(text.toLowerCase());
               }
               if (match == false
                   && p.getShortDescription() != null
                   && p.getShortDescription() != null) {
-                match |=
-                    p.getShortDescription()
-                        .toLowerCase()
-                        .contains(text.toLowerCase());
+                match |= p.getShortDescription().toLowerCase().contains(text.toLowerCase());
               }
               if (match == false && p.getName() != null && p.getName() != null) {
                 match |= p.getName().toLowerCase().contains(text.toLowerCase());
               }
-              if (match == false
-                  && p.getRequirement() != null
-                  && p.getRequirement() != null) {
-                match |=
-                    p.getRequirement().toLowerCase().contains(text.toLowerCase());
+              if (match == false && p.getRequirement() != null && p.getRequirement() != null) {
+                match |= p.getRequirement().toLowerCase().contains(text.toLowerCase());
               }
               if (match == false
                   && p.getSupervisorName() != null
                   && p.getSupervisorName() != null) {
-                match |=
-                    p.getSupervisorName()
-                        .toLowerCase()
-                        .contains(text.toLowerCase());
+                match |= p.getSupervisorName().toLowerCase().contains(text.toLowerCase());
               }
               return match;
             })

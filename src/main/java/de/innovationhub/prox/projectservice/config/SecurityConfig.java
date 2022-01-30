@@ -17,7 +17,12 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
   private static final String[] PUBLIC_READ_PATHS = {
-      "/projects/**", "/moduleTypes/**", "/studyPrograms/**", "/profile/**", "/swagger-ui/**", "/v3/api-docs/**"
+    "/projects/**",
+    "/moduleTypes/**",
+    "/studyPrograms/**",
+    "/profile/**",
+    "/swagger-ui/**",
+    "/v3/api-docs/**"
   };
 
   @Autowired
@@ -51,11 +56,14 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         .mvcMatchers(HttpMethod.POST, "/projects/**")
         .access("hasAnyRole('professor', 'company-manager')")
         .mvcMatchers(HttpMethod.PUT, "/projects/{id}/**")
-        .access("hasAnyRole('professor', 'company-manager') and hasPermission(#id, 'Project', 'WRITE')")
+        .access(
+            "hasAnyRole('professor', 'company-manager') and hasPermission(#id, 'Project', 'WRITE')")
         .mvcMatchers(HttpMethod.PATCH, "/projects/{id}/**")
-        .access("hasAnyRole('professor', 'company-manager') and hasPermission(#id, 'Project', 'WRITE')")
+        .access(
+            "hasAnyRole('professor', 'company-manager') and hasPermission(#id, 'Project', 'WRITE')")
         .mvcMatchers(HttpMethod.DELETE, "/projects/{id}/**")
-        .access("hasAnyRole('professor', 'company-manager') and hasPermission(#id, 'Project', 'WRITE')")
+        .access(
+            "hasAnyRole('professor', 'company-manager') and hasPermission(#id, 'Project', 'WRITE')")
         .anyRequest()
         .denyAll();
   }

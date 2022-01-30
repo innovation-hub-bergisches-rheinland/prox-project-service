@@ -3,7 +3,6 @@ package de.innovationhub.prox.projectservice.project;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.Instant;
-import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 import org.springframework.data.repository.PagingAndSortingRepository;

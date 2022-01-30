@@ -28,11 +28,9 @@ import org.springframework.test.web.servlet.MockMvc;
 @SuppressWarnings("java:S2699")
 class ProjectControllerTest {
 
-  @Autowired
-  MockMvc mockMvc;
+  @Autowired MockMvc mockMvc;
 
-  @Autowired
-  EntityManager entityManager;
+  @Autowired EntityManager entityManager;
 
   @BeforeEach
   void setup() {
@@ -44,16 +42,15 @@ class ProjectControllerTest {
     var easyRandom = new EasyRandom();
     var randomProjects = easyRandom.objects(Project.class, 5).toList();
 
-    randomProjects
-        .forEach(randomProject -> entityManager.persist(randomProject));
+    randomProjects.forEach(randomProject -> entityManager.persist(randomProject));
     entityManager.flush();
 
     // @formatter:off
     given()
         .accept(MediaType.APPLICATION_JSON)
-    .when()
+        .when()
         .get("/projects")
-    .then()
+        .then()
         .status(HttpStatus.OK)
         .body("_embedded.projects", hasSize(5));
     // @formatter:on
@@ -69,9 +66,9 @@ class ProjectControllerTest {
     // @formatter:off
     given()
         .accept(MediaType.APPLICATION_JSON)
-    .when()
+        .when()
         .get("/projects/{id}", randomProject.getId())
-    .then()
+        .then()
         .status(HttpStatus.OK);
     // @formatter:on
   }
@@ -82,9 +79,9 @@ class ProjectControllerTest {
     given()
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON_VALUE)
-    .when()
+        .when()
         .post("/projects")
-    .then()
+        .then()
         .status(HttpStatus.UNAUTHORIZED);
     // @formatter:on
   }
@@ -92,39 +89,37 @@ class ProjectControllerTest {
   @Test
   @WithMockKeycloakAuth(
       authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(
-          sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"
-      ))
+      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldCreateProject() {
     var easyRandom = new EasyRandom();
     var randomProject = easyRandom.nextObject(Project.class);
 
     // @formatter:off
-    var id = given()
-        .accept(MediaType.APPLICATION_JSON)
-        .contentType(MediaType.APPLICATION_JSON_VALUE)
-        .body(randomProject)
-    .when()
-        .post("/projects")
-    .then()
-        .status(HttpStatus.CREATED)
-    .extract()
-        .body().jsonPath()
-        .getUUID("id");
+    var id =
+        given()
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body(randomProject)
+            .when()
+            .post("/projects")
+            .then()
+            .status(HttpStatus.CREATED)
+            .extract()
+            .body()
+            .jsonPath()
+            .getUUID("id");
     // @formatter:on
 
     var project = this.entityManager.find(Project.class, id);
     assertThat(project).isNotNull();
-    assertThat(project.getCreatorID()).isEqualTo(
-        UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    assertThat(project.getCreatorID())
+        .isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
   }
 
   @Test
   @WithMockKeycloakAuth(
       authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(
-          sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"
-      ))
+      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldUpdateProject() {
     var easyRandom = new EasyRandom();
     var randomProject = easyRandom.nextObject(Project.class);
@@ -141,9 +136,9 @@ class ProjectControllerTest {
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .body(updatedProject)
-    .when()
+        .when()
         .put("/projects/{id}", randomProject.getId())
-    .then()
+        .then()
         .status(HttpStatus.OK);
     // @formatter:on
 
@@ -158,9 +153,7 @@ class ProjectControllerTest {
   @Test
   @WithMockKeycloakAuth(
       authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(
-          sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"
-      ))
+      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldPartiallyUpdateProject() {
     var easyRandom = new EasyRandom();
     var randomProject = easyRandom.nextObject(Project.class);
@@ -179,9 +172,9 @@ class ProjectControllerTest {
               "name": "Test 123"
             }
             """)
-    .when()
+        .when()
         .patch("/projects/{id}", randomProject.getId())
-    .then()
+        .then()
         .status(HttpStatus.OK);
     // @formatter:on
 
@@ -189,18 +182,13 @@ class ProjectControllerTest {
     assertThat(found).isNotNull();
     assertThat(found.getName()).isEqualTo("Test 123");
     // Everything except name is unchanged
-    assertThat(found)
-        .usingRecursiveComparison()
-        .ignoringFields("name")
-        .isEqualTo(randomProject);
+    assertThat(found).usingRecursiveComparison().ignoringFields("name").isEqualTo(randomProject);
   }
 
   @Test
   @WithMockKeycloakAuth(
       authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(
-          sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"
-      ))
+      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldDeleteProject() {
     var easyRandom = new EasyRandom();
     var randomProject = easyRandom.nextObject(Project.class);
@@ -215,9 +203,9 @@ class ProjectControllerTest {
     // @formatter:off
     given()
         .accept(MediaType.APPLICATION_JSON)
-    .when()
+        .when()
         .delete("/projects/{id}", randomProject.getId())
-    .then()
+        .then()
         .status(HttpStatus.NO_CONTENT);
     // @formatter:on
 
@@ -227,9 +215,7 @@ class ProjectControllerTest {
   @Test
   @WithMockKeycloakAuth(
       authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(
-          sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"
-      ))
+      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldUpdateModulesOfProject() {
     var easyRandom = new EasyRandom();
     var randomModules = easyRandom.objects(ModuleType.class, 2).collect(Collectors.toList());
@@ -242,17 +228,17 @@ class ProjectControllerTest {
 
     randomModules.forEach(moduleType -> this.entityManager.persist(moduleType));
 
-    var moduleIds = randomModules.stream().map(moduleType -> moduleType.getId().toString())
-        .toList();
+    var moduleIds =
+        randomModules.stream().map(moduleType -> moduleType.getId().toString()).toList();
 
     // @formatter:off
     given()
         .accept(MediaType.APPLICATION_JSON)
         .contentType("text/uri-list")
         .body(String.join("\n", moduleIds))
-    .when()
+        .when()
         .put("/projects/{id}/modules", randomProject.getId())
-    .then()
+        .then()
         .status(HttpStatus.NO_CONTENT);
     // @formatter:on
 

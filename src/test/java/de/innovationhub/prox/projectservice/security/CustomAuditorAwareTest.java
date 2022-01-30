@@ -15,26 +15,22 @@ class CustomAuditorAwareTest {
   CustomAuditorAware customAuditorAware = new CustomAuditorAware();
 
   @Test
-  @WithMockKeycloakAuth(claims = @OpenIdClaims(
-      sub = "4f04c5da-1117-475a-a26a-7b65301ebd36"
-  ))
+  @WithMockKeycloakAuth(claims = @OpenIdClaims(sub = "4f04c5da-1117-475a-a26a-7b65301ebd36"))
   void shouldGetUUIDFromTokenSubject() {
     assertThat(customAuditorAware.getCurrentAuditor())
-        .isNotEmpty().get()
+        .isNotEmpty()
+        .get()
         .isEqualTo(UUID.fromString("4f04c5da-1117-475a-a26a-7b65301ebd36"));
   }
 
   @Test
-  @WithMockKeycloakAuth(claims = @OpenIdClaims(
-      sub = "test@example.com"
-  ))
+  @WithMockKeycloakAuth(claims = @OpenIdClaims(sub = "test@example.com"))
   void shouldThrowException() {
     assertThrows(IllegalArgumentException.class, () -> customAuditorAware.getCurrentAuditor());
   }
 
   @Test
   void shouldBeEmpty() {
-    assertThat(customAuditorAware.getCurrentAuditor())
-        .isEmpty();
+    assertThat(customAuditorAware.getCurrentAuditor()).isEmpty();
   }
 }

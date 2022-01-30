@@ -61,9 +61,7 @@ public class RestConfig implements RepositoryRestConfigurer {
             Link.of(
                 request.getRequestURL() + "/tagCollections/" + projectID + "/tags",
                 "tagCollection"));
-        resource.add(
-            Link.of(request.getRequestURL() + "/professors/" + creatorID,
-                "professor"));
+        resource.add(Link.of(request.getRequestURL() + "/professors/" + creatorID, "professor"));
         return resource;
       }
     };

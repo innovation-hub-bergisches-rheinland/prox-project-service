@@ -7,7 +7,6 @@ import de.innovationhub.prox.projectservice.project.ProjectContext;
 import de.innovationhub.prox.projectservice.project.ProjectStatus;
 import java.util.Set;
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.core.config.Projection;
 
 @Projection(
@@ -15,16 +14,28 @@ import org.springframework.data.rest.core.config.Projection;
     types = {Project.class})
 public interface ProjectWithModulesProjection {
   String getId();
+
   String getName();
+
   String getDescription();
+
   String getShortDescription();
+
   String getRequirement();
+
   ProjectStatus getStatus();
+
   ProjectContext getContext();
+
   UUID getCreatorID();
+
   String getCreatorName();
+
   String getSupervisorName();
+
   Set<ModuleType> getModules();
+
   java.util.Date getCreated();
+
   java.util.Date getModified();
 }

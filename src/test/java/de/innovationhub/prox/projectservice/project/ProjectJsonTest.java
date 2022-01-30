@@ -12,8 +12,7 @@ import org.springframework.boot.test.json.JacksonTester;
 @JsonTest
 public class ProjectJsonTest {
 
-  @Autowired
-  JacksonTester<Project> json;
+  @Autowired JacksonTester<Project> json;
 
   @Test
   void serialize() throws Exception {
@@ -25,25 +24,35 @@ public class ProjectJsonTest {
     var serialized = this.json.write(randomProject);
 
     // Then
-    assertThat(serialized).extractingJsonPathStringValue("@.id")
+    assertThat(serialized)
+        .extractingJsonPathStringValue("@.id")
         .isEqualTo(randomProject.getId().toString());
-    assertThat(serialized).extractingJsonPathStringValue("@.name")
+    assertThat(serialized)
+        .extractingJsonPathStringValue("@.name")
         .isEqualTo(randomProject.getName());
-    assertThat(serialized).extractingJsonPathStringValue("@.description")
+    assertThat(serialized)
+        .extractingJsonPathStringValue("@.description")
         .isEqualTo(randomProject.getDescription());
-    assertThat(serialized).extractingJsonPathStringValue("@.shortDescription")
+    assertThat(serialized)
+        .extractingJsonPathStringValue("@.shortDescription")
         .isEqualTo(randomProject.getShortDescription());
-    assertThat(serialized).extractingJsonPathStringValue("@.requirement")
+    assertThat(serialized)
+        .extractingJsonPathStringValue("@.requirement")
         .isEqualTo(randomProject.getRequirement());
-    assertThat(serialized).extractingJsonPathStringValue("@.status")
+    assertThat(serialized)
+        .extractingJsonPathStringValue("@.status")
         .isEqualTo(randomProject.getStatus().toString());
-    assertThat(serialized).extractingJsonPathStringValue("@.context")
+    assertThat(serialized)
+        .extractingJsonPathStringValue("@.context")
         .isEqualTo(randomProject.getContext().toString());
-    assertThat(serialized).extractingJsonPathStringValue("@.creatorName")
+    assertThat(serialized)
+        .extractingJsonPathStringValue("@.creatorName")
         .isEqualTo(randomProject.getCreatorName());
-    assertThat(serialized).extractingJsonPathStringValue("@.supervisorName")
+    assertThat(serialized)
+        .extractingJsonPathStringValue("@.supervisorName")
         .isEqualTo(randomProject.getSupervisorName());
-    assertThat(serialized).extractingJsonPathStringValue("@.creatorID")
+    assertThat(serialized)
+        .extractingJsonPathStringValue("@.creatorID")
         .isEqualTo(randomProject.getCreatorID().toString());
     assertThat(serialized).extractingJsonPathStringValue("@.created").isNotBlank();
     assertThat(serialized).extractingJsonPathStringValue("@.modified").isNotBlank();
@@ -52,7 +61,8 @@ public class ProjectJsonTest {
   @Test
   void deserialize() throws Exception {
     // Given
-    var jsonStr = """
+    var jsonStr =
+        """
         {
           "id":"1c57e910-ac3c-4d72-8e11-961ef07cdf44",
           "name":"tg",
@@ -84,7 +94,7 @@ public class ProjectJsonTest {
     assertThat(deserializedResult.getCreatorName()).isNullOrEmpty();
     assertThat(deserializedResult.getCreatedAt()).isNull();
     assertThat(deserializedResult.getModifiedAt()).isNull();
-    assertThat(deserializedResult.getId()).isNotEqualByComparingTo(
-        UUID.fromString("1c57e910-ac3c-4d72-8e11-961ef07cdf44"));
+    assertThat(deserializedResult.getId())
+        .isNotEqualByComparingTo(UUID.fromString("1c57e910-ac3c-4d72-8e11-961ef07cdf44"));
   }
 }

@@ -54,8 +54,7 @@ public class Project extends AbstractEntity {
 
   @NotNull private ProjectStatus status;
 
-  @Column
-  private ProjectContext context;
+  @Column private ProjectContext context;
 
   @JsonProperty(access = Access.READ_ONLY)
   @Column(length = 255)
@@ -65,9 +64,7 @@ public class Project extends AbstractEntity {
   @Size(max = 255)
   private String supervisorName;
 
-  @JsonIgnore
-  @ManyToMany
-  private Set<ModuleType> modules = new HashSet<>();
+  @JsonIgnore @ManyToMany private Set<ModuleType> modules = new HashSet<>();
 
   @CreatedBy
   @JsonProperty(access = Access.READ_ONLY)
