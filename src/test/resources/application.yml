@@ -1,4 +1,3 @@
-# TODO Keycloak Config necessary?
 keycloak:
   auth-server-url: https://login.aws.innovation-hub.de/auth
   bearer-only: true
@@ -6,20 +5,8 @@ keycloak:
   principal-attribute: preferred_username
   realm: innovation-hub-bergisches-rheinland
   resource: prox-project-service
-module:
-  service:
-    url: http://service-discovery/studyCourses
-moduleImport:
-  delay:
-    initial:
-      seconds: 10
-    hasData:
-      minutes: 1440
-    hasNoData:
-      seconds: 10
 server:
   port: 9002
-  use-forward-headers: true
 spring:
   application:
     name: project-service
