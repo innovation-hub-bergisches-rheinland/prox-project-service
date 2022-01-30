@@ -38,7 +38,7 @@ Starts a Docker container based on the compose file and the image.
 
 Powershell
 
-```posh
+```pwsh
 $env:IMAGE='prox-project-service'; `
 $env:TAG='latest'; `
 docker-compose -f ./src/main/docker/docker-compose.yml up

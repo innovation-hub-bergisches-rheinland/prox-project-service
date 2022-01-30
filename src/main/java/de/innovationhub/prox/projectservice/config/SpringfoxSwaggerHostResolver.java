@@ -7,13 +7,16 @@ import io.swagger.v3.oas.models.servers.Server;
 import java.util.Arrays;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
 import springfox.documentation.oas.web.OpenApiTransformationContext;
 import springfox.documentation.oas.web.WebMvcOpenApiTransformationFilter;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.SpringfoxWebConfiguration;
 
 /** WORKAROUND for https://github.com/springfox/springfox/issues/3483 */
 @Component
+@ConditionalOnBean({EurekaClient.class, SpringfoxWebConfiguration.class})
 public class SpringfoxSwaggerHostResolver implements WebMvcOpenApiTransformationFilter {
 
   private final EurekaClient eurekaClient;

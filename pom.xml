@@ -231,29 +231,36 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <image>
-            <name>${docker.image.prefix}/${project.artifactId}:${project.version}</name>
-          </image>
-          <excludes>
-            <exclude>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-            </exclude>
-          </excludes>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>build-image</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
 
   <profiles>
+    <profile>
+      <id>dev</id>
+      <activation>
+        <property>
+          <!-- Disable Profile if it runs in CI -->
+          <name>!env.CI</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+              <profiles>
+                <profile>dev</profile>
+              </profiles>
+              <jvmArguments>
+                -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005
+              </jvmArguments>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <profile>
       <id>node</id>
       <activation>

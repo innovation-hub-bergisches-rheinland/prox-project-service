@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+
+  project-service:
+    image: quay.io/innovation-hub-bergisches-rheinland/prox-project-service:latest
+    ports:
+      - "9002:9002"
+
+  project-db:
+    image: postgres:11.3-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - project-db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=project-service
+      - POSTGRES_PASSWORD=project-service
+      - POSTGRES_DB=project-db
+      - PGDATA=/var/lib/postgresql/data/pgdata
+
+volumes:
+  project-db-data:

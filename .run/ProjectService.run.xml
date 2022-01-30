@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ProjectService [Dev + Debugger]" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="prox-project-service" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="de.innovationhub.prox.projectservice.ProjectService" />
+    <option name="ACTIVE_PROFILES" value="dev" />
+    <option name="VM_PARAMETERS" value="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2">
+      <option name="MakeProject" enabled="true" />
+    </method>
+  </configuration>
+</component>
