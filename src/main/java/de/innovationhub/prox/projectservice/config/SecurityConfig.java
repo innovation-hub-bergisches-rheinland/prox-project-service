@@ -26,7 +26,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
       "/projprojectStudyCoursesects/**";
   private static final String PROFILE_PATTERN = "/profile/**";
   public static final String[] SWAGGER_PATHS = {
-    "/swagger-resources/**", "/swagger-ui/**", "/swagger-ui/", "/v2/api-docs", "/v3/api-docs"
+    "/swagger-ui.html", "/swagger-ui/**", "/swagger-ui/*", "/v3/api-docs/*", "/v3/api-docs/**"
   };
 
   @Autowired

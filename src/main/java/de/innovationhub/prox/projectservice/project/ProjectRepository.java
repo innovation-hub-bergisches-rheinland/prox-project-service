@@ -1,6 +1,7 @@
 package de.innovationhub.prox.projectservice.project;
 
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -10,6 +11,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.format.annotation.DateTimeFormat;
 
+@Tag(name = "projects")
 @RepositoryRestResource
 public interface ProjectRepository
     extends PagingAndSortingRepository<Project, UUID>, ProjectRepositoryCustom {
