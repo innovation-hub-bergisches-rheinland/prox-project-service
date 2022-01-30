@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
 
-  @Autowired @Lazy private ProjectRepository projectRepository;
+  @Autowired
+  @Lazy
+  private ProjectRepository projectRepository;
 
   @Override
   public List<Project> findAllByIds(@RequestParam("projectIds") UUID[] projectIds) {
@@ -31,13 +33,13 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
 
   @Override
   public Set<Project> findAvailableProjectsOfCreator(UUID creatorId) {
-    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId, ProjectStatus.VERFÜGBAR);
+    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId, ProjectStatus.AVAILABLE);
   }
 
   @Override
   public Set<Project> findRunningAndFinishedProjectsOfCreator(UUID creatorId) {
     return projectRepository.findAllByCreatorIDAndStatusIn(
-        creatorId, ProjectStatus.ABGESCHLOSSEN, ProjectStatus.LAUFEND);
+        creatorId, ProjectStatus.FINISHED, ProjectStatus.RUNNING);
   }
 
   @Override
@@ -49,10 +51,10 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
             p ->
                 moduleTypeKeys != null && moduleTypeKeys.length > 0
                     ? StreamSupport.stream(p.getModules().spliterator(), false)
-                        .anyMatch(
-                            m ->
-                                Arrays.stream(moduleTypeKeys)
-                                    .anyMatch(k -> k.equalsIgnoreCase(m.getKey())))
+                    .anyMatch(
+                        m ->
+                            Arrays.stream(moduleTypeKeys)
+                                .anyMatch(k -> k.equalsIgnoreCase(m.getKey())))
                     : true)
         .filter(
             p -> {
@@ -91,11 +93,11 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
   public ProjectStats findProjectStatsOfCreator(UUID creatorId) {
     var projects =
         this.projectRepository.findAllByCreatorIDAndStatusIn(
-            creatorId, ProjectStatus.LAUFEND, ProjectStatus.VERFÜGBAR, ProjectStatus.ABGESCHLOSSEN);
+            creatorId, ProjectStatus.RUNNING, ProjectStatus.AVAILABLE, ProjectStatus.FINISHED);
     return new ProjectStats(
-        filterByStatusAndCount(projects, ProjectStatus.LAUFEND),
-        filterByStatusAndCount(projects, ProjectStatus.ABGESCHLOSSEN),
-        filterByStatusAndCount(projects, ProjectStatus.VERFÜGBAR));
+        filterByStatusAndCount(projects, ProjectStatus.RUNNING),
+        filterByStatusAndCount(projects, ProjectStatus.FINISHED),
+        filterByStatusAndCount(projects, ProjectStatus.AVAILABLE));
   }
 
   private int filterByStatusAndCount(Set<Project> projects, ProjectStatus projectStatus) {
@@ -104,11 +106,11 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
 
   @Override
   public Set<Project> findRunningProjectsOfCreator(UUID creatorId) {
-    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId, ProjectStatus.LAUFEND);
+    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId, ProjectStatus.RUNNING);
   }
 
   @Override
   public Set<Project> findinishedProjectsOfCreator(UUID creatorId) {
-    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId, ProjectStatus.ABGESCHLOSSEN);
+    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId, ProjectStatus.FINISHED);
   }
 }

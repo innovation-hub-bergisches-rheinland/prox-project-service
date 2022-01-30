@@ -2,6 +2,7 @@ package de.innovationhub.prox.projectservice.project;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.UUID;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
@@ -10,9 +11,13 @@ import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 
 @JsonTest
-public class ProjectJsonTest {
+class ProjectJsonTest {
 
-  @Autowired JacksonTester<Project> json;
+  @Autowired
+  JacksonTester<Project> json;
+
+  @Autowired
+  ObjectMapper objectMapper;
 
   @Test
   void serialize() throws Exception {
@@ -41,7 +46,7 @@ public class ProjectJsonTest {
         .isEqualTo(randomProject.getRequirement());
     assertThat(serialized)
         .extractingJsonPathStringValue("@.status")
-        .isEqualTo(randomProject.getStatus().toString());
+        .isEqualTo(objectMapper.writeValueAsString(randomProject.getStatus()).replace("\"", ""));
     assertThat(serialized)
         .extractingJsonPathStringValue("@.context")
         .isEqualTo(randomProject.getContext().toString());
@@ -87,7 +92,7 @@ public class ProjectJsonTest {
     assertThat(deserializedResult.getDescription()).isEqualTo("eOMtThyhVNLWUZNRcBaQKxI");
     assertThat(deserializedResult.getShortDescription()).isEqualTo("LRHCsQ");
     assertThat(deserializedResult.getRequirement()).isEqualTo("yedUsFwdkelQbxeTeQOvaScfqIOOmaa");
-    assertThat(deserializedResult.getStatus()).isEqualTo(ProjectStatus.ABGESCHLOSSEN);
+    assertThat(deserializedResult.getStatus()).isEqualTo(ProjectStatus.FINISHED);
     assertThat(deserializedResult.getContext()).isEqualTo(ProjectContext.PROFESSOR);
 
     // Should not be deserialized
