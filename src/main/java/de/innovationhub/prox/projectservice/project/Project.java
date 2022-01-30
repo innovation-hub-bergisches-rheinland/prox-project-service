@@ -4,22 +4,16 @@ package de.innovationhub.prox.projectservice.project;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import de.innovationhub.prox.projectservice.core.AbstractEntity;
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.ManyToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -81,11 +75,12 @@ public class Project extends AbstractEntity {
   private UUID creatorID;
 
   @JsonProperty(access = Access.READ_ONLY)
-  @Column(updatable = false)
+  @Column(name = "created_at", updatable = false)
   @CreationTimestamp
-  private Instant created;
+  private Instant createdAt;
 
   @JsonProperty(access = Access.READ_ONLY)
+  @Column(name = "modified_at")
   @UpdateTimestamp
-  private Instant modified;
+  private Instant modifiedAt;
 }

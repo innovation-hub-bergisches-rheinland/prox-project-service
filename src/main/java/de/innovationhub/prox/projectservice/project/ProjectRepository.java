@@ -2,6 +2,7 @@ package de.innovationhub.prox.projectservice.project;
 
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -21,8 +22,8 @@ public interface ProjectRepository
   Set<Project> findBySupervisorNameContaining(
       @Param(value = "supervisorName") String supervisorName);
 
-  Set<Project> findAllByModifiedAfter(
-      @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") @Param(value = "modified") Date modified);
+  Set<Project> findAllByModifiedAtAfter(
+      @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") @Param(value = "modified") Instant modified);
 
   @RestResource(exported = false)
   Set<Project> findAllByCreatorIDAndStatusIn(final UUID creatorId, ProjectStatus... status);

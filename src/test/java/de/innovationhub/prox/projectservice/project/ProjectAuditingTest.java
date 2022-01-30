@@ -1,6 +1,5 @@
 package de.innovationhub.prox.projectservice.project;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,7 +14,6 @@ import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.AuditorAware;
@@ -61,7 +59,7 @@ class ProjectAuditingTest {
 
     // Then
     var saved = entityManager.find(Project.class, randomProject.getId());
-    assertThat(saved.getCreated()).isCloseTo(Instant.now(), within(1, ChronoUnit.SECONDS));
+    assertThat(saved.getCreatedAt()).isCloseTo(Instant.now(), within(1, ChronoUnit.SECONDS));
   }
 
   @Test
@@ -72,7 +70,7 @@ class ProjectAuditingTest {
     entityManager.persist(randomProject);
     entityManager.flush();
     var saved = entityManager.find(Project.class, randomProject.getId());
-    var oldModifiedDate = saved.getModified();
+    var oldModifiedDate = saved.getModifiedAt();
 
     // When
     saved.setName("Test 123");
@@ -81,7 +79,7 @@ class ProjectAuditingTest {
 
     // Then
     var newSaved = entityManager.find(Project.class, randomProject.getId());
-    assertThat(newSaved.getModified())
+    assertThat(newSaved.getModifiedAt())
         .isAfter(oldModifiedDate)
         .isCloseTo(Instant.now(), within(1, ChronoUnit.SECONDS));
   }
