@@ -2,20 +2,6 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://service-discovery:8761/eureka/
-moduleImport:
-  delay:
-    initial:
-      seconds: 10
-    hasData:
-      minutes: 1440
-    hasNoData:
-      seconds: 10
-tagServiceLink:
-  port: 9003
-  tag-collection: tagCollections
-professorServiceLink:
-  port: 9005
-  professor-resource: professors
 keycloak:
   auth-server-url: https://login.aws.innovation-hub.de/auth
   bearer-only: true

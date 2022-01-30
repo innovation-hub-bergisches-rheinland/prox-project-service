@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.core.event.ValidatingRepositoryEventListener;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
@@ -17,26 +16,18 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.util.UriComponents;
 
-// TODO Refactor: Better use eureka
 @Configuration
 public class RestConfig implements RepositoryRestConfigurer {
 
   private final EntityManager entityManager;
-  private Environment env;
-  private String tagServicePort = "";
-  private String professorServicePort = "";
+  private final LocalValidatorFactoryBean validator;
 
-  public RestConfig(Environment env, EntityManager entityManager) {
-    this.env = env;
-    this.tagServicePort = env.getProperty("tagServiceLink.port");
-    this.professorServicePort = env.getProperty("professorServiceLink.port");
+  @Autowired
+  public RestConfig(EntityManager entityManager, LocalValidatorFactoryBean validator) {
     this.entityManager = entityManager;
+    this.validator = validator;
   }
-
-  @Autowired private LocalValidatorFactoryBean validator;
 
   @Override
   public void configureValidatingRepositoryEventListener(
@@ -55,51 +46,23 @@ public class RestConfig implements RepositoryRestConfigurer {
   }
 
   @Bean
-  public RepresentationModelProcessor<EntityModel<Project>> personProcessor(
+  public RepresentationModelProcessor<EntityModel<Project>> projectProcessor(
       HttpServletRequest request) {
-
+    // Note: This cannot be refactored to a lambda expression for whatever reason
+    //  probably because of some generic type shenanigans
     return new RepresentationModelProcessor<>() {
 
       @Override
       public EntityModel<Project> process(EntityModel<Project> resource) {
-
         String projectID = resource.getContent().getId().toString();
         String creatorID = resource.getContent().getCreatorID().toString();
 
-        UriComponents request = ServletUriComponentsBuilder.fromCurrentRequest().build();
-        String scheme = request.getScheme() + "://";
-        String serverName = request.getHost();
-        String tagServicePort2 = "";
-        String professorServicePot = "";
-
-        if (request.getPort() == 8081) {
-          tagServicePort2 = ":" + request.getPort();
-          professorServicePot = ":" + request.getPort();
-        } else if (request.getPort() == 9002) {
-          tagServicePort2 = ":" + RestConfig.this.tagServicePort;
-          professorServicePot = ":" + RestConfig.this.professorServicePort;
-        }
-
         resource.add(
             Link.of(
-                scheme
-                    + serverName
-                    + tagServicePort2
-                    + "/"
-                    + RestConfig.this.env.getProperty("tagServiceLink.tag-collection")
-                    + "/"
-                    + projectID
-                    + "/tags",
+                request.getRequestURL() + "/tagCollections/" + projectID + "/tags",
                 "tagCollection"));
         resource.add(
-            Link.of(
-                scheme
-                    + serverName
-                    + professorServicePot
-                    + "/"
-                    + RestConfig.this.env.getProperty("professorServiceLink.professor-resource")
-                    + "/"
-                    + creatorID,
+            Link.of(request.getRequestURL() + "/professors/" + creatorID,
                 "professor"));
         return resource;
       }
