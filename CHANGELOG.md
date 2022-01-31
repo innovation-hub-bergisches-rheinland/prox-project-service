@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.2.5...v1.3.0) (2022-01-31)
+
+
+### Features
+
+* sorting capabilities for all rest resources ([de16596](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/de165964d5fa75dfd93377b69514d11fba977aed))
+
 ### [1.2.5](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.2.4...v1.2.5) (2022-01-31)
 
 
