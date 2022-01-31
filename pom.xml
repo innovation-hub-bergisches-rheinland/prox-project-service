@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -17,7 +19,9 @@
 
   <scm>
     <!-- Probably it would be better to use SSH here, but that's out of scope for now -->
-    <developerConnection>scm:git:https://github.com/innovation-hub-bergisches-rheinland/prox-project-service.git</developerConnection>
+    <developerConnection>
+      scm:git:https://github.com/innovation-hub-bergisches-rheinland/prox-project-service.git
+    </developerConnection>
     <tag>HEAD</tag>
     <url>https://github.com/innovation-hub-bergisches-rheinland/prox-project-service</url>
   </scm>
@@ -30,6 +34,7 @@
     <javers.version>6.2.2</javers.version>
     <keycloak.version>15.0.2</keycloak.version>
     <maven-toolchains-plugin.version>3.0.0</maven-toolchains-plugin.version>
+    <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
     <spotless-maven-plugin.version>2.17.4</spotless-maven-plugin.version>
     <spring-cloud.version>2020.0.4</spring-cloud.version>
     <springfox.version>3.0.0</springfox.version>
@@ -112,6 +117,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct</artifactId>
+      <version>${org.mapstruct.version}</version>
+    </dependency>
+
+    <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>runtime</scope>
@@ -191,6 +202,19 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.mapstruct</groupId>
+              <artifactId>mapstruct-processor</artifactId>
+              <version>${org.mapstruct.version}</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
@@ -288,7 +312,8 @@
               <profiles>
                 <profile>dev</profile>
               </profiles>
-              <jvmArguments>-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005</jvmArguments>
+              <jvmArguments>-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005
+              </jvmArguments>
             </configuration>
           </plugin>
         </plugins>
