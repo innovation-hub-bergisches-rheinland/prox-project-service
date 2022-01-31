@@ -24,3 +24,6 @@ spring:
             non_contextual_creation: true
   flyway:
     enabled: false
+eureka:
+  client:
+    enabled: false
