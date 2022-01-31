@@ -1,7 +1,7 @@
 {
   "name": "prox-project-service",
   "private": true,
-  "version": "1.2.4",
+  "version": "1.2.5",
   "scripts": {
     "prepare": "husky install",
     "lint-staged": "lint-staged",
