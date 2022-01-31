@@ -2,7 +2,6 @@ keycloak:
   auth-server-url: https://login.aws.innovation-hub.de/auth
   bearer-only: true
   cors: false
-  principal-attribute: preferred_username
   realm: innovation-hub-bergisches-rheinland
   resource: prox-project-service
 server:
