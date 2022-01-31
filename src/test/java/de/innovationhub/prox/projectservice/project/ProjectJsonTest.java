@@ -74,7 +74,7 @@ class ProjectJsonTest {
               "description":"eOMtThyhVNLWUZNRcBaQKxI",
               "shortDescription":"LRHCsQ",
               "requirement":"yedUsFwdkelQbxeTeQOvaScfqIOOmaa",
-              "status":"ABGESCHLOSSEN",
+              "status":"FINISHED",
               "context":"PROFESSOR",
               "creatorName":"JxkyvRnL",
               "supervisorName":"tguuayKsvm",
