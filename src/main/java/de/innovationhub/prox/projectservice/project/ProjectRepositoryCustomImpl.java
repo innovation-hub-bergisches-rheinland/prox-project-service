@@ -1,17 +1,15 @@
 package de.innovationhub.prox.projectservice.project;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.data.domain.Sort;
 
 public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
 
@@ -20,97 +18,90 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
   private ProjectRepository projectRepository;
 
   @Override
-  public List<Project> findAllByIds(@RequestParam("projectIds") UUID[] projectIds) {
-    List<Project> specificProjects = new ArrayList<>();
-    for (UUID projectId : projectIds) {
-      Optional<Project> project = projectRepository.findById(projectId);
-      if (project.isPresent()) {
-        specificProjects.add(project.get());
-      }
-    }
-    return specificProjects;
+  public List<Project> findAvailableProjectsOfCreator(UUID creatorId,
+      Sort sort) {
+    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId,
+        Collections.singleton(ProjectStatus.AVAILABLE), sort);
   }
 
   @Override
-  public Set<Project> findAvailableProjectsOfCreator(UUID creatorId) {
-    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId, ProjectStatus.AVAILABLE);
-  }
-
-  @Override
-  public Set<Project> findRunningAndFinishedProjectsOfCreator(UUID creatorId) {
+  public List<Project> findRunningAndFinishedProjectsOfCreator(UUID creatorId,
+      Sort sort) {
     return projectRepository.findAllByCreatorIDAndStatusIn(
-        creatorId, ProjectStatus.FINISHED, ProjectStatus.RUNNING);
+        creatorId, List.of(ProjectStatus.FINISHED, ProjectStatus.RUNNING), sort);
   }
 
   @Override
-  public Set<Project> filterProjects(ProjectStatus status, String[] moduleTypeKeys, String text) {
+  public List<Project> filterProjects(ProjectStatus status, String[] moduleTypeKeys, String text,
+      Sort sort) {
     // TODO refactor and use fuzzy search or something similar which does not require hardcoding
-    return StreamSupport.stream(this.projectRepository.findAll().spliterator(), false)
-        .filter(p -> status != null ? p.getStatus() == status : true)
+    return StreamSupport.stream(this.projectRepository.findAll(sort).spliterator(), false)
+        .filter(p -> status == null || p.getStatus() == status)
         .filter(
             p ->
-                moduleTypeKeys != null && moduleTypeKeys.length > 0
-                    ? StreamSupport.stream(p.getModules().spliterator(), false)
+                moduleTypeKeys == null || moduleTypeKeys.length <= 0 || p.getModules().stream()
                     .anyMatch(
                         m ->
                             Arrays.stream(moduleTypeKeys)
-                                .anyMatch(k -> k.equalsIgnoreCase(m.getKey())))
-                    : true)
+                                .anyMatch(k -> k.equalsIgnoreCase(m.getKey()))))
         .filter(
             p -> {
               if (text == null || text.length() <= 0) {
                 return true;
               }
               var match = false;
-              if (p.getCreatorName() != null && p.getCreatorName() != null) {
+              if (p.getCreatorName() != null) {
                 match |= p.getCreatorName().toLowerCase().contains(text.toLowerCase());
               }
-              if (match == false && p.getDescription() != null && p.getDescription() != null) {
+              if (!match && p.getDescription() != null) {
                 match |= p.getDescription().toLowerCase().contains(text.toLowerCase());
               }
-              if (match == false
-                  && p.getShortDescription() != null
+              if (!match
                   && p.getShortDescription() != null) {
                 match |= p.getShortDescription().toLowerCase().contains(text.toLowerCase());
               }
-              if (match == false && p.getName() != null && p.getName() != null) {
+              if (!match && p.getName() != null) {
                 match |= p.getName().toLowerCase().contains(text.toLowerCase());
               }
-              if (match == false && p.getRequirement() != null && p.getRequirement() != null) {
+              if (!match && p.getRequirement() != null) {
                 match |= p.getRequirement().toLowerCase().contains(text.toLowerCase());
               }
-              if (match == false
-                  && p.getSupervisorName() != null
-                  && p.getSupervisorName() != null) {
+              if (!match && p.getSupervisorName() != null) {
                 match |= p.getSupervisorName().toLowerCase().contains(text.toLowerCase());
               }
               return match;
             })
-        .collect(Collectors.toSet());
+        .collect(Collectors.toList());
   }
 
   @Override
-  public ProjectStats findProjectStatsOfCreator(UUID creatorId) {
+  public ProjectStats findProjectStatsOfCreator(UUID creatorId,
+      Sort sort) {
     var projects =
         this.projectRepository.findAllByCreatorIDAndStatusIn(
-            creatorId, ProjectStatus.RUNNING, ProjectStatus.AVAILABLE, ProjectStatus.FINISHED);
+            creatorId,
+            List.of(ProjectStatus.RUNNING, ProjectStatus.AVAILABLE, ProjectStatus.FINISHED), sort);
     return new ProjectStats(
         filterByStatusAndCount(projects, ProjectStatus.RUNNING),
         filterByStatusAndCount(projects, ProjectStatus.FINISHED),
         filterByStatusAndCount(projects, ProjectStatus.AVAILABLE));
   }
 
-  private int filterByStatusAndCount(Set<Project> projects, ProjectStatus projectStatus) {
+  private int filterByStatusAndCount(List<Project> projects, ProjectStatus projectStatus) {
     return Math.toIntExact(projects.stream().filter(p -> p.getStatus() == projectStatus).count());
   }
 
   @Override
-  public Set<Project> findRunningProjectsOfCreator(UUID creatorId) {
-    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId, ProjectStatus.RUNNING);
+  public List<Project> findRunningProjectsOfCreator(UUID creatorId,
+      Sort sort) {
+    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId,
+        Collections.singleton(ProjectStatus.RUNNING), sort);
   }
 
   @Override
-  public Set<Project> findinishedProjectsOfCreator(UUID creatorId) {
-    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId, ProjectStatus.FINISHED);
+  public List<Project> findinishedProjectsOfCreator(UUID creatorId,
+      Sort sort) {
+    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId,
+        Collections.singleton(ProjectStatus.FINISHED), sort);
   }
 }
