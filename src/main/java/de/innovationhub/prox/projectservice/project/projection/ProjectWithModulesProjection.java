@@ -5,6 +5,7 @@ import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.ProjectContext;
 import de.innovationhub.prox.projectservice.project.ProjectStatus;
+import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
 import org.springframework.data.rest.core.config.Projection;
@@ -13,6 +14,7 @@ import org.springframework.data.rest.core.config.Projection;
     name = "withModules",
     types = {Project.class})
 public interface ProjectWithModulesProjection {
+
   String getId();
 
   String getName();
@@ -35,7 +37,7 @@ public interface ProjectWithModulesProjection {
 
   Set<ModuleType> getModules();
 
-  java.util.Date getCreated();
+  Instant getCreatedAt();
 
-  java.util.Date getModified();
+  Instant getModifiedAt();
 }
