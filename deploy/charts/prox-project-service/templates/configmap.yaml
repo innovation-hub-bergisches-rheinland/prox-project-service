@@ -35,7 +35,7 @@ data:
       realm: archilab
       resource: prox-project-service
     server:
-      port: 9002
+      port: 8080
       forward-headers-strategy: native
     spring:
       application:
