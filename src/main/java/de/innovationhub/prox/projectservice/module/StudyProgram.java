@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.AccessLevel;
@@ -21,6 +22,7 @@ import org.hibernate.annotations.NaturalId;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StudyProgram extends AbstractEntity {
+
   @NotBlank
   @Size(max = 10)
   @NaturalId
@@ -30,5 +32,9 @@ public class StudyProgram extends AbstractEntity {
   @Size(max = 255)
   private String name;
 
-  @ManyToMany private Set<ModuleType> modules = new HashSet<>();
+  @ManyToMany
+  private Set<ModuleType> modules = new HashSet<>();
+
+  @ManyToOne(optional = false)
+  private Specialization specialization;
 }
