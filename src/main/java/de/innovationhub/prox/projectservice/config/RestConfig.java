@@ -1,6 +1,9 @@
 package de.innovationhub.prox.projectservice.config;
 
 
+import de.innovationhub.prox.projectservice.module.ModuleType;
+import de.innovationhub.prox.projectservice.module.Specialization;
+import de.innovationhub.prox.projectservice.module.StudyProgram;
 import de.innovationhub.prox.projectservice.project.Project;
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.Type;
@@ -14,6 +17,7 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
+import org.springframework.http.HttpMethod;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
@@ -43,6 +47,36 @@ public class RestConfig implements RepositoryRestConfigurer {
         this.entityManager.getMetamodel().getEntities().stream()
             .map(Type::getJavaType)
             .toArray(Class[]::new));
+
+    // Specialization is read-only
+    config.getExposureConfiguration()
+        .forDomainType(Specialization.class)
+        .withCollectionExposure(
+            (metadata, httpMethods) -> httpMethods.disable(HttpMethod.DELETE, HttpMethod.PUT,
+                HttpMethod.POST, HttpMethod.PATCH))
+        .withItemExposure(
+            (metadata, httpMethods) -> httpMethods.disable(HttpMethod.DELETE, HttpMethod.PUT,
+                HttpMethod.POST, HttpMethod.PATCH));
+
+    // ModuleType is read-only
+    config.getExposureConfiguration()
+        .forDomainType(ModuleType.class)
+        .withCollectionExposure(
+            (metadata, httpMethods) -> httpMethods.disable(HttpMethod.DELETE, HttpMethod.PUT,
+                HttpMethod.POST, HttpMethod.PATCH))
+        .withItemExposure(
+            (metadata, httpMethods) -> httpMethods.disable(HttpMethod.DELETE, HttpMethod.PUT,
+                HttpMethod.POST, HttpMethod.PATCH));
+
+    // StudyProgram is read-only
+    config.getExposureConfiguration()
+        .forDomainType(StudyProgram.class)
+        .withCollectionExposure(
+            (metadata, httpMethods) -> httpMethods.disable(HttpMethod.DELETE, HttpMethod.PUT,
+                HttpMethod.POST, HttpMethod.PATCH))
+        .withItemExposure(
+            (metadata, httpMethods) -> httpMethods.disable(HttpMethod.DELETE, HttpMethod.PUT,
+                HttpMethod.POST, HttpMethod.PATCH));
   }
 
   @Bean
