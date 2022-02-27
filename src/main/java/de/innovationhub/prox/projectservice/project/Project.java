@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import de.innovationhub.prox.projectservice.core.AbstractEntity;
 import de.innovationhub.prox.projectservice.module.ModuleType;
+import de.innovationhub.prox.projectservice.module.Specialization;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -52,9 +53,11 @@ public class Project extends AbstractEntity {
   @Column(length = 10000)
   private String requirement;
 
-  @NotNull private ProjectStatus status;
+  @NotNull
+  private ProjectStatus status;
 
-  @Column private ProjectContext context;
+  @Column
+  private ProjectContext context;
 
   @JsonProperty(access = Access.READ_ONLY)
   @Column(length = 255)
@@ -64,7 +67,13 @@ public class Project extends AbstractEntity {
   @Size(max = 255)
   private String supervisorName;
 
-  @JsonIgnore @ManyToMany private Set<ModuleType> modules = new HashSet<>();
+  @JsonProperty(access = Access.READ_ONLY)
+  @ManyToMany
+  private Set<Specialization> specializations = new HashSet<>();
+
+  @JsonIgnore
+  @ManyToMany
+  private Set<ModuleType> modules = new HashSet<>();
 
   @CreatedBy
   @JsonProperty(access = Access.READ_ONLY)

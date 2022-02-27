@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.hasSize;
 import com.c4_soft.springaddons.security.oauth2.test.annotations.OpenIdClaims;
 import com.c4_soft.springaddons.security.oauth2.test.annotations.keycloak.WithMockKeycloakAuth;
 import de.innovationhub.prox.projectservice.module.ModuleType;
+import de.innovationhub.prox.projectservice.module.Specialization;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -28,9 +29,11 @@ import org.springframework.test.web.servlet.MockMvc;
 @SuppressWarnings("java:S2699")
 class ProjectControllerTest {
 
-  @Autowired MockMvc mockMvc;
+  @Autowired
+  MockMvc mockMvc;
 
-  @Autowired EntityManager entityManager;
+  @Autowired
+  EntityManager entityManager;
 
   @BeforeEach
   void setup() {
@@ -245,5 +248,43 @@ class ProjectControllerTest {
     var foundProject = this.entityManager.find(Project.class, randomProject.getId());
     assertThat(foundProject).isNotNull();
     assertThat(foundProject.getModules()).containsExactlyInAnyOrderElementsOf(randomModules);
+  }
+
+  @Test
+  @WithMockKeycloakAuth(
+      authorities = {"ROLE_professor"},
+      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+  void shouldUpdateSpecializationOfProject() {
+    var easyRandom = new EasyRandom();
+    var randomSpecializations = easyRandom.objects(Specialization.class, 2)
+        .collect(Collectors.toList());
+    var randomProject = easyRandom.nextObject(Project.class);
+
+    // Ensure that authenticated User is the creator
+    randomProject.setCreatorID(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    this.entityManager.persist(randomProject);
+    entityManager.flush();
+
+    randomSpecializations.forEach(specialization -> this.entityManager.persist(specialization));
+
+    var specializationIds =
+        randomSpecializations.stream().map(specialization -> specialization.getId().toString())
+            .toList();
+
+    // @formatter:off
+    given()
+        .accept(MediaType.APPLICATION_JSON)
+        .contentType("text/uri-list")
+        .body(String.join("\n", specializationIds))
+        .when()
+        .put("/projects/{id}/specializations", randomProject.getId())
+        .then()
+        .status(HttpStatus.NO_CONTENT);
+    // @formatter:on
+
+    var foundProject = this.entityManager.find(Project.class, randomProject.getId());
+    assertThat(foundProject).isNotNull();
+    assertThat(foundProject.getSpecializations()).containsExactlyInAnyOrderElementsOf(
+        randomSpecializations);
   }
 }
