@@ -47,7 +47,8 @@ class ModuleTypeRepositoryTest {
     entityManager.flush();
 
     // When
-    var result = moduleTypeRepository.findAllModuleTypesOfSpecializationId(specialization.getId());
+    var result = moduleTypeRepository.findAllModuleTypesOfSpecializationId(
+        Set.of(specialization.getId()));
 
     // Then
     assertThat(result).containsExactlyInAnyOrderElementsOf(moduleTypesOfSpecialization);

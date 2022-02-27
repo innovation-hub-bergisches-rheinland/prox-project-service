@@ -16,8 +16,9 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource
 public interface ModuleTypeRepository extends CrudRepository<ModuleType, UUID> {
 
-  @Query("select m from StudyProgram s join s.modules m where s.specialization.id = :id")
-  Set<ModuleType> findAllModuleTypesOfSpecializationId(@Param("id") UUID id);
+  @Query("select m from StudyProgram s join s.modules m where s.specialization.id IN :ids")
+  Set<ModuleType> findAllModuleTypesOfSpecializationId(
+      @Param("ids") @Parameter(array = @ArraySchema(uniqueItems = true, schema = @Schema(name = "string", type = "uuid"))) Set<UUID> ids);
 
   @Query("select s from StudyProgram sp join sp.specialization s join sp.modules mt where mt.id IN :ids")
   Set<Specialization> findSpecializationsOfModules(
