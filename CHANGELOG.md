@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.3](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.4.2...v1.4.3) (2022-02-27)
+
+
+### Bug Fixes
+
+* array parameter to search moduletypes based on specialization ([de42f30](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/de42f3088ab34d8aef93187d3fea6754f83b86a2))
+
 ### [1.4.2](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.4.1...v1.4.2) (2022-02-27)
 
 
