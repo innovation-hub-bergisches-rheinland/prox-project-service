@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   prox-project-service:
   - apiVersion: v2
+    appVersion: 1.4.2
+    created: "2022-02-27T17:06:47.825656285Z"
+    description: A Helm chart for Kubernetes
+    digest: 37e3840eef64d43ff94de37868d91bb5e34996c5bf76a5f6af3f418ff029f342
+    name: prox-project-service
+    type: application
+    urls:
+    - https://innovation-hub-bergisches-rheinland.github.io/prox-project-service/prox-project-service-1.4.2.tgz
+    version: 1.4.2
+  - apiVersion: v2
     appVersion: 1.4.1
     created: "2022-02-27T16:42:52.142349379Z"
     description: A Helm chart for Kubernetes
@@ -131,4 +141,4 @@ entries:
     urls:
     - https://innovation-hub-bergisches-rheinland.github.io/prox-project-service/prox-project-service-1.0.0.tgz
     version: 1.0.0
-generated: "2022-02-27T16:42:52.141383972Z"
+generated: "2022-02-27T17:06:47.824838738Z"
