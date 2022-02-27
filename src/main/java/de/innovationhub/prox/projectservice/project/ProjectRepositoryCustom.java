@@ -25,7 +25,8 @@ public interface ProjectRepositoryCustom {
       Sort sort);
 
   @RestResource(exported = true, path = "filterProjects")
-  List<Project> filterProjects(ProjectStatus status, String[] moduleTypeKeys, String text,
+  List<Project> filterProjects(ProjectStatus status, String[] specializationKeys,
+      String[] moduleTypeKeys, String text,
       Sort sort);
 
   @RestResource(exported = true, path = "findProjectStatsOfCreator")

@@ -32,11 +32,20 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
   }
 
   @Override
-  public List<Project> filterProjects(ProjectStatus status, String[] moduleTypeKeys, String text,
+  public List<Project> filterProjects(ProjectStatus status, String[] specializationKeys,
+      String[] moduleTypeKeys, String text,
       Sort sort) {
     // TODO refactor and use fuzzy search or something similar which does not require hardcoding
     return StreamSupport.stream(this.projectRepository.findAll(sort).spliterator(), false)
         .filter(p -> status == null || p.getStatus() == status)
+        .filter(
+            p ->
+                specializationKeys == null || specializationKeys.length <= 0
+                    || p.getSpecializations().stream()
+                    .anyMatch(
+                        s ->
+                            Arrays.stream(specializationKeys)
+                                .anyMatch(k -> k.equalsIgnoreCase(s.getKey()))))
         .filter(
             p ->
                 moduleTypeKeys == null || moduleTypeKeys.length <= 0 || p.getModules().stream()
