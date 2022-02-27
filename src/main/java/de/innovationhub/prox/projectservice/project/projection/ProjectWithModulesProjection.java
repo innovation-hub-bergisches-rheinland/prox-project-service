@@ -2,6 +2,7 @@ package de.innovationhub.prox.projectservice.project.projection;
 
 
 import de.innovationhub.prox.projectservice.module.ModuleType;
+import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.ProjectContext;
 import de.innovationhub.prox.projectservice.project.ProjectStatus;
@@ -11,7 +12,7 @@ import java.util.UUID;
 import org.springframework.data.rest.core.config.Projection;
 
 @Projection(
-    name = "withModules",
+    name = "withAssociations",
     types = {Project.class})
 public interface ProjectWithModulesProjection {
 
@@ -36,6 +37,8 @@ public interface ProjectWithModulesProjection {
   String getSupervisorName();
 
   Set<ModuleType> getModules();
+
+  Set<Specialization> getSpecializations();
 
   Instant getCreatedAt();
 
