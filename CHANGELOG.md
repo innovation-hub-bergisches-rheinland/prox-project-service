@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.3.1...v1.4.0) (2022-02-27)
+
+
+### Features
+
+* add query methods for specializations based on modules ([ddaaa02](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/ddaaa02a3a7131f7c4cc11938fdd9b0877f47734))
+* add specializations to projects ([b19037a](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/b19037ac2e696e5f8bee0494510c63c60bfd69e5))
+
+
+### Bug Fixes
+
+* add swagger-ui to public paths ([b7a89a0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/b7a89a0bada94eec41f083f08a8a8452a054d935))
+* configure read-only REST resources for specialization, moduletypes and studyprograms ([fc4bd5b](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/fc4bd5b3150c19cec38963a3aeed366ea0168edf))
+
 ### [1.3.1](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.3.0...v1.3.1) (2022-02-15)
 
 ## [1.3.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.2.5...v1.3.0) (2022-01-31)
