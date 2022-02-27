@@ -20,6 +20,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
       "/projects/**",
       "/moduleTypes/**",
       "/studyPrograms/**",
+      "/specializations/**",
       "/profile/**",
       "/swagger-ui.html",
       "/swagger-ui/**",
