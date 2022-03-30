@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.5](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.4.4...v1.4.5) (2022-03-30)
+
+
+### Bug Fixes
+
+* temporary fix for SpringShell ([cd49532](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/cd49532227e73bd600c36717c08a5c9083c32716))
+
 ### [1.4.4](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.4.3...v1.4.4) (2022-02-27)
 
 
