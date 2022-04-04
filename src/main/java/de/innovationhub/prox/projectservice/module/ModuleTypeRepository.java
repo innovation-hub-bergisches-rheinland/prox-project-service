@@ -18,9 +18,22 @@ public interface ModuleTypeRepository extends CrudRepository<ModuleType, UUID> {
 
   @Query("select m from StudyProgram s join s.modules m where s.specialization.id IN :ids")
   Set<ModuleType> findAllModuleTypesOfSpecializationId(
-      @Param("ids") @Parameter(array = @ArraySchema(uniqueItems = true, schema = @Schema(name = "string", type = "uuid"))) Set<UUID> ids);
+      @Param("ids")
+          @Parameter(
+              array =
+                  @ArraySchema(
+                      uniqueItems = true,
+                      schema = @Schema(name = "string", type = "uuid")))
+          Set<UUID> ids);
 
-  @Query("select s from StudyProgram sp join sp.specialization s join sp.modules mt where mt.id IN :ids")
+  @Query(
+      "select s from StudyProgram sp join sp.specialization s join sp.modules mt where mt.id IN :ids")
   Set<Specialization> findSpecializationsOfModules(
-      @Param("ids") @Parameter(array = @ArraySchema(uniqueItems = true, schema = @Schema(name = "string", type = "uuid"))) Set<UUID> ids);
+      @Param("ids")
+          @Parameter(
+              array =
+                  @ArraySchema(
+                      uniqueItems = true,
+                      schema = @Schema(name = "string", type = "uuid")))
+          Set<UUID> ids);
 }

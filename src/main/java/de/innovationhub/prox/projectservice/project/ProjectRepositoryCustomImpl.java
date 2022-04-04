@@ -13,46 +13,48 @@ import org.springframework.data.domain.Sort;
 
 public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
 
-  @Autowired
-  @Lazy
-  private ProjectRepository projectRepository;
+  @Autowired @Lazy private ProjectRepository projectRepository;
 
   @Override
-  public List<Project> findAvailableProjectsOfCreator(UUID creatorId,
-      Sort sort) {
-    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId,
-        Collections.singleton(ProjectStatus.AVAILABLE), sort);
+  public List<Project> findAvailableProjectsOfCreator(UUID creatorId, Sort sort) {
+    return projectRepository.findAllByCreatorIDAndStatusIn(
+        creatorId, Collections.singleton(ProjectStatus.AVAILABLE), sort);
   }
 
   @Override
-  public List<Project> findRunningAndFinishedProjectsOfCreator(UUID creatorId,
-      Sort sort) {
+  public List<Project> findRunningAndFinishedProjectsOfCreator(UUID creatorId, Sort sort) {
     return projectRepository.findAllByCreatorIDAndStatusIn(
         creatorId, List.of(ProjectStatus.FINISHED, ProjectStatus.RUNNING), sort);
   }
 
   @Override
-  public List<Project> filterProjects(ProjectStatus status, String[] specializationKeys,
-      String[] moduleTypeKeys, String text,
+  public List<Project> filterProjects(
+      ProjectStatus status,
+      String[] specializationKeys,
+      String[] moduleTypeKeys,
+      String text,
       Sort sort) {
     // TODO refactor and use fuzzy search or something similar which does not require hardcoding
     return StreamSupport.stream(this.projectRepository.findAll(sort).spliterator(), false)
         .filter(p -> status == null || p.getStatus() == status)
         .filter(
             p ->
-                specializationKeys == null || specializationKeys.length <= 0
+                specializationKeys == null
+                    || specializationKeys.length <= 0
                     || p.getSpecializations().stream()
-                    .anyMatch(
-                        s ->
-                            Arrays.stream(specializationKeys)
-                                .anyMatch(k -> k.equalsIgnoreCase(s.getKey()))))
+                        .anyMatch(
+                            s ->
+                                Arrays.stream(specializationKeys)
+                                    .anyMatch(k -> k.equalsIgnoreCase(s.getKey()))))
         .filter(
             p ->
-                moduleTypeKeys == null || moduleTypeKeys.length <= 0 || p.getModules().stream()
-                    .anyMatch(
-                        m ->
-                            Arrays.stream(moduleTypeKeys)
-                                .anyMatch(k -> k.equalsIgnoreCase(m.getKey()))))
+                moduleTypeKeys == null
+                    || moduleTypeKeys.length <= 0
+                    || p.getModules().stream()
+                        .anyMatch(
+                            m ->
+                                Arrays.stream(moduleTypeKeys)
+                                    .anyMatch(k -> k.equalsIgnoreCase(m.getKey()))))
         .filter(
             p -> {
               if (text == null || text.length() <= 0) {
@@ -65,8 +67,7 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
               if (!match && p.getDescription() != null) {
                 match |= p.getDescription().toLowerCase().contains(text.toLowerCase());
               }
-              if (!match
-                  && p.getShortDescription() != null) {
+              if (!match && p.getShortDescription() != null) {
                 match |= p.getShortDescription().toLowerCase().contains(text.toLowerCase());
               }
               if (!match && p.getName() != null) {
@@ -84,12 +85,12 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
   }
 
   @Override
-  public ProjectStats findProjectStatsOfCreator(UUID creatorId,
-      Sort sort) {
+  public ProjectStats findProjectStatsOfCreator(UUID creatorId, Sort sort) {
     var projects =
         this.projectRepository.findAllByCreatorIDAndStatusIn(
             creatorId,
-            List.of(ProjectStatus.RUNNING, ProjectStatus.AVAILABLE, ProjectStatus.FINISHED), sort);
+            List.of(ProjectStatus.RUNNING, ProjectStatus.AVAILABLE, ProjectStatus.FINISHED),
+            sort);
     return new ProjectStats(
         filterByStatusAndCount(projects, ProjectStatus.RUNNING),
         filterByStatusAndCount(projects, ProjectStatus.FINISHED),
@@ -101,16 +102,14 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
   }
 
   @Override
-  public List<Project> findRunningProjectsOfCreator(UUID creatorId,
-      Sort sort) {
-    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId,
-        Collections.singleton(ProjectStatus.RUNNING), sort);
+  public List<Project> findRunningProjectsOfCreator(UUID creatorId, Sort sort) {
+    return projectRepository.findAllByCreatorIDAndStatusIn(
+        creatorId, Collections.singleton(ProjectStatus.RUNNING), sort);
   }
 
   @Override
-  public List<Project> findinishedProjectsOfCreator(UUID creatorId,
-      Sort sort) {
-    return projectRepository.findAllByCreatorIDAndStatusIn(creatorId,
-        Collections.singleton(ProjectStatus.FINISHED), sort);
+  public List<Project> findinishedProjectsOfCreator(UUID creatorId, Sort sort) {
+    return projectRepository.findAllByCreatorIDAndStatusIn(
+        creatorId, Collections.singleton(ProjectStatus.FINISHED), sort);
   }
 }

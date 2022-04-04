@@ -49,34 +49,43 @@ public class RestConfig implements RepositoryRestConfigurer {
             .toArray(Class[]::new));
 
     // Specialization is read-only
-    config.getExposureConfiguration()
+    config
+        .getExposureConfiguration()
         .forDomainType(Specialization.class)
         .withCollectionExposure(
-            (metadata, httpMethods) -> httpMethods.disable(HttpMethod.DELETE, HttpMethod.PUT,
-                HttpMethod.POST, HttpMethod.PATCH))
+            (metadata, httpMethods) ->
+                httpMethods.disable(
+                    HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.POST, HttpMethod.PATCH))
         .withItemExposure(
-            (metadata, httpMethods) -> httpMethods.disable(HttpMethod.DELETE, HttpMethod.PUT,
-                HttpMethod.POST, HttpMethod.PATCH));
+            (metadata, httpMethods) ->
+                httpMethods.disable(
+                    HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.POST, HttpMethod.PATCH));
 
     // ModuleType is read-only
-    config.getExposureConfiguration()
+    config
+        .getExposureConfiguration()
         .forDomainType(ModuleType.class)
         .withCollectionExposure(
-            (metadata, httpMethods) -> httpMethods.disable(HttpMethod.DELETE, HttpMethod.PUT,
-                HttpMethod.POST, HttpMethod.PATCH))
+            (metadata, httpMethods) ->
+                httpMethods.disable(
+                    HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.POST, HttpMethod.PATCH))
         .withItemExposure(
-            (metadata, httpMethods) -> httpMethods.disable(HttpMethod.DELETE, HttpMethod.PUT,
-                HttpMethod.POST, HttpMethod.PATCH));
+            (metadata, httpMethods) ->
+                httpMethods.disable(
+                    HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.POST, HttpMethod.PATCH));
 
     // StudyProgram is read-only
-    config.getExposureConfiguration()
+    config
+        .getExposureConfiguration()
         .forDomainType(StudyProgram.class)
         .withCollectionExposure(
-            (metadata, httpMethods) -> httpMethods.disable(HttpMethod.DELETE, HttpMethod.PUT,
-                HttpMethod.POST, HttpMethod.PATCH))
+            (metadata, httpMethods) ->
+                httpMethods.disable(
+                    HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.POST, HttpMethod.PATCH))
         .withItemExposure(
-            (metadata, httpMethods) -> httpMethods.disable(HttpMethod.DELETE, HttpMethod.PUT,
-                HttpMethod.POST, HttpMethod.PATCH));
+            (metadata, httpMethods) ->
+                httpMethods.disable(
+                    HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.POST, HttpMethod.PATCH));
   }
 
   @Bean

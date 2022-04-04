@@ -32,6 +32,6 @@ public interface ProjectRepository
       Sort sort);
 
   @RestResource(exported = false)
-  List<Project> findAllByCreatorIDAndStatusIn(final UUID creatorId, Iterable<ProjectStatus> status,
-      Sort sort);
+  List<Project> findAllByCreatorIDAndStatusIn(
+      final UUID creatorId, Iterable<ProjectStatus> status, Sort sort);
 }

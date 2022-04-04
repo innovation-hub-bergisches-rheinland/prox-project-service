@@ -29,11 +29,9 @@ import org.springframework.test.web.servlet.MockMvc;
 @SuppressWarnings("java:S2699")
 class ProjectControllerTest {
 
-  @Autowired
-  MockMvc mockMvc;
+  @Autowired MockMvc mockMvc;
 
-  @Autowired
-  EntityManager entityManager;
+  @Autowired EntityManager entityManager;
 
   @BeforeEach
   void setup() {
@@ -256,8 +254,8 @@ class ProjectControllerTest {
       claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldUpdateSpecializationOfProject() {
     var easyRandom = new EasyRandom();
-    var randomSpecializations = easyRandom.objects(Specialization.class, 2)
-        .collect(Collectors.toList());
+    var randomSpecializations =
+        easyRandom.objects(Specialization.class, 2).collect(Collectors.toList());
     var randomProject = easyRandom.nextObject(Project.class);
 
     // Ensure that authenticated User is the creator
@@ -268,7 +266,8 @@ class ProjectControllerTest {
     randomSpecializations.forEach(specialization -> this.entityManager.persist(specialization));
 
     var specializationIds =
-        randomSpecializations.stream().map(specialization -> specialization.getId().toString())
+        randomSpecializations.stream()
+            .map(specialization -> specialization.getId().toString())
             .toList();
 
     // @formatter:off
@@ -284,7 +283,7 @@ class ProjectControllerTest {
 
     var foundProject = this.entityManager.find(Project.class, randomProject.getId());
     assertThat(foundProject).isNotNull();
-    assertThat(foundProject.getSpecializations()).containsExactlyInAnyOrderElementsOf(
-        randomSpecializations);
+    assertThat(foundProject.getSpecializations())
+        .containsExactlyInAnyOrderElementsOf(randomSpecializations);
   }
 }

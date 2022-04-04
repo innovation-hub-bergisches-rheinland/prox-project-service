@@ -13,11 +13,9 @@ import org.springframework.boot.test.json.JacksonTester;
 @JsonTest
 class ProjectJsonTest {
 
-  @Autowired
-  JacksonTester<Project> json;
+  @Autowired JacksonTester<Project> json;
 
-  @Autowired
-  ObjectMapper objectMapper;
+  @Autowired ObjectMapper objectMapper;
 
   @Test
   void serialize() throws Exception {

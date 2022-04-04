@@ -16,28 +16,26 @@ import org.springframework.boot.test.context.SpringBootTest;
 @Transactional
 class ModuleTypeRepositoryTest {
 
-  @Autowired
-  ModuleTypeRepository moduleTypeRepository;
+  @Autowired ModuleTypeRepository moduleTypeRepository;
 
-  @Autowired
-  EntityManager entityManager;
+  @Autowired EntityManager entityManager;
 
   @Test
   void findAllModuleTypesOfSpecializationId() {
     // Given
     var specialization = new Specialization("TST", "Test Specialization");
-    var moduleTypesOfSpecialization = Set.of(
-        new ModuleType("T1", "Test 1"),
-        new ModuleType("T2", "Test 2"),
-        new ModuleType("T3", "Test 3")
-    );
-    var otherModuleTypes = Set.of(
-        new ModuleType("T4", "Test 4"),
-        new ModuleType("T5", "Test 5"),
-        new ModuleType("T6", "Test 6")
-    );
-    var studyProgram = new StudyProgram("TST", "Test StudyProgram", moduleTypesOfSpecialization,
-        specialization);
+    var moduleTypesOfSpecialization =
+        Set.of(
+            new ModuleType("T1", "Test 1"),
+            new ModuleType("T2", "Test 2"),
+            new ModuleType("T3", "Test 3"));
+    var otherModuleTypes =
+        Set.of(
+            new ModuleType("T4", "Test 4"),
+            new ModuleType("T5", "Test 5"),
+            new ModuleType("T6", "Test 6"));
+    var studyProgram =
+        new StudyProgram("TST", "Test StudyProgram", moduleTypesOfSpecialization, specialization);
     studyProgram.setModules(moduleTypesOfSpecialization);
 
     entityManager.persist(specialization);
@@ -47,8 +45,8 @@ class ModuleTypeRepositoryTest {
     entityManager.flush();
 
     // When
-    var result = moduleTypeRepository.findAllModuleTypesOfSpecializationId(
-        Set.of(specialization.getId()));
+    var result =
+        moduleTypeRepository.findAllModuleTypesOfSpecializationId(Set.of(specialization.getId()));
 
     // Then
     assertThat(result).containsExactlyInAnyOrderElementsOf(moduleTypesOfSpecialization);
@@ -58,18 +56,18 @@ class ModuleTypeRepositoryTest {
   void findSpecializationsOfModules() {
     // Given
     var specialization = new Specialization("TST", "Test Specialization");
-    var moduleTypesOfSpecialization = Set.of(
-        new ModuleType("T1", "Test 1"),
-        new ModuleType("T2", "Test 2"),
-        new ModuleType("T3", "Test 3")
-    );
-    var otherModuleTypes = Set.of(
-        new ModuleType("T4", "Test 4"),
-        new ModuleType("T5", "Test 5"),
-        new ModuleType("T6", "Test 6")
-    );
-    var studyProgram = new StudyProgram("TST", "Test StudyProgram", moduleTypesOfSpecialization,
-        specialization);
+    var moduleTypesOfSpecialization =
+        Set.of(
+            new ModuleType("T1", "Test 1"),
+            new ModuleType("T2", "Test 2"),
+            new ModuleType("T3", "Test 3"));
+    var otherModuleTypes =
+        Set.of(
+            new ModuleType("T4", "Test 4"),
+            new ModuleType("T5", "Test 5"),
+            new ModuleType("T6", "Test 6"));
+    var studyProgram =
+        new StudyProgram("TST", "Test StudyProgram", moduleTypesOfSpecialization, specialization);
     studyProgram.setModules(moduleTypesOfSpecialization);
 
     entityManager.persist(specialization);
@@ -79,11 +77,13 @@ class ModuleTypeRepositoryTest {
     entityManager.flush();
 
     // When
-    var result = moduleTypeRepository.findSpecializationsOfModules(
-        moduleTypesOfSpecialization.stream().map(ModuleType::getId).collect(Collectors.toSet()));
+    var result =
+        moduleTypeRepository.findSpecializationsOfModules(
+            moduleTypesOfSpecialization.stream()
+                .map(ModuleType::getId)
+                .collect(Collectors.toSet()));
 
     // Then
-    assertThat(result).hasSize(1)
-        .containsExactly(specialization);
+    assertThat(result).hasSize(1).containsExactly(specialization);
   }
 }

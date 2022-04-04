@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.module;
 
+
 import de.innovationhub.prox.projectservice.core.AbstractEntity;
 import javax.persistence.Entity;
 import javax.persistence.Table;

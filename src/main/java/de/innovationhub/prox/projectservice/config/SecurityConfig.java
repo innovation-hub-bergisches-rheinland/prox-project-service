@@ -17,14 +17,14 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
   private static final String[] PUBLIC_READ_PATHS = {
-      "/projects/**",
-      "/moduleTypes/**",
-      "/studyPrograms/**",
-      "/specializations/**",
-      "/profile/**",
-      "/swagger-ui.html",
-      "/swagger-ui/**",
-      "/v3/api-docs/**"
+    "/projects/**",
+    "/moduleTypes/**",
+    "/studyPrograms/**",
+    "/specializations/**",
+    "/profile/**",
+    "/swagger-ui.html",
+    "/swagger-ui/**",
+    "/v3/api-docs/**"
   };
 
   @Autowired
