@@ -5,8 +5,10 @@ import static org.assertj.core.api.Assertions.within;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import de.innovationhub.prox.projectservice.owners.user.User;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 import javax.persistence.EntityManager;
@@ -26,32 +28,10 @@ class ProjectAuditingTest {
 
   @Autowired private EntityManager entityManager;
 
-  @MockBean private AuditorAware<UUID> auditorAware;
-
-  @Test
-  void shouldSaveCreatedBy() {
-    // Given
-    var creatorId = UUID.randomUUID();
-    var easyRandom = new EasyRandom();
-    var randomProject = easyRandom.nextObject(Project.class);
-    when(auditorAware.getCurrentAuditor()).thenReturn(Optional.of(creatorId));
-
-    // When
-    entityManager.persist(randomProject);
-    entityManager.flush();
-
-    // Then
-    var saved = entityManager.find(Project.class, randomProject.getId());
-    assertThat(saved.getCreatorID()).isEqualByComparingTo(creatorId);
-
-    verify(auditorAware).getCurrentAuditor();
-  }
-
   @Test
   void shouldSaveCreationDate() {
     // Given
-    var easyRandom = new EasyRandom();
-    var randomProject = easyRandom.nextObject(Project.class);
+    var randomProject = getTestProject();
 
     // When
     entityManager.persist(randomProject);
@@ -65,8 +45,7 @@ class ProjectAuditingTest {
   @Test
   void shouldSaveModificationDate() {
     // Given
-    var easyRandom = new EasyRandom();
-    var randomProject = easyRandom.nextObject(Project.class);
+    var randomProject = getTestProject();
     entityManager.persist(randomProject);
     entityManager.flush();
     var saved = entityManager.find(Project.class, randomProject.getId());
@@ -82,5 +61,24 @@ class ProjectAuditingTest {
     assertThat(newSaved.getModifiedAt())
         .isAfter(oldModifiedDate)
         .isCloseTo(Instant.now(), within(1, ChronoUnit.SECONDS));
+  }
+
+  private Project getTestProject() {
+    var owner = new User(UUID.randomUUID());
+    this.entityManager.persist(owner);
+    return new Project(
+        "Test Project",
+        "Test Project Description",
+        "Test Project Short Description",
+        "Test Project Requirement",
+        ProjectStatus.AVAILABLE,
+        "Test Project Creator Name",
+        "Test Project Supervisor",
+        Collections.emptySet(),
+        Collections.emptySet(),
+        owner,
+        Instant.now(),
+        Instant.now()
+    );
   }
 }

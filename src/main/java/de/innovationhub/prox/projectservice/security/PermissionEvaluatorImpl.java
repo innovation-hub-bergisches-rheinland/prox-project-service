@@ -1,6 +1,7 @@
 package de.innovationhub.prox.projectservice.security;
 
 
+import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.ProjectRepository;
 import java.io.Serializable;
@@ -29,10 +30,16 @@ public class PermissionEvaluatorImpl implements PermissionEvaluator {
       var project = (Project) targetDomainObject;
 
       if (permissionStr.equalsIgnoreCase("WRITE")) {
-        return project
-            .getCreatorID()
-            .toString()
-            .equals(keycloakAuth.getAccount().getKeycloakSecurityContext().getToken().getSubject());
+        if (project.getOwner() instanceof User) {
+          return project
+              .getOwner()
+              .getId()
+              .toString()
+              .equals(keycloakAuth.getAccount().getKeycloakSecurityContext().getToken().getSubject());
+        } else {
+          // TODO
+          throw new RuntimeException("Not implemented yet");
+        }
       }
     }
 

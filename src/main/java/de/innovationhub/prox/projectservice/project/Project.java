@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import de.innovationhub.prox.projectservice.core.AbstractEntity;
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
+import de.innovationhub.prox.projectservice.owners.AbstractOwner;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +15,9 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -55,8 +58,6 @@ public class Project extends AbstractEntity {
 
   @NotNull private ProjectStatus status;
 
-  @Column private ProjectContext context;
-
   @JsonProperty(access = Access.READ_ONLY)
   @Column(length = 255)
   private String creatorName;
@@ -73,8 +74,9 @@ public class Project extends AbstractEntity {
 
   @CreatedBy
   @JsonProperty(access = Access.READ_ONLY)
-  @Column(updatable = false)
-  private UUID creatorID;
+  @ManyToOne(optional = false)
+  @JoinColumn(name="owner_id", nullable=false, updatable=false)
+  private AbstractOwner owner;
 
   @JsonProperty(access = Access.READ_ONLY)
   @Column(name = "created_at", updatable = false)
