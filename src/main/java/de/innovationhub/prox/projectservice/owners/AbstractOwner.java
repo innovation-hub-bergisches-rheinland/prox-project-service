@@ -35,4 +35,6 @@ public abstract class AbstractOwner {
   @JsonProperty(access = Access.READ_ONLY)
   @Setter(value = AccessLevel.PROTECTED)
   private UUID id;
+
+  public abstract String getDiscriminator();
 }
