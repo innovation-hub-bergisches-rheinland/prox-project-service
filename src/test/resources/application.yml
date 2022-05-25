@@ -1,9 +1,3 @@
-keycloak:
-  auth-server-url: https://login.aws.innovation-hub.de/auth
-  bearer-only: true
-  cors: false
-  realm: innovation-hub-bergisches-rheinland
-  resource: prox-project-service
 server:
   port: 9002
 spring:
@@ -23,6 +17,11 @@ spring:
             non_contextual_creation: true
   flyway:
     enabled: false
-eureka:
-  client:
-    enabled: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://login.aws.innovation-hub.de/auth/realms/innovation-hub-bergisches-rheinland
+logging:
+  level:
+    "org.springframework.security": DEBUG

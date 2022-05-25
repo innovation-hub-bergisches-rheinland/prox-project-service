@@ -7,17 +7,14 @@ import static org.mockito.Mockito.when;
 
 import com.c4_soft.springaddons.security.oauth2.test.OidcTokenBuilder;
 import com.c4_soft.springaddons.security.oauth2.test.keycloak.KeycloakAuthenticationTokenBuilder;
+import java.security.Principal;
 import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.Test;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
-import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.keycloak.representations.AccessToken;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 
@@ -71,7 +68,7 @@ class UserRequestContextAuthorizationManagerTest {
     var context = new RequestAuthorizationContext(
         new MockHttpServletRequest(),
         Map.of("userId", userId.toString()));
-    Supplier<Authentication> keycloakAuthSupplier = () -> buildKeycloakToken(userId.toString());
+    Supplier<Authentication> keycloakAuthSupplier = () -> mockedAuth(userId.toString());
 
     var result = manager.check(keycloakAuthSupplier, context);
 
@@ -84,30 +81,16 @@ class UserRequestContextAuthorizationManagerTest {
     var context = new RequestAuthorizationContext(
         new MockHttpServletRequest(),
         Map.of("userId", UUID.randomUUID().toString()));
-    Supplier<Authentication> keycloakAuthSupplier = () -> buildKeycloakToken(userId.toString());
+    Supplier<Authentication> keycloakAuthSupplier = () -> mockedAuth(userId.toString());
 
     var result = manager.check(keycloakAuthSupplier, context);
 
     assertThat(result.isGranted()).isFalse();
   }
 
-  private KeycloakAuthenticationToken buildKeycloakToken(String subject) {
-    var token = new AccessToken();
-    token.setSubject(subject);
-    final RefreshableKeycloakSecurityContext securityContext =
-        new RefreshableKeycloakSecurityContext(
-            null,
-            null,
-            "test.keycloak.token",
-            token,
-            "test.keycloak.token",
-            token,
-            null);
-
-    final KeycloakPrincipal<RefreshableKeycloakSecurityContext> principal = new KeycloakPrincipal<>("test-user", securityContext);
-
-    final SimpleKeycloakAccount account = new SimpleKeycloakAccount(principal, Collections.emptySet(), securityContext);
-
-    return new KeycloakAuthenticationToken(account, false, Collections.emptySet());
+  private Authentication mockedAuth(String principalName) {
+    var token = new TestingAuthenticationToken((Principal) () -> principalName, null);
+    token.setAuthenticated(true);
+    return token;
   }
 }

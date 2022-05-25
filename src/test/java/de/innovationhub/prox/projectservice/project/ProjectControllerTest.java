@@ -1,10 +1,12 @@
 package de.innovationhub.prox.projectservice.project;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
+import static io.restassured.module.mockmvc.RestAssuredMockMvc.post;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 
 import com.c4_soft.springaddons.security.oauth2.test.annotations.OpenIdClaims;
+import com.c4_soft.springaddons.security.oauth2.test.annotations.WithMockJwtAuth;
 import com.c4_soft.springaddons.security.oauth2.test.annotations.keycloak.WithMockKeycloakAuth;
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
@@ -93,12 +95,12 @@ class ProjectControllerTest {
         .when()
         .post("/users/35982f30-18df-48bf-afc1-e7f8deeeb49c/projects")
         .then()
-        .status(HttpStatus.FORBIDDEN);
+        .status(HttpStatus.UNAUTHORIZED);
     // @formatter:on
   }
 
   @Test
-  @WithMockKeycloakAuth(
+  @WithMockJwtAuth(
       authorities = {"ROLE_professor"},
       claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldCreateProject() {
@@ -128,7 +130,7 @@ class ProjectControllerTest {
   }
 
   @Test
-  @WithMockKeycloakAuth(
+  @WithMockJwtAuth(
       authorities = {"ROLE_professor"},
       claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldUpdateProject() {
@@ -163,7 +165,7 @@ class ProjectControllerTest {
   }
 
   @Test
-  @WithMockKeycloakAuth(
+  @WithMockJwtAuth(
       authorities = {"ROLE_professor"},
       claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldPartiallyUpdateProject() {
@@ -198,7 +200,7 @@ class ProjectControllerTest {
   }
 
   @Test
-  @WithMockKeycloakAuth(
+  @WithMockJwtAuth(
       authorities = {"ROLE_professor"},
       claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldDeleteProject() {
@@ -225,7 +227,7 @@ class ProjectControllerTest {
   }
 
   @Test
-  @WithMockKeycloakAuth(
+  @WithMockJwtAuth(
       authorities = {"ROLE_professor"},
       claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldUpdateModulesOfProject() {
@@ -259,7 +261,7 @@ class ProjectControllerTest {
   }
 
   @Test
-  @WithMockKeycloakAuth(
+  @WithMockJwtAuth(
       authorities = {"ROLE_professor"},
       claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldUpdateSpecializationOfProject() {

@@ -6,7 +6,6 @@ import de.innovationhub.prox.projectservice.project.ProjectRepository;
 import java.util.UUID;
 import java.util.function.Supplier;
 import lombok.extern.slf4j.Slf4j;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
@@ -64,10 +63,9 @@ public class ProjectRequestContextAuthorizationManager implements AuthorizationM
 
   private AuthorizationDecision authorizeUser(Authentication authentication, Project project, RequestAuthorizationContext object) {
     try {
-      var keycloakAuth = (KeycloakAuthenticationToken) authentication;
-      var subjectString = keycloakAuth.getAccount().getKeycloakSecurityContext().getToken().getSubject();
+      var principal = authentication.getName();
       // Not necessary to parse into a UUID. We can just rely on plain string equality
-      return new AuthorizationDecision(project.getOwner().getId().toString().equals(subjectString));
+      return new AuthorizationDecision(project.getOwner().getId().toString().equals(principal));
     } catch (ClassCastException e) {
       log.error("Could not parse the provided authentication to Keycloak token", e);
       return new AuthorizationDecision(false);
