@@ -1,6 +1,7 @@
 package de.innovationhub.prox.projectservice.security;
 
 import de.innovationhub.prox.projectservice.owners.user.User;
+import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.ProjectRepository;
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -17,9 +18,12 @@ import org.springframework.stereotype.Component;
 public class ProjectRequestContextAuthorizationManager implements AuthorizationManager<RequestAuthorizationContext> {
   private final static String PROJECT_ID_VARIABLE = "projectId";
   private final ProjectRepository projectRepository;
+  private final UserInfoRequestHeaderExtractor userInfoRequestHeaderExtractor;
 
-  public ProjectRequestContextAuthorizationManager(ProjectRepository projectRepository) {
+  public ProjectRequestContextAuthorizationManager(ProjectRepository projectRepository,
+      UserInfoRequestHeaderExtractor userInfoRequestHeaderExtractor) {
     this.projectRepository = projectRepository;
+    this.userInfoRequestHeaderExtractor = userInfoRequestHeaderExtractor;
   }
 
   @Override
@@ -33,6 +37,11 @@ public class ProjectRequestContextAuthorizationManager implements AuthorizationM
       return null;
     }
 
+    var auth = authentication.get();
+    if (!auth.isAuthenticated()) {
+      return new AuthorizationDecision(false);
+    }
+
     var optProject = projectRepository.findById(UUID.fromString(value));
     if(optProject.isEmpty()) {
       // Can't decide if a project doesn't exist
@@ -41,22 +50,35 @@ public class ProjectRequestContextAuthorizationManager implements AuthorizationM
 
     var project = optProject.get();
 
-    if(project.getOwner() instanceof User) {
-      try {
-        var auth = authentication.get();
-        if (!auth.isAuthenticated()) {
-          return new AuthorizationDecision(false);
-        }
-        var keycloakAuth = (KeycloakAuthenticationToken) auth;
-        var subjectString = keycloakAuth.getAccount().getKeycloakSecurityContext().getToken().getSubject();
-        // Not necessary to parse into a UUID. We can just rely on plain string equality
-        return new AuthorizationDecision(project.getOwner().getId().toString().equals(subjectString));
-      } catch (ClassCastException e) {
-        log.error("Could not parse the provided authentication to Keycloak token", e);
-        return null;
-      }
+    var discriminator = project.getOwner().getDiscriminator();
+    switch (discriminator) {
+      case "user":
+        return authorizeUser(auth, project, object);
+      case "organization":
+        return authorizeOrganization(auth, project, object);
     }
 
-    throw new RuntimeException("Not supported yet");
+    log.warn("Authorization decision cannot be done because '{}' is not a known discriminator value", discriminator);
+    return null;
+  }
+
+  private AuthorizationDecision authorizeUser(Authentication authentication, Project project, RequestAuthorizationContext object) {
+    try {
+      var keycloakAuth = (KeycloakAuthenticationToken) authentication;
+      var subjectString = keycloakAuth.getAccount().getKeycloakSecurityContext().getToken().getSubject();
+      // Not necessary to parse into a UUID. We can just rely on plain string equality
+      return new AuthorizationDecision(project.getOwner().getId().toString().equals(subjectString));
+    } catch (ClassCastException e) {
+      log.error("Could not parse the provided authentication to Keycloak token", e);
+      return new AuthorizationDecision(false);
+    }
+  }
+
+  private AuthorizationDecision authorizeOrganization(Authentication authentication, Project project, RequestAuthorizationContext object) {
+    var userInfo = userInfoRequestHeaderExtractor.parseUserInfoFromRequest(object.getRequest());
+    if(userInfo == null) {
+      return new AuthorizationDecision(false);
+    }
+    return new AuthorizationDecision(userInfo.orgs().contains(project.getOwner().getId()));
   }
 }
