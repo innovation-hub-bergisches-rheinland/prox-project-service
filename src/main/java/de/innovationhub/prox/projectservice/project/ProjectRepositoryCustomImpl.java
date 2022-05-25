@@ -17,13 +17,13 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
 
   @Override
   public List<Project> findAvailableProjectsOfCreator(UUID creatorId, Sort sort) {
-    return projectRepository.findAllByCreatorIDAndStatusIn(
+    return projectRepository.findAllByOwner_IdAndStatusIn(
         creatorId, Collections.singleton(ProjectStatus.AVAILABLE), sort);
   }
 
   @Override
   public List<Project> findRunningAndFinishedProjectsOfCreator(UUID creatorId, Sort sort) {
-    return projectRepository.findAllByCreatorIDAndStatusIn(
+    return projectRepository.findAllByOwner_IdAndStatusIn(
         creatorId, List.of(ProjectStatus.FINISHED, ProjectStatus.RUNNING), sort);
   }
 
@@ -87,7 +87,7 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
   @Override
   public ProjectStats findProjectStatsOfCreator(UUID creatorId, Sort sort) {
     var projects =
-        this.projectRepository.findAllByCreatorIDAndStatusIn(
+        this.projectRepository.findAllByOwner_IdAndStatusIn(
             creatorId,
             List.of(ProjectStatus.RUNNING, ProjectStatus.AVAILABLE, ProjectStatus.FINISHED),
             sort);
@@ -103,13 +103,13 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
 
   @Override
   public List<Project> findRunningProjectsOfCreator(UUID creatorId, Sort sort) {
-    return projectRepository.findAllByCreatorIDAndStatusIn(
+    return projectRepository.findAllByOwner_IdAndStatusIn(
         creatorId, Collections.singleton(ProjectStatus.RUNNING), sort);
   }
 
   @Override
   public List<Project> findinishedProjectsOfCreator(UUID creatorId, Sort sort) {
-    return projectRepository.findAllByCreatorIDAndStatusIn(
+    return projectRepository.findAllByOwner_IdAndStatusIn(
         creatorId, Collections.singleton(ProjectStatus.FINISHED), sort);
   }
 }

@@ -1,14 +1,18 @@
 package de.innovationhub.prox.projectservice.security;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.c4_soft.springaddons.security.oauth2.test.OidcTokenBuilder;
-import com.c4_soft.springaddons.security.oauth2.test.keycloak.KeycloakAuthenticationTokenBuilder;
+import de.innovationhub.prox.projectservice.owners.user.User;
+import de.innovationhub.prox.projectservice.project.Project;
+import de.innovationhub.prox.projectservice.project.ProjectRepository;
+import de.innovationhub.prox.projectservice.project.ProjectStatus;
+import java.time.Instant;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.Test;
@@ -21,9 +25,10 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 
-class UserRequestContextAuthorizationManagerTest {
+class ProjectRequestContextAuthorizationManagerTest {
 
-  private final UserRequestContextAuthorizationManager manager = new UserRequestContextAuthorizationManager();
+  private final ProjectRepository projectRepository = mock(ProjectRepository.class);
+  private final ProjectRequestContextAuthorizationManager manager = new ProjectRequestContextAuthorizationManager(projectRepository);
 
   @Test
   void shouldReturnNullWhenNoVariableIsSupplied() {
@@ -38,24 +43,43 @@ class UserRequestContextAuthorizationManagerTest {
   }
 
   @Test
-  void shouldReturnFalseWhenAuthenticationIsNotAKeycloakToken() {
+  void shouldReturnNullWhenAuthenticationIsNotAKeycloakToken() {
     var context = new RequestAuthorizationContext(
         new MockHttpServletRequest(),
-        Map.of("userId", UUID.randomUUID().toString()));
+        Map.of("projectId", UUID.randomUUID().toString()));
     var mockedAuth = mock(Authentication.class);
     when(mockedAuth.isAuthenticated()).thenReturn(true);
     Supplier<Authentication> mockAuthSupplier = () -> mockedAuth;
 
     var result = manager.check(mockAuthSupplier, context);
 
-    assertThat(result.isGranted()).isFalse();
+    assertThat(result).isNull();
+  }
+
+  @Test
+  void shouldReturnNullWhenProjectNotExists() {
+    var projectId = UUID.randomUUID();
+    when(projectRepository.findById(projectId)).thenReturn(Optional.empty());
+    var context = new RequestAuthorizationContext(
+        new MockHttpServletRequest(),
+        Map.of("projectId", projectId.toString()));
+
+    var mockedAuth = mock(Authentication.class);
+    Supplier<Authentication> mockAuthSupplier = () -> mockedAuth;
+
+    var result = manager.check(mockAuthSupplier, context);
+
+    assertThat(result).isNull();
+    verify(projectRepository).findById(projectId);
   }
 
   @Test
   void shouldReturnFalseWhenUserIsNotAuthenticated() {
+    var project = getTestProject(UUID.randomUUID());
+    when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
     var context = new RequestAuthorizationContext(
         new MockHttpServletRequest(),
-        Map.of("userId", UUID.randomUUID().toString()));
+        Map.of("projectId", project.getId().toString()));
     var mockedAuth = mock(Authentication.class);
     when(mockedAuth.isAuthenticated()).thenReturn(false);
     Supplier<Authentication> mockAuthSupplier = () -> mockedAuth;
@@ -66,29 +90,35 @@ class UserRequestContextAuthorizationManagerTest {
   }
 
   @Test
-  void shouldReturnTrueWhenUserIsEqualToVariable() {
+  void shouldReturnTrueWhenUserIsProjectOwner() {
     var userId = UUID.randomUUID();
+    var project = getTestProject(userId);
+    when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
     var context = new RequestAuthorizationContext(
         new MockHttpServletRequest(),
-        Map.of("userId", userId.toString()));
+        Map.of("projectId", project.getId().toString()));
     Supplier<Authentication> keycloakAuthSupplier = () -> buildKeycloakToken(userId.toString());
 
     var result = manager.check(keycloakAuthSupplier, context);
 
     assertThat(result.isGranted()).isTrue();
+    verify(projectRepository).findById(project.getId());
   }
 
   @Test
-  void shouldReturnFalseWhenUserIsNotEqualToVariable() {
+  void shouldReturnFalseWhenUserIsNotProjectOwner() {
     var userId = UUID.randomUUID();
+    var project = getTestProject(UUID.randomUUID());
+    when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
     var context = new RequestAuthorizationContext(
         new MockHttpServletRequest(),
-        Map.of("userId", UUID.randomUUID().toString()));
+        Map.of("projectId", project.getId().toString()));
     Supplier<Authentication> keycloakAuthSupplier = () -> buildKeycloakToken(userId.toString());
 
     var result = manager.check(keycloakAuthSupplier, context);
 
     assertThat(result.isGranted()).isFalse();
+    verify(projectRepository).findById(project.getId());
   }
 
   private KeycloakAuthenticationToken buildKeycloakToken(String subject) {
@@ -109,5 +139,22 @@ class UserRequestContextAuthorizationManagerTest {
     final SimpleKeycloakAccount account = new SimpleKeycloakAccount(principal, Collections.emptySet(), securityContext);
 
     return new KeycloakAuthenticationToken(account, false, Collections.emptySet());
+  }
+
+  private Project getTestProject(UUID userId) {
+    return new Project(
+        "Test Project",
+        "Test Project Description",
+        "Test Project Short Description",
+        "Test Project Requirement",
+        ProjectStatus.AVAILABLE,
+        "Test Project Creator Name",
+        "Test Project Supervisor",
+        Collections.emptySet(),
+        Collections.emptySet(),
+        new User(userId),
+        Instant.now(),
+        Instant.now()
+    );
   }
 }

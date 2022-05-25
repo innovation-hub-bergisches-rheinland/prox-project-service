@@ -36,7 +36,7 @@ public class UserRequestContextAuthorizationManager implements AuthorizationMana
       return new AuthorizationDecision(value.equals(subjectString));
     } catch (ClassCastException e) {
       log.error("Could not parse the provided authentication to Keycloak token", e);
-      return null;
+      return new AuthorizationDecision(false);
     }
   }
 }

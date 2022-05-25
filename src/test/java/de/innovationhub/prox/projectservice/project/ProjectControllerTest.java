@@ -8,7 +8,11 @@ import com.c4_soft.springaddons.security.oauth2.test.annotations.OpenIdClaims;
 import com.c4_soft.springaddons.security.oauth2.test.annotations.keycloak.WithMockKeycloakAuth;
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
+import de.innovationhub.prox.projectservice.owners.user.User;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
+import java.time.Instant;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
@@ -41,7 +45,13 @@ class ProjectControllerTest {
   @Test
   void shouldGetProjects() {
     var easyRandom = new EasyRandom();
-    var randomProjects = easyRandom.objects(Project.class, 5).toList();
+    var randomProjects = List.of(
+        getTestProject(),
+        getTestProject(),
+        getTestProject(),
+        getTestProject(),
+        getTestProject()
+    );
 
     randomProjects.forEach(randomProject -> entityManager.persist(randomProject));
     entityManager.flush();
@@ -60,7 +70,7 @@ class ProjectControllerTest {
   @Test
   void shouldGetProject() {
     var easyRandom = new EasyRandom();
-    var randomProject = easyRandom.nextObject(Project.class);
+    var randomProject = getTestProject();
     this.entityManager.persist(randomProject);
     entityManager.flush();
 
@@ -81,9 +91,9 @@ class ProjectControllerTest {
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .when()
-        .post("/projects")
+        .post("/users/35982f30-18df-48bf-afc1-e7f8deeeb49c/projects")
         .then()
-        .status(HttpStatus.UNAUTHORIZED);
+        .status(HttpStatus.FORBIDDEN);
     // @formatter:on
   }
 
@@ -93,7 +103,7 @@ class ProjectControllerTest {
       claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldCreateProject() {
     var easyRandom = new EasyRandom();
-    var randomProject = easyRandom.nextObject(Project.class);
+    var randomProject = getTestProject();
 
     // @formatter:off
     var id =
@@ -102,7 +112,7 @@ class ProjectControllerTest {
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .body(randomProject)
             .when()
-            .post("/projects")
+            .post("users/35982f30-18df-48bf-afc1-e7f8deeeb49c/projects")
             .then()
             .status(HttpStatus.CREATED)
             .extract()
@@ -113,7 +123,7 @@ class ProjectControllerTest {
 
     var project = this.entityManager.find(Project.class, id);
     assertThat(project).isNotNull();
-    assertThat(project.getCreatorID())
+    assertThat(project.getOwner().getId())
         .isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
   }
 
@@ -123,14 +133,15 @@ class ProjectControllerTest {
       claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldUpdateProject() {
     var easyRandom = new EasyRandom();
-    var randomProject = easyRandom.nextObject(Project.class);
-
     // Ensure that authenticated User is the creator
-    randomProject.setCreatorID(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    var randomProject = getTestProject(owner);
+
     this.entityManager.persist(randomProject);
     entityManager.flush();
 
-    var updatedProject = easyRandom.nextObject(Project.class);
+    var updatedProject = getTestProject();
+    updatedProject.setOwner(owner);
 
     // @formatter:off
     given()
@@ -147,7 +158,7 @@ class ProjectControllerTest {
     assertThat(found).isNotNull();
     assertThat(found)
         .usingRecursiveComparison()
-        .ignoringFields("id", "createdAt", "creatorName", "modifiedAt", "creatorID", "modules")
+        .ignoringFields("id", "createdAt", "creatorName", "modifiedAt", "modules")
         .isEqualTo(updatedProject);
   }
 
@@ -157,10 +168,10 @@ class ProjectControllerTest {
       claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldPartiallyUpdateProject() {
     var easyRandom = new EasyRandom();
-    var randomProject = easyRandom.nextObject(Project.class);
-
     // Ensure that authenticated User is the creator
-    randomProject.setCreatorID(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    var randomProject = getTestProject(owner);
+
     this.entityManager.persist(randomProject);
     entityManager.flush();
 
@@ -192,10 +203,10 @@ class ProjectControllerTest {
       claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldDeleteProject() {
     var easyRandom = new EasyRandom();
-    var randomProject = easyRandom.nextObject(Project.class);
-
     // Ensure that authenticated User is the creator
-    randomProject.setCreatorID(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    var randomProject = getTestProject(owner);
+
     this.entityManager.persist(randomProject);
     entityManager.flush();
 
@@ -220,13 +231,12 @@ class ProjectControllerTest {
   void shouldUpdateModulesOfProject() {
     var easyRandom = new EasyRandom();
     var randomModules = easyRandom.objects(ModuleType.class, 2).collect(Collectors.toList());
-    var randomProject = easyRandom.nextObject(Project.class);
-
     // Ensure that authenticated User is the creator
-    randomProject.setCreatorID(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    var randomProject = getTestProject(owner);
+
     this.entityManager.persist(randomProject);
     entityManager.flush();
-
     randomModules.forEach(moduleType -> this.entityManager.persist(moduleType));
 
     var moduleIds =
@@ -256,10 +266,10 @@ class ProjectControllerTest {
     var easyRandom = new EasyRandom();
     var randomSpecializations =
         easyRandom.objects(Specialization.class, 2).collect(Collectors.toList());
-    var randomProject = easyRandom.nextObject(Project.class);
-
     // Ensure that authenticated User is the creator
-    randomProject.setCreatorID(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    var randomProject = getTestProject(owner);
+
     this.entityManager.persist(randomProject);
     entityManager.flush();
 
@@ -285,5 +295,27 @@ class ProjectControllerTest {
     assertThat(foundProject).isNotNull();
     assertThat(foundProject.getSpecializations())
         .containsExactlyInAnyOrderElementsOf(randomSpecializations);
+  }
+
+  private Project getTestProject() {
+    var owner = new User(UUID.randomUUID());
+    return getTestProject(owner);
+  }
+  private Project getTestProject(User owner) {
+    this.entityManager.persist(owner);
+    return new Project(
+        "Test Project",
+        "Test Project Description",
+        "Test Project Short Description",
+        "Test Project Requirement",
+        ProjectStatus.AVAILABLE,
+        "Test Project Creator Name",
+        "Test Project Supervisor",
+        Collections.emptySet(),
+        Collections.emptySet(),
+        owner,
+        Instant.now(),
+        Instant.now()
+    );
   }
 }

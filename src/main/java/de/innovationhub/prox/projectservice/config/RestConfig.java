@@ -4,6 +4,7 @@ package de.innovationhub.prox.projectservice.config;
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.module.StudyProgram;
+import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.project.Project;
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.Type;
@@ -97,14 +98,17 @@ public class RestConfig implements RepositoryRestConfigurer {
 
       @Override
       public EntityModel<Project> process(EntityModel<Project> resource) {
-        String projectID = resource.getContent().getId().toString();
-        String creatorID = resource.getContent().getCreatorID().toString();
+        var project = resource.getContent();
+        String projectID = project.getId().toString();
 
         resource.add(
             Link.of(
                 request.getRequestURL() + "/tagCollections/" + projectID + "/tags",
                 "tagCollection"));
-        resource.add(Link.of(request.getRequestURL() + "/professors/" + creatorID, "professor"));
+        if(project.getOwner() instanceof User) {
+          String creatorID = project.getOwner().getId().toString();
+          resource.add(Link.of(request.getRequestURL() + "/users/" + creatorID, "owner"));
+        }
         return resource;
       }
     };

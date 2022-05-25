@@ -3,6 +3,9 @@ package de.innovationhub.prox.projectservice.project;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.innovationhub.prox.projectservice.owners.user.User;
+import java.time.Instant;
+import java.util.Collections;
 import java.util.UUID;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
@@ -20,8 +23,20 @@ class ProjectJsonTest {
   @Test
   void serialize() throws Exception {
     // Given
-    var easyRandom = new EasyRandom();
-    var randomProject = easyRandom.nextObject(Project.class);
+    var randomProject = new Project(
+        "Test Project",
+        "Test Project Description",
+        "Test Project Short Description",
+        "Test Project Requirement",
+        ProjectStatus.AVAILABLE,
+        "Test Project Creator Name",
+        "Test Project Supervisor",
+        Collections.emptySet(),
+        Collections.emptySet(),
+        new User(UUID.randomUUID()),
+        Instant.now(),
+        Instant.now()
+    );
 
     // When
     var serialized = this.json.write(randomProject);
@@ -46,17 +61,14 @@ class ProjectJsonTest {
         .extractingJsonPathStringValue("@.status")
         .isEqualTo(objectMapper.writeValueAsString(randomProject.getStatus()).replace("\"", ""));
     assertThat(serialized)
-        .extractingJsonPathStringValue("@.context")
-        .isEqualTo(randomProject.getContext().toString());
-    assertThat(serialized)
         .extractingJsonPathStringValue("@.creatorName")
         .isEqualTo(randomProject.getCreatorName());
     assertThat(serialized)
         .extractingJsonPathStringValue("@.supervisorName")
         .isEqualTo(randomProject.getSupervisorName());
     assertThat(serialized)
-        .extractingJsonPathStringValue("@.creatorID")
-        .isEqualTo(randomProject.getCreatorID().toString());
+        .extractingJsonPathStringValue("@.owner.id")
+        .isEqualTo(randomProject.getOwner().getId().toString());
     assertThat(serialized).extractingJsonPathStringValue("@.createdAt").isNotBlank();
     assertThat(serialized).extractingJsonPathStringValue("@.modifiedAt").isNotBlank();
   }
@@ -73,7 +85,6 @@ class ProjectJsonTest {
               "shortDescription":"LRHCsQ",
               "requirement":"yedUsFwdkelQbxeTeQOvaScfqIOOmaa",
               "status":"FINISHED",
-              "context":"PROFESSOR",
               "creatorName":"JxkyvRnL",
               "supervisorName":"tguuayKsvm",
               "creatorID":"b921f1dd-3cbc-0495-fdab-8cd14d33f0aa",
@@ -91,7 +102,6 @@ class ProjectJsonTest {
     assertThat(deserializedResult.getShortDescription()).isEqualTo("LRHCsQ");
     assertThat(deserializedResult.getRequirement()).isEqualTo("yedUsFwdkelQbxeTeQOvaScfqIOOmaa");
     assertThat(deserializedResult.getStatus()).isEqualTo(ProjectStatus.FINISHED);
-    assertThat(deserializedResult.getContext()).isEqualTo(ProjectContext.PROFESSOR);
 
     // Should not be deserialized
     assertThat(deserializedResult.getCreatorName()).isNullOrEmpty();
