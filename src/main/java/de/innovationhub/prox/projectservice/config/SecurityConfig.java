@@ -18,6 +18,10 @@ class SecurityConfig {
   private final UserRequestContextAuthorizationManager userAuthorizationManager;
   private final OrganizationRequestContextAuthorizationManager orgAuthorizationManager;
 
+  private final ProjectRequestContextAuthorizationManager projectAuthorizationManager;
+  private final UserRequestContextAuthorizationManager userAuthorizationManager;
+  private final OrganizationRequestContextAuthorizationManager orgAuthorizationManager;
+
   private static final String[] PUBLIC_READ_PATHS = {
     "/projects/**",
     "/moduleTypes/**",

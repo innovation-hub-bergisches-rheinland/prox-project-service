@@ -95,7 +95,7 @@ class ProjectControllerTest {
         .when()
         .post("/users/35982f30-18df-48bf-afc1-e7f8deeeb49c/projects")
         .then()
-        .status(HttpStatus.UNAUTHORIZED);
+        .status(HttpStatus.FORBIDDEN);
     // @formatter:on
   }
 
