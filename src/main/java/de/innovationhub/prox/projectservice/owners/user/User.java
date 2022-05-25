@@ -1,6 +1,7 @@
 package de.innovationhub.prox.projectservice.owners.user;
 
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
+import java.util.UUID;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -16,5 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class User extends AbstractOwner {
-
+  public User(UUID id) {
+    super(id);
+  }
 }
