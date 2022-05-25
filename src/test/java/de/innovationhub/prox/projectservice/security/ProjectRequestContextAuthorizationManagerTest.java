@@ -11,6 +11,7 @@ import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.ProjectRepository;
 import de.innovationhub.prox.projectservice.project.ProjectStatus;
+import java.security.Principal;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.Map;
@@ -19,12 +20,8 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.Test;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
-import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.keycloak.representations.AccessToken;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 
@@ -103,7 +100,7 @@ class ProjectRequestContextAuthorizationManagerTest {
     var context = new RequestAuthorizationContext(
         new MockHttpServletRequest(),
         Map.of("projectId", project.getId().toString()));
-    Supplier<Authentication> keycloakAuthSupplier = () -> buildKeycloakToken(userId.toString());
+    Supplier<Authentication> keycloakAuthSupplier = () -> mockedAuth(userId.toString());
 
     var result = manager.check(keycloakAuthSupplier, context);
 
@@ -119,7 +116,7 @@ class ProjectRequestContextAuthorizationManagerTest {
     var context = new RequestAuthorizationContext(
         new MockHttpServletRequest(),
         Map.of("projectId", project.getId().toString()));
-    Supplier<Authentication> keycloakAuthSupplier = () -> buildKeycloakToken(userId.toString());
+    Supplier<Authentication> keycloakAuthSupplier = () -> mockedAuth(userId.toString());
 
     var result = manager.check(keycloakAuthSupplier, context);
 
@@ -135,7 +132,7 @@ class ProjectRequestContextAuthorizationManagerTest {
     var context = new RequestAuthorizationContext(
         new MockHttpServletRequest(),
         Map.of("projectId", project.getId().toString()));
-    Supplier<Authentication> keycloakAuthSupplier = () -> buildKeycloakToken(UUID.randomUUID().toString());
+    Supplier<Authentication> keycloakAuthSupplier = () -> mockedAuth(UUID.randomUUID().toString());
     when(userInfoRequestHeaderExtractor.parseUserInfoFromRequest(any())).thenReturn(new UserInfo(UUID.randomUUID(),
         Set.of(UUID.randomUUID(), orgId)));
 
@@ -153,7 +150,7 @@ class ProjectRequestContextAuthorizationManagerTest {
     var context = new RequestAuthorizationContext(
         new MockHttpServletRequest(),
         Map.of("projectId", project.getId().toString()));
-    Supplier<Authentication> keycloakAuthSupplier = () -> buildKeycloakToken(UUID.randomUUID().toString());
+    Supplier<Authentication> keycloakAuthSupplier = () ->  mockedAuth(UUID.randomUUID().toString());
     when(userInfoRequestHeaderExtractor.parseUserInfoFromRequest(any())).thenReturn(new UserInfo(UUID.randomUUID(),
         Set.of(UUID.randomUUID(), UUID.randomUUID())));
 
@@ -163,24 +160,10 @@ class ProjectRequestContextAuthorizationManagerTest {
     verify(projectRepository).findById(project.getId());
   }
 
-  private KeycloakAuthenticationToken buildKeycloakToken(String subject) {
-    var token = new AccessToken();
-    token.setSubject(subject);
-    final RefreshableKeycloakSecurityContext securityContext =
-        new RefreshableKeycloakSecurityContext(
-            null,
-            null,
-            "test.keycloak.token",
-            token,
-            "test.keycloak.token",
-            token,
-            null);
-
-    final KeycloakPrincipal<RefreshableKeycloakSecurityContext> principal = new KeycloakPrincipal<>("test-user", securityContext);
-
-    final SimpleKeycloakAccount account = new SimpleKeycloakAccount(principal, Collections.emptySet(), securityContext);
-
-    return new KeycloakAuthenticationToken(account, false, Collections.emptySet());
+  private Authentication mockedAuth(String principalName) {
+    var token = new TestingAuthenticationToken((Principal) () -> principalName, null);
+    token.setAuthenticated(true);
+    return token;
   }
 
   private Project getTestProject(UUID userId) {

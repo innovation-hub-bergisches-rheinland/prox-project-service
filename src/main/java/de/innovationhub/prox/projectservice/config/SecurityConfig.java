@@ -4,20 +4,15 @@ package de.innovationhub.prox.projectservice.config;
 import de.innovationhub.prox.projectservice.security.OrganizationRequestContextAuthorizationManager;
 import de.innovationhub.prox.projectservice.security.ProjectRequestContextAuthorizationManager;
 import de.innovationhub.prox.projectservice.security.UserRequestContextAuthorizationManager;
-import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
-import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
-import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
-import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
-import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.web.SecurityFilterChain;
 
-@KeycloakConfiguration
-class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
+@Configuration
+class SecurityConfig {
 
   private final ProjectRequestContextAuthorizationManager projectAuthorizationManager;
   private final UserRequestContextAuthorizationManager userAuthorizationManager;
@@ -42,27 +37,20 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     this.orgAuthorizationManager = orgAuthorizationManager;
   }
 
-  @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) {
-    KeycloakAuthenticationProvider keycloakAuthenticationProvider =
-        this.keycloakAuthenticationProvider();
-    keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
-    auth.authenticationProvider(keycloakAuthenticationProvider);
+  private JwtAuthenticationConverter jwtAuthenticationConverter() {
+    JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
+    jwtConverter.setJwtGrantedAuthoritiesConverter(new KeycloakGrantedAuthoritiesConverter());
+    jwtConverter.setPrincipalClaimName("sub");
+    return jwtConverter;
   }
 
   @Bean
-  @Override
-  protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-    return new NullAuthenticatedSessionStrategy();
-  }
-
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    //super.configure(http);
+  public SecurityFilterChain configure(HttpSecurity http) throws Exception {
     http.cors()
         .and()
         .csrf()
         .disable()
+        .oauth2ResourceServer(oauth2 -> oauth2.jwt().jwtAuthenticationConverter(jwtAuthenticationConverter()))
         .authorizeHttpRequests(registry ->
             registry
                 .mvcMatchers(HttpMethod.GET, PUBLIC_READ_PATHS)
@@ -87,5 +75,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .anyRequest()
                 .denyAll()
         );
+
+    return http.build();
   }
 }
