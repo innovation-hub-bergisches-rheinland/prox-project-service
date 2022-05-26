@@ -59,6 +59,8 @@ class SecurityConfig {
                 .permitAll()
                 .mvcMatchers(HttpMethod.OPTIONS, PUBLIC_READ_PATHS)
                 .permitAll()
+                .mvcMatchers("/user/**")
+                .authenticated()
                 .mvcMatchers(HttpMethod.POST, "/users/{userId}/**")
                 .access(userAuthorizationManager)
                 .mvcMatchers(HttpMethod.POST, "/organizations/{orgId}/**")

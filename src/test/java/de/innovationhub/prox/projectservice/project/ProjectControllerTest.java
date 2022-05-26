@@ -103,6 +103,36 @@ class ProjectControllerTest {
   @WithMockJwtAuth(
       authorities = {"ROLE_professor"},
       claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+  void shouldCreateProjectForAuthenticatedUser() {
+    var easyRandom = new EasyRandom();
+    var randomProject = getTestProject();
+
+    // @formatter:off
+    var id =
+        given()
+            .accept(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body(randomProject)
+            .when()
+            .post("user/projects")
+            .then()
+            .status(HttpStatus.CREATED)
+            .extract()
+            .body()
+            .jsonPath()
+            .getUUID("id");
+    // @formatter:on
+
+    var project = this.entityManager.find(Project.class, id);
+    assertThat(project).isNotNull();
+    assertThat(project.getOwner().getId())
+        .isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+  }
+
+  @Test
+  @WithMockJwtAuth(
+      authorities = {"ROLE_professor"},
+      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldCreateProject() {
     var easyRandom = new EasyRandom();
     var randomProject = getTestProject();
