@@ -1,11 +1,13 @@
 package de.innovationhub.prox.projectservice.owners;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import de.innovationhub.prox.projectservice.core.AbstractEntity;
 import de.innovationhub.prox.projectservice.project.Project;
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -35,6 +37,10 @@ public abstract class AbstractOwner {
   @JsonProperty(access = Access.READ_ONLY)
   @Setter(value = AccessLevel.PROTECTED)
   private UUID id;
+
+  @JsonIgnore
+  @Column(name = "owner_type", updatable = false, nullable = false, insertable = false)
+  private String ownerType;
 
   public abstract String getDiscriminator();
 }

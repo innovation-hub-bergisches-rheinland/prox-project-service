@@ -20,6 +20,8 @@ class SecurityConfig {
 
   private static final String[] PUBLIC_READ_PATHS = {
     "/projects/**",
+    "/users/**",
+    "/organizations/**",
     "/moduleTypes/**",
     "/studyPrograms/**",
     "/specializations/**",
