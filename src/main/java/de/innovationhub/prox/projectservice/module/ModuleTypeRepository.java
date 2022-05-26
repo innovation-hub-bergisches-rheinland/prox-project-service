@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.Query;
@@ -12,9 +13,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@Tag(name = "modules")
-@RepositoryRestResource
 public interface ModuleTypeRepository extends CrudRepository<ModuleType, UUID> {
+
+  Set<ModuleType> findAllByKeyIn(Collection<String> keys);
 
   @Query("select m from StudyProgram s join s.modules m where s.specialization.id IN :ids")
   Set<ModuleType> findAllModuleTypesOfSpecializationId(

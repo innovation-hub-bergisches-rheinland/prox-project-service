@@ -32,7 +32,8 @@ public class StudyProgram extends AbstractEntity {
   @Size(max = 255)
   private String name;
 
-  @ManyToMany private Set<ModuleType> modules = new HashSet<>();
+  @ManyToMany
+  private Set<ModuleType> modules = new HashSet<>();
 
   @ManyToOne(optional = false)
   private Specialization specialization;

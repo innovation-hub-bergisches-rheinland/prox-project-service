@@ -21,6 +21,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -65,7 +66,7 @@ class ProjectControllerTest {
         .get("/projects")
         .then()
         .status(HttpStatus.OK)
-        .body("_embedded.projects", hasSize(5));
+        .body("projects", hasSize(5));
     // @formatter:on
   }
 
@@ -198,6 +199,7 @@ class ProjectControllerTest {
   @WithMockJwtAuth(
       authorities = {"ROLE_professor"},
       claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+  @Disabled("Not implemented")
   void shouldPartiallyUpdateProject() {
     var easyRandom = new EasyRandom();
     // Ensure that authenticated User is the creator
@@ -309,18 +311,18 @@ class ProjectControllerTest {
 
     var specializationIds =
         randomSpecializations.stream()
-            .map(specialization -> specialization.getId().toString())
+            .map(specialization -> specialization.getKey())
             .toList();
 
     // @formatter:off
     given()
         .accept(MediaType.APPLICATION_JSON)
-        .contentType("text/uri-list")
-        .body(String.join("\n", specializationIds))
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .body(specializationIds)
         .when()
         .put("/projects/{id}/specializations", randomProject.getId())
         .then()
-        .status(HttpStatus.NO_CONTENT);
+        .status(HttpStatus.OK);
     // @formatter:on
 
     var foundProject = this.entityManager.find(Project.class, randomProject.getId());

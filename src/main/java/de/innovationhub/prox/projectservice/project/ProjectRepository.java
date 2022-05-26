@@ -11,19 +11,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "projects")
-@RepositoryRestResource(excerptProjection = ProjectExcerpt.class)
+@Repository
 public interface ProjectRepository
     extends PagingAndSortingRepository<Project, UUID>, ProjectRepositoryCustom {
-  @Override
-  Project save(Project entity);
-
   @Query("select p from Project p where p.owner.id = ?1 and p.owner.ownerType = ?2")
-  List<ProjectExcerpt> findByOwner(UUID id, String discriminator);
-
-  List<Project> findByStatus(@Param(value = "status") ProjectStatus status, Sort sort);
+  List<Project> findByOwner(UUID id, String discriminator);
 }
