@@ -30,8 +30,6 @@ public interface ProjectWithModulesProjection {
 
   AbstractOwner getOwner();
 
-  UUID getCreatorID();
-
   String getCreatorName();
 
   String getSupervisorName();
