@@ -1,7 +1,7 @@
 package de.innovationhub.prox.projectservice.project;
 
 
-import de.innovationhub.prox.projectservice.project.projection.ProjectWithModulesProjection;
+import de.innovationhub.prox.projectservice.project.projection.ProjectExcerpt;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.Instant;
 import java.util.List;
@@ -15,7 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "projects")
-@RepositoryRestResource(excerptProjection = ProjectWithModulesProjection.class)
+@RepositoryRestResource(excerptProjection = ProjectExcerpt.class)
 public interface ProjectRepository
     extends PagingAndSortingRepository<Project, UUID>, ProjectRepositoryCustom {
 

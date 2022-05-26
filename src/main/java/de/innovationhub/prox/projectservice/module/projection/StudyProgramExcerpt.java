@@ -9,7 +9,7 @@ import org.springframework.data.rest.core.config.Projection;
 @Projection(
     name = "withModules",
     types = {StudyProgram.class})
-public interface StudyProgramWithModulesProjection {
+public interface StudyProgramExcerpt {
   String getKey();
 
   String getName();
