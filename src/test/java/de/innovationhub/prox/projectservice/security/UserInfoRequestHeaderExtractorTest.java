@@ -4,11 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.UUID;
-import javax.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpMethod;
 import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 class UserInfoRequestHeaderExtractorTest {
 
@@ -37,7 +34,9 @@ class UserInfoRequestHeaderExtractorTest {
   @Test
   void shouldReturnNullOnInvalidMapping() {
     var request = new MockHttpServletRequest();
-    request.addHeader("x-userinfo", """
+    request.addHeader(
+        "x-userinfo",
+        """
         {
           "orgs": [],
           "sub": {},
@@ -52,12 +51,15 @@ class UserInfoRequestHeaderExtractorTest {
     var subject = UUID.randomUUID();
     var orgId1 = UUID.randomUUID();
     var orgId2 = UUID.randomUUID();
-    request.addHeader("x-userinfo", """
+    request.addHeader(
+        "x-userinfo",
+        """
         {
           "orgs": [ "%s", "%s" ],
           "sub": "%s"
         }
-        """.formatted(orgId1, orgId2, subject));
+        """
+            .formatted(orgId1, orgId2, subject));
 
     var result = extractor.parseUserInfoFromRequest(request);
 
@@ -71,18 +73,19 @@ class UserInfoRequestHeaderExtractorTest {
     var subject = UUID.randomUUID();
     var orgId1 = UUID.randomUUID();
     var orgId2 = UUID.randomUUID();
-    request.addHeader("X-uSeRiNfO", """
+    request.addHeader(
+        "X-uSeRiNfO",
+        """
         {
           "orgs": [ "%s", "%s" ],
           "sub": "%s"
         }
-        """.formatted(orgId1, orgId2, subject));
+        """
+            .formatted(orgId1, orgId2, subject));
 
     var result = extractor.parseUserInfoFromRequest(request);
 
     assertThat(result.sub()).isEqualTo(subject);
     assertThat(result.orgs()).containsExactlyInAnyOrder(orgId1, orgId2);
   }
-
-
 }

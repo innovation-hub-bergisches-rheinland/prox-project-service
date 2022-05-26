@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.security;
 
+
 import de.innovationhub.prox.projectservice.owners.organization.Organization;
 import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.project.Project;
@@ -22,19 +23,19 @@ public class ProjectPermissionEvaluatorHelper {
   }
 
   public boolean hasPermission(Project project, Authentication authentication, UserInfo userInfo) {
-    if(!authentication.isAuthenticated()) {
+    if (!authentication.isAuthenticated()) {
       return false;
     }
 
     var owner = project.getOwner();
     var discriminator = owner.getDiscriminator();
 
-    if(discriminator.equals(User.DISCRIMINATOR)) {
+    if (discriminator.equals(User.DISCRIMINATOR)) {
       return authentication.getName().equals(project.getOwner().getId().toString());
     }
 
-    if(discriminator.equals(Organization.DISCRIMINATOR)) {
-      if(userInfo == null) {
+    if (discriminator.equals(Organization.DISCRIMINATOR)) {
+      if (userInfo == null) {
         return false;
       }
       return userInfo.orgs().stream().anyMatch(oId -> owner.getId().equals(oId));
@@ -44,7 +45,8 @@ public class ProjectPermissionEvaluatorHelper {
     return false;
   }
 
-  public boolean hasPermission(Project project, Authentication authentication, HttpServletRequest request) {
+  public boolean hasPermission(
+      Project project, Authentication authentication, HttpServletRequest request) {
     var userInfo = requestHeaderExtractor.parseUserInfoFromRequest(request);
     return hasPermission(project, authentication, userInfo);
   }
@@ -52,7 +54,7 @@ public class ProjectPermissionEvaluatorHelper {
   public boolean hasPermissionWithCurrentContext(Project project) {
     var authentication = SecurityContextHolder.getContext().getAuthentication();
     var optRequest = getCurrentHttpRequest();
-    if(optRequest.isEmpty()) {
+    if (optRequest.isEmpty()) {
       log.debug("No Request present");
       return false;
     }

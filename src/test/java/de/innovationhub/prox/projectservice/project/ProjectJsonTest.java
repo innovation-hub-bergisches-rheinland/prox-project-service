@@ -7,7 +7,6 @@ import de.innovationhub.prox.projectservice.owners.user.User;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.UUID;
-import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
@@ -23,20 +22,20 @@ class ProjectJsonTest {
   @Test
   void serialize() throws Exception {
     // Given
-    var randomProject = new Project(
-        "Test Project",
-        "Test Project Description",
-        "Test Project Short Description",
-        "Test Project Requirement",
-        ProjectStatus.AVAILABLE,
-        "Test Project Creator Name",
-        "Test Project Supervisor",
-        Collections.emptySet(),
-        Collections.emptySet(),
-        new User(UUID.randomUUID()),
-        Instant.now(),
-        Instant.now()
-    );
+    var randomProject =
+        new Project(
+            "Test Project",
+            "Test Project Description",
+            "Test Project Short Description",
+            "Test Project Requirement",
+            ProjectStatus.AVAILABLE,
+            "Test Project Creator Name",
+            "Test Project Supervisor",
+            Collections.emptySet(),
+            Collections.emptySet(),
+            new User(UUID.randomUUID()),
+            Instant.now(),
+            Instant.now());
 
     // When
     var serialized = this.json.write(randomProject);

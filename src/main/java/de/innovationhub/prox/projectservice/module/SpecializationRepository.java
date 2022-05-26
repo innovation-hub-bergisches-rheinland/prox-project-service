@@ -1,7 +1,6 @@
 package de.innovationhub.prox.projectservice.module;
 
 
-import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;

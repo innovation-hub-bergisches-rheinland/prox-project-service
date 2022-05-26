@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.security;
 
+
 import java.util.function.Supplier;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authorization.AuthorizationDecision;
@@ -10,16 +11,19 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class UserRequestContextAuthorizationManager implements AuthorizationManager<RequestAuthorizationContext> {
-  private final static String User_ID_VARIABLE = "userId";
+public class UserRequestContextAuthorizationManager
+    implements AuthorizationManager<RequestAuthorizationContext> {
+  private static final String User_ID_VARIABLE = "userId";
 
   @Override
-  public AuthorizationDecision check(Supplier<Authentication> authentication,
-      RequestAuthorizationContext object) {
+  public AuthorizationDecision check(
+      Supplier<Authentication> authentication, RequestAuthorizationContext object) {
     // If we don't have a userId in the request context, we can't do anything
     var value = object.getVariables().get(User_ID_VARIABLE);
-    if(value == null || value.isBlank()) {
-      log.warn("No authorization decision could be made because the request variable '{}' is not present", User_ID_VARIABLE);
+    if (value == null || value.isBlank()) {
+      log.warn(
+          "No authorization decision could be made because the request variable '{}' is not present",
+          User_ID_VARIABLE);
       return null;
     }
 

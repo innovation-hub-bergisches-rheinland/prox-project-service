@@ -18,16 +18,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 
 class OrganizationRequestContextAuthorizationManagerTest {
-  private final UserInfoRequestHeaderExtractor extractor = mock(UserInfoRequestHeaderExtractor.class);
+  private final UserInfoRequestHeaderExtractor extractor =
+      mock(UserInfoRequestHeaderExtractor.class);
   private final Authentication authentication = mock(Authentication.class);
   private final Supplier<Authentication> mockAuthSupplier = () -> authentication;
-  private final OrganizationRequestContextAuthorizationManager manager = new OrganizationRequestContextAuthorizationManager(extractor);
+  private final OrganizationRequestContextAuthorizationManager manager =
+      new OrganizationRequestContextAuthorizationManager(extractor);
 
   @Test
   void shouldReturnNullWhenNoVariableIsSupplied() {
-    var context = new RequestAuthorizationContext(
-        new MockHttpServletRequest(),
-        Map.of());
+    var context = new RequestAuthorizationContext(new MockHttpServletRequest(), Map.of());
 
     var result = manager.check(mockAuthSupplier, context);
 
@@ -38,9 +38,9 @@ class OrganizationRequestContextAuthorizationManagerTest {
   @Test
   void shouldReturnNullWhenExtractorReturnsNull() {
     when(extractor.parseUserInfoFromRequest(any())).thenReturn(null);
-    var context = new RequestAuthorizationContext(
-        new MockHttpServletRequest(),
-        Map.of("orgId", UUID.randomUUID().toString()));
+    var context =
+        new RequestAuthorizationContext(
+            new MockHttpServletRequest(), Map.of("orgId", UUID.randomUUID().toString()));
 
     var result = manager.check(mockAuthSupplier, context);
 
@@ -50,9 +50,8 @@ class OrganizationRequestContextAuthorizationManagerTest {
 
   @Test
   void shouldThrowWhenContextVariableIsNotAUUID() {
-    var context = new RequestAuthorizationContext(
-        new MockHttpServletRequest(),
-        Map.of("orgId", "abc"));
+    var context =
+        new RequestAuthorizationContext(new MockHttpServletRequest(), Map.of("orgId", "abc"));
 
     assertThrows(IllegalArgumentException.class, () -> manager.check(mockAuthSupplier, context));
   }
@@ -60,9 +59,9 @@ class OrganizationRequestContextAuthorizationManagerTest {
   @Test
   void shouldReturnTrueWhenUserIsInOrg() {
     var orgId = UUID.randomUUID();
-    var context = new RequestAuthorizationContext(
-        new MockHttpServletRequest(),
-        Map.of("orgId", orgId.toString()));
+    var context =
+        new RequestAuthorizationContext(
+            new MockHttpServletRequest(), Map.of("orgId", orgId.toString()));
     var userInfo = new UserInfo(UUID.randomUUID(), Set.of(UUID.randomUUID(), orgId));
     when(extractor.parseUserInfoFromRequest(any())).thenReturn(userInfo);
 
@@ -74,9 +73,9 @@ class OrganizationRequestContextAuthorizationManagerTest {
 
   @Test
   void shouldReturnFalseWhenUserIsNotInOrg() {
-    var context = new RequestAuthorizationContext(
-        new MockHttpServletRequest(),
-        Map.of("orgId", UUID.randomUUID().toString()));
+    var context =
+        new RequestAuthorizationContext(
+            new MockHttpServletRequest(), Map.of("orgId", UUID.randomUUID().toString()));
     var userInfo = new UserInfo(UUID.randomUUID(), Set.of(UUID.randomUUID()));
     when(extractor.parseUserInfoFromRequest(any())).thenReturn(userInfo);
 

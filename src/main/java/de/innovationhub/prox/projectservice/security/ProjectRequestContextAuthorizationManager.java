@@ -1,6 +1,6 @@
 package de.innovationhub.prox.projectservice.security;
 
-import de.innovationhub.prox.projectservice.project.Project;
+
 import de.innovationhub.prox.projectservice.project.ProjectRepository;
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -13,24 +13,27 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class ProjectRequestContextAuthorizationManager implements AuthorizationManager<RequestAuthorizationContext> {
-  private final static String PROJECT_ID_VARIABLE = "projectId";
+public class ProjectRequestContextAuthorizationManager
+    implements AuthorizationManager<RequestAuthorizationContext> {
+  private static final String PROJECT_ID_VARIABLE = "projectId";
   private final ProjectRepository projectRepository;
   private final ProjectPermissionEvaluatorHelper permissionEvaluatorHelper;
 
-  public ProjectRequestContextAuthorizationManager(ProjectRepository projectRepository,
+  public ProjectRequestContextAuthorizationManager(
+      ProjectRepository projectRepository,
       ProjectPermissionEvaluatorHelper permissionEvaluatorHelper) {
     this.projectRepository = projectRepository;
     this.permissionEvaluatorHelper = permissionEvaluatorHelper;
   }
 
   @Override
-  public AuthorizationDecision check(Supplier<Authentication> authentication,
-      RequestAuthorizationContext object) {
+  public AuthorizationDecision check(
+      Supplier<Authentication> authentication, RequestAuthorizationContext object) {
     // If we don't have a projectId in the request context, we can't do anything
     var value = object.getVariables().get(PROJECT_ID_VARIABLE);
-    if(value == null || value.isBlank()) {
-      log.warn("No authorization decision could be made because the request variable '{}' is not present",
+    if (value == null || value.isBlank()) {
+      log.warn(
+          "No authorization decision could be made because the request variable '{}' is not present",
           PROJECT_ID_VARIABLE);
       return null;
     }
@@ -41,13 +44,14 @@ public class ProjectRequestContextAuthorizationManager implements AuthorizationM
     }
 
     var optProject = projectRepository.findById(UUID.fromString(value));
-    if(optProject.isEmpty()) {
+    if (optProject.isEmpty()) {
       // Can't decide if a project doesn't exist
       return null;
     }
 
     var project = optProject.get();
 
-    return new AuthorizationDecision(permissionEvaluatorHelper.hasPermission(project, auth, object.getRequest()));
+    return new AuthorizationDecision(
+        permissionEvaluatorHelper.hasPermission(project, auth, object.getRequest()));
   }
 }

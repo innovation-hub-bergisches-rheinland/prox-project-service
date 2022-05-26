@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.config;
 
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 
-public class KeycloakGrantedAuthoritiesConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
+public class KeycloakGrantedAuthoritiesConverter
+    implements Converter<Jwt, Collection<GrantedAuthority>> {
 
   @Override
   public Collection<GrantedAuthority> convert(Jwt source) {

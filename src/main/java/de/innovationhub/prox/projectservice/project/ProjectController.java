@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.project;
 
+
 import de.innovationhub.prox.projectservice.module.ModuleTypeRepository;
 import de.innovationhub.prox.projectservice.module.SpecializationRepository;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
@@ -41,10 +42,13 @@ public class ProjectController {
   private final ProjectMapper projectMapper;
 
   @Autowired
-  public ProjectController(ProjectRepository projectRepository,
-      SpecializationRepository specializationRepository, ModuleTypeRepository moduleTypeRepository,
+  public ProjectController(
+      ProjectRepository projectRepository,
+      SpecializationRepository specializationRepository,
+      ModuleTypeRepository moduleTypeRepository,
       UserRepository userRepository,
-      OrganizationRepository organizationRepository, ProjectMapper projectMapper) {
+      OrganizationRepository organizationRepository,
+      ProjectMapper projectMapper) {
     this.projectRepository = projectRepository;
     this.specializationRepository = specializationRepository;
     this.moduleTypeRepository = moduleTypeRepository;
@@ -67,16 +71,23 @@ public class ProjectController {
 
   @GetMapping(value = "/projects/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public @ResponseBody ResponseEntity<ReadProjectDto> getProjectById(@PathVariable("id") UUID id) {
-    return this.projectRepository.findById(id)
+    return this.projectRepository
+        .findById(id)
         .map(projectMapper::toDto)
         .map(ResponseEntity::ok)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
   }
 
-  @PutMapping(value = "/projects/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<ReadProjectDto> updateProjectById(@PathVariable("id") UUID id, @RequestBody CreateProjectDto projectDto) {
-    var project =  this.projectRepository.findById(id)
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+  @PutMapping(
+      value = "/projects/{id}",
+      produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
+  public @ResponseBody ResponseEntity<ReadProjectDto> updateProjectById(
+      @PathVariable("id") UUID id, @RequestBody CreateProjectDto projectDto) {
+    var project =
+        this.projectRepository
+            .findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
     projectMapper.updateProject(project, projectDto);
     var updated = projectRepository.save(project);
@@ -84,20 +95,32 @@ public class ProjectController {
     return ResponseEntity.ok(projectMapper.toDto(updated));
   }
 
-  @PutMapping(value = "/projects/{id}/specializations", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<ReadProjectDto> setProjectSpecializationsById(@PathVariable("id") UUID id, @RequestBody Set<String> specializationKeys) {
-    var project =  this.projectRepository.findById(id)
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+  @PutMapping(
+      value = "/projects/{id}/specializations",
+      produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
+  public @ResponseBody ResponseEntity<ReadProjectDto> setProjectSpecializationsById(
+      @PathVariable("id") UUID id, @RequestBody Set<String> specializationKeys) {
+    var project =
+        this.projectRepository
+            .findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     var specializations = this.specializationRepository.findAllByKeyIn(specializationKeys);
     project.setSpecializations(specializations);
     var updated = projectRepository.save(project);
     return ResponseEntity.ok(projectMapper.toDto(updated));
   }
 
-  @PutMapping(value = "/projects/{id}/modules", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<ReadProjectDto> setProjectModuleTypesById(@PathVariable("id") UUID id, @RequestBody Set<String> moduleTypeKeys) {
-    var project =  this.projectRepository.findById(id)
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+  @PutMapping(
+      value = "/projects/{id}/modules",
+      produces = MediaType.APPLICATION_JSON_VALUE,
+      consumes = MediaType.APPLICATION_JSON_VALUE)
+  public @ResponseBody ResponseEntity<ReadProjectDto> setProjectModuleTypesById(
+      @PathVariable("id") UUID id, @RequestBody Set<String> moduleTypeKeys) {
+    var project =
+        this.projectRepository
+            .findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     var moduleTypes = this.moduleTypeRepository.findAllByKeyIn(moduleTypeKeys);
     project.setModules(moduleTypes);
     var updated = projectRepository.save(project);
@@ -106,8 +129,10 @@ public class ProjectController {
 
   @DeleteMapping(value = "/projects/{id}")
   public @ResponseBody ResponseEntity<Void> deleteProjectById(@PathVariable("id") UUID id) {
-    var project =  this.projectRepository.findById(id)
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    var project =
+        this.projectRepository
+            .findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     this.projectRepository.delete(project);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
@@ -124,9 +149,10 @@ public class ProjectController {
       @RequestParam(name = "specializationKeys", required = false) String[] specializationKeys,
       @RequestParam(name = "moduleTypeKeys", required = false) String[] moduleTypeKeys,
       @RequestParam(name = "text", required = false) String text,
-      Sort sort
-  ) {
-    var projects = this.projectRepository.filterProjects(status, specializationKeys, moduleTypeKeys, text, sort);
+      Sort sort) {
+    var projects =
+        this.projectRepository.filterProjects(
+            status, specializationKeys, moduleTypeKeys, text, sort);
     return ResponseEntity.ok(projectMapper.toDto(projects));
   }
 
@@ -137,44 +163,60 @@ public class ProjectController {
    */
 
   @Transactional
-  @PostMapping(value = "/user/projects", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<ReadProjectDto> createProjectForAuthenticatedUser(@RequestBody CreateProjectDto project, Authentication authentication) {
+  @PostMapping(
+      value = "/user/projects",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public @ResponseBody ResponseEntity<ReadProjectDto> createProjectForAuthenticatedUser(
+      @RequestBody CreateProjectDto project, Authentication authentication) {
     var id = UUID.fromString(authentication.getName());
     return this.createUserProject(id, project);
   }
 
   @GetMapping(value = "/user/projects", produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<ReadProjectCollectionDto> getProjectsOfAuthenticatedUser(Authentication authentication) {
+  public @ResponseBody ResponseEntity<ReadProjectCollectionDto> getProjectsOfAuthenticatedUser(
+      Authentication authentication) {
     var id = UUID.fromString(authentication.getName());
     return getProjectsOfUser(id);
   }
 
   @Transactional
-  @PostMapping(value = "/users/{id}/projects", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<ReadProjectDto> createUserProject(@PathVariable("id") UUID userId, @RequestBody CreateProjectDto project) {
-    var user = this.userRepository.findById(userId)
-        .orElse(userRepository.save(new User(userId)));
+  @PostMapping(
+      value = "/users/{id}/projects",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public @ResponseBody ResponseEntity<ReadProjectDto> createUserProject(
+      @PathVariable("id") UUID userId, @RequestBody CreateProjectDto project) {
+    var user = this.userRepository.findById(userId).orElse(userRepository.save(new User(userId)));
     var createdProject = createProject(project, user);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdProject);
   }
 
   @GetMapping(value = "/users/{id}/projects", produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<ReadProjectCollectionDto> getProjectsOfUser(@PathVariable("id") UUID userId) {
+  public @ResponseBody ResponseEntity<ReadProjectCollectionDto> getProjectsOfUser(
+      @PathVariable("id") UUID userId) {
     var projects = this.projectRepository.findByOwner(userId, User.DISCRIMINATOR);
     return ResponseEntity.ok(projectMapper.toDto(projects));
   }
 
   @Transactional
-  @PostMapping(value ="/organizations/{id}/projects", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<ReadProjectDto> createOrganizationProject(@PathVariable("id") UUID orgId, @RequestBody CreateProjectDto project) {
-    var org = this.organizationRepository.findById(orgId)
-        .orElse(organizationRepository.save(new Organization(orgId)));
+  @PostMapping(
+      value = "/organizations/{id}/projects",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public @ResponseBody ResponseEntity<ReadProjectDto> createOrganizationProject(
+      @PathVariable("id") UUID orgId, @RequestBody CreateProjectDto project) {
+    var org =
+        this.organizationRepository
+            .findById(orgId)
+            .orElse(organizationRepository.save(new Organization(orgId)));
     var createdProject = createProject(project, org);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdProject);
   }
 
   @GetMapping(value = "/organizations/{id}/projects", produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<ReadProjectCollectionDto> getProjectsOfOrganization(@PathVariable("id") UUID orgId) {
+  public @ResponseBody ResponseEntity<ReadProjectCollectionDto> getProjectsOfOrganization(
+      @PathVariable("id") UUID orgId) {
     var projects = this.projectRepository.findByOwner(orgId, Organization.DISCRIMINATOR);
     return ResponseEntity.ok(projectMapper.toDto(projects));
   }

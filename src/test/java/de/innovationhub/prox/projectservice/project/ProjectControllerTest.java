@@ -1,13 +1,11 @@
 package de.innovationhub.prox.projectservice.project;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
-import static io.restassured.module.mockmvc.RestAssuredMockMvc.post;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 
 import com.c4_soft.springaddons.security.oauth2.test.annotations.OpenIdClaims;
 import com.c4_soft.springaddons.security.oauth2.test.annotations.WithMockJwtAuth;
-import com.c4_soft.springaddons.security.oauth2.test.annotations.keycloak.WithMockKeycloakAuth;
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.user.User;
@@ -16,7 +14,6 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import org.jeasy.random.EasyRandom;
@@ -48,13 +45,13 @@ class ProjectControllerTest {
   @Test
   void shouldGetProjects() {
     var easyRandom = new EasyRandom();
-    var randomProjects = List.of(
-        getTestProject(),
-        getTestProject(),
-        getTestProject(),
-        getTestProject(),
-        getTestProject()
-    );
+    var randomProjects =
+        List.of(
+            getTestProject(),
+            getTestProject(),
+            getTestProject(),
+            getTestProject(),
+            getTestProject());
 
     randomProjects.forEach(randomProject -> entityManager.persist(randomProject));
     entityManager.flush();
@@ -264,7 +261,8 @@ class ProjectControllerTest {
       claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldUpdateModulesOfProject() {
     var easyRandom = new EasyRandom();
-    var randomModules = List.of(new ModuleType("AB", "Alpha Beta"), new ModuleType("BG", "Beta Gamma"));
+    var randomModules =
+        List.of(new ModuleType("AB", "Alpha Beta"), new ModuleType("BG", "Beta Gamma"));
     // Ensure that authenticated User is the creator
     var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
     var randomProject = getTestProject(owner);
@@ -273,8 +271,7 @@ class ProjectControllerTest {
     randomModules.forEach(moduleType -> this.entityManager.persist(moduleType));
     this.entityManager.flush();
 
-    var moduleKeys =
-        randomModules.stream().map(moduleType -> moduleType.getKey()).toList();
+    var moduleKeys = randomModules.stream().map(moduleType -> moduleType.getKey()).toList();
 
     // @formatter:off
     given()
@@ -298,7 +295,8 @@ class ProjectControllerTest {
       claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldUpdateSpecializationOfProject() {
     var easyRandom = new EasyRandom();
-    var randomSpecializations = List.of(new Specialization("AB", "Alpha Beta"), new Specialization("BG", "Beta Gamma"));
+    var randomSpecializations =
+        List.of(new Specialization("AB", "Alpha Beta"), new Specialization("BG", "Beta Gamma"));
     // Ensure that authenticated User is the creator
     var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
     var randomProject = getTestProject(owner);
@@ -308,9 +306,7 @@ class ProjectControllerTest {
     this.entityManager.flush();
 
     var specializationIds =
-        randomSpecializations.stream()
-            .map(specialization -> specialization.getKey())
-            .toList();
+        randomSpecializations.stream().map(specialization -> specialization.getKey()).toList();
 
     // @formatter:off
     given()
@@ -333,6 +329,7 @@ class ProjectControllerTest {
     var owner = new User(UUID.randomUUID());
     return getTestProject(owner);
   }
+
   private Project getTestProject(User owner) {
     this.entityManager.persist(owner);
     return new Project(
@@ -347,7 +344,6 @@ class ProjectControllerTest {
         Collections.emptySet(),
         owner,
         Instant.now(),
-        Instant.now()
-    );
+        Instant.now());
   }
 }

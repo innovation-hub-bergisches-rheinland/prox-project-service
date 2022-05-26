@@ -3,7 +3,6 @@ package de.innovationhub.prox.projectservice.project;
 
 import io.micrometer.core.lang.Nullable;
 import java.util.List;
-import java.util.UUID;
 import org.springframework.data.domain.Sort;
 
 public interface ProjectRepositoryCustom {

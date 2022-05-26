@@ -1,9 +1,9 @@
 package de.innovationhub.prox.projectservice.project.dto;
 
+
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
-import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.ProjectStatus;
 import java.time.Instant;
 import java.util.Set;
@@ -23,6 +23,4 @@ public record ReadProjectDto(
     AbstractOwner owner,
     Instant createdAt,
     Instant modifiedAt,
-    ProjectPermissionsDto permissions
-) {
-}
+    ProjectPermissionsDto permissions) {}

@@ -30,7 +30,8 @@ class SecurityConfig {
     "/v3/api-docs/**"
   };
 
-  public SecurityConfig(ProjectRequestContextAuthorizationManager projectAuthorizationManager,
+  public SecurityConfig(
+      ProjectRequestContextAuthorizationManager projectAuthorizationManager,
       UserRequestContextAuthorizationManager userAuthorizationManager,
       OrganizationRequestContextAuthorizationManager orgAuthorizationManager) {
     this.projectAuthorizationManager = projectAuthorizationManager;
@@ -51,30 +52,31 @@ class SecurityConfig {
         .and()
         .csrf()
         .disable()
-        .oauth2ResourceServer(oauth2 -> oauth2.jwt().jwtAuthenticationConverter(jwtAuthenticationConverter()))
-        .authorizeHttpRequests(registry ->
-            registry
-                .mvcMatchers(HttpMethod.GET, PUBLIC_READ_PATHS)
-                .permitAll()
-                .mvcMatchers(HttpMethod.HEAD, PUBLIC_READ_PATHS)
-                .permitAll()
-                .mvcMatchers(HttpMethod.OPTIONS, PUBLIC_READ_PATHS)
-                .permitAll()
-                .mvcMatchers("/user/**")
-                .authenticated()
-                .mvcMatchers(HttpMethod.POST, "/users/{userId}/**")
-                .access(userAuthorizationManager)
-                .mvcMatchers(HttpMethod.POST, "/organizations/{orgId}/**")
-                .access(orgAuthorizationManager)
-                .mvcMatchers(HttpMethod.PUT, "/projects/{projectId}/**")
-                .access(projectAuthorizationManager)
-                .mvcMatchers(HttpMethod.PATCH, "/projects/{projectId}/**")
-                .access(projectAuthorizationManager)
-                .mvcMatchers(HttpMethod.DELETE, "/projects/{projectId}/**")
-                .access(projectAuthorizationManager)
-                .anyRequest()
-                .denyAll()
-        );
+        .oauth2ResourceServer(
+            oauth2 -> oauth2.jwt().jwtAuthenticationConverter(jwtAuthenticationConverter()))
+        .authorizeHttpRequests(
+            registry ->
+                registry
+                    .mvcMatchers(HttpMethod.GET, PUBLIC_READ_PATHS)
+                    .permitAll()
+                    .mvcMatchers(HttpMethod.HEAD, PUBLIC_READ_PATHS)
+                    .permitAll()
+                    .mvcMatchers(HttpMethod.OPTIONS, PUBLIC_READ_PATHS)
+                    .permitAll()
+                    .mvcMatchers("/user/**")
+                    .authenticated()
+                    .mvcMatchers(HttpMethod.POST, "/users/{userId}/**")
+                    .access(userAuthorizationManager)
+                    .mvcMatchers(HttpMethod.POST, "/organizations/{orgId}/**")
+                    .access(orgAuthorizationManager)
+                    .mvcMatchers(HttpMethod.PUT, "/projects/{projectId}/**")
+                    .access(projectAuthorizationManager)
+                    .mvcMatchers(HttpMethod.PATCH, "/projects/{projectId}/**")
+                    .access(projectAuthorizationManager)
+                    .mvcMatchers(HttpMethod.DELETE, "/projects/{projectId}/**")
+                    .access(projectAuthorizationManager)
+                    .anyRequest()
+                    .denyAll());
 
     return http.build();
   }

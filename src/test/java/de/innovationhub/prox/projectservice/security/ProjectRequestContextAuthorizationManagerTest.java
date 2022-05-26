@@ -6,7 +6,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import de.innovationhub.prox.projectservice.owners.organization.Organization;
 import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.ProjectRepository;
@@ -16,7 +15,6 @@ import java.time.Instant;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 import java.util.function.Supplier;
 import javax.servlet.http.HttpServletRequest;
@@ -29,14 +27,14 @@ import org.springframework.security.web.access.intercept.RequestAuthorizationCon
 class ProjectRequestContextAuthorizationManagerTest {
 
   private final ProjectRepository projectRepository = mock(ProjectRepository.class);
-  private final ProjectPermissionEvaluatorHelper permissionEvaluatorHelper = mock(ProjectPermissionEvaluatorHelper.class);
-  private final ProjectRequestContextAuthorizationManager manager = new ProjectRequestContextAuthorizationManager(projectRepository, permissionEvaluatorHelper);
+  private final ProjectPermissionEvaluatorHelper permissionEvaluatorHelper =
+      mock(ProjectPermissionEvaluatorHelper.class);
+  private final ProjectRequestContextAuthorizationManager manager =
+      new ProjectRequestContextAuthorizationManager(projectRepository, permissionEvaluatorHelper);
 
   @Test
   void shouldReturnNullWhenNoVariableIsSupplied() {
-    var context = new RequestAuthorizationContext(
-        new MockHttpServletRequest(),
-        Map.of());
+    var context = new RequestAuthorizationContext(new MockHttpServletRequest(), Map.of());
     Supplier<Authentication> mockAuthSupplier = () -> mock(Authentication.class);
 
     var result = manager.check(mockAuthSupplier, context);
@@ -48,9 +46,9 @@ class ProjectRequestContextAuthorizationManagerTest {
   void shouldReturnNullWhenProjectNotExists() {
     var projectId = UUID.randomUUID();
     when(projectRepository.findById(projectId)).thenReturn(Optional.empty());
-    var context = new RequestAuthorizationContext(
-        new MockHttpServletRequest(),
-        Map.of("projectId", projectId.toString()));
+    var context =
+        new RequestAuthorizationContext(
+            new MockHttpServletRequest(), Map.of("projectId", projectId.toString()));
 
     var mockedAuth = mock(Authentication.class);
     when(mockedAuth.isAuthenticated()).thenReturn(true);
@@ -66,9 +64,9 @@ class ProjectRequestContextAuthorizationManagerTest {
   void shouldReturnFalseWhenUserIsNotAuthenticated() {
     var project = getTestProject(UUID.randomUUID());
     when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
-    var context = new RequestAuthorizationContext(
-        new MockHttpServletRequest(),
-        Map.of("projectId", project.getId().toString()));
+    var context =
+        new RequestAuthorizationContext(
+            new MockHttpServletRequest(), Map.of("projectId", project.getId().toString()));
     var mockedAuth = mock(Authentication.class);
     when(mockedAuth.isAuthenticated()).thenReturn(false);
     Supplier<Authentication> mockAuthSupplier = () -> mockedAuth;
@@ -83,11 +81,12 @@ class ProjectRequestContextAuthorizationManagerTest {
     var userId = UUID.randomUUID();
     var project = getTestProject(userId);
     when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
-    var context = new RequestAuthorizationContext(
-        new MockHttpServletRequest(),
-        Map.of("projectId", project.getId().toString()));
-    when(permissionEvaluatorHelper.hasPermission(any(Project.class), any(Authentication.class), any(
-        HttpServletRequest.class))).thenReturn(true);
+    var context =
+        new RequestAuthorizationContext(
+            new MockHttpServletRequest(), Map.of("projectId", project.getId().toString()));
+    when(permissionEvaluatorHelper.hasPermission(
+            any(Project.class), any(Authentication.class), any(HttpServletRequest.class)))
+        .thenReturn(true);
     Supplier<Authentication> keycloakAuthSupplier = () -> mockedAuth(userId.toString());
 
     var result = manager.check(keycloakAuthSupplier, context);
@@ -101,11 +100,12 @@ class ProjectRequestContextAuthorizationManagerTest {
     var userId = UUID.randomUUID();
     var project = getTestProject(UUID.randomUUID());
     when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
-    when(permissionEvaluatorHelper.hasPermission(any(Project.class), any(Authentication.class), any(
-        HttpServletRequest.class))).thenReturn(false);
-    var context = new RequestAuthorizationContext(
-        new MockHttpServletRequest(),
-        Map.of("projectId", project.getId().toString()));
+    when(permissionEvaluatorHelper.hasPermission(
+            any(Project.class), any(Authentication.class), any(HttpServletRequest.class)))
+        .thenReturn(false);
+    var context =
+        new RequestAuthorizationContext(
+            new MockHttpServletRequest(), Map.of("projectId", project.getId().toString()));
     Supplier<Authentication> keycloakAuthSupplier = () -> mockedAuth(userId.toString());
 
     var result = manager.check(keycloakAuthSupplier, context);
@@ -133,7 +133,6 @@ class ProjectRequestContextAuthorizationManagerTest {
         Collections.emptySet(),
         new User(userId),
         Instant.now(),
-        Instant.now()
-    );
+        Instant.now());
   }
 }

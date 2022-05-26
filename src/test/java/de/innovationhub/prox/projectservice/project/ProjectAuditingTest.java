@@ -2,24 +2,18 @@ package de.innovationhub.prox.projectservice.project;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import de.innovationhub.prox.projectservice.owners.user.User;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
-import java.util.Optional;
 import java.util.UUID;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.AuditorAware;
 
 @SpringBootTest
 @AutoConfigureDataJpa
@@ -78,7 +72,6 @@ class ProjectAuditingTest {
         Collections.emptySet(),
         owner,
         Instant.now(),
-        Instant.now()
-    );
+        Instant.now());
   }
 }

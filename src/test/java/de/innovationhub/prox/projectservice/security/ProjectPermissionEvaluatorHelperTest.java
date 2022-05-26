@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 import de.innovationhub.prox.projectservice.owners.organization.Organization;
 import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.project.Project;
-import de.innovationhub.prox.projectservice.project.ProjectRepository;
 import de.innovationhub.prox.projectservice.project.ProjectStatus;
 import java.time.Instant;
 import java.util.Collections;
@@ -18,8 +17,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.security.core.Authentication;
 
 class ProjectPermissionEvaluatorHelperTest {
-  private final UserInfoRequestHeaderExtractor userInfoRequestHeaderExtractor = mock(UserInfoRequestHeaderExtractor.class);
-  private final ProjectPermissionEvaluatorHelper helper = new ProjectPermissionEvaluatorHelper(userInfoRequestHeaderExtractor);
+  private final UserInfoRequestHeaderExtractor userInfoRequestHeaderExtractor =
+      mock(UserInfoRequestHeaderExtractor.class);
+  private final ProjectPermissionEvaluatorHelper helper =
+      new ProjectPermissionEvaluatorHelper(userInfoRequestHeaderExtractor);
 
   @Test
   void shouldReturnFalseWhenNotAuthenticated() {
@@ -27,7 +28,10 @@ class ProjectPermissionEvaluatorHelperTest {
     var auth = mock(Authentication.class);
     when(auth.isAuthenticated()).thenReturn(false);
 
-    assertThat(helper.hasPermission(project, auth, new UserInfo(UUID.randomUUID(), Collections.emptySet()))).isFalse();
+    assertThat(
+            helper.hasPermission(
+                project, auth, new UserInfo(UUID.randomUUID(), Collections.emptySet())))
+        .isFalse();
   }
 
   @Test
@@ -39,7 +43,8 @@ class ProjectPermissionEvaluatorHelperTest {
     when(auth.isAuthenticated()).thenReturn(true);
     when(auth.getName()).thenReturn(user.toString());
 
-    assertThat(helper.hasPermission(project, auth, new UserInfo(user, Collections.emptySet()))).isTrue();
+    assertThat(helper.hasPermission(project, auth, new UserInfo(user, Collections.emptySet())))
+        .isTrue();
   }
 
   @Test
@@ -51,7 +56,8 @@ class ProjectPermissionEvaluatorHelperTest {
     when(auth.isAuthenticated()).thenReturn(true);
     when(auth.getName()).thenReturn(user.toString());
 
-    assertThat(helper.hasPermission(project, auth, new UserInfo(user, Collections.emptySet()))).isFalse();
+    assertThat(helper.hasPermission(project, auth, new UserInfo(user, Collections.emptySet())))
+        .isFalse();
   }
 
   @Test
@@ -64,7 +70,10 @@ class ProjectPermissionEvaluatorHelperTest {
     when(auth.isAuthenticated()).thenReturn(true);
     when(auth.getName()).thenReturn(user.toString());
 
-    assertThat(helper.hasPermission(project, auth, new UserInfo(user, Set.of(UUID.randomUUID(), orgId)))).isTrue();
+    assertThat(
+            helper.hasPermission(
+                project, auth, new UserInfo(user, Set.of(UUID.randomUUID(), orgId))))
+        .isTrue();
   }
 
   @Test
@@ -93,8 +102,7 @@ class ProjectPermissionEvaluatorHelperTest {
         Collections.emptySet(),
         new User(userId),
         Instant.now(),
-        Instant.now()
-    );
+        Instant.now());
   }
 
   private Project getTestOrgProject(UUID orgId) {
@@ -110,7 +118,6 @@ class ProjectPermissionEvaluatorHelperTest {
         Collections.emptySet(),
         new Organization(orgId),
         Instant.now(),
-        Instant.now()
-    );
+        Instant.now());
   }
 }

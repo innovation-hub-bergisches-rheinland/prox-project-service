@@ -11,7 +11,6 @@ import de.innovationhub.prox.projectservice.owners.AbstractOwner;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -29,7 +28,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -76,7 +74,7 @@ public class Project extends AbstractEntity {
 
   @JsonProperty(access = Access.READ_ONLY)
   @ManyToOne(optional = false)
-  @JoinColumn(name="owner_id", nullable=false, updatable=false)
+  @JoinColumn(name = "owner_id", nullable = false, updatable = false)
   private AbstractOwner owner;
 
   @JsonProperty(access = Access.READ_ONLY)

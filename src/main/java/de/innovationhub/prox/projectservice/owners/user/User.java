@@ -6,9 +6,7 @@ import de.innovationhub.prox.projectservice.owners.AbstractOwner;
 import java.util.UUID;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +18,8 @@ import lombok.Setter;
 @Setter
 public class User extends AbstractOwner {
 
-  public final static String DISCRIMINATOR = "user";
+  public static final String DISCRIMINATOR = "user";
+
   public User(UUID id) {
     super(id, DISCRIMINATOR);
   }

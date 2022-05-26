@@ -1,6 +1,6 @@
 package de.innovationhub.prox.projectservice.module;
 
-import de.innovationhub.prox.projectservice.module.dto.ReadModuleTypeCollectionDto;
+
 import de.innovationhub.prox.projectservice.module.dto.ReadSpecializationCollectionDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
