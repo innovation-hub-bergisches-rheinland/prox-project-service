@@ -7,7 +7,6 @@ import java.util.UUID;
 import org.springframework.data.domain.Sort;
 
 public interface ProjectRepositoryCustom {
-
   List<Project> filterProjects(
       @Nullable ProjectStatus status,
       @Nullable String[] specializationKeys,
