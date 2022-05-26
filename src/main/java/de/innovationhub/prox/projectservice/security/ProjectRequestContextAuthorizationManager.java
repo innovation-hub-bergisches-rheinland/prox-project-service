@@ -1,6 +1,5 @@
 package de.innovationhub.prox.projectservice.security;
 
-import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.ProjectRepository;
 import java.util.UUID;
@@ -17,12 +16,12 @@ import org.springframework.stereotype.Component;
 public class ProjectRequestContextAuthorizationManager implements AuthorizationManager<RequestAuthorizationContext> {
   private final static String PROJECT_ID_VARIABLE = "projectId";
   private final ProjectRepository projectRepository;
-  private final UserInfoRequestHeaderExtractor userInfoRequestHeaderExtractor;
+  private final ProjectPermissionEvaluatorHelper permissionEvaluatorHelper;
 
   public ProjectRequestContextAuthorizationManager(ProjectRepository projectRepository,
-      UserInfoRequestHeaderExtractor userInfoRequestHeaderExtractor) {
+      ProjectPermissionEvaluatorHelper permissionEvaluatorHelper) {
     this.projectRepository = projectRepository;
-    this.userInfoRequestHeaderExtractor = userInfoRequestHeaderExtractor;
+    this.permissionEvaluatorHelper = permissionEvaluatorHelper;
   }
 
   @Override
@@ -49,34 +48,6 @@ public class ProjectRequestContextAuthorizationManager implements AuthorizationM
 
     var project = optProject.get();
 
-    var discriminator = project.getOwner().getDiscriminator();
-    switch (discriminator) {
-      case "user":
-        return authorizeUser(auth, project, object);
-      case "organization":
-        return authorizeOrganization(auth, project, object);
-    }
-
-    log.warn("Authorization decision cannot be done because '{}' is not a known discriminator value", discriminator);
-    return null;
-  }
-
-  private AuthorizationDecision authorizeUser(Authentication authentication, Project project, RequestAuthorizationContext object) {
-    try {
-      var principal = authentication.getName();
-      // Not necessary to parse into a UUID. We can just rely on plain string equality
-      return new AuthorizationDecision(project.getOwner().getId().toString().equals(principal));
-    } catch (ClassCastException e) {
-      log.error("Could not parse the provided authentication to Keycloak token", e);
-      return new AuthorizationDecision(false);
-    }
-  }
-
-  private AuthorizationDecision authorizeOrganization(Authentication authentication, Project project, RequestAuthorizationContext object) {
-    var userInfo = userInfoRequestHeaderExtractor.parseUserInfoFromRequest(object.getRequest());
-    if(userInfo == null) {
-      return new AuthorizationDecision(false);
-    }
-    return new AuthorizationDecision(userInfo.orgs().contains(project.getOwner().getId()));
+    return new AuthorizationDecision(permissionEvaluatorHelper.hasPermission(project, auth, object.getRequest()));
   }
 }

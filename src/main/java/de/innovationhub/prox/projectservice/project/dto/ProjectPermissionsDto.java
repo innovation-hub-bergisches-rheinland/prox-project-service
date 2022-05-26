@@ -4,5 +4,4 @@ public record ProjectPermissionsDto(
     boolean canEdit,
     boolean canDelete
 ) {
-
 }
