@@ -96,7 +96,7 @@ public class ProjectController {
     return ResponseEntity.ok(ReadProjectDto.fromProject(updated));
   }
 
-  @PutMapping(value = "/projects/{id}/moduleTypes", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PutMapping(value = "/projects/{id}/modules", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
   public @ResponseBody ResponseEntity<ReadProjectDto> setProjectModuleTypesById(@PathVariable("id") UUID id, @RequestBody Set<String> moduleTypeKeys) {
     var project =  this.projectRepository.findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

@@ -264,27 +264,27 @@ class ProjectControllerTest {
       claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldUpdateModulesOfProject() {
     var easyRandom = new EasyRandom();
-    var randomModules = easyRandom.objects(ModuleType.class, 2).collect(Collectors.toList());
+    var randomModules = List.of(new ModuleType("AB", "Alpha Beta"), new ModuleType("BG", "Beta Gamma"));
     // Ensure that authenticated User is the creator
     var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
     var randomProject = getTestProject(owner);
 
     this.entityManager.persist(randomProject);
-    entityManager.flush();
     randomModules.forEach(moduleType -> this.entityManager.persist(moduleType));
+    this.entityManager.flush();
 
-    var moduleIds =
-        randomModules.stream().map(moduleType -> moduleType.getId().toString()).toList();
+    var moduleKeys =
+        randomModules.stream().map(moduleType -> moduleType.getKey()).toList();
 
     // @formatter:off
     given()
         .accept(MediaType.APPLICATION_JSON)
-        .contentType("text/uri-list")
-        .body(String.join("\n", moduleIds))
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .body(moduleKeys)
         .when()
         .put("/projects/{id}/modules", randomProject.getId())
         .then()
-        .status(HttpStatus.NO_CONTENT);
+        .status(HttpStatus.OK);
     // @formatter:on
 
     var foundProject = this.entityManager.find(Project.class, randomProject.getId());
@@ -298,16 +298,14 @@ class ProjectControllerTest {
       claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldUpdateSpecializationOfProject() {
     var easyRandom = new EasyRandom();
-    var randomSpecializations =
-        easyRandom.objects(Specialization.class, 2).collect(Collectors.toList());
+    var randomSpecializations = List.of(new Specialization("AB", "Alpha Beta"), new Specialization("BG", "Beta Gamma"));
     // Ensure that authenticated User is the creator
     var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
     var randomProject = getTestProject(owner);
 
     this.entityManager.persist(randomProject);
-    entityManager.flush();
-
     randomSpecializations.forEach(specialization -> this.entityManager.persist(specialization));
+    this.entityManager.flush();
 
     var specializationIds =
         randomSpecializations.stream()

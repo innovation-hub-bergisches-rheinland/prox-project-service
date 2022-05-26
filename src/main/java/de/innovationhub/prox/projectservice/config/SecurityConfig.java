@@ -22,10 +22,9 @@ class SecurityConfig {
     "/projects/**",
     "/users/**",
     "/organizations/**",
-    "/moduleTypes/**",
+    "/modules/**",
     "/studyPrograms/**",
     "/specializations/**",
-    "/profile/**",
     "/swagger-ui.html",
     "/swagger-ui/**",
     "/v3/api-docs/**"

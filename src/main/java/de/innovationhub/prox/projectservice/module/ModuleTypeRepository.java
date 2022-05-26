@@ -11,30 +11,19 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ModuleTypeRepository extends CrudRepository<ModuleType, UUID> {
 
   Set<ModuleType> findAllByKeyIn(Collection<String> keys);
 
-  @Query("select m from StudyProgram s join s.modules m where s.specialization.id IN :ids")
+  @Query("select m from StudyProgram s join s.modules m where s.specialization.key IN ?1")
   Set<ModuleType> findAllModuleTypesOfSpecializationId(
-      @Param("ids")
-          @Parameter(
-              array =
-                  @ArraySchema(
-                      uniqueItems = true,
-                      schema = @Schema(name = "string", type = "uuid")))
-          Set<UUID> ids);
+          Set<String> keys);
 
   @Query(
-      "select s from StudyProgram sp join sp.specialization s join sp.modules mt where mt.id IN :ids")
+      "select s from StudyProgram sp join sp.specialization s join sp.modules mt where mt.key IN ?1")
   Set<Specialization> findSpecializationsOfModules(
-      @Param("ids")
-          @Parameter(
-              array =
-                  @ArraySchema(
-                      uniqueItems = true,
-                      schema = @Schema(name = "string", type = "uuid")))
-          Set<UUID> ids);
+          Set<String> keys);
 }

@@ -17,17 +17,17 @@ public class ModuleTypeController {
     this.moduleTypeRepository = moduleTypeRepository;
   }
 
-  @GetMapping("/moduleTypes")
+  @GetMapping("/modules")
   public @ResponseBody ResponseEntity<ReadModuleTypeCollectionDto> getAllModules() {
     var moduleTypes = this.moduleTypeRepository.findAll();
     return ResponseEntity.ok(ReadModuleTypeCollectionDto.fromModuleTypes(moduleTypes));
   }
 
-  @GetMapping("/moduleTypes/search/findModulesOfSpecializations")
+  @GetMapping("/modules/search/findModulesOfSpecializations")
   public @ResponseBody ResponseEntity<ReadModuleTypeCollectionDto> findModulesOfSpecializations(
-      @RequestParam("ids") Set<UUID> ids
+      @RequestParam("keys") Set<String> keys
   ) {
-    var moduleTypes = this.moduleTypeRepository.findAllModuleTypesOfSpecializationId(ids);
+    var moduleTypes = this.moduleTypeRepository.findAllModuleTypesOfSpecializationId(keys);
     return ResponseEntity.ok(ReadModuleTypeCollectionDto.fromModuleTypes(moduleTypes));
   }
 }

@@ -46,7 +46,7 @@ class ModuleTypeRepositoryTest {
 
     // When
     var result =
-        moduleTypeRepository.findAllModuleTypesOfSpecializationId(Set.of(specialization.getId()));
+        moduleTypeRepository.findAllModuleTypesOfSpecializationId(Set.of(specialization.getKey()));
 
     // Then
     assertThat(result).containsExactlyInAnyOrderElementsOf(moduleTypesOfSpecialization);
@@ -80,7 +80,7 @@ class ModuleTypeRepositoryTest {
     var result =
         moduleTypeRepository.findSpecializationsOfModules(
             moduleTypesOfSpecialization.stream()
-                .map(ModuleType::getId)
+                .map(ModuleType::getKey)
                 .collect(Collectors.toSet()));
 
     // Then
