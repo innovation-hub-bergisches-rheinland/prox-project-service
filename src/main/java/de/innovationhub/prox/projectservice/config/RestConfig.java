@@ -49,6 +49,12 @@ public class RestConfig implements RepositoryRestConfigurer {
             .map(Type::getJavaType)
             .toArray(Class[]::new));
 
+    // Projects can only be created using the /users, or /organizations resource
+    config
+        .getExposureConfiguration()
+            .forDomainType(Project.class)
+                .withItemExposure((metadata, httpMethods) -> httpMethods.disable(HttpMethod.POST));
+
     // Specialization is read-only
     config
         .getExposureConfiguration()

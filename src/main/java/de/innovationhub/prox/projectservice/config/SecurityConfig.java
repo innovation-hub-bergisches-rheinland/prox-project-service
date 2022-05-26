@@ -59,9 +59,6 @@ class SecurityConfig {
                 .permitAll()
                 .mvcMatchers(HttpMethod.OPTIONS, PUBLIC_READ_PATHS)
                 .permitAll()
-                // Don't allow the POST /projects endpoint as it is still exposed by Spring Data REST
-                .mvcMatchers(HttpMethod.POST, "/projects/**")
-                .denyAll()
                 .mvcMatchers(HttpMethod.POST, "/users/{userId}/**")
                 .access(userAuthorizationManager)
                 .mvcMatchers(HttpMethod.POST, "/organizations/{orgId}/**")
