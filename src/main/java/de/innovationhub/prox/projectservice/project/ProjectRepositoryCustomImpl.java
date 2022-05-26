@@ -16,18 +16,6 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
   @Autowired @Lazy private ProjectRepository projectRepository;
 
   @Override
-  public List<Project> findAvailableProjectsOfCreator(UUID creatorId, Sort sort) {
-    return projectRepository.findAllByOwner_IdAndStatusIn(
-        creatorId, Collections.singleton(ProjectStatus.AVAILABLE), sort);
-  }
-
-  @Override
-  public List<Project> findRunningAndFinishedProjectsOfCreator(UUID creatorId, Sort sort) {
-    return projectRepository.findAllByOwner_IdAndStatusIn(
-        creatorId, List.of(ProjectStatus.FINISHED, ProjectStatus.RUNNING), sort);
-  }
-
-  @Override
   public List<Project> filterProjects(
       ProjectStatus status,
       String[] specializationKeys,
@@ -82,34 +70,5 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
               return match;
             })
         .collect(Collectors.toList());
-  }
-
-  @Override
-  public ProjectStats findProjectStatsOfCreator(UUID creatorId, Sort sort) {
-    var projects =
-        this.projectRepository.findAllByOwner_IdAndStatusIn(
-            creatorId,
-            List.of(ProjectStatus.RUNNING, ProjectStatus.AVAILABLE, ProjectStatus.FINISHED),
-            sort);
-    return new ProjectStats(
-        filterByStatusAndCount(projects, ProjectStatus.RUNNING),
-        filterByStatusAndCount(projects, ProjectStatus.FINISHED),
-        filterByStatusAndCount(projects, ProjectStatus.AVAILABLE));
-  }
-
-  private int filterByStatusAndCount(List<Project> projects, ProjectStatus projectStatus) {
-    return Math.toIntExact(projects.stream().filter(p -> p.getStatus() == projectStatus).count());
-  }
-
-  @Override
-  public List<Project> findRunningProjectsOfCreator(UUID creatorId, Sort sort) {
-    return projectRepository.findAllByOwner_IdAndStatusIn(
-        creatorId, Collections.singleton(ProjectStatus.RUNNING), sort);
-  }
-
-  @Override
-  public List<Project> findinishedProjectsOfCreator(UUID creatorId, Sort sort) {
-    return projectRepository.findAllByOwner_IdAndStatusIn(
-        creatorId, Collections.singleton(ProjectStatus.FINISHED), sort);
   }
 }

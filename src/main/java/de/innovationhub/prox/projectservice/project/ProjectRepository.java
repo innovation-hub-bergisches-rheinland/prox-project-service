@@ -19,27 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RepositoryRestResource(excerptProjection = ProjectExcerpt.class)
 public interface ProjectRepository
     extends PagingAndSortingRepository<Project, UUID>, ProjectRepositoryCustom {
-
   @Override
   Project save(Project entity);
 
   @Query("select p from Project p where p.owner.id = ?1 and p.owner.ownerType = ?2")
   List<ProjectExcerpt> findByOwner(UUID id, String discriminator);
 
-  // 's' for backwards compatibility
-  @RestResource(path = "findAllByIdsIn")
-  List<Project> findAllByIdIn(@RequestParam("projectIds") UUID[] projectIds);
-
   List<Project> findByStatus(@Param(value = "status") ProjectStatus status, Sort sort);
-
-  List<Project> findBySupervisorNameContaining(
-      @Param(value = "supervisorName") String supervisorName, Sort sort);
-
-  List<Project> findAllByModifiedAtAfter(
-      @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") @Param(value = "modified") Instant modified,
-      Sort sort);
-
-  @RestResource(exported = false)
-  List<Project> findAllByOwner_IdAndStatusIn(
-      final UUID creatorId, Iterable<ProjectStatus> status, Sort sort);
 }
