@@ -11,7 +11,6 @@ import java.util.Set;
 import org.springframework.data.rest.core.config.Projection;
 
 @Projection(
-    name = "withAssociations",
     types = {Project.class})
 public interface ProjectExcerpt {
 
