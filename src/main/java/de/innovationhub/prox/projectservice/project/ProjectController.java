@@ -5,6 +5,7 @@ import de.innovationhub.prox.projectservice.owners.organization.Organization;
 import de.innovationhub.prox.projectservice.owners.organization.OrganizationRepository;
 import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.owners.user.UserRepository;
+import de.innovationhub.prox.projectservice.project.dto.CreateProjectDto;
 import java.util.UUID;
 import javax.transaction.Transactional;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
@@ -34,14 +35,14 @@ public class ProjectController {
 
   @Transactional
   @PostMapping(value = "/user/projects", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<?> createProjectForAuthenticatedUser(@RequestBody Project project, Authentication authentication) {
+  public @ResponseBody ResponseEntity<?> createProjectForAuthenticatedUser(@RequestBody CreateProjectDto project, Authentication authentication) {
     var id = UUID.fromString(authentication.getName());
     return this.createUserProject(id, project);
   }
 
   @Transactional
   @PostMapping(value = "/users/{id}/projects", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<?> createUserProject(@PathVariable("id") UUID userId, @RequestBody Project project) {
+  public @ResponseBody ResponseEntity<?> createUserProject(@PathVariable("id") UUID userId, @RequestBody CreateProjectDto project) {
     var user = this.userRepository.findById(userId)
         .orElse(userRepository.save(new User(userId)));
     var createdProject = createProject(project, user);
@@ -50,14 +51,15 @@ public class ProjectController {
 
   @Transactional
   @PostMapping(value ="/organizations/{id}/projects", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<?> createOrganizationProject(@PathVariable("id") UUID orgId, @RequestBody Project project) {
+  public @ResponseBody ResponseEntity<?> createOrganizationProject(@PathVariable("id") UUID orgId, @RequestBody CreateProjectDto project) {
     var org = this.organizationRepository.findById(orgId)
         .orElse(organizationRepository.save(new Organization(orgId)));
     var createdProject = createProject(project, org);
     return ResponseEntity.status(HttpStatus.CREATED).body(EntityModel.of(createdProject));
   }
 
-  private Project createProject(Project project, AbstractOwner owner) {
+  private Project createProject(CreateProjectDto projectDto, AbstractOwner owner) {
+    var project = projectDto.toProject();
     project.setOwner(owner);
     return projectRepository.save(project);
   }

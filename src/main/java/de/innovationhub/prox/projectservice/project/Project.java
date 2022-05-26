@@ -23,6 +23,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,6 +38,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
+@Builder
 public class Project extends AbstractEntity {
 
   @Column(length = 255)
