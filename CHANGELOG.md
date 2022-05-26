@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v2.0.0...v2.0.1) (2022-05-26)
+
+
+### Bug Fixes
+
+* drop context column ([2ceb3a7](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/2ceb3a7a7e77fe2806483b2c9befc0a01d673ffe))
+
 ## [2.0.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.4.6...v2.0.0) (2022-05-26)
 
 
