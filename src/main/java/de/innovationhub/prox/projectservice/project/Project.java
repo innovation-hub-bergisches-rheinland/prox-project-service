@@ -72,7 +72,6 @@ public class Project extends AbstractEntity {
 
   @JsonIgnore @ManyToMany private Set<ModuleType> modules = new HashSet<>();
 
-  @CreatedBy
   @JsonProperty(access = Access.READ_ONLY)
   @ManyToOne(optional = false)
   @JoinColumn(name="owner_id", nullable=false, updatable=false)
