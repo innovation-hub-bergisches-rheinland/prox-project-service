@@ -25,7 +25,4 @@ public record ReadProjectDto(
     Instant modifiedAt,
     ProjectPermissionsDto permissions
 ) {
-    public static ReadProjectDto fromProject(Project project) {
-        return new ReadProjectDto(project.getId() ,project.getName(), project.getDescription(), project.getShortDescription(), project.getRequirement(), project.getStatus(), project.getCreatorName(), project.getSupervisorName(), project.getSpecializations(), project.getModules(), project.getOwner(), project.getCreatedAt(), project.getModifiedAt(), null);
-    }
 }

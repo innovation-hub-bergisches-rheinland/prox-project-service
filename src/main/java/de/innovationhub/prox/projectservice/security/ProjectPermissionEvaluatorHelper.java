@@ -34,6 +34,9 @@ public class ProjectPermissionEvaluatorHelper {
     }
 
     if(discriminator.equals(Organization.DISCRIMINATOR)) {
+      if(userInfo == null) {
+        return false;
+      }
       return userInfo.orgs().stream().anyMatch(oId -> owner.getId().equals(oId));
     }
 
@@ -53,8 +56,7 @@ public class ProjectPermissionEvaluatorHelper {
       log.debug("No Request present");
       return false;
     }
-    var userInfo = requestHeaderExtractor.parseUserInfoFromRequest(optRequest.get());
-    return hasPermission(project, authentication, userInfo);
+    return hasPermission(project, authentication, optRequest.get());
   }
 
   private Optional<HttpServletRequest> getCurrentHttpRequest() {

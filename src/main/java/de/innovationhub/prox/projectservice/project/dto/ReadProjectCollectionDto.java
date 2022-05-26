@@ -15,7 +15,4 @@ import javax.xml.transform.stream.StreamSource;
 public record ReadProjectCollectionDto(
     List<ReadProjectDto> projects
 ) {
-    public static ReadProjectCollectionDto fromProjects(Iterable<Project> projects) {
-        return new ReadProjectCollectionDto(StreamSupport.stream(projects.spliterator(), false).map(ReadProjectDto::fromProject).toList());
-    }
 }

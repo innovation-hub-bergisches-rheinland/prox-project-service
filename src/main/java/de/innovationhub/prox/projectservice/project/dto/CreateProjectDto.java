@@ -14,15 +14,4 @@ public record CreateProjectDto(
     String creatorName,
     String supervisorName
 ) {
-  public Project toProject() {
-    return Project.builder()
-        .name(name)
-        .description(description)
-        .shortDescription(shortDescription)
-        .requirement(requirement)
-        .status(status)
-        .creatorName(creatorName)
-        .supervisorName(supervisorName)
-        .build();
-  }
 }

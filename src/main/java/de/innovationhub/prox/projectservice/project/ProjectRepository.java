@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProjectRepository
     extends PagingAndSortingRepository<Project, UUID>, ProjectRepositoryCustom {
+  List<Project> findAll();
   @Query("select p from Project p where p.owner.id = ?1 and p.owner.ownerType = ?2")
   List<Project> findByOwner(UUID id, String discriminator);
 }

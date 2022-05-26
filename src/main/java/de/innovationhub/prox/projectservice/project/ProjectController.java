@@ -10,6 +10,7 @@ import de.innovationhub.prox.projectservice.owners.user.UserRepository;
 import de.innovationhub.prox.projectservice.project.dto.CreateProjectDto;
 import de.innovationhub.prox.projectservice.project.dto.ReadProjectCollectionDto;
 import de.innovationhub.prox.projectservice.project.dto.ReadProjectDto;
+import de.innovationhub.prox.projectservice.project.mapper.ProjectMapper;
 import java.util.Set;
 import java.util.UUID;
 import javax.transaction.Transactional;
@@ -37,17 +38,19 @@ public class ProjectController {
   private final ModuleTypeRepository moduleTypeRepository;
   private final UserRepository userRepository;
   private final OrganizationRepository organizationRepository;
+  private final ProjectMapper projectMapper;
 
   @Autowired
   public ProjectController(ProjectRepository projectRepository,
       SpecializationRepository specializationRepository, ModuleTypeRepository moduleTypeRepository,
       UserRepository userRepository,
-      OrganizationRepository organizationRepository) {
+      OrganizationRepository organizationRepository, ProjectMapper projectMapper) {
     this.projectRepository = projectRepository;
     this.specializationRepository = specializationRepository;
     this.moduleTypeRepository = moduleTypeRepository;
     this.userRepository = userRepository;
     this.organizationRepository = organizationRepository;
+    this.projectMapper = projectMapper;
   }
 
   /*
@@ -59,13 +62,13 @@ public class ProjectController {
   @GetMapping(value = "/projects", produces = MediaType.APPLICATION_JSON_VALUE)
   public @ResponseBody ResponseEntity<ReadProjectCollectionDto> getAllProjects() {
     var projects = this.projectRepository.findAll();
-    return ResponseEntity.ok(ReadProjectCollectionDto.fromProjects(projects));
+    return ResponseEntity.ok(projectMapper.toDto(projects));
   }
 
   @GetMapping(value = "/projects/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public @ResponseBody ResponseEntity<ReadProjectDto> getProjectById(@PathVariable("id") UUID id) {
     return this.projectRepository.findById(id)
-        .map(ReadProjectDto::fromProject)
+        .map(projectMapper::toDto)
         .map(ResponseEntity::ok)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
   }
@@ -74,16 +77,11 @@ public class ProjectController {
   public @ResponseBody ResponseEntity<ReadProjectDto> updateProjectById(@PathVariable("id") UUID id, @RequestBody CreateProjectDto projectDto) {
     var project =  this.projectRepository.findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    // TODO: Proper mapping
-    project.setName(projectDto.name());
-    project.setDescription(projectDto.description());
-    project.setShortDescription(projectDto.shortDescription());
-    project.setRequirement(projectDto.requirement());
-    project.setStatus(projectDto.status());
-    project.setSupervisorName(project.getSupervisorName());
 
+    projectMapper.updateProject(project, projectDto);
     var updated = projectRepository.save(project);
-    return ResponseEntity.ok(ReadProjectDto.fromProject(updated));
+
+    return ResponseEntity.ok(projectMapper.toDto(updated));
   }
 
   @PutMapping(value = "/projects/{id}/specializations", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -93,7 +91,7 @@ public class ProjectController {
     var specializations = this.specializationRepository.findAllByKeyIn(specializationKeys);
     project.setSpecializations(specializations);
     var updated = projectRepository.save(project);
-    return ResponseEntity.ok(ReadProjectDto.fromProject(updated));
+    return ResponseEntity.ok(projectMapper.toDto(updated));
   }
 
   @PutMapping(value = "/projects/{id}/modules", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -103,7 +101,7 @@ public class ProjectController {
     var moduleTypes = this.moduleTypeRepository.findAllByKeyIn(moduleTypeKeys);
     project.setModules(moduleTypes);
     var updated = projectRepository.save(project);
-    return ResponseEntity.ok(ReadProjectDto.fromProject(updated));
+    return ResponseEntity.ok(projectMapper.toDto(updated));
   }
 
   @DeleteMapping(value = "/projects/{id}")
@@ -129,7 +127,7 @@ public class ProjectController {
       Sort sort
   ) {
     var projects = this.projectRepository.filterProjects(status, specializationKeys, moduleTypeKeys, text, sort);
-    return ResponseEntity.ok(ReadProjectCollectionDto.fromProjects(projects));
+    return ResponseEntity.ok(projectMapper.toDto(projects));
   }
 
   /*
@@ -163,7 +161,7 @@ public class ProjectController {
   @GetMapping(value = "/users/{id}/projects", produces = MediaType.APPLICATION_JSON_VALUE)
   public @ResponseBody ResponseEntity<ReadProjectCollectionDto> getProjectsOfUser(@PathVariable("id") UUID userId) {
     var projects = this.projectRepository.findByOwner(userId, User.DISCRIMINATOR);
-    return ResponseEntity.ok(ReadProjectCollectionDto.fromProjects(projects));
+    return ResponseEntity.ok(projectMapper.toDto(projects));
   }
 
   @Transactional
@@ -178,13 +176,13 @@ public class ProjectController {
   @GetMapping(value = "/organizations/{id}/projects", produces = MediaType.APPLICATION_JSON_VALUE)
   public @ResponseBody ResponseEntity<ReadProjectCollectionDto> getProjectsOfOrganization(@PathVariable("id") UUID orgId) {
     var projects = this.projectRepository.findByOwner(orgId, Organization.DISCRIMINATOR);
-    return ResponseEntity.ok(ReadProjectCollectionDto.fromProjects(projects));
+    return ResponseEntity.ok(projectMapper.toDto(projects));
   }
 
   private ReadProjectDto createProject(CreateProjectDto projectDto, AbstractOwner owner) {
-    var project = projectDto.toProject();
+    var project = projectMapper.toEntity(projectDto);
     project.setOwner(owner);
     var savedProject = projectRepository.save(project);
-    return ReadProjectDto.fromProject(savedProject);
+    return projectMapper.toDto(savedProject);
   }
 }
