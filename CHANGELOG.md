@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.4.6...v2.0.0) (2022-05-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* simplify repository and exported resources
+* implement ownership concept
+
+### Features
+
+* add endpoint for authenticated user ([8d57592](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/8d57592ff869c8b8e70fbdc3f1e702a2a9f07ec4))
+* add organization check ([a776c72](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/a776c728908e9d4734d1f4513fa96f62c26cced4))
+* add permissions to response body ([c9f22a9](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/c9f22a9368636f413a956127086a431c9caa6e36))
+* add sort ([76614d8](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/76614d8e6630e64336743b9ec4ff546eca61a9ab))
+* implement ownership concept ([af0c454](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/af0c454dcfc1f29f59ddc5999663912ae0893ffa))
+* introduce endpoints to retrieve owners projects ([98aa34d](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/98aa34dbd7cececd28a49d34eee9dc87ef25d70e))
+
+
+### Bug Fixes
+
+* make owner ids accessible ([d4050c2](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/d4050c2904e423ae07a35f2795990300da953536))
+
+
+* simplify repository and exported resources ([d28672b](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/d28672bbd454c94369caab54fe039a73cf073bde))
+
 ### [1.4.6](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.4.5...v1.4.6) (2022-04-04)
 
 ### [1.4.5](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v1.4.4...v1.4.5) (2022-03-30)
