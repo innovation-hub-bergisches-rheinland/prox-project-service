@@ -9,11 +9,15 @@ import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -62,9 +66,13 @@ public class Project extends AbstractEntity {
   @Column(length = 255)
   private String creatorName;
 
-  @Column(length = 255)
-  @Size(max = 255)
-  private String supervisorName;
+  @ElementCollection(fetch = FetchType.EAGER)
+  /*
+  TODO: Enable once the manual migration has been performed
+  @CollectionTable(uniqueConstraints = {
+      @UniqueConstraint(columnNames = { "project_id", "id" })
+  })*/
+  private List<Supervisor> supervisors = new ArrayList<>();
 
   @JsonProperty(access = Access.READ_ONLY)
   @ManyToMany

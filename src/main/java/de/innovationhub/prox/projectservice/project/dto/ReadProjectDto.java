@@ -6,6 +6,7 @@ import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
 import de.innovationhub.prox.projectservice.project.ProjectStatus;
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ public record ReadProjectDto(
     String requirement,
     ProjectStatus status,
     String creatorName,
-    String supervisorName,
+    List<ReadSupervisorDto> supervisors,
     Set<Specialization> specializations,
     Set<ModuleType> modules,
     AbstractOwner owner,

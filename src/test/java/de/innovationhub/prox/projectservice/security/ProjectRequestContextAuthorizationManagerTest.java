@@ -10,9 +10,11 @@ import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.ProjectRepository;
 import de.innovationhub.prox.projectservice.project.ProjectStatus;
+import de.innovationhub.prox.projectservice.project.Supervisor;
 import java.security.Principal;
 import java.time.Instant;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -128,7 +130,7 @@ class ProjectRequestContextAuthorizationManagerTest {
         "Test Project Requirement",
         ProjectStatus.AVAILABLE,
         "Test Project Creator Name",
-        "Test Project Supervisor",
+        List.of(new Supervisor(UUID.randomUUID(), "Test Project Supervisor")),
         Collections.emptySet(),
         Collections.emptySet(),
         new User(userId),

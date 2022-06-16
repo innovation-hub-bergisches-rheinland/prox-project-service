@@ -9,8 +9,10 @@ import de.innovationhub.prox.projectservice.owners.organization.Organization;
 import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.ProjectStatus;
+import de.innovationhub.prox.projectservice.project.Supervisor;
 import java.time.Instant;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -97,7 +99,7 @@ class ProjectPermissionEvaluatorHelperTest {
         "Test Project Requirement",
         ProjectStatus.AVAILABLE,
         "Test Project Creator Name",
-        "Test Project Supervisor",
+        List.of(new Supervisor(UUID.randomUUID(), "Test Project Supervisor")),
         Collections.emptySet(),
         Collections.emptySet(),
         new User(userId),
@@ -113,7 +115,7 @@ class ProjectPermissionEvaluatorHelperTest {
         "Test Project Requirement",
         ProjectStatus.AVAILABLE,
         "Test Project Creator Name",
-        "Test Project Supervisor",
+        List.of(new Supervisor(UUID.randomUUID(), "Test Project Supervisor")),
         Collections.emptySet(),
         Collections.emptySet(),
         new Organization(orgId),

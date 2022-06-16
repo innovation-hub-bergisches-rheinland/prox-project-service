@@ -7,6 +7,7 @@ import de.innovationhub.prox.projectservice.owners.user.User;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -67,7 +68,7 @@ class ProjectAuditingTest {
         "Test Project Requirement",
         ProjectStatus.AVAILABLE,
         "Test Project Creator Name",
-        "Test Project Supervisor",
+        List.of(new Supervisor(UUID.randomUUID(), "Test Project Supervisor")),
         Collections.emptySet(),
         Collections.emptySet(),
         owner,

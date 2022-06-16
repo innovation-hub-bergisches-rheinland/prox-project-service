@@ -11,6 +11,7 @@ import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.user.User;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -271,7 +272,7 @@ class ProjectControllerTest {
     randomModules.forEach(moduleType -> this.entityManager.persist(moduleType));
     this.entityManager.flush();
 
-    var moduleKeys = randomModules.stream().map(moduleType -> moduleType.getKey()).toList();
+    var moduleKeys = randomModules.stream().map(ModuleType::getKey).toList();
 
     // @formatter:off
     given()
@@ -339,11 +340,18 @@ class ProjectControllerTest {
         "Test Project Requirement",
         ProjectStatus.AVAILABLE,
         "Test Project Creator Name",
-        "Test Project Supervisor",
+        getSupervisors(),
         Collections.emptySet(),
         Collections.emptySet(),
         owner,
         Instant.now(),
         Instant.now());
+  }
+
+  // Note: We need to construct a mutable collection for ElementCollections (thanks Hibernate)
+  private List<Supervisor> getSupervisors() {
+    var list = new ArrayList<Supervisor>();
+    list.add(new Supervisor(UUID.randomUUID(), "Test Project Supervisor"));
+    return list;
   }
 }

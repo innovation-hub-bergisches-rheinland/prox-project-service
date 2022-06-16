@@ -62,8 +62,10 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
               if (!match && p.getRequirement() != null) {
                 match |= p.getRequirement().toLowerCase().contains(text.toLowerCase());
               }
-              if (!match && p.getSupervisorName() != null) {
-                match |= p.getSupervisorName().toLowerCase().contains(text.toLowerCase());
+              if (!match && p.getSupervisors() != null) {
+                match |=
+                    p.getSupervisors().stream()
+                        .anyMatch(s -> s.getName().toLowerCase().contains(text.toLowerCase()));
               }
               return match;
             })
