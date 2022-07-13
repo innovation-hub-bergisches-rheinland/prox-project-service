@@ -1,9 +1,9 @@
 package de.innovationhub.prox.projectservice.security;
 
 
+import de.innovationhub.prox.projectservice.core.Ownable;
 import de.innovationhub.prox.projectservice.owners.organization.Organization;
 import de.innovationhub.prox.projectservice.owners.user.User;
-import de.innovationhub.prox.projectservice.project.Project;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -15,23 +15,23 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Service
 @Slf4j
-public class ProjectPermissionEvaluatorHelper {
+public class OwnablePermissionEvaluatorHelper<T extends Ownable> {
   private final UserInfoRequestHeaderExtractor requestHeaderExtractor;
 
-  public ProjectPermissionEvaluatorHelper(UserInfoRequestHeaderExtractor requestHeaderExtractor) {
-    this.requestHeaderExtractor = requestHeaderExtractor;
+  public OwnablePermissionEvaluatorHelper(UserInfoRequestHeaderExtractor extractor) {
+    this.requestHeaderExtractor = extractor;
   }
 
-  public boolean hasPermission(Project project, Authentication authentication, UserInfo userInfo) {
+  public boolean hasPermission(T ownable, Authentication authentication, UserInfo userInfo) {
     if (!authentication.isAuthenticated()) {
       return false;
     }
 
-    var owner = project.getOwner();
+    var owner = ownable.getOwner();
     var discriminator = owner.getDiscriminator();
 
     if (discriminator.equals(User.DISCRIMINATOR)) {
-      return authentication.getName().equals(project.getOwner().getId().toString());
+      return authentication.getName().equals(ownable.getOwner().getId().toString());
     }
 
     if (discriminator.equals(Organization.DISCRIMINATOR)) {
@@ -46,19 +46,19 @@ public class ProjectPermissionEvaluatorHelper {
   }
 
   public boolean hasPermission(
-      Project project, Authentication authentication, HttpServletRequest request) {
+      T ownable, Authentication authentication, HttpServletRequest request) {
     var userInfo = requestHeaderExtractor.parseUserInfoFromRequest(request);
-    return hasPermission(project, authentication, userInfo);
+    return hasPermission(ownable, authentication, userInfo);
   }
 
-  public boolean hasPermissionWithCurrentContext(Project project) {
+  public boolean hasPermissionWithCurrentContext(T ownable) {
     var authentication = SecurityContextHolder.getContext().getAuthentication();
     var optRequest = getCurrentHttpRequest();
     if (optRequest.isEmpty()) {
       log.debug("No Request present");
       return false;
     }
-    return hasPermission(project, authentication, optRequest.get());
+    return hasPermission(ownable, authentication, optRequest.get());
   }
 
   private Optional<HttpServletRequest> getCurrentHttpRequest() {

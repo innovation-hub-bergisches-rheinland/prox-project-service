@@ -1,32 +1,38 @@
 package de.innovationhub.prox.projectservice.security;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import de.innovationhub.prox.projectservice.core.Ownable;
+import de.innovationhub.prox.projectservice.owners.AbstractOwner;
 import de.innovationhub.prox.projectservice.owners.organization.Organization;
 import de.innovationhub.prox.projectservice.owners.user.User;
-import de.innovationhub.prox.projectservice.project.Project;
-import de.innovationhub.prox.projectservice.project.ProjectStatus;
-import de.innovationhub.prox.projectservice.project.Supervisor;
-import java.time.Instant;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import lombok.Getter;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.Authentication;
 
-class ProjectPermissionEvaluatorHelperTest {
+class OwnablePermissionEvaluatorHelperTest {
   private final UserInfoRequestHeaderExtractor userInfoRequestHeaderExtractor =
       mock(UserInfoRequestHeaderExtractor.class);
-  private final ProjectPermissionEvaluatorHelper helper =
-      new ProjectPermissionEvaluatorHelper(userInfoRequestHeaderExtractor);
+  private final OwnablePermissionEvaluatorHelper<TestOwnable> helper =
+      new OwnablePermissionEvaluatorHelper<>(userInfoRequestHeaderExtractor);
+
+  @Getter
+  class TestOwnable implements Ownable {
+    private final AbstractOwner owner;
+
+    TestOwnable(AbstractOwner owner) {
+      this.owner = owner;
+    }
+  }
 
   @Test
   void shouldReturnFalseWhenNotAuthenticated() {
-    var project = getTestProject(UUID.randomUUID());
+    var project = getTestOwnableUser(UUID.randomUUID());
     var auth = mock(Authentication.class);
     when(auth.isAuthenticated()).thenReturn(false);
 
@@ -39,7 +45,7 @@ class ProjectPermissionEvaluatorHelperTest {
   @Test
   void shouldReturnTrueWhenUserIsOwner() {
     var user = UUID.randomUUID();
-    var project = getTestProject(user);
+    var project = getTestOwnableUser(user);
     var auth = mock(Authentication.class);
 
     when(auth.isAuthenticated()).thenReturn(true);
@@ -52,7 +58,7 @@ class ProjectPermissionEvaluatorHelperTest {
   @Test
   void shouldReturnFalseWhenUserIsNotOwner() {
     var user = UUID.randomUUID();
-    var project = getTestProject(UUID.randomUUID());
+    var project = getTestOwnableUser(UUID.randomUUID());
     var auth = mock(Authentication.class);
 
     when(auth.isAuthenticated()).thenReturn(true);
@@ -66,7 +72,7 @@ class ProjectPermissionEvaluatorHelperTest {
   void shouldReturnTrueWhenUserIsInOrg() {
     var user = UUID.randomUUID();
     var orgId = UUID.randomUUID();
-    var project = getTestOrgProject(orgId);
+    var project = getTestOwnableOrg(orgId);
     var auth = mock(Authentication.class);
 
     when(auth.isAuthenticated()).thenReturn(true);
@@ -82,7 +88,7 @@ class ProjectPermissionEvaluatorHelperTest {
   void shouldReturnFalseWhenUserIsNotInOrg() {
     var user = UUID.randomUUID();
     var orgId = UUID.randomUUID();
-    var project = getTestOrgProject(orgId);
+    var project = getTestOwnableOrg(orgId);
     var auth = mock(Authentication.class);
 
     when(auth.isAuthenticated()).thenReturn(true);
@@ -91,35 +97,11 @@ class ProjectPermissionEvaluatorHelperTest {
     assertThat(helper.hasPermission(project, auth, new UserInfo(user, Set.of()))).isFalse();
   }
 
-  private Project getTestProject(UUID userId) {
-    return new Project(
-        "Test Project",
-        "Test Project Description",
-        "Test Project Short Description",
-        "Test Project Requirement",
-        ProjectStatus.AVAILABLE,
-        "Test Project Creator Name",
-        List.of(new Supervisor(UUID.randomUUID(), "Test Project Supervisor")),
-        Collections.emptySet(),
-        Collections.emptySet(),
-        new User(userId),
-        Instant.now(),
-        Instant.now());
+  private TestOwnable getTestOwnableUser(UUID userId) {
+    return new TestOwnable(new User(userId));
   }
 
-  private Project getTestOrgProject(UUID orgId) {
-    return new Project(
-        "Test Project",
-        "Test Project Description",
-        "Test Project Short Description",
-        "Test Project Requirement",
-        ProjectStatus.AVAILABLE,
-        "Test Project Creator Name",
-        List.of(new Supervisor(UUID.randomUUID(), "Test Project Supervisor")),
-        Collections.emptySet(),
-        Collections.emptySet(),
-        new Organization(orgId),
-        Instant.now(),
-        Instant.now());
+  private TestOwnable getTestOwnableOrg(UUID orgId) {
+    return new TestOwnable(new Organization(orgId));
   }
 }

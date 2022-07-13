@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import de.innovationhub.prox.projectservice.core.AbstractEntity;
+import de.innovationhub.prox.projectservice.core.Ownable;
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
@@ -43,7 +44,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
 @Builder
-public class Project extends AbstractEntity {
+public class Project extends AbstractEntity implements Ownable {
 
   @Column(length = 255)
   @Size(min = 1, max = 255)

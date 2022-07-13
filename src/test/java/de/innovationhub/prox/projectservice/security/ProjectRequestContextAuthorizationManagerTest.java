@@ -29,8 +29,8 @@ import org.springframework.security.web.access.intercept.RequestAuthorizationCon
 class ProjectRequestContextAuthorizationManagerTest {
 
   private final ProjectRepository projectRepository = mock(ProjectRepository.class);
-  private final ProjectPermissionEvaluatorHelper permissionEvaluatorHelper =
-      mock(ProjectPermissionEvaluatorHelper.class);
+  private final OwnablePermissionEvaluatorHelper permissionEvaluatorHelper =
+      mock(OwnablePermissionEvaluatorHelper.class);
   private final ProjectRequestContextAuthorizationManager manager =
       new ProjectRequestContextAuthorizationManager(projectRepository, permissionEvaluatorHelper);
 

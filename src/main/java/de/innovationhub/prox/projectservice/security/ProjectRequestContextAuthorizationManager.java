@@ -1,6 +1,7 @@
 package de.innovationhub.prox.projectservice.security;
 
 
+import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.ProjectRepository;
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -17,11 +18,11 @@ public class ProjectRequestContextAuthorizationManager
     implements AuthorizationManager<RequestAuthorizationContext> {
   private static final String PROJECT_ID_VARIABLE = "projectId";
   private final ProjectRepository projectRepository;
-  private final ProjectPermissionEvaluatorHelper permissionEvaluatorHelper;
+  private final OwnablePermissionEvaluatorHelper<Project> permissionEvaluatorHelper;
 
   public ProjectRequestContextAuthorizationManager(
       ProjectRepository projectRepository,
-      ProjectPermissionEvaluatorHelper permissionEvaluatorHelper) {
+      OwnablePermissionEvaluatorHelper<Project> permissionEvaluatorHelper) {
     this.projectRepository = projectRepository;
     this.permissionEvaluatorHelper = permissionEvaluatorHelper;
   }

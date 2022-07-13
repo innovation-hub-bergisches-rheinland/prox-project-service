@@ -9,7 +9,7 @@ import de.innovationhub.prox.projectservice.project.dto.ProjectPermissionsDto;
 import de.innovationhub.prox.projectservice.project.dto.ReadProjectCollectionDto;
 import de.innovationhub.prox.projectservice.project.dto.ReadProjectDto;
 import de.innovationhub.prox.projectservice.project.dto.ReadSupervisorDto;
-import de.innovationhub.prox.projectservice.security.ProjectPermissionEvaluatorHelper;
+import de.innovationhub.prox.projectservice.security.OwnablePermissionEvaluatorHelper;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring")
 public abstract class ProjectMapper {
-  @Autowired private ProjectPermissionEvaluatorHelper permissionEvaluatorHelper;
+  @Autowired private OwnablePermissionEvaluatorHelper<Project> permissionEvaluatorHelper;
 
   public ProjectPermissionsDto getPermissions(Project project) {
     var hasPermission = permissionEvaluatorHelper.hasPermissionWithCurrentContext(project);
