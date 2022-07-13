@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
+@Slf4j
 public class UserInfoRequestHeaderExtractor {
   private final ObjectMapper objectMapper = new ObjectMapper();
 
