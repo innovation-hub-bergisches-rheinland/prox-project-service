@@ -3,6 +3,7 @@ package de.innovationhub.prox.projectservice.config;
 
 import de.innovationhub.prox.projectservice.security.OrganizationRequestContextAuthorizationManager;
 import de.innovationhub.prox.projectservice.security.ProjectRequestContextAuthorizationManager;
+import de.innovationhub.prox.projectservice.security.ProposalRequestContextAuthorizationManager;
 import de.innovationhub.prox.projectservice.security.UserRequestContextAuthorizationManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,26 +16,34 @@ import org.springframework.security.web.SecurityFilterChain;
 class SecurityConfig {
 
   private final ProjectRequestContextAuthorizationManager projectAuthorizationManager;
+  private final ProposalRequestContextAuthorizationManager proposalAuthorizationManager;
   private final UserRequestContextAuthorizationManager userAuthorizationManager;
   private final OrganizationRequestContextAuthorizationManager orgAuthorizationManager;
 
   private static final String[] PUBLIC_READ_PATHS = {
-    "/projects/**",
-    "/users/**",
-    "/organizations/**",
-    "/modules/**",
-    "/studyPrograms/**",
-    "/specializations/**",
-    "/swagger-ui.html",
-    "/swagger-ui/**",
-    "/v3/api-docs/**"
+      "/projects/**",
+      "/proposals/**",
+      "/users/**",
+      "/organizations/**",
+      "/modules/**",
+      "/studyPrograms/**",
+      "/specializations/**",
+      "/swagger-ui.html",
+      "/swagger-ui/**",
+      "/v3/api-docs/**"
   };
+  private static final String PROJECT_WRITE_PATH = "/projects/{%s}/**".formatted(
+      ProjectRequestContextAuthorizationManager.PROJECT_ID_VARIABLE);
+  private static final String PROPOSAL_WRITE_PATH = "/proposals/{%s}/**".formatted(
+      ProposalRequestContextAuthorizationManager.PROPOSAL_ID_VARIABLE);
 
   public SecurityConfig(
       ProjectRequestContextAuthorizationManager projectAuthorizationManager,
+      ProposalRequestContextAuthorizationManager proposalAuthorizationManager,
       UserRequestContextAuthorizationManager userAuthorizationManager,
       OrganizationRequestContextAuthorizationManager orgAuthorizationManager) {
     this.projectAuthorizationManager = projectAuthorizationManager;
+    this.proposalAuthorizationManager = proposalAuthorizationManager;
     this.userAuthorizationManager = userAuthorizationManager;
     this.orgAuthorizationManager = orgAuthorizationManager;
   }
@@ -69,12 +78,18 @@ class SecurityConfig {
                     .access(userAuthorizationManager)
                     .mvcMatchers(HttpMethod.POST, "/organizations/{orgId}/**")
                     .access(orgAuthorizationManager)
-                    .mvcMatchers(HttpMethod.PUT, "/projects/{projectId}/**")
+                    .mvcMatchers(HttpMethod.PUT, PROJECT_WRITE_PATH)
                     .access(projectAuthorizationManager)
-                    .mvcMatchers(HttpMethod.PATCH, "/projects/{projectId}/**")
+                    .mvcMatchers(HttpMethod.PATCH, PROJECT_WRITE_PATH)
                     .access(projectAuthorizationManager)
-                    .mvcMatchers(HttpMethod.DELETE, "/projects/{projectId}/**")
+                    .mvcMatchers(HttpMethod.DELETE, PROJECT_WRITE_PATH)
                     .access(projectAuthorizationManager)
+                    .mvcMatchers(HttpMethod.PUT, PROPOSAL_WRITE_PATH)
+                    .access(proposalAuthorizationManager)
+                    .mvcMatchers(HttpMethod.PATCH, PROPOSAL_WRITE_PATH)
+                    .access(proposalAuthorizationManager)
+                    .mvcMatchers(HttpMethod.DELETE, PROPOSAL_WRITE_PATH)
+                    .access(proposalAuthorizationManager)
                     .anyRequest()
                     .denyAll());
 
