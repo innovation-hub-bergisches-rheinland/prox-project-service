@@ -12,7 +12,9 @@ import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalCollectionD
 import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalDto;
 import de.innovationhub.prox.projectservice.proposal.exception.ProposalNotFoundException;
 import de.innovationhub.prox.projectservice.proposal.mapper.ProposalMapper;
+import java.time.Instant;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.StreamSupport;
 import org.springframework.stereotype.Service;
