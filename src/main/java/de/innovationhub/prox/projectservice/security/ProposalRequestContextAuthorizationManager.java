@@ -1,8 +1,8 @@
 package de.innovationhub.prox.projectservice.security;
 
 
-import de.innovationhub.prox.projectservice.project.Project;
-import de.innovationhub.prox.projectservice.project.ProjectRepository;
+import de.innovationhub.prox.projectservice.proposal.Proposal;
+import de.innovationhub.prox.projectservice.proposal.ProposalRepository;
 import java.util.UUID;
 import java.util.function.Supplier;
 import lombok.extern.slf4j.Slf4j;
@@ -14,16 +14,16 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class ProjectRequestContextAuthorizationManager
+public class ProposalRequestContextAuthorizationManager
     implements AuthorizationManager<RequestAuthorizationContext> {
-  public static final String PROJECT_ID_VARIABLE = "projectId";
-  private final ProjectRepository projectRepository;
-  private final OwnablePermissionEvaluatorHelper<Project> permissionEvaluatorHelper;
+  public static final String PROPOSAL_ID_VARIABLE = "proposalId";
+  private final ProposalRepository proposalRepository;
+  private final OwnablePermissionEvaluatorHelper<Proposal> permissionEvaluatorHelper;
 
-  public ProjectRequestContextAuthorizationManager(
-      ProjectRepository projectRepository,
-      OwnablePermissionEvaluatorHelper<Project> permissionEvaluatorHelper) {
-    this.projectRepository = projectRepository;
+  public ProposalRequestContextAuthorizationManager(
+      ProposalRepository proposalRepository,
+      OwnablePermissionEvaluatorHelper<Proposal> permissionEvaluatorHelper) {
+    this.proposalRepository = proposalRepository;
     this.permissionEvaluatorHelper = permissionEvaluatorHelper;
   }
 
@@ -31,11 +31,11 @@ public class ProjectRequestContextAuthorizationManager
   public AuthorizationDecision check(
       Supplier<Authentication> authentication, RequestAuthorizationContext object) {
     // If we don't have a projectId in the request context, we can't do anything
-    var value = object.getVariables().get(PROJECT_ID_VARIABLE);
+    var value = object.getVariables().get(PROPOSAL_ID_VARIABLE);
     if (value == null || value.isBlank()) {
       log.warn(
           "No authorization decision could be made because the request variable '{}' is not present",
-          PROJECT_ID_VARIABLE);
+          PROPOSAL_ID_VARIABLE);
       return null;
     }
 
@@ -44,15 +44,15 @@ public class ProjectRequestContextAuthorizationManager
       return new AuthorizationDecision(false);
     }
 
-    var optProject = projectRepository.findById(UUID.fromString(value));
-    if (optProject.isEmpty()) {
+    var optProposal = proposalRepository.findById(UUID.fromString(value));
+    if (optProposal.isEmpty()) {
       // Can't decide if a project doesn't exist
       return null;
     }
 
-    var project = optProject.get();
+    var proposal = optProposal.get();
 
     return new AuthorizationDecision(
-        permissionEvaluatorHelper.hasPermission(project, auth, object.getRequest()));
+        permissionEvaluatorHelper.hasPermission(proposal, auth, object.getRequest()));
   }
 }

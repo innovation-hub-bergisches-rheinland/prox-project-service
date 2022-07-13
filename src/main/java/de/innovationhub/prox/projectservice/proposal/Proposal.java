@@ -1,4 +1,4 @@
-package de.innovationhub.prox.projectservice.project;
+package de.innovationhub.prox.projectservice.proposal;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,25 +10,22 @@ import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,13 +33,18 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+/**
+ * A proposal is a pre-state of a project where a user has an idea for a project but
+ * not the capacity, resources, knowledge or the rights to supervise it.
+ */
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
-public class Project extends AbstractEntity implements Ownable {
+@Builder
+public class Proposal extends AbstractEntity implements Ownable {
 
   @Column(length = 255)
   @Size(min = 1, max = 255)
@@ -61,23 +63,20 @@ public class Project extends AbstractEntity implements Ownable {
   @Column(length = 10000)
   private String requirement;
 
-  @NotNull private ProjectStatus status;
-
-  @JsonProperty(access = Access.READ_ONLY)
-  @Column(length = 255)
-  private String creatorName;
-
-  @ElementCollection(fetch = FetchType.EAGER)
-  @CollectionTable(uniqueConstraints = {
-      @UniqueConstraint(columnNames = { "project_id", "id" })
-  })
-  private List<Supervisor> supervisors = new ArrayList<>();
+  @NotNull
+  @Enumerated(EnumType.ORDINAL)
+  @Builder.Default
+  private ProposalStatus status = ProposalStatus.PROPOSED;
 
   @JsonProperty(access = Access.READ_ONLY)
   @ManyToMany
+  @Builder.Default
   private Set<Specialization> specializations = new HashSet<>();
 
-  @JsonIgnore @ManyToMany private Set<ModuleType> modules = new HashSet<>();
+  @JsonIgnore
+  @ManyToMany
+  @Builder.Default
+  private Set<ModuleType> modules = new HashSet<>();
 
   @JsonProperty(access = Access.READ_ONLY)
   @ManyToOne(optional = false)
@@ -87,10 +86,12 @@ public class Project extends AbstractEntity implements Ownable {
   @JsonProperty(access = Access.READ_ONLY)
   @Column(name = "created_at", updatable = false)
   @CreationTimestamp
-  private Instant createdAt;
+  @Builder.Default
+  private Instant createdAt = Instant.now();
 
   @JsonProperty(access = Access.READ_ONLY)
   @Column(name = "modified_at")
   @UpdateTimestamp
-  private Instant modifiedAt;
+  @Builder.Default
+  private Instant modifiedAt = Instant.now();
 }
