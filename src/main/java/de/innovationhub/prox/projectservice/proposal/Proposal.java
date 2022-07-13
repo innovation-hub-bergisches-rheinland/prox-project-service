@@ -84,6 +84,11 @@ public class Proposal extends AbstractEntity implements Ownable {
   private AbstractOwner owner;
 
   @JsonProperty(access = Access.READ_ONLY)
+  @Column(name = "status_changed_at")
+  @Builder.Default
+  private Instant statusChangedAt = Instant.now();
+
+  @JsonProperty(access = Access.READ_ONLY)
   @Column(name = "created_at", updatable = false)
   @CreationTimestamp
   @Builder.Default
@@ -94,4 +99,9 @@ public class Proposal extends AbstractEntity implements Ownable {
   @UpdateTimestamp
   @Builder.Default
   private Instant modifiedAt = Instant.now();
+
+  public void setStatus(ProposalStatus status) {
+    this.status = status;
+    statusChangedAt = Instant.now();
+  }
 }
