@@ -20,7 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 @SpringBootTest(properties = {
-    "project-service.proposals.auto-archive-after=P2D"
+    "project-service.proposals.jobs.auto-archive.after=P2D"
 })
 class ProposalAutoArchiverTest extends BaseProposalJobsTest {
   @Autowired

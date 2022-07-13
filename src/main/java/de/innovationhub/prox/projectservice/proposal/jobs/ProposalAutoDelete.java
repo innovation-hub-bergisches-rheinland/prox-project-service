@@ -10,12 +10,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConditionalOnProperty(prefix = "project-service.proposals", value = "enable-auto-deletion", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "project-service.proposals.jobs.auto-delete", value = "enable", havingValue = "true", matchIfMissing = true)
 @Slf4j
-public class ProposalAutoDeletion {
+public class ProposalAutoDelete {
   private final ProposalRepository proposalRepository;
 
-  public ProposalAutoDeletion(ProposalRepository proposalRepository) {
+  public ProposalAutoDelete(ProposalRepository proposalRepository) {
     this.proposalRepository = proposalRepository;
   }
 
@@ -24,7 +24,7 @@ public class ProposalAutoDeletion {
     log.info("Proposal Auto Deletion is enabled");
   }
 
-  // TODO: is a cron really the best idea?
+  // @Scheduled(cron = "${project-service.proposals.jobs.auto-delete.cron}")
   @Scheduled(cron = "0 0 0 * * *")
   void autoDelete() {
     // Just use the current timestamp to ensure forward-compatibility as we might introduce pre-dated

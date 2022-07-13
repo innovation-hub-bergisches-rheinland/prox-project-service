@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConditionalOnProperty(prefix = "project-service.proposals", value = "enable-auto-archive", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "project-service.proposals.jobs.auto-archive", value = "enable", havingValue = "true", matchIfMissing = true)
 @Slf4j
 public class ProposalAutoArchiver {
   private final ProposalRepository proposalRepository;
@@ -21,7 +21,7 @@ public class ProposalAutoArchiver {
   public ProposalAutoArchiver(ProposalRepository proposalRepository,
       ProposalConfig proposalConfig) {
     this.proposalRepository = proposalRepository;
-    this.archiveAfter = proposalConfig.getAutoArchiveAfter();
+    this.archiveAfter = proposalConfig.jobs().autoArchive().after();
   }
 
   @PostConstruct
@@ -29,7 +29,7 @@ public class ProposalAutoArchiver {
     log.info("Proposal Auto Archiving is enabled with a duration of {} for archiving", archiveAfter);
   }
 
-  // TODO: is a cron really the best idea?
+  // @Scheduled(cron = "${project-service.proposals.jobs.auto-archive.cron}")
   @Scheduled(cron = "0 0 0 * * *")
   void autoArchive() {
     var qualifyingTimestamp = Instant.now().minus(archiveAfter);

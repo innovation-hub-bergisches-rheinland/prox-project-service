@@ -10,43 +10,65 @@ import java.time.Instant;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class ProposalAutoDeletionTest extends BaseProposalJobsTest {
+@SpringBootTest(properties = {
+    "project-service.proposals.jobs.auto-mark-for-delete.after=P2D"
+})
+class ProposalAutoDeleteMarkerTest extends BaseProposalJobsTest {
   @Autowired
   ProposalRepository proposalRepository;
 
   @Autowired
-  ProposalAutoDeletion autoDeletion;
+  ProposalAutoDeletionMarker autoDeletionMarker;
 
   @Test
-  void shouldDelete() {
+  void shouldNotMarkProposalsNewerThanConfigured() {
     // Given
-    var proposal = getSampleProposal(ProposalStatus.READY_FOR_DELETION, Instant.now());
+    var proposal = getSampleProposal(ProposalStatus.ARCHIVED, Instant.now());
     proposalRepository.save(proposal);
 
     // When
-    this.autoDeletion.autoDelete();
+    this.autoDeletionMarker.autoMark();
 
     // Then
     var foundProposal = proposalRepository.findById(proposal.getId());
     assertThat(foundProposal)
-        .isEmpty();
+        .isPresent()
+        .get()
+        .isEqualTo(proposal);
+  }
+
+  @Test
+  void shouldMarkSingleProposal() {
+    // Given
+    var olderTimestamp = Instant.now().minus(Duration.ofDays(2));
+    var proposal = getSampleProposal(ProposalStatus.ARCHIVED, olderTimestamp);
+    proposalRepository.save(proposal);
+
+    // When
+    this.autoDeletionMarker.autoMark();
+
+    // Then
+    var foundProposal = proposalRepository.findById(proposal.getId());
+    assertThat(foundProposal)
+        .isPresent()
+        .get()
+        .extracting(Proposal::getStatus)
+        .isEqualTo(ProposalStatus.READY_FOR_DELETION);
   }
 
   @ParameterizedTest(name = "should not delete {0}")
-  @EnumSource(value = ProposalStatus.class, names = { "ARCHIVED", "PROPOSED" })
-  void shouldNotDeleteProposalInOtherState(ProposalStatus proposalStatus) {
+  @EnumSource(value = ProposalStatus.class, names = { "PROPOSED", "READY_FOR_DELETION" })
+  void shouldNotModifyProposalsWithOtherState(ProposalStatus proposalStatus) {
     // Given
     var olderTimestamp = Instant.now().minus(Duration.ofDays(2));
     var proposal = getSampleProposal(proposalStatus, olderTimestamp);
     proposalRepository.save(proposal);
 
     // When
-    this.autoDeletion.autoDelete();
+    this.autoDeletionMarker.autoMark();
 
     // Then
     var foundProposal = proposalRepository.findById(proposal.getId());

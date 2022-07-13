@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConditionalOnProperty(prefix = "project-service.proposals", value = "enable-auto-mark-for-deletion", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "project-service.proposals.jobs.auto-mark-for-delete", value = "enable", havingValue = "true", matchIfMissing = true)
 @Slf4j
 public class ProposalAutoDeletionMarker {
 
@@ -22,7 +22,7 @@ public class ProposalAutoDeletionMarker {
   public ProposalAutoDeletionMarker(ProposalRepository proposalRepository,
       ProposalConfig proposalConfig) {
     this.proposalRepository = proposalRepository;
-    this.markForDeletionAfter = proposalConfig.getAutoMarkDeletionAfter();
+    this.markForDeletionAfter = proposalConfig.jobs().autoMarkForDelete().after();
   }
 
   @PostConstruct
@@ -31,7 +31,7 @@ public class ProposalAutoDeletionMarker {
         markForDeletionAfter);
   }
 
-  // TODO: is a cron really the best idea?
+  // @Scheduled(cron = "${project-service.proposals.jobs.auto-mark-for-delete.cron}")
   @Scheduled(cron = "0 0 0 * * *")
   void autoMark() {
     var qualifyingTimestamp = Instant.now().minus(markForDeletionAfter);
