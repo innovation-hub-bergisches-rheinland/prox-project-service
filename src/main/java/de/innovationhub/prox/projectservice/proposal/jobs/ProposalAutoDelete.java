@@ -4,6 +4,7 @@ import de.innovationhub.prox.projectservice.proposal.ProposalRepository;
 import de.innovationhub.prox.projectservice.proposal.ProposalStatus;
 import java.time.Instant;
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -30,7 +31,7 @@ public class ProposalAutoDelete {
     // drafts
     var qualifyingTimestamp = Instant.now();
     var proposalsToDelete = this.proposalRepository.findWithStatusModifiedBefore(ProposalStatus.READY_FOR_DELETION, qualifyingTimestamp);
-    if(proposalsToDelete.size() > 0) {
+    if(!proposalsToDelete.isEmpty()) {
       this.proposalRepository.deleteAll(proposalsToDelete);
     }
   }

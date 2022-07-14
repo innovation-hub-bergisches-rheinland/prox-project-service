@@ -6,6 +6,7 @@ import de.innovationhub.prox.projectservice.proposal.ProposalStatus;
 import java.time.Duration;
 import java.time.Instant;
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -36,7 +37,7 @@ public class ProposalAutoDeletionMarker {
     var qualifyingTimestamp = Instant.now().minus(markForDeletionAfter);
     var proposalsToMark = this.proposalRepository.findWithStatusModifiedBefore(
         ProposalStatus.ARCHIVED, qualifyingTimestamp);
-    if (proposalsToMark.size() > 0) {
+    if (!proposalsToMark.isEmpty()) {
       proposalsToMark.forEach(p -> p.setStatus(ProposalStatus.READY_FOR_DELETION));
       this.proposalRepository.saveAll(proposalsToMark);
     }
