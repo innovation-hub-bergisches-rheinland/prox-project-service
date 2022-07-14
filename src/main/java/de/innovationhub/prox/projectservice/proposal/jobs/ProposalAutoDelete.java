@@ -24,8 +24,7 @@ public class ProposalAutoDelete {
     log.info("Proposal Auto Deletion is enabled");
   }
 
-  // @Scheduled(cron = "${project-service.proposals.jobs.auto-delete.cron}")
-  @Scheduled(cron = "0 0 0 * * *")
+  @Scheduled(cron = "${project-service.proposals.jobs.auto-delete.cron:0 0 0 * * *}")
   void autoDelete() {
     // Just use the current timestamp to ensure forward-compatibility as we might introduce pre-dated
     // drafts
