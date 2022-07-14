@@ -29,8 +29,7 @@ public class ProposalAutoArchiver {
     log.info("Proposal Auto Archiving is enabled with a duration of {} for archiving", archiveAfter);
   }
 
-  // @Scheduled(cron = "${project-service.proposals.jobs.auto-archive.cron}")
-  @Scheduled(cron = "0 0 0 * * *")
+  @Scheduled(cron = "${project-service.proposals.jobs.auto-archive.cron:0 0 0 * * *}")
   void autoArchive() {
     var qualifyingTimestamp = Instant.now().minus(archiveAfter);
     var proposalsToArchive = this.proposalRepository.findWithStatusModifiedBefore(ProposalStatus.PROPOSED, qualifyingTimestamp);

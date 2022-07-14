@@ -16,21 +16,21 @@ public record ProposalConfig(@DefaultValue ProposalJobConfig jobs) {
                                   @DefaultValue AutoDeletionConfig autoDelete) {
 
     public record AutoArchiveConfig(@DefaultValue("true") Boolean enable,
-                                    @DurationUnit(ChronoUnit.DAYS) @DefaultValue("90") Duration after
-                                    // @DefaultValue("0 0 0 * * *") String cron
+                                    @DurationUnit(ChronoUnit.DAYS) @DefaultValue("90") Duration after,
+                                    @DefaultValue("0 0 0 * * *") String cron
     ) {
 
     }
 
     public record AutoMarkForDeletionConfig(@DefaultValue("true") Boolean enable,
-                                            @DurationUnit(ChronoUnit.DAYS) @DefaultValue("90") Duration after
-                                            // @DefaultValue("0 0 0 * * *") String cron
+                                            @DurationUnit(ChronoUnit.DAYS) @DefaultValue("90") Duration after,
+                                            @DefaultValue("0 0 0 * * *") String cron
     ) {
 
     }
 
-    public record AutoDeletionConfig(@DefaultValue("true") Boolean enable
-                                     // @DefaultValue("0 0 0 * * *") String cron
+    public record AutoDeletionConfig(@DefaultValue("true") Boolean enable,
+                                     @DefaultValue("0 0 0 * * *") String cron
     ) {
 
     }
