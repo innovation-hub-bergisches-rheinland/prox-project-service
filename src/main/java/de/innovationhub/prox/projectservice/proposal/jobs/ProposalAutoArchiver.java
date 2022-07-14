@@ -6,6 +6,7 @@ import de.innovationhub.prox.projectservice.proposal.ProposalStatus;
 import java.time.Duration;
 import java.time.Instant;
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -33,7 +34,7 @@ public class ProposalAutoArchiver {
   void autoArchive() {
     var qualifyingTimestamp = Instant.now().minus(archiveAfter);
     var proposalsToArchive = this.proposalRepository.findWithStatusModifiedBefore(ProposalStatus.PROPOSED, qualifyingTimestamp);
-    if(proposalsToArchive.size() > 0) {
+    if(!proposalsToArchive.isEmpty()) {
       proposalsToArchive.forEach(p -> p.setStatus(ProposalStatus.ARCHIVED));
       this.proposalRepository.saveAll(proposalsToArchive);
     }
