@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v2.1.1...v2.2.0) (2022-07-20)
+
+
+### Features
+
+* implement auto archive and deletion for proposals ([a3be860](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/a3be8601cce0781b05736b4fadf6435cb1130699))
+* implement proposals for project ideas ([a5b7cb4](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/a5b7cb4f10a9b71f81bd3d4e5129d36d53348d70))
+* make cron configurable ([86f4bce](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/86f4bceaba8052bb3360534a8328d1aaa3980a94))
+
 ### [2.1.1](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v2.1.0...v2.1.1) (2022-06-16)
 
 
