@@ -2,22 +2,16 @@ package de.innovationhub.prox.projectservice.proposal.jobs;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.innovationhub.prox.projectservice.ProjectService;
-import de.innovationhub.prox.projectservice.config.ProposalConfig;
-import de.innovationhub.prox.projectservice.owners.user.User;
-import de.innovationhub.prox.projectservice.owners.user.UserRepository;
 import de.innovationhub.prox.projectservice.proposal.Proposal;
 import de.innovationhub.prox.projectservice.proposal.ProposalRepository;
 import de.innovationhub.prox.projectservice.proposal.ProposalStatus;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 
 @SpringBootTest(properties = {
     "project-service.proposals.jobs.auto-archive.after=P2D"

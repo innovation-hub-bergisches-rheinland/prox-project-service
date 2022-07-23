@@ -1,22 +1,38 @@
 package de.innovationhub.prox.projectservice.proposal;
 
+import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.ModuleTypeRepository;
+import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.module.SpecializationRepository;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
 import de.innovationhub.prox.projectservice.owners.organization.Organization;
 import de.innovationhub.prox.projectservice.owners.organization.OrganizationRepository;
 import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.owners.user.UserRepository;
+import de.innovationhub.prox.projectservice.project.Project;
+import de.innovationhub.prox.projectservice.project.ProjectRepository;
+import de.innovationhub.prox.projectservice.project.ProjectService;
+import de.innovationhub.prox.projectservice.project.ProjectStatus;
+import de.innovationhub.prox.projectservice.project.Supervisor;
+import de.innovationhub.prox.projectservice.project.dto.CreateProjectDto;
+import de.innovationhub.prox.projectservice.project.dto.CreateSupervisorDto;
+import de.innovationhub.prox.projectservice.project.dto.ReadProjectDto;
 import de.innovationhub.prox.projectservice.proposal.dto.CreateProposalDto;
 import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalCollectionDto;
 import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalDto;
+import de.innovationhub.prox.projectservice.proposal.exception.NoUsernameInAuthenticationException;
 import de.innovationhub.prox.projectservice.proposal.exception.ProposalNotFoundException;
+import de.innovationhub.prox.projectservice.proposal.exception.UnsupportedAuthenticationException;
 import de.innovationhub.prox.projectservice.proposal.mapper.ProposalMapper;
-import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.StreamSupport;
+import javax.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,16 +43,20 @@ public class ProposalService {
   private final ProposalMapper proposalMapper;
   private final ModuleTypeRepository moduleTypeRepository;
   private final SpecializationRepository specializationRepository;
+  private final ProjectService projectService;
 
+  @Autowired
   public ProposalService(ProposalRepository proposalRepository, UserRepository userRepository,
       OrganizationRepository organizationRepository, ProposalMapper proposalMapper,
-      ModuleTypeRepository moduleTypeRepository, SpecializationRepository specializationRepository) {
+      ModuleTypeRepository moduleTypeRepository, SpecializationRepository specializationRepository,
+      ProjectService projectService) {
     this.proposalRepository = proposalRepository;
     this.userRepository = userRepository;
     this.organizationRepository = organizationRepository;
     this.proposalMapper = proposalMapper;
     this.moduleTypeRepository = moduleTypeRepository;
     this.specializationRepository = specializationRepository;
+    this.projectService = projectService;
   }
 
   public ReadProposalCollectionDto getAll() {
@@ -109,7 +129,38 @@ public class ProposalService {
     return proposalMapper.toDto(proposal);
   }
 
+  @Transactional
+  public ReadProjectDto promoteToProject(UUID proposalId, Authentication authentication) {
+    var proposal = getOrThrow(proposalId);
+
+    var principal = authentication.getPrincipal();
+    if(!(principal instanceof Jwt))
+      throw new UnsupportedAuthenticationException();
+
+    var jwt = (Jwt) principal;
+    var name = jwt.getClaimAsString("name");
+    if(name == null)
+      throw new NoUsernameInAuthenticationException();
+
+    var userId = UUID.fromString(authentication.getName());
+
+    var projectRequest = this.promoteToProjectRequest(proposal, new CreateSupervisorDto(userId, name));
+    var createdProject = this.projectService.create(projectRequest, proposal.getOwner());
+    createdProject = this.projectService.setSpecializations(createdProject.id(), proposal.getSpecializations().stream().map(
+        Specialization::getKey).toList());
+    createdProject = this.projectService.setModuleTypes(createdProject.id(), proposal.getModules().stream().map(
+        ModuleType::getKey).toList());
+    this.delete(proposalId);
+
+    return createdProject;
+  }
+
   private Proposal getOrThrow(UUID proposalId) {
     return proposalRepository.findById(proposalId).orElseThrow(() -> new ProposalNotFoundException(proposalId));
+  }
+
+  private CreateProjectDto promoteToProjectRequest(Proposal proposal, CreateSupervisorDto supervisor) {
+    return new CreateProjectDto(proposal.getName(), proposal.getDescription(), proposal.getShortDescription(), proposal.getRequirement(), ProjectStatus.AVAILABLE, null,
+        List.of(supervisor));
   }
 }

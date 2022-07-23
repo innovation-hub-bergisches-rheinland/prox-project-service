@@ -1,6 +1,7 @@
 package de.innovationhub.prox.projectservice.proposal;
 
 
+import de.innovationhub.prox.projectservice.project.dto.ReadProjectDto;
 import de.innovationhub.prox.projectservice.proposal.dto.CreateProposalDto;
 import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalCollectionDto;
 import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalDto;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -80,6 +83,13 @@ public class ProposalController {
   public @ResponseBody ResponseEntity<Void> deleteById(@PathVariable("id") UUID id) {
     this.proposalService.delete(id);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  }
+
+  @PreAuthorize("hasRole('professor')")
+  @PostMapping(value = "/proposals/{id}/commitment")
+  public @ResponseBody ResponseEntity<ReadProjectDto> commitForProposal(@PathVariable("id") UUID id, Authentication auth) {
+    var createdProject = this.proposalService.promoteToProject(id, auth);
+    return ResponseEntity.status(HttpStatus.CREATED).body(createdProject);
   }
 
   /*

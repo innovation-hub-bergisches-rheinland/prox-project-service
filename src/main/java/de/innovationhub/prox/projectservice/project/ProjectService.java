@@ -69,7 +69,7 @@ public class ProjectService {
     return create(projectDto, user);
   }
 
-  private ReadProjectDto create(CreateProjectDto projectDto, AbstractOwner owner) {
+  public ReadProjectDto create(CreateProjectDto projectDto, AbstractOwner owner) {
     var project = projectMapper.toEntity(projectDto);
     project.setOwner(owner);
     project = projectRepository.save(project);
