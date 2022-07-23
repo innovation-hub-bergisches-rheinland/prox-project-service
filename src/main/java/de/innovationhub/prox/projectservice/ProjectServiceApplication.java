@@ -12,9 +12,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableFeignClients
 @EnableScheduling
 @EnableConfigurationProperties({ProposalConfig.class})
-public class ProjectService {
+public class ProjectServiceApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(ProjectService.class, args);
+    SpringApplication.run(ProjectServiceApplication.class, args);
   }
 }
