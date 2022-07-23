@@ -84,6 +84,8 @@ class SecurityConfig {
                     .access(projectAuthorizationManager)
                     .mvcMatchers(HttpMethod.DELETE, PROJECT_WRITE_PATH)
                     .access(projectAuthorizationManager)
+                    .mvcMatchers(HttpMethod.POST, "/proposals/{proposalId}/commitment")
+                    .hasRole("professor")
                     .mvcMatchers(HttpMethod.PUT, PROPOSAL_WRITE_PATH)
                     .access(proposalAuthorizationManager)
                     .mvcMatchers(HttpMethod.PATCH, PROPOSAL_WRITE_PATH)

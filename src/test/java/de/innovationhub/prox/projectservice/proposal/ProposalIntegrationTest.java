@@ -2,20 +2,27 @@ package de.innovationhub.prox.projectservice.proposal;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 
 import com.c4_soft.springaddons.security.oauth2.test.annotations.OpenIdClaims;
 import com.c4_soft.springaddons.security.oauth2.test.annotations.WithMockJwtAuth;
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.user.User;
+import de.innovationhub.prox.projectservice.project.Project;
+import de.innovationhub.prox.projectservice.project.ProjectStatus;
 import de.innovationhub.prox.projectservice.project.Supervisor;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import org.assertj.core.api.SoftAssertions;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,9 +39,15 @@ import org.springframework.test.web.servlet.MockMvc;
 @Transactional
 @SuppressWarnings("java:S2699")
 class ProposalIntegrationTest {
-  @Autowired MockMvc mockMvc;
 
-  @Autowired EntityManager entityManager;
+  @Autowired
+  MockMvc mockMvc;
+
+  @Autowired
+  EntityManager entityManager;
+
+  @Autowired
+  Validator validator;
 
   @BeforeEach
   void setup() {
@@ -84,7 +97,8 @@ class ProposalIntegrationTest {
     var proposal = entityManager.find(Proposal.class, id);
     var proposalAssertions = new SoftAssertions();
     proposalAssertions.assertThat(proposal)
-        .extracting(Proposal::getName, Proposal::getDescription, Proposal::getShortDescription, Proposal::getRequirement, Proposal::getStatus)
+        .extracting(Proposal::getName, Proposal::getDescription, Proposal::getShortDescription,
+            Proposal::getRequirement, Proposal::getStatus)
         .doesNotContainNull()
         .containsExactly("Test", "Test", "Test", "Test", ProposalStatus.PROPOSED);
     proposalAssertions.assertThat(proposal)
@@ -128,7 +142,8 @@ class ProposalIntegrationTest {
 
     var proposalAssertions = new SoftAssertions();
     proposalAssertions.assertThat(result)
-        .extracting(Proposal::getName, Proposal::getDescription, Proposal::getShortDescription, Proposal::getRequirement, Proposal::getStatus)
+        .extracting(Proposal::getName, Proposal::getDescription, Proposal::getShortDescription,
+            Proposal::getRequirement, Proposal::getStatus)
         .doesNotContainNull()
         .containsExactly("Test2", "Test2", "Test2", "Test2", ProposalStatus.PROPOSED);
     proposalAssertions.assertThat(result)
@@ -229,6 +244,45 @@ class ProposalIntegrationTest {
     var result = this.entityManager.find(Proposal.class, testProposal.getId());
     assertThat(result.getSpecializations())
         .containsExactlyInAnyOrderElementsOf(randomSpecializations);
+  }
+
+  @Test
+  @WithMockJwtAuth(
+      authorities = {"ROLE_professor"},
+      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c", name = "Karl Peter"))
+  void shouldApplyCommitment() {
+    var easyRandom = new EasyRandom();
+    var randomSpecializations =
+        List.of(new Specialization("AB", "Alpha Beta"), new Specialization("BG", "Beta Gamma"));
+    // Ensure that authenticated User is the creator
+    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    var testProposal = getTestProposal(owner);
+
+    randomSpecializations.forEach(specialization -> this.entityManager.persist(specialization));
+    testProposal.setSpecializations(randomSpecializations.stream().collect(Collectors.toSet()));
+    this.entityManager.persist(testProposal);
+    this.entityManager.flush();
+
+    // @formatter:off
+    var projectId = given()
+        .accept(MediaType.APPLICATION_JSON)
+        .when()
+        .post("/proposals/{id}/commitment", testProposal.getId())
+        .then()
+        .status(HttpStatus.CREATED)
+        .extract()
+        .jsonPath()
+        .getUUID("id");
+
+    // @formatter:on
+
+    var result = this.entityManager.find(Proposal.class, testProposal.getId());
+    assertThat(result).isNull();
+    var projectResult = this.entityManager.find(Project.class, projectId);
+    assertThat(projectResult).isNotNull();
+    assertThat(projectResult.getSupervisors())
+        .extracting("id", "name")
+        .contains(tuple(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Karl Peter"));
   }
 
   private Proposal getTestProposal(User owner) {

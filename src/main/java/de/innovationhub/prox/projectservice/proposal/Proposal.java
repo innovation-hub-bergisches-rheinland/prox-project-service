@@ -9,7 +9,11 @@ import de.innovationhub.prox.projectservice.core.Ownable;
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
+import de.innovationhub.prox.projectservice.project.Project;
+import de.innovationhub.prox.projectservice.project.ProjectStatus;
+import de.innovationhub.prox.projectservice.project.Supervisor;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -34,8 +38,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
- * A proposal is a pre-state of a project where a user has an idea for a project but
- * not the capacity, resources, knowledge or the rights to supervise it.
+ * A proposal is a pre-state of a project where a user has an idea for a project but not the
+ * capacity, resources, knowledge or the rights to supervise it.
  */
 @Entity
 @Getter
