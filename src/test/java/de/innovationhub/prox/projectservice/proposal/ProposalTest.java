@@ -21,7 +21,6 @@ class ProposalTest {
         .name("Test")
         .status(ProposalStatus.PROPOSED)
         .requirement("Test")
-        .shortDescription("Test")
         .build();
     var firstStatusChangedTimestamp = Instant.from(proposal.getStatusChangedAt());
 

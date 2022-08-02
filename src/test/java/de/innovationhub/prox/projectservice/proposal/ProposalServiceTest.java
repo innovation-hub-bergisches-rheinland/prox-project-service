@@ -51,7 +51,7 @@ public class ProposalServiceTest {
 
     assertThrows(ProposalNotFoundException.class, () -> proposalService.get(id));
     assertThrows(ProposalNotFoundException.class, () -> proposalService.delete(id));
-    assertThrows(ProposalNotFoundException.class, () -> proposalService.update(id, new CreateProposalDto("", "", "", "")));
+    assertThrows(ProposalNotFoundException.class, () -> proposalService.update(id, new CreateProposalDto("", "", "")));
     assertThrows(ProposalNotFoundException.class, () -> proposalService.setModuleTypes(id, Collections.emptySet()));
     assertThrows(ProposalNotFoundException.class, () -> proposalService.setSpecializations(id, Collections.emptySet()));
   }
@@ -60,7 +60,7 @@ public class ProposalServiceTest {
   void shouldCreateUserWhenNotFound() {
     when(userRepository.findById(any())).thenReturn(Optional.empty());
     var userId = UUID.randomUUID();
-    var proposal = new CreateProposalDto("", "", "", "");
+    var proposal = new CreateProposalDto("",  "", "");
 
     proposalService.createForUser(userId, proposal);
 
@@ -73,7 +73,7 @@ public class ProposalServiceTest {
   void shouldCreateOrganizationWhenNotFound() {
     when(organizationRepository.findById(any())).thenReturn(Optional.empty());
     var orgId = UUID.randomUUID();
-    var proposal = new CreateProposalDto("", "", "", "");
+    var proposal = new CreateProposalDto("",  "", "");
 
     proposalService.createForOrganization(orgId, proposal);
 

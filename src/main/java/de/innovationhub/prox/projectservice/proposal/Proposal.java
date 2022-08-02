@@ -49,7 +49,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @Builder
 public class Proposal extends AbstractEntity implements Ownable {
-
   @Column(length = 255)
   @Size(min = 1, max = 255)
   @NotBlank
@@ -57,12 +56,9 @@ public class Proposal extends AbstractEntity implements Ownable {
   private String name;
 
   @Column(length = 10000)
-  private String description;
-
-  @Column(length = 10000)
   @Size(min = 1, max = 10000)
   @NotBlank
-  private String shortDescription;
+  private String description;
 
   @Column(length = 10000)
   private String requirement;

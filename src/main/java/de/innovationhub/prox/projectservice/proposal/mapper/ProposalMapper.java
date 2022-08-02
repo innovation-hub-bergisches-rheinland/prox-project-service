@@ -26,7 +26,6 @@ public abstract class ProposalMapper {
 
     proposalToUpdate.setName(updated.name());
     proposalToUpdate.setDescription(updated.description());
-    proposalToUpdate.setShortDescription(updated.shortDescription());
     proposalToUpdate.setRequirement(updated.requirement());
   }
 }

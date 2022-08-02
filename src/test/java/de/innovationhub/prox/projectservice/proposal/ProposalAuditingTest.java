@@ -71,7 +71,6 @@ class ProposalAuditingTest {
     return Proposal.builder()
         .name("Test")
         .description("Test")
-        .shortDescription("Test")
         .owner(owner)
         .build();
   }

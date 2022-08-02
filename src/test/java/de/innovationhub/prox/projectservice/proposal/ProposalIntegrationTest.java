@@ -81,7 +81,6 @@ class ProposalIntegrationTest {
             {
               "name": "Test",
               "description": "Test",
-              "shortDescription": "Test",
               "requirement": "Test"
             }
             """)
@@ -97,10 +96,10 @@ class ProposalIntegrationTest {
     var proposal = entityManager.find(Proposal.class, id);
     var proposalAssertions = new SoftAssertions();
     proposalAssertions.assertThat(proposal)
-        .extracting(Proposal::getName, Proposal::getDescription, Proposal::getShortDescription,
+        .extracting(Proposal::getName, Proposal::getDescription,
             Proposal::getRequirement, Proposal::getStatus)
         .doesNotContainNull()
-        .containsExactly("Test", "Test", "Test", "Test", ProposalStatus.PROPOSED);
+        .containsExactly("Test", "Test", "Test", ProposalStatus.PROPOSED);
     proposalAssertions.assertThat(proposal)
         .extracting(p -> p.getOwner().getId(), p -> p.getOwner().getDiscriminator())
         .containsExactly(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "user");
@@ -128,7 +127,6 @@ class ProposalIntegrationTest {
             {
               "name": "Test2",
               "description": "Test2",
-              "shortDescription": "Test2",
               "requirement": "Test2"
             }
             """)
@@ -142,10 +140,10 @@ class ProposalIntegrationTest {
 
     var proposalAssertions = new SoftAssertions();
     proposalAssertions.assertThat(result)
-        .extracting(Proposal::getName, Proposal::getDescription, Proposal::getShortDescription,
+        .extracting(Proposal::getName, Proposal::getDescription,
             Proposal::getRequirement, Proposal::getStatus)
         .doesNotContainNull()
-        .containsExactly("Test2", "Test2", "Test2", "Test2", ProposalStatus.PROPOSED);
+        .containsExactly("Test2", "Test2", "Test2", ProposalStatus.PROPOSED);
     proposalAssertions.assertThat(result)
         .extracting(p -> p.getOwner().getId(), p -> p.getOwner().getDiscriminator())
         .containsExactly(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "user");
@@ -290,7 +288,6 @@ class ProposalIntegrationTest {
     return Proposal.builder()
         .name("Test")
         .owner(owner)
-        .shortDescription("Test")
         .requirement("Test")
         .description("Test")
         .build();

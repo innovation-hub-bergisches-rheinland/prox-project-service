@@ -160,7 +160,7 @@ public class ProposalService {
   }
 
   private CreateProjectDto promoteToProjectRequest(Proposal proposal, CreateSupervisorDto supervisor) {
-    return new CreateProjectDto(proposal.getName(), proposal.getDescription(), proposal.getShortDescription(), proposal.getRequirement(), ProjectStatus.AVAILABLE, null,
+    return new CreateProjectDto(proposal.getName(), null, proposal.getDescription(), proposal.getRequirement(), ProjectStatus.AVAILABLE, null,
         List.of(supervisor));
   }
 }

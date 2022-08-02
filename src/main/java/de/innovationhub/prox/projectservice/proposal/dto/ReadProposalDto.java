@@ -13,7 +13,6 @@ public record ReadProposalDto(
     UUID id,
     String name,
     String description,
-    String shortDescription,
     String requirement,
     ProposalStatus status,
     Set<Specialization> specializations,

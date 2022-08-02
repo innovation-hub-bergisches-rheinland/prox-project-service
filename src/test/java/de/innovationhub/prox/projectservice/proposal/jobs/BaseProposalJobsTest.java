@@ -31,7 +31,6 @@ public class BaseProposalJobsTest {
 
     return Proposal.builder()
         .owner(user)
-        .shortDescription("Test")
         .name("Test")
         .description("Test")
         .requirement("Test")
