@@ -38,8 +38,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
- * A proposal is a pre-state of a project where a user has an idea for a project but not the
- * capacity, resources, knowledge or the rights to supervise it.
+ * A proposal (also known as "idea") is a pre-state of a project where a user has an idea for a
+ * project but not the capacity, resources, knowledge or the rights to supervise it.
+ *
+ * The intention behind a proposal is to draft potentially immature project ideas in a lightweight
+ * format. The key difference between a project and a proposal is, that a proposal does not have
+ * a supervisor yet.
  */
 @Entity
 @Getter
