@@ -94,7 +94,8 @@ public class ProjectController {
       @RequestParam(name = "moduleTypeKeys", required = false) String[] moduleTypeKeys,
       @RequestParam(name = "text", required = false) String text,
       Sort sort) {
-    return ResponseEntity.ok(projectService.filter(status, specializationKeys, moduleTypeKeys, text, sort));
+    return ResponseEntity.ok(
+        projectService.filter(status, specializationKeys, moduleTypeKeys, text, sort));
   }
 
   /*

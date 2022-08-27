@@ -25,23 +25,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
 public class ProposalServiceTest {
-  @MockBean
-  ProposalRepository proposalRepository;
+  @MockBean ProposalRepository proposalRepository;
 
-  @MockBean
-  UserRepository userRepository;
+  @MockBean UserRepository userRepository;
 
-  @MockBean
-  OrganizationRepository organizationRepository;
+  @MockBean OrganizationRepository organizationRepository;
 
-  @MockBean
-  ModuleTypeRepository moduleTypeRepository;
+  @MockBean ModuleTypeRepository moduleTypeRepository;
 
-  @MockBean
-  SpecializationRepository specializationRepository;
+  @MockBean SpecializationRepository specializationRepository;
 
-  @Autowired
-  ProposalService proposalService;
+  @Autowired ProposalService proposalService;
 
   @Test
   void shouldThrowWhenProposalNotFound() {
@@ -51,16 +45,22 @@ public class ProposalServiceTest {
 
     assertThrows(ProposalNotFoundException.class, () -> proposalService.get(id));
     assertThrows(ProposalNotFoundException.class, () -> proposalService.delete(id));
-    assertThrows(ProposalNotFoundException.class, () -> proposalService.update(id, new CreateProposalDto("", "", "")));
-    assertThrows(ProposalNotFoundException.class, () -> proposalService.setModuleTypes(id, Collections.emptySet()));
-    assertThrows(ProposalNotFoundException.class, () -> proposalService.setSpecializations(id, Collections.emptySet()));
+    assertThrows(
+        ProposalNotFoundException.class,
+        () -> proposalService.update(id, new CreateProposalDto("", "", "")));
+    assertThrows(
+        ProposalNotFoundException.class,
+        () -> proposalService.setModuleTypes(id, Collections.emptySet()));
+    assertThrows(
+        ProposalNotFoundException.class,
+        () -> proposalService.setSpecializations(id, Collections.emptySet()));
   }
 
   @Test
   void shouldCreateUserWhenNotFound() {
     when(userRepository.findById(any())).thenReturn(Optional.empty());
     var userId = UUID.randomUUID();
-    var proposal = new CreateProposalDto("",  "", "");
+    var proposal = new CreateProposalDto("", "", "");
 
     proposalService.createForUser(userId, proposal);
 
@@ -73,7 +73,7 @@ public class ProposalServiceTest {
   void shouldCreateOrganizationWhenNotFound() {
     when(organizationRepository.findById(any())).thenReturn(Optional.empty());
     var orgId = UUID.randomUUID();
-    var proposal = new CreateProposalDto("",  "", "");
+    var proposal = new CreateProposalDto("", "", "");
 
     proposalService.createForOrganization(orgId, proposal);
 

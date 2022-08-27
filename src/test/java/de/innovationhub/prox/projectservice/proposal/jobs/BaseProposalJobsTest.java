@@ -10,16 +10,13 @@ import de.innovationhub.prox.projectservice.proposal.ProposalStatus;
 import java.time.Instant;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class BaseProposalJobsTest {
 
-  @Autowired
-  UserRepository userRepository;
+  @Autowired UserRepository userRepository;
 
-  @Autowired
-  ProposalRepository proposalRepository;
+  @Autowired ProposalRepository proposalRepository;
 
   @AfterEach
   void cleanUp() {

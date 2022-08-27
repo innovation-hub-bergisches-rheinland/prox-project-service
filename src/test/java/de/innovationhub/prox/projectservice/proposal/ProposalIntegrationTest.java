@@ -10,19 +10,15 @@ import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.project.Project;
-import de.innovationhub.prox.projectservice.project.ProjectStatus;
 import de.innovationhub.prox.projectservice.project.Supervisor;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import org.assertj.core.api.SoftAssertions;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,14 +36,11 @@ import org.springframework.test.web.servlet.MockMvc;
 @SuppressWarnings("java:S2699")
 class ProposalIntegrationTest {
 
-  @Autowired
-  MockMvc mockMvc;
+  @Autowired MockMvc mockMvc;
 
-  @Autowired
-  EntityManager entityManager;
+  @Autowired EntityManager entityManager;
 
-  @Autowired
-  Validator validator;
+  @Autowired Validator validator;
 
   @BeforeEach
   void setup() {
@@ -77,7 +70,8 @@ class ProposalIntegrationTest {
         given()
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .body("""
+            .body(
+                """
             {
               "name": "Test",
               "description": "Test",
@@ -95,16 +89,20 @@ class ProposalIntegrationTest {
 
     var proposal = entityManager.find(Proposal.class, id);
     var proposalAssertions = new SoftAssertions();
-    proposalAssertions.assertThat(proposal)
-        .extracting(Proposal::getName, Proposal::getDescription,
-            Proposal::getRequirement, Proposal::getStatus)
+    proposalAssertions
+        .assertThat(proposal)
+        .extracting(
+            Proposal::getName,
+            Proposal::getDescription,
+            Proposal::getRequirement,
+            Proposal::getStatus)
         .doesNotContainNull()
         .containsExactly("Test", "Test", "Test", ProposalStatus.PROPOSED);
-    proposalAssertions.assertThat(proposal)
+    proposalAssertions
+        .assertThat(proposal)
         .extracting(p -> p.getOwner().getId(), p -> p.getOwner().getDiscriminator())
         .containsExactly(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "user");
     proposalAssertions.assertAll();
-
   }
 
   @Test
@@ -123,7 +121,8 @@ class ProposalIntegrationTest {
     given()
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON_VALUE)
-        .body("""
+        .body(
+            """
             {
               "name": "Test2",
               "description": "Test2",
@@ -139,12 +138,17 @@ class ProposalIntegrationTest {
     var result = this.entityManager.find(Proposal.class, proposal.getId());
 
     var proposalAssertions = new SoftAssertions();
-    proposalAssertions.assertThat(result)
-        .extracting(Proposal::getName, Proposal::getDescription,
-            Proposal::getRequirement, Proposal::getStatus)
+    proposalAssertions
+        .assertThat(result)
+        .extracting(
+            Proposal::getName,
+            Proposal::getDescription,
+            Proposal::getRequirement,
+            Proposal::getStatus)
         .doesNotContainNull()
         .containsExactly("Test2", "Test2", "Test2", ProposalStatus.PROPOSED);
-    proposalAssertions.assertThat(result)
+    proposalAssertions
+        .assertThat(result)
         .extracting(p -> p.getOwner().getId(), p -> p.getOwner().getDiscriminator())
         .containsExactly(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "user");
     proposalAssertions.assertAll();
@@ -171,8 +175,7 @@ class ProposalIntegrationTest {
         .status(HttpStatus.NO_CONTENT);
     // @formatter:on
     var result = this.entityManager.find(Proposal.class, proposal.getId());
-    assertThat(result)
-        .isNull();
+    assertThat(result).isNull();
   }
 
   @Test
@@ -205,8 +208,7 @@ class ProposalIntegrationTest {
     // @formatter:on
 
     var result = this.entityManager.find(Proposal.class, proposal.getId());
-    assertThat(result.getModules())
-        .containsExactlyInAnyOrderElementsOf(randomModules);
+    assertThat(result.getModules()).containsExactlyInAnyOrderElementsOf(randomModules);
   }
 
   @Test
@@ -262,15 +264,16 @@ class ProposalIntegrationTest {
     this.entityManager.flush();
 
     // @formatter:off
-    var projectId = given()
-        .accept(MediaType.APPLICATION_JSON)
-        .when()
-        .post("/proposals/{id}/commitment", testProposal.getId())
-        .then()
-        .status(HttpStatus.CREATED)
-        .extract()
-        .jsonPath()
-        .getUUID("id");
+    var projectId =
+        given()
+            .accept(MediaType.APPLICATION_JSON)
+            .when()
+            .post("/proposals/{id}/commitment", testProposal.getId())
+            .then()
+            .status(HttpStatus.CREATED)
+            .extract()
+            .jsonPath()
+            .getUUID("id");
 
     // @formatter:on
 

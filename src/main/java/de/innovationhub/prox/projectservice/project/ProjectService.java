@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.project;
 
+
 import de.innovationhub.prox.projectservice.module.ModuleTypeRepository;
 import de.innovationhub.prox.projectservice.module.SpecializationRepository;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
@@ -29,9 +30,12 @@ public class ProjectService {
   private final ProjectMapper projectMapper;
 
   @Autowired
-  public ProjectService(ProjectRepository projectRepository,
-      SpecializationRepository specializationRepository, ModuleTypeRepository moduleTypeRepository,
-      UserRepository userRepository, OrganizationRepository organizationRepository,
+  public ProjectService(
+      ProjectRepository projectRepository,
+      SpecializationRepository specializationRepository,
+      ModuleTypeRepository moduleTypeRepository,
+      UserRepository userRepository,
+      OrganizationRepository organizationRepository,
       ProjectMapper projectMapper) {
     this.projectRepository = projectRepository;
     this.specializationRepository = specializationRepository;
@@ -111,8 +115,14 @@ public class ProjectService {
     return projectMapper.toDto(project);
   }
 
-  public ReadProjectCollectionDto filter(ProjectStatus status, String[] specializationKeys, String[] moduleTypeKeys, String text, Sort sort) {
-    var projects = projectRepository.filterProjects(status, specializationKeys, moduleTypeKeys, text, sort);
+  public ReadProjectCollectionDto filter(
+      ProjectStatus status,
+      String[] specializationKeys,
+      String[] moduleTypeKeys,
+      String text,
+      Sort sort) {
+    var projects =
+        projectRepository.filterProjects(status, specializationKeys, moduleTypeKeys, text, sort);
     return projectMapper.toDto(projects.stream().toList());
   }
 
@@ -127,6 +137,8 @@ public class ProjectService {
   }
 
   private Project getOrThrow(UUID projectId) {
-    return this.projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
+    return this.projectRepository
+        .findById(projectId)
+        .orElseThrow(() -> new ProjectNotFoundException(projectId));
   }
 }

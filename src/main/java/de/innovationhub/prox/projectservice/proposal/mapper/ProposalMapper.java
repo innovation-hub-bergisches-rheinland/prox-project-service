@@ -13,8 +13,7 @@ public abstract class ProposalMapper {
   public abstract ReadProposalDto toDto(Proposal proposal);
 
   public ReadProposalCollectionDto toDto(List<Proposal> proposals) {
-    return new ReadProposalCollectionDto(
-        proposals.stream().map(this::toDto).toList());
+    return new ReadProposalCollectionDto(proposals.stream().map(this::toDto).toList());
   }
 
   public abstract Proposal toEntity(CreateProposalDto proposalDto);

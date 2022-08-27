@@ -9,11 +9,7 @@ import de.innovationhub.prox.projectservice.core.Ownable;
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
-import de.innovationhub.prox.projectservice.project.Project;
-import de.innovationhub.prox.projectservice.project.ProjectStatus;
-import de.innovationhub.prox.projectservice.project.Supervisor;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -41,9 +37,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  * A proposal (also known as "idea") is a pre-state of a project where a user has an idea for a
  * project but not the capacity, resources, knowledge or the rights to supervise it.
  *
- * The intention behind a proposal is to draft potentially immature project ideas in a lightweight
- * format. The key difference between a project and a proposal is, that a proposal does not have
- * a supervisor yet.
+ * <p>The intention behind a proposal is to draft potentially immature project ideas in a
+ * lightweight format. The key difference between a project and a proposal is, that a proposal does
+ * not have a supervisor yet.
  */
 @Entity
 @Getter
@@ -77,10 +73,7 @@ public class Proposal extends AbstractEntity implements Ownable {
   @Builder.Default
   private Set<Specialization> specializations = new HashSet<>();
 
-  @JsonIgnore
-  @ManyToMany
-  @Builder.Default
-  private Set<ModuleType> modules = new HashSet<>();
+  @JsonIgnore @ManyToMany @Builder.Default private Set<ModuleType> modules = new HashSet<>();
 
   @JsonProperty(access = Access.READ_ONLY)
   @ManyToOne(optional = false)

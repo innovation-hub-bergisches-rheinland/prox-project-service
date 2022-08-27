@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.proposal.jobs;
 
+
 import de.innovationhub.prox.projectservice.proposal.ProposalStatus;
 import java.time.Instant;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
@@ -8,21 +9,27 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
-@SpringBootTest(properties = {
-    "project-service.proposals.jobs.auto-archive.enable=true",
-    "project-service.proposals.jobs.auto-archive.after=P2D",
-    "project-service.proposals.jobs.auto-archive.cron=* * * * * *",
-    "project-service.proposals.jobs.auto-mark-for-delete.enable=true",
-    "project-service.proposals.jobs.auto-mark-for-delete.after=P2D",
-    "project-service.proposals.jobs.auto-mark-for-delete.cron=* * * * * *",
-    "project-service.proposals.jobs.auto-delete.enable=true",
-    "project-service.proposals.jobs.auto-delete.cron=* * * * * *",
-})
+@SpringBootTest(
+    properties = {
+      "project-service.proposals.jobs.auto-archive.enable=true",
+      "project-service.proposals.jobs.auto-archive.after=P2D",
+      "project-service.proposals.jobs.auto-archive.cron=* * * * * *",
+      "project-service.proposals.jobs.auto-mark-for-delete.enable=true",
+      "project-service.proposals.jobs.auto-mark-for-delete.after=P2D",
+      "project-service.proposals.jobs.auto-mark-for-delete.cron=* * * * * *",
+      "project-service.proposals.jobs.auto-delete.enable=true",
+      "project-service.proposals.jobs.auto-delete.cron=* * * * * *",
+    })
 @DirtiesContext
-@EnabledIfEnvironmentVariable(disabledReason = "Long running tests are disabled", named = "CI", matches = "true")
+@EnabledIfEnvironmentVariable(
+    disabledReason = "Long running tests are disabled",
+    named = "CI",
+    matches = "true")
 class ProposalLifecycleIntegrationTest extends BaseProposalJobsTest {
   @ParameterizedTest(name = "should not touch proposals with a newer timestamp")
-  @EnumSource(value = ProposalStatus.class, names = { "ARCHIVED", "PROPOSED" })
+  @EnumSource(
+      value = ProposalStatus.class,
+      names = {"ARCHIVED", "PROPOSED"})
   void shouldNotTouchProposalsWithNewerTimestamp(ProposalStatus status)
       throws InterruptedException {
     // We create a proposal which has been proposed two days ago

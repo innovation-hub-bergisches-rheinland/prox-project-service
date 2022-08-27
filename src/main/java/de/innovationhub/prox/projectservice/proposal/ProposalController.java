@@ -87,7 +87,8 @@ public class ProposalController {
 
   @PreAuthorize("hasRole('professor')")
   @PostMapping(value = "/proposals/{id}/commitment")
-  public @ResponseBody ResponseEntity<ReadProjectDto> commitForProposal(@PathVariable("id") UUID id, Authentication auth) {
+  public @ResponseBody ResponseEntity<ReadProjectDto> commitForProposal(
+      @PathVariable("id") UUID id, Authentication auth) {
     var createdProject = this.proposalService.promoteToProject(id, auth);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdProject);
   }

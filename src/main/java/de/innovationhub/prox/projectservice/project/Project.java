@@ -70,9 +70,7 @@ public class Project extends AbstractEntity implements Ownable {
   private String creatorName;
 
   @ElementCollection(fetch = FetchType.EAGER)
-  @CollectionTable(uniqueConstraints = {
-      @UniqueConstraint(columnNames = { "project_id", "id" })
-  })
+  @CollectionTable(uniqueConstraints = {@UniqueConstraint(columnNames = {"project_id", "id"})})
   @Builder.Default
   private List<Supervisor> supervisors = new ArrayList<>();
 

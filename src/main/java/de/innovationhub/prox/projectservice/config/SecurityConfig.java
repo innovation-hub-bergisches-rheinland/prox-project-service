@@ -21,21 +21,22 @@ class SecurityConfig {
   private final OrganizationRequestContextAuthorizationManager orgAuthorizationManager;
 
   private static final String[] PUBLIC_READ_PATHS = {
-      "/projects/**",
-      "/proposals/**",
-      "/users/**",
-      "/organizations/**",
-      "/modules/**",
-      "/studyPrograms/**",
-      "/specializations/**",
-      "/swagger-ui.html",
-      "/swagger-ui/**",
-      "/v3/api-docs/**"
+    "/projects/**",
+    "/proposals/**",
+    "/users/**",
+    "/organizations/**",
+    "/modules/**",
+    "/studyPrograms/**",
+    "/specializations/**",
+    "/swagger-ui.html",
+    "/swagger-ui/**",
+    "/v3/api-docs/**"
   };
-  private static final String PROJECT_WRITE_PATH = "/projects/{%s}/**".formatted(
-      ProjectRequestContextAuthorizationManager.PROJECT_ID_VARIABLE);
-  private static final String PROPOSAL_WRITE_PATH = "/proposals/{%s}/**".formatted(
-      ProposalRequestContextAuthorizationManager.PROPOSAL_ID_VARIABLE);
+  private static final String PROJECT_WRITE_PATH =
+      "/projects/{%s}/**".formatted(ProjectRequestContextAuthorizationManager.PROJECT_ID_VARIABLE);
+  private static final String PROPOSAL_WRITE_PATH =
+      "/proposals/{%s}/**"
+          .formatted(ProposalRequestContextAuthorizationManager.PROPOSAL_ID_VARIABLE);
 
   public SecurityConfig(
       ProjectRequestContextAuthorizationManager projectAuthorizationManager,

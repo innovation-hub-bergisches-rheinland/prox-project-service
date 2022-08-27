@@ -19,5 +19,4 @@ public record ReadProposalDto(
     Set<ModuleType> modules,
     AbstractOwner owner,
     Instant createdAt,
-    Instant modifiedAt
-) {}
+    Instant modifiedAt) {}

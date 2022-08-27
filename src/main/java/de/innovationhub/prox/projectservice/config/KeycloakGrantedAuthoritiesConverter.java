@@ -21,18 +21,14 @@ public class KeycloakGrantedAuthoritiesConverter
     var roles = (List<String>) realmAccess.get("roles");
     Stream<GrantedAuthority> roleAuthorities = Stream.empty();
     if (roles != null) {
-      roleAuthorities = roles.stream()
-          .map(rn -> new SimpleGrantedAuthority("ROLE_" + rn));
+      roleAuthorities = roles.stream().map(rn -> new SimpleGrantedAuthority("ROLE_" + rn));
     }
-
 
     var features = source.getClaimAsStringList("features");
     Stream<GrantedAuthority> featureAuthorities = Stream.empty();
-    if(features != null) {
-      featureAuthorities = features.stream()
-          .map(fn -> new SimpleGrantedAuthority("FEATURE_" + fn));
+    if (features != null) {
+      featureAuthorities = features.stream().map(fn -> new SimpleGrantedAuthority("FEATURE_" + fn));
     }
-
 
     return Stream.concat(roleAuthorities, featureAuthorities).collect(Collectors.toList());
   }

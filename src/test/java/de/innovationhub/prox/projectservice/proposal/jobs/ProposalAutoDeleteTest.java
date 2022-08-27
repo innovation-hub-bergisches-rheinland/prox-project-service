@@ -8,7 +8,6 @@ import de.innovationhub.prox.projectservice.proposal.ProposalStatus;
 import de.innovationhub.prox.projectservice.proposal.jobs.ProposalAutoDeleteTest.DeleteTest.DeleteTestContextInitializer;
 import java.time.Duration;
 import java.time.Instant;
-import javax.transaction.Transactional;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
@@ -18,33 +17,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.TestPropertySourceUtils;
 
 @SpringBootTest
 class ProposalAutoDeleteTest extends BaseProposalJobsTest {
-  @Autowired
-  ProposalRepository proposalRepository;
+  @Autowired ProposalRepository proposalRepository;
 
-  @Autowired
-  ProposalAutoDelete autoDeletion;
+  @Autowired ProposalAutoDelete autoDeletion;
 
   @ContextConfiguration(initializers = {DeleteTestContextInitializer.class})
-  @EnabledIfEnvironmentVariable(disabledReason = "Long running tests are disabled", named = "CI", matches = "true")
+  @EnabledIfEnvironmentVariable(
+      disabledReason = "Long running tests are disabled",
+      named = "CI",
+      matches = "true")
   @Nested
   class DeleteTest {
 
-    static class DeleteTestContextInitializer implements
-        ApplicationContextInitializer<ConfigurableApplicationContext> {
+    static class DeleteTestContextInitializer
+        implements ApplicationContextInitializer<ConfigurableApplicationContext> {
       @Override
       public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-        TestPropertySourceUtils.addInlinedPropertiesToEnvironment(configurableApplicationContext,
+        TestPropertySourceUtils.addInlinedPropertiesToEnvironment(
+            configurableApplicationContext,
             "project-service.proposals.jobs.auto-archive.enable=false",
             "project-service.proposals.jobs.auto-mark-for-delete.enable=false",
             "project-service.proposals.jobs.auto-delete.enable=true",
-            "project-service.proposals.jobs.auto-delete.cron=* * * * * *"
-        );
+            "project-service.proposals.jobs.auto-delete.cron=* * * * * *");
       }
     }
 
@@ -56,7 +55,9 @@ class ProposalAutoDeleteTest extends BaseProposalJobsTest {
 
       final var proposalId = proposal.getId();
       // Cron is configured to run every second
-      await().atMost(Duration.ofSeconds(2)).untilAsserted(() -> assertThat(proposalRepository.existsById(proposalId)).isFalse());
+      await()
+          .atMost(Duration.ofSeconds(2))
+          .untilAsserted(() -> assertThat(proposalRepository.existsById(proposalId)).isFalse());
     }
   }
 
@@ -71,12 +72,13 @@ class ProposalAutoDeleteTest extends BaseProposalJobsTest {
 
     // Then
     var foundProposal = proposalRepository.findById(proposal.getId());
-    assertThat(foundProposal)
-        .isEmpty();
+    assertThat(foundProposal).isEmpty();
   }
 
   @ParameterizedTest(name = "should not delete {0}")
-  @EnumSource(value = ProposalStatus.class, names = { "ARCHIVED", "PROPOSED" })
+  @EnumSource(
+      value = ProposalStatus.class,
+      names = {"ARCHIVED", "PROPOSED"})
   void shouldNotDeleteProposalInOtherState(ProposalStatus proposalStatus) {
     // Given
     var olderTimestamp = Instant.now().minus(Duration.ofDays(2));
@@ -88,9 +90,6 @@ class ProposalAutoDeleteTest extends BaseProposalJobsTest {
 
     // Then
     var foundProposal = proposalRepository.findById(proposal.getId());
-    assertThat(foundProposal)
-        .isPresent()
-        .get()
-        .isEqualTo(proposal);
+    assertThat(foundProposal).isPresent().get().isEqualTo(proposal);
   }
 }

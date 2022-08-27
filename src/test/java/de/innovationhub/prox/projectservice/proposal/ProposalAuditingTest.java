@@ -68,10 +68,6 @@ class ProposalAuditingTest {
   private Proposal getTestProposal() {
     var owner = new User(UUID.randomUUID());
     this.entityManager.persist(owner);
-    return Proposal.builder()
-        .name("Test")
-        .description("Test")
-        .owner(owner)
-        .build();
+    return Proposal.builder().name("Test").description("Test").owner(owner).build();
   }
 }

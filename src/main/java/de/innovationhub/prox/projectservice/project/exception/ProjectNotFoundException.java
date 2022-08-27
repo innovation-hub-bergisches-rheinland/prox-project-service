@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.project.exception;
 
+
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
