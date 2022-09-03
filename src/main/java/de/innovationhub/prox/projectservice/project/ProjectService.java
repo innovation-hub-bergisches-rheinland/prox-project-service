@@ -14,6 +14,7 @@ import de.innovationhub.prox.projectservice.project.dto.ReadProjectDto;
 import de.innovationhub.prox.projectservice.project.exception.ProjectNotFoundException;
 import de.innovationhub.prox.projectservice.project.mapper.ProjectMapper;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.StreamSupport;
 import javax.transaction.Transactional;
@@ -158,6 +159,16 @@ public class ProjectService {
     return this.projectRepository
       .findById(projectId)
       .orElseThrow(() -> new ProjectNotFoundException(projectId));
+  }
+
+  @Transactional
+  public ReadProjectCollectionDto reconcile(List<UUID> projectIds) {
+    var projects = projectRepository.findAllByIdIn(projectIds);
+    // just resave is enough to publish the changes
+    for (var project : projects) {
+      saveAndPublish(project);
+    }
+    return projectMapper.toDto(projects);
   }
 
   private Project saveAndPublish(Project project) {

@@ -158,21 +158,31 @@ public class ProposalService {
         this.promoteToProjectRequest(proposal, new CreateSupervisorDto(userId, name));
     var createdProject = this.projectService.create(projectRequest, proposal.getOwner());
     createdProject =
-        this.projectService.setSpecializations(
-            createdProject.id(),
-            proposal.getSpecializations().stream().map(Specialization::getKey).toList());
+      this.projectService.setSpecializations(
+        createdProject.id(),
+        proposal.getSpecializations().stream().map(Specialization::getKey).toList());
     createdProject =
-        this.projectService.setModuleTypes(
-            createdProject.id(), proposal.getModules().stream().map(ModuleType::getKey).toList());
+      this.projectService.setModuleTypes(
+        createdProject.id(), proposal.getModules().stream().map(ModuleType::getKey).toList());
     this.delete(proposalId);
 
     return createdProject;
   }
 
+  @Transactional
+  public ReadProposalCollectionDto reconcile(List<UUID> projectIds) {
+    var proposals = proposalRepository.findAllByIdIn(projectIds);
+    // just resave is enough to publish the changes
+    for (var proposal : proposals) {
+      saveAndPublish(proposal);
+    }
+    return proposalMapper.toDto(proposals);
+  }
+
   private Proposal getOrThrow(UUID proposalId) {
     return proposalRepository
-        .findById(proposalId)
-        .orElseThrow(() -> new ProposalNotFoundException(proposalId));
+      .findById(proposalId)
+      .orElseThrow(() -> new ProposalNotFoundException(proposalId));
   }
 
   private CreateProjectDto promoteToProjectRequest(
