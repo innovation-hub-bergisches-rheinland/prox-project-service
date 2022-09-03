@@ -29,6 +29,7 @@ import lombok.Setter;
 @DiscriminatorColumn(name = "owner_type", discriminatorType = DiscriminatorType.STRING)
 @Table(name = "abstract_owner")
 public abstract class AbstractOwner {
+
   @Id
   @JsonProperty(access = Access.READ_ONLY)
   @Setter(value = AccessLevel.PROTECTED)
@@ -37,6 +38,9 @@ public abstract class AbstractOwner {
   @JsonIgnore
   @Column(name = "owner_type", updatable = false, nullable = false, insertable = false)
   private String ownerType;
+
+  @Column(name = "owner_name", nullable = false)
+  private String name;
 
   public abstract String getDiscriminator();
 }
