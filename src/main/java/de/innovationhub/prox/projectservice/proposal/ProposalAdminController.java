@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,8 @@ public class ProposalAdminController {
   }
 
   @PostMapping(value = "/proposals/reconciliation", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<ReadProposalCollectionDto> reconcile(List<UUID> ids) {
+  public @ResponseBody ResponseEntity<ReadProposalCollectionDto> reconcile(
+    @RequestBody List<UUID> ids) {
     return ResponseEntity.ok(this.proposalService.reconcile(ids));
   }
 }

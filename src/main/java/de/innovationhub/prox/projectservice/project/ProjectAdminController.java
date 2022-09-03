@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,8 @@ public class ProjectAdminController {
   }
 
   @PostMapping(value = "/projects/reconciliation", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<ReadProjectCollectionDto> reconcile(List<UUID> ids) {
+  public @ResponseBody ResponseEntity<ReadProjectCollectionDto> reconcile(
+    @RequestBody List<UUID> ids) {
     return ResponseEntity.ok(this.projectService.reconcile(ids));
   }
 }
