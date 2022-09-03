@@ -3,6 +3,11 @@ package de.innovationhub.prox.projectservice.proposal;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
 
 import com.c4_soft.springaddons.security.oauth2.test.annotations.OpenIdClaims;
 import com.c4_soft.springaddons.security.oauth2.test.annotations.WithMockJwtAuth;
@@ -26,8 +31,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -35,14 +44,26 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("h2")
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @SuppressWarnings("java:S2699")
 class ProposalIntegrationTest {
 
-  @Autowired MockMvc mockMvc;
+  @Autowired
+  MockMvc mockMvc;
 
-  @Autowired EntityManager entityManager;
+  @Autowired
+  EntityManager entityManager;
 
-  @Autowired Validator validator;
+  @Autowired
+  Validator validator;
+
+  @MockBean
+  KafkaTemplate<String, Proposal> kafkaTemplate;
+
+  @MockBean
+  KafkaTemplate<String, Project> kafkaTemplateProj;
+
+  static final String PROPOSAL_TOPIC = "entity.proposal.proposal";
 
   @BeforeEach
   void setup() {
@@ -64,9 +85,9 @@ class ProposalIntegrationTest {
 
   @Test
   @WithMockJwtAuth(
-      authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
-  void shouldCreateProposalForUser() {
+    authorities = {"ROLE_professor"},
+    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+  void shouldCreateProposalForUser() throws InterruptedException {
     var user = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     entityManager.persist(user);
 
@@ -95,26 +116,28 @@ class ProposalIntegrationTest {
     var proposal = entityManager.find(Proposal.class, id);
     var proposalAssertions = new SoftAssertions();
     proposalAssertions
-        .assertThat(proposal)
-        .extracting(
-            Proposal::getName,
-            Proposal::getDescription,
-            Proposal::getRequirement,
-            Proposal::getStatus)
-        .doesNotContainNull()
-        .containsExactly("Test", "Test", "Test", ProposalStatus.PROPOSED);
+      .assertThat(proposal)
+      .extracting(
+        Proposal::getName,
+        Proposal::getDescription,
+        Proposal::getRequirement,
+        Proposal::getStatus)
+      .doesNotContainNull()
+      .containsExactly("Test", "Test", "Test", ProposalStatus.PROPOSED);
     proposalAssertions
-        .assertThat(proposal)
-        .extracting(p -> p.getOwner().getId(), p -> p.getOwner().getDiscriminator())
-        .containsExactly(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "user");
+      .assertThat(proposal)
+      .extracting(p -> p.getOwner().getId(), p -> p.getOwner().getDiscriminator())
+      .containsExactly(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "user");
     proposalAssertions.assertAll();
+
+    verify(kafkaTemplate).send(eq(PROPOSAL_TOPIC), eq(id.toString()), eq(proposal));
   }
 
   @Test
   @WithMockJwtAuth(
-      authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
-  void shouldUpdate() {
+    authorities = {"ROLE_professor"},
+    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+  void shouldUpdate() throws InterruptedException {
     // Ensure that authenticated User is the creator
     var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     var proposal = getTestProposal(owner);
@@ -144,26 +167,28 @@ class ProposalIntegrationTest {
 
     var proposalAssertions = new SoftAssertions();
     proposalAssertions
-        .assertThat(result)
-        .extracting(
-            Proposal::getName,
-            Proposal::getDescription,
-            Proposal::getRequirement,
-            Proposal::getStatus)
-        .doesNotContainNull()
-        .containsExactly("Test2", "Test2", "Test2", ProposalStatus.PROPOSED);
+      .assertThat(result)
+      .extracting(
+        Proposal::getName,
+        Proposal::getDescription,
+        Proposal::getRequirement,
+        Proposal::getStatus)
+      .doesNotContainNull()
+      .containsExactly("Test2", "Test2", "Test2", ProposalStatus.PROPOSED);
     proposalAssertions
-        .assertThat(result)
-        .extracting(p -> p.getOwner().getId(), p -> p.getOwner().getDiscriminator())
-        .containsExactly(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "user");
+      .assertThat(result)
+      .extracting(p -> p.getOwner().getId(), p -> p.getOwner().getDiscriminator())
+      .containsExactly(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "user");
     proposalAssertions.assertAll();
+
+    verify(kafkaTemplate).send(eq(PROPOSAL_TOPIC), eq(proposal.getId().toString()), eq(proposal));
   }
 
   @Test
   @WithMockJwtAuth(
-      authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
-  void shouldDelete() {
+    authorities = {"ROLE_professor"},
+    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+  void shouldDelete() throws InterruptedException {
     // Ensure that authenticated User is the creator
     var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     var proposal = getTestProposal(owner);
@@ -181,16 +206,18 @@ class ProposalIntegrationTest {
     // @formatter:on
     var result = this.entityManager.find(Proposal.class, proposal.getId());
     assertThat(result).isNull();
+
+    verify(kafkaTemplate).send(eq(PROPOSAL_TOPIC), eq(proposal.getId().toString()), isNull());
   }
 
   @Test
   @WithMockJwtAuth(
-      authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
-  void shouldUpdateModules() {
+    authorities = {"ROLE_professor"},
+    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+  void shouldUpdateModules() throws InterruptedException {
     var easyRandom = new EasyRandom();
     var randomModules =
-        List.of(new ModuleType("AB", "Alpha Beta"), new ModuleType("BG", "Beta Gamma"));
+      List.of(new ModuleType("AB", "Alpha Beta"), new ModuleType("BG", "Beta Gamma"));
     // Ensure that authenticated User is the creator
     var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     var proposal = getTestProposal(owner);
@@ -214,16 +241,18 @@ class ProposalIntegrationTest {
 
     var result = this.entityManager.find(Proposal.class, proposal.getId());
     assertThat(result.getModules()).containsExactlyInAnyOrderElementsOf(randomModules);
+
+    verify(kafkaTemplate).send(eq(PROPOSAL_TOPIC), eq(proposal.getId().toString()), eq(proposal));
   }
 
   @Test
   @WithMockJwtAuth(
-      authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
-  void shouldUpdateSpecialization() {
+    authorities = {"ROLE_professor"},
+    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+  void shouldUpdateSpecialization() throws InterruptedException {
     var easyRandom = new EasyRandom();
     var randomSpecializations =
-        List.of(new Specialization("AB", "Alpha Beta"), new Specialization("BG", "Beta Gamma"));
+      List.of(new Specialization("AB", "Alpha Beta"), new Specialization("BG", "Beta Gamma"));
     // Ensure that authenticated User is the creator
     var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     var testProposal = getTestProposal(owner);
@@ -248,17 +277,20 @@ class ProposalIntegrationTest {
 
     var result = this.entityManager.find(Proposal.class, testProposal.getId());
     assertThat(result.getSpecializations())
-        .containsExactlyInAnyOrderElementsOf(randomSpecializations);
+      .containsExactlyInAnyOrderElementsOf(randomSpecializations);
+
+    verify(kafkaTemplate).send(eq(PROPOSAL_TOPIC), eq(testProposal.getId().toString()),
+      eq(testProposal));
   }
 
   @Test
   @WithMockJwtAuth(
-      authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c", name = "Karl Peter"))
-  void shouldApplyCommitment() {
+    authorities = {"ROLE_professor"},
+    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c", name = "Karl Peter"))
+  void shouldApplyCommitment() throws InterruptedException {
     var easyRandom = new EasyRandom();
     var randomSpecializations =
-        List.of(new Specialization("AB", "Alpha Beta"), new Specialization("BG", "Beta Gamma"));
+      List.of(new Specialization("AB", "Alpha Beta"), new Specialization("BG", "Beta Gamma"));
     // Ensure that authenticated User is the creator
     var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     var testProposal = getTestProposal(owner);
@@ -287,8 +319,11 @@ class ProposalIntegrationTest {
     var projectResult = this.entityManager.find(Project.class, projectId);
     assertThat(projectResult).isNotNull();
     assertThat(projectResult.getSupervisors())
-        .extracting("id", "name")
-        .contains(tuple(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Karl Peter"));
+      .extracting("id", "name")
+      .contains(tuple(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Karl Peter"));
+
+    verify(kafkaTemplate).send(eq(PROPOSAL_TOPIC), eq(testProposal.getId().toString()), isNull());
+    verify(kafkaTemplateProj, atLeastOnce()).send(any(), any(), any());
   }
 
   private Proposal getTestProposal(User owner) {

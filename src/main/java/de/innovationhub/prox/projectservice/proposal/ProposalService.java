@@ -27,12 +27,15 @@ import java.util.UUID;
 import java.util.stream.StreamSupport;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProposalService {
+
+  private static final String PROPOSAL_TOPIC = "entity.proposal.proposal";
   private final ProposalRepository proposalRepository;
   private final UserRepository userRepository;
   private final OrganizationRepository organizationRepository;
@@ -40,16 +43,17 @@ public class ProposalService {
   private final ModuleTypeRepository moduleTypeRepository;
   private final SpecializationRepository specializationRepository;
   private final ProjectService projectService;
+  private final KafkaTemplate<String, Proposal> kafkaTemplate;
 
   @Autowired
   public ProposalService(
-      ProposalRepository proposalRepository,
-      UserRepository userRepository,
-      OrganizationRepository organizationRepository,
-      ProposalMapper proposalMapper,
-      ModuleTypeRepository moduleTypeRepository,
-      SpecializationRepository specializationRepository,
-      ProjectService projectService) {
+    ProposalRepository proposalRepository,
+    UserRepository userRepository,
+    OrganizationRepository organizationRepository,
+    ProposalMapper proposalMapper,
+    ModuleTypeRepository moduleTypeRepository,
+    SpecializationRepository specializationRepository,
+    ProjectService projectService, KafkaTemplate<String, Proposal> kafkaTemplate) {
     this.proposalRepository = proposalRepository;
     this.userRepository = userRepository;
     this.organizationRepository = organizationRepository;
@@ -57,6 +61,7 @@ public class ProposalService {
     this.moduleTypeRepository = moduleTypeRepository;
     this.specializationRepository = specializationRepository;
     this.projectService = projectService;
+    this.kafkaTemplate = kafkaTemplate;
   }
 
   public ReadProposalCollectionDto getAll() {
@@ -95,7 +100,7 @@ public class ProposalService {
   private ReadProposalDto create(CreateProposalDto proposalToCreate, AbstractOwner owner) {
     var proposal = proposalMapper.toEntity(proposalToCreate);
     proposal.setOwner(owner);
-    proposal = proposalRepository.save(proposal);
+    proposal = saveAndPublish(proposal);
     return proposalMapper.toDto(proposal);
   }
 
@@ -105,7 +110,7 @@ public class ProposalService {
     // Assumption is that permissions are already verified by the security filter chain
     proposalMapper.updateProposal(proposal, updatedProposal);
 
-    proposal = proposalRepository.save(proposal);
+    proposal = saveAndPublish(proposal);
     return proposalMapper.toDto(proposal);
   }
 
@@ -114,6 +119,7 @@ public class ProposalService {
 
     // Assumption is that permissions are already verified by the security filter chain
     proposalRepository.delete(proposal);
+    this.kafkaTemplate.send(PROPOSAL_TOPIC, proposalId.toString(), null);
   }
 
   public ReadProposalDto setModuleTypes(UUID proposalId, Collection<String> moduleTypeKeys) {
@@ -121,7 +127,7 @@ public class ProposalService {
     var moduleTypes = this.moduleTypeRepository.findAllByKeyIn(moduleTypeKeys);
     // Assumption is that permissions are already verified by the security filter chain
     proposal.setModules(moduleTypes);
-    proposal = proposalRepository.save(proposal);
+    proposal = saveAndPublish(proposal);
     return proposalMapper.toDto(proposal);
   }
 
@@ -131,7 +137,7 @@ public class ProposalService {
     var specializations = this.specializationRepository.findAllByKeyIn(specializationKeys);
     // Assumption is that permissions are already verified by the security filter chain
     proposal.setSpecializations(specializations);
-    proposal = proposalRepository.save(proposal);
+    proposal = saveAndPublish(proposal);
     return proposalMapper.toDto(proposal);
   }
 
@@ -170,14 +176,20 @@ public class ProposalService {
   }
 
   private CreateProjectDto promoteToProjectRequest(
-      Proposal proposal, CreateSupervisorDto supervisor) {
+    Proposal proposal, CreateSupervisorDto supervisor) {
     return new CreateProjectDto(
-        proposal.getName(),
-        null,
-        proposal.getDescription(),
-        proposal.getRequirement(),
-        ProjectStatus.AVAILABLE,
-        null,
-        List.of(supervisor));
+      proposal.getName(),
+      null,
+      proposal.getDescription(),
+      proposal.getRequirement(),
+      ProjectStatus.AVAILABLE,
+      null,
+      List.of(supervisor));
+  }
+
+  private Proposal saveAndPublish(Proposal proposal) {
+    proposal = proposalRepository.save(proposal);
+    this.kafkaTemplate.send(PROPOSAL_TOPIC, proposal.getId().toString(), proposal);
+    return proposal;
   }
 }

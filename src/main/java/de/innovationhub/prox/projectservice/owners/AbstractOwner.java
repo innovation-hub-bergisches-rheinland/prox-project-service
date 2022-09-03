@@ -1,9 +1,10 @@
 package de.innovationhub.prox.projectservice.owners;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import de.innovationhub.prox.projectservice.owners.organization.Organization;
+import de.innovationhub.prox.projectservice.owners.user.User;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -28,14 +29,17 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "owner_type", discriminatorType = DiscriminatorType.STRING)
 @Table(name = "abstract_owner")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "ownerType")
+@JsonSubTypes({
+  @JsonSubTypes.Type(value = User.class, name = User.DISCRIMINATOR),
+  @JsonSubTypes.Type(value = Organization.class, name = Organization.DISCRIMINATOR)}
+)
 public abstract class AbstractOwner {
 
   @Id
-  @JsonProperty(access = Access.READ_ONLY)
   @Setter(value = AccessLevel.PROTECTED)
   private UUID id;
 
-  @JsonIgnore
   @Column(name = "owner_type", updatable = false, nullable = false, insertable = false)
   private String ownerType;
 

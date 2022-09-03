@@ -7,37 +7,12 @@ metadata:
     {{- include "prox-project-service.labels" . | nindent 4 }}
 data:
   application.yml: |-
-    moduleImport:
-      delay:
-        initial:
-          seconds: 10
-        hasData:
-          minutes: 1440
-        hasNoData:
-          seconds: 10
-    tagServiceLink:
-      port: 9003
-      tag-collection: tagCollections
-    professorServiceLink:
-      port: 9005
-      professor-resource: professors
-    keycloak:
-      auth-server-url: https://login.aws.innovation-hub.de/auth
-      bearer-only: true
-      cors: false
-      principal-attribute: preferred_username
-      realm: archilab
-      resource: prox-project-service
     server:
       port: 8080
       forward-headers-strategy: native
     spring:
       application:
         name: project-service
-      data:
-        rest:
-          max-page-size: 1000000000
-          default-page-size: 1000000000
       datasource:
         url: jdbc:postgresql://prox-project-service-db:5432/postgres
         username: postgres
@@ -50,4 +25,21 @@ data:
             jdbc:
               lob:
                 non_contextual_creation: true
+        producer:
+          key-serializer: org.apache.kafka.common.serialization.StringSerializer
+          value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+          compression-type: gzip
+        consumer:
+          key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+          value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+          group-id: project-service
+        properties:
+          "spring.json.trusted.packages": "*"
+          "spring.deserializer.value.delegate.class": org.apache.kafka.common.serialization.StringDeserializer
+          "spring.deserializer.key.delegate.class": org.apache.kafka.common.serialization.StringDeserializer
+      security:
+        oauth2:
+          resourceserver:
+            jwt:
+              issuer-uri: https://login.aws.innovation-hub.de/auth/realms/innovation-hub-bergisches-rheinland
   {{- end }}

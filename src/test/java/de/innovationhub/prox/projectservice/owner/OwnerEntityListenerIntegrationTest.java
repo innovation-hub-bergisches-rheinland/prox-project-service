@@ -10,10 +10,14 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -21,6 +25,7 @@ import org.springframework.test.context.DynamicPropertySource;
 @SpringBootTest
 @ActiveProfiles("h2")
 @Transactional
+@DirtiesContext(classMode = ClassMode.BEFORE_CLASS)
 class OwnerEntityListenerIntegrationTest {
 
   @Autowired
@@ -34,8 +39,14 @@ class OwnerEntityListenerIntegrationTest {
   static RedpandaContainer REDPANDA_CONTAINER =
     new RedpandaContainer("docker.redpanda.com/vectorized/redpanda:v22.2.2");
 
-  static {
+  @BeforeAll
+  static void start() {
     REDPANDA_CONTAINER.start();
+  }
+
+  @AfterAll
+  static void stop() {
+    REDPANDA_CONTAINER.stop();
   }
 
   @DynamicPropertySource
@@ -44,7 +55,8 @@ class OwnerEntityListenerIntegrationTest {
     registry.add("spring.kafka.consumer.auto-offset-reset", () -> "earliest");
 
     // Also we want to use plain text serialization for publishing
-    registry.add("spring.kafka.producer.value-serializer", () -> "org.apache.kafka.common.serialization.StringSerializer");
+    registry.add("spring.kafka.producer.value-serializer",
+      () -> "org.apache.kafka.common.serialization.StringSerializer");
   }
 
   @Test

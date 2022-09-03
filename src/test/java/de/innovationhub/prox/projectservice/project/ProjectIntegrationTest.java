@@ -3,9 +3,13 @@ package de.innovationhub.prox.projectservice.project;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.Mockito.verify;
 
 import com.c4_soft.springaddons.security.oauth2.test.annotations.OpenIdClaims;
 import com.c4_soft.springaddons.security.oauth2.test.annotations.WithMockJwtAuth;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.user.User;
@@ -24,8 +28,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -34,11 +40,22 @@ import org.springframework.test.web.servlet.MockMvc;
 @Transactional
 @ActiveProfiles("h2")
 @SuppressWarnings("java:S2699")
-class ProjectControllerTest {
+class ProjectIntegrationTest {
 
-  @Autowired MockMvc mockMvc;
+  @Autowired
+  MockMvc mockMvc;
 
-  @Autowired EntityManager entityManager;
+  @Autowired
+  EntityManager entityManager;
+
+  @Autowired
+  ObjectMapper objectMapper;
+
+  @MockBean
+  KafkaTemplate<String, Project> kafkaTemplate;
+
+
+  static final String PROJECT_TOPIC = "entity.project.project";
 
   @BeforeEach
   void setup() {
@@ -102,9 +119,9 @@ class ProjectControllerTest {
 
   @Test
   @WithMockJwtAuth(
-      authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
-  void shouldCreateProjectForAuthenticatedUser() {
+    authorities = {"ROLE_professor"},
+    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+  void shouldCreateProjectForAuthenticatedUser() throws Exception {
     var easyRandom = new EasyRandom();
     var randomProject = getTestProject();
     var user = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
@@ -129,14 +146,16 @@ class ProjectControllerTest {
     var project = this.entityManager.find(Project.class, id);
     assertThat(project).isNotNull();
     assertThat(project.getOwner().getId())
-        .isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+      .isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+
+    verify(kafkaTemplate).send(eq(PROJECT_TOPIC), eq(id.toString()), eq(project));
   }
 
   @Test
   @WithMockJwtAuth(
-      authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
-  void shouldCreateProject() {
+    authorities = {"ROLE_professor"},
+    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+  void shouldCreateProject() throws InterruptedException {
     var easyRandom = new EasyRandom();
     var randomProject = getTestProject();
     var user = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
@@ -161,14 +180,16 @@ class ProjectControllerTest {
     var project = this.entityManager.find(Project.class, id);
     assertThat(project).isNotNull();
     assertThat(project.getOwner().getId())
-        .isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+      .isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+
+    verify(kafkaTemplate).send(eq(PROJECT_TOPIC), eq(id.toString()), eq(project));
   }
 
   @Test
   @WithMockJwtAuth(
-      authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
-  void shouldUpdateProject() {
+    authorities = {"ROLE_professor"},
+    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+  void shouldUpdateProject() throws InterruptedException {
     var easyRandom = new EasyRandom();
     // Ensure that authenticated User is the creator
     var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
@@ -194,17 +215,19 @@ class ProjectControllerTest {
     var found = this.entityManager.find(Project.class, randomProject.getId());
     assertThat(found).isNotNull();
     assertThat(found)
-        .usingRecursiveComparison()
-        .ignoringFields("id", "createdAt", "creatorName", "modifiedAt", "modules")
-        .isEqualTo(updatedProject);
+      .usingRecursiveComparison()
+      .ignoringFields("id", "createdAt", "creatorName", "modifiedAt", "modules")
+      .isEqualTo(updatedProject);
+
+    verify(kafkaTemplate).send(eq(PROJECT_TOPIC), eq(randomProject.getId().toString()), eq(found));
   }
 
   @Test
   @WithMockJwtAuth(
-      authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+    authorities = {"ROLE_professor"},
+    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   @Disabled("Not implemented")
-  void shouldPartiallyUpdateProject() {
+  void shouldPartiallyUpdateProject() throws InterruptedException {
     var easyRandom = new EasyRandom();
     // Ensure that authenticated User is the creator
     var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
@@ -233,13 +256,15 @@ class ProjectControllerTest {
     assertThat(found.getName()).isEqualTo("Test 123");
     // Everything except name is unchanged
     assertThat(found).usingRecursiveComparison().ignoringFields("name").isEqualTo(randomProject);
+
+    verify(kafkaTemplate).send(eq(PROJECT_TOPIC), eq(randomProject.getId().toString()), eq(found));
   }
 
   @Test
   @WithMockJwtAuth(
-      authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
-  void shouldDeleteProject() {
+    authorities = {"ROLE_professor"},
+    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+  void shouldDeleteProject() throws InterruptedException {
     var easyRandom = new EasyRandom();
     // Ensure that authenticated User is the creator
     var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
@@ -260,16 +285,18 @@ class ProjectControllerTest {
     // @formatter:on
 
     assertThat(this.entityManager.find(Project.class, randomProject.getId())).isNull();
+
+    verify(kafkaTemplate).send(eq(PROJECT_TOPIC), eq(randomProject.getId().toString()), isNull());
   }
 
   @Test
   @WithMockJwtAuth(
-      authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
-  void shouldUpdateModulesOfProject() {
+    authorities = {"ROLE_professor"},
+    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+  void shouldUpdateModulesOfProject() throws InterruptedException {
     var easyRandom = new EasyRandom();
     var randomModules =
-        List.of(new ModuleType("AB", "Alpha Beta"), new ModuleType("BG", "Beta Gamma"));
+      List.of(new ModuleType("AB", "Alpha Beta"), new ModuleType("BG", "Beta Gamma"));
     // Ensure that authenticated User is the creator
     var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     var randomProject = getTestProject(owner);
@@ -294,16 +321,19 @@ class ProjectControllerTest {
     var foundProject = this.entityManager.find(Project.class, randomProject.getId());
     assertThat(foundProject).isNotNull();
     assertThat(foundProject.getModules()).containsExactlyInAnyOrderElementsOf(randomModules);
+
+    verify(kafkaTemplate).send(eq(PROJECT_TOPIC), eq(randomProject.getId().toString()),
+      eq(foundProject));
   }
 
   @Test
   @WithMockJwtAuth(
-      authorities = {"ROLE_professor"},
-      claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
-  void shouldUpdateSpecializationOfProject() {
+    authorities = {"ROLE_professor"},
+    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+  void shouldUpdateSpecializationOfProject() throws InterruptedException {
     var easyRandom = new EasyRandom();
     var randomSpecializations =
-        List.of(new Specialization("AB", "Alpha Beta"), new Specialization("BG", "Beta Gamma"));
+      List.of(new Specialization("AB", "Alpha Beta"), new Specialization("BG", "Beta Gamma"));
     // Ensure that authenticated User is the creator
     var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     var randomProject = getTestProject(owner);
@@ -329,7 +359,10 @@ class ProjectControllerTest {
     var foundProject = this.entityManager.find(Project.class, randomProject.getId());
     assertThat(foundProject).isNotNull();
     assertThat(foundProject.getSpecializations())
-        .containsExactlyInAnyOrderElementsOf(randomSpecializations);
+      .containsExactlyInAnyOrderElementsOf(randomSpecializations);
+
+    verify(kafkaTemplate).send(eq(PROJECT_TOPIC), eq(randomProject.getId().toString()),
+      eq(foundProject));
   }
 
   private Project getTestProject() {
