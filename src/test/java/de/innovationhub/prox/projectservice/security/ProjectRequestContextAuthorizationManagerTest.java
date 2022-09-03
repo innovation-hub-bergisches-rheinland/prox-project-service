@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Supplier;
-import javax.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.security.authentication.TestingAuthenticationToken;
@@ -87,7 +86,7 @@ class ProjectRequestContextAuthorizationManagerTest {
         new RequestAuthorizationContext(
             new MockHttpServletRequest(), Map.of("projectId", project.getId().toString()));
     when(permissionEvaluatorHelper.hasPermission(
-            any(Project.class), any(Authentication.class), any(HttpServletRequest.class)))
+      any(Project.class), any(Authentication.class)))
         .thenReturn(true);
     Supplier<Authentication> keycloakAuthSupplier = () -> mockedAuth(userId.toString());
 
@@ -103,7 +102,7 @@ class ProjectRequestContextAuthorizationManagerTest {
     var project = getTestProject(UUID.randomUUID());
     when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
     when(permissionEvaluatorHelper.hasPermission(
-            any(Project.class), any(Authentication.class), any(HttpServletRequest.class)))
+      any(Project.class), any(Authentication.class)))
         .thenReturn(false);
     var context =
         new RequestAuthorizationContext(

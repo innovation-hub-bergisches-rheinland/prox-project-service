@@ -1,6 +1,7 @@
 package de.innovationhub.prox.projectservice.security;
 
 
+import de.innovationhub.prox.projectservice.owners.organization.OrganizationRepository;
 import java.util.UUID;
 import java.util.function.Supplier;
 import lombok.extern.slf4j.Slf4j;
@@ -14,16 +15,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrganizationRequestContextAuthorizationManager
     implements AuthorizationManager<RequestAuthorizationContext> {
-  private final UserInfoRequestHeaderExtractor userInfoExtractor;
-  private static final String ORG_ID_VARIABLE = "orgId";
 
-  public OrganizationRequestContextAuthorizationManager() {
-    this.userInfoExtractor = new UserInfoRequestHeaderExtractor();
-  }
+  private static final String ORG_ID_VARIABLE = "orgId";
+  private final OrganizationRepository organizationRepository;
 
   public OrganizationRequestContextAuthorizationManager(
-      UserInfoRequestHeaderExtractor userInfoExtractor) {
-    this.userInfoExtractor = userInfoExtractor;
+    OrganizationRepository organizationRepository) {
+    this.organizationRepository = organizationRepository;
   }
 
   @Override
@@ -41,13 +39,15 @@ public class OrganizationRequestContextAuthorizationManager
 
     try {
       var orgId = UUID.fromString(value);
-      var userInfo = userInfoExtractor.parseUserInfoFromRequest(object.getRequest());
-
-      if (userInfo == null) {
+      var optOrg = organizationRepository.findById(orgId);
+      if (optOrg.isEmpty()) {
+        log.warn("No organization with id '{}' found", orgId);
         return null;
       }
 
-      return new AuthorizationDecision(userInfo.orgs().contains(orgId));
+      var org = optOrg.get();
+      var userId = UUID.fromString(authentication.get().getName());
+      return new AuthorizationDecision(org.getMembers().contains(userId));
 
     } catch (IllegalArgumentException e) {
       log.error(

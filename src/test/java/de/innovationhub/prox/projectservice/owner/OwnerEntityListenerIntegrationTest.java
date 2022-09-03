@@ -216,7 +216,7 @@ class OwnerEntityListenerIntegrationTest {
               .isEqualTo("ACME Corporation");
             assertThat(organization.getMembers())
               .hasSize(2)
-              .containsExactly(member1, member2);
+              .containsExactlyInAnyOrder(member1, member2);
           })
 
       );

@@ -53,6 +53,6 @@ public class ProposalRequestContextAuthorizationManager
     var proposal = optProposal.get();
 
     return new AuthorizationDecision(
-        permissionEvaluatorHelper.hasPermission(proposal, auth, object.getRequest()));
+      permissionEvaluatorHelper.hasPermission(proposal, auth));
   }
 }

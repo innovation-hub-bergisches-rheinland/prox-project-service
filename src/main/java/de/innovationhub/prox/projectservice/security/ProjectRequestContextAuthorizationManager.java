@@ -53,6 +53,6 @@ public class ProjectRequestContextAuthorizationManager
     var project = optProject.get();
 
     return new AuthorizationDecision(
-        permissionEvaluatorHelper.hasPermission(project, auth, object.getRequest()));
+      permissionEvaluatorHelper.hasPermission(project, auth));
   }
 }
