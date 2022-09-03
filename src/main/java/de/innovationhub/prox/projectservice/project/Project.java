@@ -1,7 +1,6 @@
 package de.innovationhub.prox.projectservice.project;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import de.innovationhub.prox.projectservice.core.AbstractEntity;
@@ -65,7 +64,6 @@ public class Project extends AbstractEntity implements Ownable {
 
   @NotNull private ProjectStatus status;
 
-  @JsonProperty(access = Access.READ_ONLY)
   @Column(length = 255)
   private String creatorName;
 
@@ -74,14 +72,14 @@ public class Project extends AbstractEntity implements Ownable {
   @Builder.Default
   private List<Supervisor> supervisors = new ArrayList<>();
 
-  @JsonProperty(access = Access.READ_ONLY)
   @ManyToMany
   @Builder.Default
   private Set<Specialization> specializations = new HashSet<>();
 
-  @JsonIgnore @ManyToMany @Builder.Default private Set<ModuleType> modules = new HashSet<>();
+  @ManyToMany
+  @Builder.Default
+  private Set<ModuleType> modules = new HashSet<>();
 
-  @JsonProperty(access = Access.READ_ONLY)
   @ManyToOne(optional = false)
   @JoinColumn(name = "owner_id", nullable = false, updatable = false)
   private AbstractOwner owner;

@@ -1,7 +1,6 @@
 package de.innovationhub.prox.projectservice.proposal;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import de.innovationhub.prox.projectservice.core.AbstractEntity;
@@ -68,19 +67,18 @@ public class Proposal extends AbstractEntity implements Ownable {
   @Builder.Default
   private ProposalStatus status = ProposalStatus.PROPOSED;
 
-  @JsonProperty(access = Access.READ_ONLY)
   @ManyToMany
   @Builder.Default
   private Set<Specialization> specializations = new HashSet<>();
 
-  @JsonIgnore @ManyToMany @Builder.Default private Set<ModuleType> modules = new HashSet<>();
+  @ManyToMany
+  @Builder.Default
+  private Set<ModuleType> modules = new HashSet<>();
 
-  @JsonProperty(access = Access.READ_ONLY)
   @ManyToOne(optional = false)
   @JoinColumn(name = "owner_id", nullable = false, updatable = false)
   private AbstractOwner owner;
 
-  @JsonProperty(access = Access.READ_ONLY)
   @Column(name = "status_changed_at")
   @Builder.Default
   private Instant statusChangedAt = Instant.now();
