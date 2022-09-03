@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v2.2.0...v2.3.0) (2022-09-03)
+
+
+### Features
+
+* add reconciliation apis for admins ([d0f93db](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/d0f93dbaa233eab852be208adee166323c64f035))
+* consume members from organization event ([acc64a5](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/acc64a541463ddafeaf497ee57b4cd22e0952ccf))
+* introduce commitment ([ead738f](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/ead738feb6bcb8eec7bd065a446b87cef2b86fe0))
+* publish kafka events ([170be0b](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/170be0ba8cc56178d37b73960d43e244102bee7c))
+
+
+### Bug Fixes
+
+* fix configmap ([22d11e2](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/22d11e27d30a8ffa7247c2fab7c99eef2df63a2e))
+
 ## [2.2.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v2.1.1...v2.2.0) (2022-07-20)
 
 
