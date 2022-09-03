@@ -15,10 +15,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @AutoConfigureDataJpa
 @Transactional
+@ActiveProfiles("h2")
 class ProjectAuditingTest {
 
   @Autowired private EntityManager entityManager;
@@ -59,7 +61,7 @@ class ProjectAuditingTest {
   }
 
   private Project getTestProject() {
-    var owner = new User(UUID.randomUUID());
+    var owner = new User(UUID.randomUUID(), "Xavier Tester");
     this.entityManager.persist(owner);
     return new Project(
         "Test Project",

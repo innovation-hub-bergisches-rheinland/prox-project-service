@@ -24,7 +24,7 @@ public class BaseProposalJobsTest {
   }
 
   Proposal getSampleProposal(ProposalStatus status, Instant lastModifiedDate) {
-    var user = userRepository.save(new User(UUID.randomUUID()));
+    var user = userRepository.save(new User(UUID.randomUUID(), "Xavier Tester"));
 
     return Proposal.builder()
         .owner(user)

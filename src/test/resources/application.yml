@@ -1,8 +1,4 @@
-server:
-  port: 9002
 spring:
-  application:
-    name: project-service
   datasource:
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
     username: sa
@@ -17,11 +13,22 @@ spring:
             non_contextual_creation: true
   flyway:
     enabled: false
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      compression-type: gzip
+    consumer:
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      group-id: project-service
+    properties:
+      "spring.json.trusted.packages": "*"
+      "spring.deserializer.value.delegate.class": org.apache.kafka.common.serialization.StringDeserializer
+      "spring.deserializer.key.delegate.class": org.apache.kafka.common.serialization.StringDeserializer
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: https://login.aws.innovation-hub.de/auth/realms/innovation-hub-bergisches-rheinland
-logging:
-  level:
-    "org.springframework.security": DEBUG

@@ -25,18 +25,18 @@ class ProjectJsonTest {
     // Given
     var randomProject =
         new Project(
-            "Test Project",
-            "Test Project Description",
-            "Test Project Short Description",
-            "Test Project Requirement",
-            ProjectStatus.AVAILABLE,
-            "Test Project Creator Name",
-            List.of(new Supervisor(UUID.randomUUID(), "Test Project Supervisor")),
-            Collections.emptySet(),
-            Collections.emptySet(),
-            new User(UUID.randomUUID()),
-            Instant.now(),
-            Instant.now());
+          "Test Project",
+          "Test Project Description",
+          "Test Project Short Description",
+          "Test Project Requirement",
+          ProjectStatus.AVAILABLE,
+          "Test Project Creator Name",
+          List.of(new Supervisor(UUID.randomUUID(), "Test Project Supervisor")),
+          Collections.emptySet(),
+          Collections.emptySet(),
+          new User(UUID.randomUUID(), "Xavier Tester"),
+          Instant.now(),
+          Instant.now());
 
     // When
     var serialized = this.json.write(randomProject);

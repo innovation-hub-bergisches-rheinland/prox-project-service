@@ -124,17 +124,17 @@ class ProjectRequestContextAuthorizationManagerTest {
 
   private Project getTestProject(UUID userId) {
     return new Project(
-        "Test Project",
-        "Test Project Description",
-        "Test Project Short Description",
-        "Test Project Requirement",
-        ProjectStatus.AVAILABLE,
-        "Test Project Creator Name",
-        List.of(new Supervisor(UUID.randomUUID(), "Test Project Supervisor")),
-        Collections.emptySet(),
-        Collections.emptySet(),
-        new User(userId),
-        Instant.now(),
-        Instant.now());
+      "Test Project",
+      "Test Project Description",
+      "Test Project Short Description",
+      "Test Project Requirement",
+      ProjectStatus.AVAILABLE,
+      "Test Project Creator Name",
+      List.of(new Supervisor(UUID.randomUUID(), "Test Project Supervisor")),
+      Collections.emptySet(),
+      Collections.emptySet(),
+      new User(userId, "Xavier Tester"),
+      Instant.now(),
+      Instant.now());
   }
 }

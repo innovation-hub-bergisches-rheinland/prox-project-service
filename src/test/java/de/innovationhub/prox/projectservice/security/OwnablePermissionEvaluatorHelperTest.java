@@ -98,10 +98,10 @@ class OwnablePermissionEvaluatorHelperTest {
   }
 
   private TestOwnable getTestOwnableUser(UUID userId) {
-    return new TestOwnable(new User(userId));
+    return new TestOwnable(new User(userId, "Xavier Tester"));
   }
 
   private TestOwnable getTestOwnableOrg(UUID orgId) {
-    return new TestOwnable(new Organization(orgId));
+    return new TestOwnable(new Organization(orgId, "ACME Ltd."));
   }
 }

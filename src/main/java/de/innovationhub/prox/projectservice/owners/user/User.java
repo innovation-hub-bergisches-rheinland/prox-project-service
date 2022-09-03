@@ -20,8 +20,8 @@ public class User extends AbstractOwner {
 
   public static final String DISCRIMINATOR = "user";
 
-  public User(UUID id) {
-    super(id, DISCRIMINATOR);
+  public User(UUID id, String name) {
+    super(id, DISCRIMINATOR, name);
   }
 
   @Override

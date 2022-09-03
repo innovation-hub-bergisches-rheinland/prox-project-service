@@ -17,10 +17,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Organization extends AbstractOwner {
+
   public static final String DISCRIMINATOR = "organization";
 
-  public Organization(UUID id) {
-    super(id, DISCRIMINATOR);
+  public Organization(UUID id, String name) {
+    super(id, DISCRIMINATOR, name);
   }
 
   @Override

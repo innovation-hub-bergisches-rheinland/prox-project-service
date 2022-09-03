@@ -60,16 +60,20 @@ public class ProjectService {
     // Assumption is that every organization that enters the service is valid and already verified
     // by the security filter chain.
     var org =
-        this.organizationRepository
-            .findById(organizationId)
-            .orElse(organizationRepository.save(new Organization(organizationId)));
+      this.organizationRepository
+        .findById(organizationId)
+        .orElseThrow();
     return create(projectDto, org);
   }
 
   public ReadProjectDto createForUser(UUID userId, CreateProjectDto projectDto) {
     // Assumption is that every user that enters the service is valid and already verified
     // by the security filter chain.
-    var user = this.userRepository.findById(userId).orElse(userRepository.save(new User(userId)));
+
+    // We know that when a user is authenticated, it also exists. So we should create it here.
+    // Profile information will eventually be added.
+    var user = this.userRepository.findById(userId)
+      .orElseGet(() -> new User(userId, "UNKNWON"));
     return create(projectDto, user);
   }
 

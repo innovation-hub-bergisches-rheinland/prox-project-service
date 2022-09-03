@@ -6,7 +6,6 @@ import de.innovationhub.prox.projectservice.module.ModuleTypeRepository;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.module.SpecializationRepository;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
-import de.innovationhub.prox.projectservice.owners.organization.Organization;
 import de.innovationhub.prox.projectservice.owners.organization.OrganizationRepository;
 import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.owners.user.UserRepository;
@@ -76,16 +75,20 @@ public class ProposalService {
     // Assumption is that every organization that enters the service is valid and already verified
     // by the security filter chain.
     var org =
-        this.organizationRepository
-            .findById(organizationId)
-            .orElse(organizationRepository.save(new Organization(organizationId)));
+      this.organizationRepository
+        .findById(organizationId)
+        .orElseThrow();
     return create(proposalToCreate, org);
   }
 
   public ReadProposalDto createForUser(UUID userId, CreateProposalDto proposalToCreate) {
     // Assumption is that every user that enters the service is valid and already verified
     // by the security filter chain.
-    var user = this.userRepository.findById(userId).orElse(userRepository.save(new User(userId)));
+
+    // We know that when a user is authenticated, it also exists. So we should create it here.
+    // Profile information will eventually be added.
+    var user = this.userRepository.findById(userId)
+      .orElseGet(() -> new User(userId, "UNKNWON"));
     return create(proposalToCreate, user);
   }
 

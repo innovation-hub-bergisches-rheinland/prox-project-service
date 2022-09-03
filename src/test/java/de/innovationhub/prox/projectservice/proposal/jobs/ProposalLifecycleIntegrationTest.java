@@ -8,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(
     properties = {
@@ -22,9 +23,10 @@ import org.springframework.test.annotation.DirtiesContext;
     })
 @DirtiesContext
 @EnabledIfEnvironmentVariable(
-    disabledReason = "Long running tests are disabled",
-    named = "CI",
-    matches = "true")
+  disabledReason = "Long running tests are disabled",
+  named = "CI",
+  matches = "true")
+@ActiveProfiles("h2")
 class ProposalLifecycleIntegrationTest extends BaseProposalJobsTest {
   @ParameterizedTest(name = "should not touch proposals with a newer timestamp")
   @EnumSource(

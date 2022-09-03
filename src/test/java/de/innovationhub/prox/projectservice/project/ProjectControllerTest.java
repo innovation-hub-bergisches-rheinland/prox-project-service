@@ -26,11 +26,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
+@ActiveProfiles("h2")
 @SuppressWarnings("java:S2699")
 class ProjectControllerTest {
 
@@ -105,6 +107,8 @@ class ProjectControllerTest {
   void shouldCreateProjectForAuthenticatedUser() {
     var easyRandom = new EasyRandom();
     var randomProject = getTestProject();
+    var user = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
+    entityManager.persist(user);
 
     // @formatter:off
     var id =
@@ -135,6 +139,8 @@ class ProjectControllerTest {
   void shouldCreateProject() {
     var easyRandom = new EasyRandom();
     var randomProject = getTestProject();
+    var user = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
+    entityManager.persist(user);
 
     // @formatter:off
     var id =
@@ -165,7 +171,7 @@ class ProjectControllerTest {
   void shouldUpdateProject() {
     var easyRandom = new EasyRandom();
     // Ensure that authenticated User is the creator
-    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     var randomProject = getTestProject(owner);
 
     this.entityManager.persist(randomProject);
@@ -201,7 +207,7 @@ class ProjectControllerTest {
   void shouldPartiallyUpdateProject() {
     var easyRandom = new EasyRandom();
     // Ensure that authenticated User is the creator
-    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     var randomProject = getTestProject(owner);
 
     this.entityManager.persist(randomProject);
@@ -236,7 +242,7 @@ class ProjectControllerTest {
   void shouldDeleteProject() {
     var easyRandom = new EasyRandom();
     // Ensure that authenticated User is the creator
-    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     var randomProject = getTestProject(owner);
 
     this.entityManager.persist(randomProject);
@@ -265,7 +271,7 @@ class ProjectControllerTest {
     var randomModules =
         List.of(new ModuleType("AB", "Alpha Beta"), new ModuleType("BG", "Beta Gamma"));
     // Ensure that authenticated User is the creator
-    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     var randomProject = getTestProject(owner);
 
     this.entityManager.persist(randomProject);
@@ -299,7 +305,7 @@ class ProjectControllerTest {
     var randomSpecializations =
         List.of(new Specialization("AB", "Alpha Beta"), new Specialization("BG", "Beta Gamma"));
     // Ensure that authenticated User is the creator
-    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     var randomProject = getTestProject(owner);
 
     this.entityManager.persist(randomProject);
@@ -327,7 +333,7 @@ class ProjectControllerTest {
   }
 
   private Project getTestProject() {
-    var owner = new User(UUID.randomUUID());
+    var owner = new User(UUID.randomUUID(), "Xavier Tester");
     return getTestProject(owner);
   }
 
