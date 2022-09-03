@@ -53,18 +53,27 @@ public class OwnerEntityEventListener {
     var value = record.value();
 
     // Thombstone
-    if(value == null) {
+    if (value == null) {
       this.organizationRepository.deleteById(key);
       return;
     }
 
     var parsedValue = objectMapper.readValue(value, OrganizationEntityEventDto.class);
-    if(!key.equals(parsedValue.id())) {
+    if (!key.equals(parsedValue.id())) {
       throw new RuntimeException("Key does not match value");
     }
 
-    var org = this.organizationRepository.findById(key).orElseGet(() -> new Organization(key, parsedValue.name()));
+    var org = this.organizationRepository.findById(key)
+      .orElseGet(() -> new Organization(key, parsedValue.name()));
     org.setName(parsedValue.name());
+
+    var members = parsedValue.members();
+    if (members != null) {
+      org.setMembers(members.keySet());
+    } else {
+      org.getMembers().clear();
+    }
+
     this.organizationRepository.save(org);
   }
 }

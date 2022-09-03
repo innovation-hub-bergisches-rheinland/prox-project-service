@@ -153,7 +153,8 @@ class OwnerEntityListenerIntegrationTest {
     var ft = kafkaTemplate.send(ORGANIZATION_TOPIC, orgId.toString(), """
       {
         "id": "%s",
-        "name": "%s"
+        "name": "%s",
+        "members": null
       }
       """.formatted(orgId, orgName));
     ft.get(5, TimeUnit.SECONDS);
@@ -164,8 +165,10 @@ class OwnerEntityListenerIntegrationTest {
       .untilAsserted(() ->
         assertThat(em.find(Organization.class, orgId))
           .isNotNull()
-          .extracting(Organization::getName)
-          .isEqualTo(orgName)
+          .satisfies(o -> {
+            assertThat(o.getName()).isEqualTo(orgName);
+            assertThat(o.getMembers()).isEmpty();
+          })
       );
   }
 
@@ -177,6 +180,9 @@ class OwnerEntityListenerIntegrationTest {
     var org = new Organization(orgId, orgName);
     em.persist(org);
 
+    var member1 = UUID.randomUUID();
+    var member2 = UUID.randomUUID();
+
     assertThat(em.find(Organization.class, orgId))
       .isNotNull()
       .extracting(Organization::getName)
@@ -186,9 +192,17 @@ class OwnerEntityListenerIntegrationTest {
     var ft = kafkaTemplate.send(ORGANIZATION_TOPIC, orgId.toString(), """
       {
         "id": "%s",
-        "name": "%s"
+        "name": "%s",
+        "members": {
+          "%s": {
+            "role": "ADMIN"
+          },
+          "%s": {
+            "role": "ADMIN"
+          }
+        }
       }
-      """.formatted(orgId, "ACME Corporation"));
+      """.formatted(orgId, "ACME Corporation", member1, member2));
     ft.get(5, TimeUnit.SECONDS);
 
     // Then
@@ -197,8 +211,14 @@ class OwnerEntityListenerIntegrationTest {
       .untilAsserted(() ->
         assertThat(em.find(Organization.class, orgId))
           .isNotNull()
-          .extracting(Organization::getName)
-          .isEqualTo("ACME Corporation")
+          .satisfies(organization -> {
+            assertThat(organization.getName())
+              .isEqualTo("ACME Corporation");
+            assertThat(organization.getMembers())
+              .hasSize(2)
+              .containsExactly(member1, member2);
+          })
+
       );
   }
 
