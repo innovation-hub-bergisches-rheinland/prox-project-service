@@ -17,6 +17,7 @@ import de.innovationhub.prox.projectservice.project.dto.ReadProjectDto;
 import de.innovationhub.prox.projectservice.proposal.dto.CreateProposalDto;
 import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalCollectionDto;
 import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalDto;
+import de.innovationhub.prox.projectservice.proposal.event.ProposalPromotedToProject;
 import de.innovationhub.prox.projectservice.proposal.exception.NoUsernameInAuthenticationException;
 import de.innovationhub.prox.projectservice.proposal.exception.ProposalNotFoundException;
 import de.innovationhub.prox.projectservice.proposal.exception.UnsupportedAuthenticationException;
@@ -36,6 +37,7 @@ import org.springframework.stereotype.Service;
 public class ProposalService {
 
   private static final String PROPOSAL_TOPIC = "entity.proposal.proposal";
+  private static final String PROPOSAL_PROMOTION_TOPIC = "event.proposal.promoted-to-project";
   private final ProposalRepository proposalRepository;
   private final UserRepository userRepository;
   private final OrganizationRepository organizationRepository;
@@ -43,7 +45,7 @@ public class ProposalService {
   private final ModuleTypeRepository moduleTypeRepository;
   private final SpecializationRepository specializationRepository;
   private final ProjectService projectService;
-  private final KafkaTemplate<String, Proposal> kafkaTemplate;
+  private final KafkaTemplate<String, Object> kafkaTemplate;
 
   @Autowired
   public ProposalService(
@@ -53,7 +55,7 @@ public class ProposalService {
     ProposalMapper proposalMapper,
     ModuleTypeRepository moduleTypeRepository,
     SpecializationRepository specializationRepository,
-    ProjectService projectService, KafkaTemplate<String, Proposal> kafkaTemplate) {
+    ProjectService projectService, KafkaTemplate<String, Object> kafkaTemplate) {
     this.proposalRepository = proposalRepository;
     this.userRepository = userRepository;
     this.organizationRepository = organizationRepository;
@@ -155,7 +157,7 @@ public class ProposalService {
     var userId = UUID.fromString(authentication.getName());
 
     var projectRequest =
-        this.promoteToProjectRequest(proposal, new CreateSupervisorDto(userId, name));
+      this.promoteToProjectRequest(proposal, new CreateSupervisorDto(userId, name));
     var createdProject = this.projectService.create(projectRequest, proposal.getOwner());
     createdProject =
       this.projectService.setSpecializations(
@@ -165,6 +167,9 @@ public class ProposalService {
       this.projectService.setModuleTypes(
         createdProject.id(), proposal.getModules().stream().map(ModuleType::getKey).toList());
     this.delete(proposalId);
+
+    this.kafkaTemplate.send(PROPOSAL_PROMOTION_TOPIC, proposalId.toString(),
+      new ProposalPromotedToProject(proposalId, createdProject.id()));
 
     return createdProject;
   }

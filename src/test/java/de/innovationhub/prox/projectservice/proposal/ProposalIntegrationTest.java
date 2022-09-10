@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNotNull;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
@@ -58,12 +59,13 @@ class ProposalIntegrationTest {
   Validator validator;
 
   @MockBean
-  KafkaTemplate<String, Proposal> kafkaTemplate;
+  KafkaTemplate<String, Object> kafkaTemplate;
 
   @MockBean
   KafkaTemplate<String, Project> kafkaTemplateProj;
 
   static final String PROPOSAL_TOPIC = "entity.proposal.proposal";
+  static final String PROPOSAL_PROPOSED_TOPIC = "event.proposal.promoted-to-project";
 
   @BeforeEach
   void setup() {
@@ -323,6 +325,8 @@ class ProposalIntegrationTest {
       .contains(tuple(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Karl Peter"));
 
     verify(kafkaTemplate).send(eq(PROPOSAL_TOPIC), eq(testProposal.getId().toString()), isNull());
+    verify(kafkaTemplate).send(eq(PROPOSAL_PROPOSED_TOPIC), eq(testProposal.getId().toString()),
+      isNotNull());
     verify(kafkaTemplateProj, atLeastOnce()).send(any(), any(), any());
   }
 
