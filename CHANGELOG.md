@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v2.3.1...v2.4.0) (2022-09-10)
+
+
+### Features
+
+* publish event once a proposal is being promoted to a project ([930967b](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/930967bae8591753a46ac35c16b4dda48b3c87ec))
+
 ### [2.3.1](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v2.3.0...v2.3.1) (2022-09-03)
 
 
