@@ -87,7 +87,25 @@ class ProjectRequestContextAuthorizationManagerTest {
             new MockHttpServletRequest(), Map.of("projectId", project.getId().toString()));
     when(permissionEvaluatorHelper.hasPermission(
       any(Project.class), any(Authentication.class)))
-        .thenReturn(true);
+      .thenReturn(true);
+    Supplier<Authentication> keycloakAuthSupplier = () -> mockedAuth(userId.toString());
+
+    var result = manager.check(keycloakAuthSupplier, context);
+
+    assertThat(result.isGranted()).isTrue();
+    verify(projectRepository).findById(project.getId());
+  }
+
+  @Test
+  void shouldReturnTrueWhenUserIsSupervisor() {
+    var userId = UUID.randomUUID();
+    var project = getTestProject(UUID.randomUUID());
+    project.setSupervisors(List.of(new Supervisor(userId, "Test")));
+    when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
+
+    var context =
+      new RequestAuthorizationContext(
+        new MockHttpServletRequest(), Map.of("projectId", project.getId().toString()));
     Supplier<Authentication> keycloakAuthSupplier = () -> mockedAuth(userId.toString());
 
     var result = manager.check(keycloakAuthSupplier, context);
@@ -103,7 +121,7 @@ class ProjectRequestContextAuthorizationManagerTest {
     when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
     when(permissionEvaluatorHelper.hasPermission(
       any(Project.class), any(Authentication.class)))
-        .thenReturn(false);
+      .thenReturn(false);
     var context =
         new RequestAuthorizationContext(
             new MockHttpServletRequest(), Map.of("projectId", project.getId().toString()));

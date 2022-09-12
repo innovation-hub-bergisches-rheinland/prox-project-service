@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -93,4 +94,8 @@ public class Project extends AbstractEntity implements Ownable {
   @Column(name = "modified_at")
   @UpdateTimestamp
   private Instant modifiedAt;
+
+  public boolean isSupervisor(UUID id) {
+    return supervisors.stream().anyMatch(s -> s.getId().equals(id));
+  }
 }

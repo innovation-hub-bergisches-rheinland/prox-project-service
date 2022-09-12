@@ -51,6 +51,14 @@ public class ProjectRequestContextAuthorizationManager
     }
 
     var project = optProject.get();
+    try {
+      var authenticatedUserId = UUID.fromString(auth.getName());
+      if (project.isSupervisor(authenticatedUserId)) {
+        return new AuthorizationDecision(true);
+      }
+    } catch (IllegalArgumentException e) {
+      log.debug("Authenticated user id is not a UUID", e);
+    }
 
     return new AuthorizationDecision(
       permissionEvaluatorHelper.hasPermission(project, auth));
