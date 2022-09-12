@@ -10,13 +10,14 @@ import java.util.Set;
 import java.util.UUID;
 
 public record ReadProposalDto(
-    UUID id,
-    String name,
-    String description,
-    String requirement,
-    ProposalStatus status,
-    Set<Specialization> specializations,
-    Set<ModuleType> modules,
-    AbstractOwner owner,
-    Instant createdAt,
-    Instant modifiedAt) {}
+  UUID id,
+  String name,
+  String description,
+  String requirement,
+  ProposalStatus status,
+  Set<Specialization> specializations,
+  Set<ModuleType> modules,
+  AbstractOwner owner,
+  ProposalPermissionsDto permissions,
+  Instant createdAt,
+  Instant modifiedAt) {}
