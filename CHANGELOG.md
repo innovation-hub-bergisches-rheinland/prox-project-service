@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v2.4.0...v2.5.0) (2022-09-12)
+
+
+### Features
+
+* add permissions to proposal DTO ([47a4024](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/47a4024bee1a3058632f1c4de6dc6ac21231cb27))
+
 ## [2.4.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v2.3.1...v2.4.0) (2022-09-10)
 
 
