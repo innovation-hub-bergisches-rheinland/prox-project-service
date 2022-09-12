@@ -11,6 +11,10 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Mapper(componentModel = "spring")
 public abstract class ProposalMapper {
@@ -23,7 +27,24 @@ public abstract class ProposalMapper {
 
   public ProposalPermissionsDto getPermissions(Proposal proposal) {
     var hasPermission = permissionEvaluatorHelper.hasPermissionWithCurrentContext(proposal);
-    return new ProposalPermissionsDto(hasPermission, hasPermission);
+    return new ProposalPermissionsDto(hasPermission, hasPermission, hasRole("ROLE_professor"));
+  }
+
+  // TODO: Not mapper logic
+  private boolean hasRole(String role) {
+    SecurityContext context = SecurityContextHolder.getContext();
+    Authentication authentication = context.getAuthentication();
+    if (authentication == null) {
+      return false;
+    }
+
+    for (GrantedAuthority auth : authentication.getAuthorities()) {
+      if (role.equals(auth.getAuthority())) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public ReadProposalCollectionDto toDto(List<Proposal> proposals) {
