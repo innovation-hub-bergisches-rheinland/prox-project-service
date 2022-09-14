@@ -2,8 +2,6 @@ package de.innovationhub.prox.projectservice.proposal;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isNotNull;
 import static org.mockito.ArgumentMatchers.isNull;
@@ -17,6 +15,7 @@ import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.Supervisor;
+import de.innovationhub.prox.projectservice.project.event.ProposalPromotedToProject;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +28,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -65,7 +65,8 @@ class ProposalIntegrationTest {
   KafkaTemplate<String, Project> kafkaTemplateProj;
 
   static final String PROPOSAL_TOPIC = "entity.proposal.proposal";
-  static final String PROPOSAL_PROPOSED_TOPIC = "event.proposal.promoted-to-project";
+  static final String PROPOSAL_RECEIVED_COMMITMENT_TOPIC = "event.proposal.received-commitment";
+  static final String PROPOSAL_PROMOTED_TOPIC = "event.proposal.promoted-to-project";
 
   @BeforeEach
   void setup() {
@@ -309,7 +310,7 @@ class ProposalIntegrationTest {
             .when()
             .post("/proposals/{id}/commitment", testProposal.getId())
             .then()
-            .status(HttpStatus.CREATED)
+            .status(HttpStatus.OK)
             .extract()
             .jsonPath()
             .getUUID("id");
@@ -317,17 +318,40 @@ class ProposalIntegrationTest {
     // @formatter:on
 
     var result = this.entityManager.find(Proposal.class, testProposal.getId());
-    assertThat(result).isNull();
-    var projectResult = this.entityManager.find(Project.class, projectId);
-    assertThat(projectResult).isNotNull();
-    assertThat(projectResult.getSupervisors())
-      .extracting("id", "name")
-      .contains(tuple(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Karl Peter"));
+    assertThat(result)
+      .isNotNull()
+        .satisfies(proposal -> {
+          assertThat(result.getCommittedSupervisor()).isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+          assertThat(result.getStatus()).isEqualTo(ProposalStatus.HAS_COMMITMENT);
+        });
 
-    verify(kafkaTemplate).send(eq(PROPOSAL_TOPIC), eq(testProposal.getId().toString()), isNull());
-    verify(kafkaTemplate).send(eq(PROPOSAL_PROPOSED_TOPIC), eq(testProposal.getId().toString()),
+    verify(kafkaTemplate, atLeastOnce()).send(eq(PROPOSAL_TOPIC), eq(testProposal.getId().toString()), isNotNull());
+    verify(kafkaTemplate, atLeastOnce()).send(eq(PROPOSAL_RECEIVED_COMMITMENT_TOPIC), eq(testProposal.getId().toString()),
       isNotNull());
-    verify(kafkaTemplateProj, atLeastOnce()).send(any(), any(), any());
+
+    var argCapture = ArgumentCaptor.forClass(ProposalPromotedToProject.class);
+    verify(kafkaTemplate, atLeastOnce()).send(eq(PROPOSAL_PROMOTED_TOPIC), eq(testProposal.getId().toString()),
+      argCapture.capture());
+    var event = argCapture.getValue();
+    assertThat(event)
+      .isNotNull();
+
+    Project createdProject = this.entityManager.find(Project.class, event.projectId());
+    assertThat(createdProject)
+      .isNotNull()
+      .satisfies(project -> {
+        assertThat(project.getName()).isEqualTo(testProposal.getName());
+        assertThat(project.getShortDescription()).isEqualTo(testProposal.getDescription());
+        assertThat(project.getModules()).containsExactlyInAnyOrderElementsOf(testProposal.getModules());
+        assertThat(project.getSpecializations()).containsExactlyInAnyOrderElementsOf(testProposal.getSpecializations());
+        assertThat(project.getOwner()).isEqualTo(testProposal.getOwner());
+        assertThat(project.getSupervisors())
+          .hasSize(1)
+          .first()
+          .satisfies(s -> {
+            assertThat(s.getId()).isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+          });
+      });
   }
 
   private Proposal getTestProposal(User owner) {

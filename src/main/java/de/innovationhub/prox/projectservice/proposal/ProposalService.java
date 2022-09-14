@@ -1,23 +1,19 @@
 package de.innovationhub.prox.projectservice.proposal;
 
 
-import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.ModuleTypeRepository;
-import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.module.SpecializationRepository;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
 import de.innovationhub.prox.projectservice.owners.organization.OrganizationRepository;
 import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.owners.user.UserRepository;
-import de.innovationhub.prox.projectservice.project.ProjectService;
 import de.innovationhub.prox.projectservice.project.ProjectStatus;
 import de.innovationhub.prox.projectservice.project.dto.CreateProjectDto;
 import de.innovationhub.prox.projectservice.project.dto.CreateSupervisorDto;
-import de.innovationhub.prox.projectservice.project.dto.ReadProjectDto;
 import de.innovationhub.prox.projectservice.proposal.dto.CreateProposalDto;
 import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalCollectionDto;
 import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalDto;
-import de.innovationhub.prox.projectservice.proposal.event.ProposalPromotedToProject;
+import de.innovationhub.prox.projectservice.proposal.event.ProposalReceivedCommitment;
 import de.innovationhub.prox.projectservice.proposal.exception.NoUsernameInAuthenticationException;
 import de.innovationhub.prox.projectservice.proposal.exception.ProposalNotFoundException;
 import de.innovationhub.prox.projectservice.proposal.exception.UnsupportedAuthenticationException;
@@ -28,6 +24,7 @@ import java.util.UUID;
 import java.util.stream.StreamSupport;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -37,15 +34,19 @@ import org.springframework.stereotype.Service;
 public class ProposalService {
 
   private static final String PROPOSAL_TOPIC = "entity.proposal.proposal";
-  private static final String PROPOSAL_PROMOTION_TOPIC = "event.proposal.promoted-to-project";
+  private static final String PROPOSAL_RECEIVED_COMMITMENT = "event.proposal.received-commitment";
   private final ProposalRepository proposalRepository;
   private final UserRepository userRepository;
   private final OrganizationRepository organizationRepository;
   private final ProposalMapper proposalMapper;
   private final ModuleTypeRepository moduleTypeRepository;
   private final SpecializationRepository specializationRepository;
-  private final ProjectService projectService;
   private final KafkaTemplate<String, Object> kafkaTemplate;
+  // TODO: Publish events here ONLY using the internal event publisher
+  //  and eventually publish events to kafka. I will do it probably in another
+  //  change, as I'm working on a feature right now.
+  //  Some thing should be done for projects.
+  private final ApplicationEventPublisher eventPublisher;
 
   @Autowired
   public ProposalService(
@@ -55,15 +56,16 @@ public class ProposalService {
     ProposalMapper proposalMapper,
     ModuleTypeRepository moduleTypeRepository,
     SpecializationRepository specializationRepository,
-    ProjectService projectService, KafkaTemplate<String, Object> kafkaTemplate) {
+    KafkaTemplate<String, Object> kafkaTemplate,
+    ApplicationEventPublisher eventPublisher) {
     this.proposalRepository = proposalRepository;
     this.userRepository = userRepository;
     this.organizationRepository = organizationRepository;
     this.proposalMapper = proposalMapper;
     this.moduleTypeRepository = moduleTypeRepository;
     this.specializationRepository = specializationRepository;
-    this.projectService = projectService;
     this.kafkaTemplate = kafkaTemplate;
+    this.eventPublisher = eventPublisher;
   }
 
   public ReadProposalCollectionDto getAll() {
@@ -144,7 +146,7 @@ public class ProposalService {
   }
 
   @Transactional
-  public ReadProjectDto promoteToProject(UUID proposalId, Authentication authentication) {
+  public ReadProposalDto applyCommitment(UUID proposalId, Authentication authentication) {
     var proposal = getOrThrow(proposalId);
 
     var principal = authentication.getPrincipal();
@@ -156,22 +158,17 @@ public class ProposalService {
 
     var userId = UUID.fromString(authentication.getName());
 
-    var projectRequest =
-      this.promoteToProjectRequest(proposal, new CreateSupervisorDto(userId, name));
-    var createdProject = this.projectService.create(projectRequest, proposal.getOwner());
-    createdProject =
-      this.projectService.setSpecializations(
-        createdProject.id(),
-        proposal.getSpecializations().stream().map(Specialization::getKey).toList());
-    createdProject =
-      this.projectService.setModuleTypes(
-        createdProject.id(), proposal.getModules().stream().map(ModuleType::getKey).toList());
-    this.delete(proposalId);
+    proposal.setStatus(ProposalStatus.HAS_COMMITMENT);
+    proposal.setCommittedSupervisor(userId);
 
-    this.kafkaTemplate.send(PROPOSAL_PROMOTION_TOPIC, proposalId.toString(),
-      new ProposalPromotedToProject(proposalId, createdProject.id()));
+    this.saveAndPublish(proposal);
 
-    return createdProject;
+    var event = new ProposalReceivedCommitment(proposalId, userId);
+    this.kafkaTemplate.send(PROPOSAL_RECEIVED_COMMITMENT, proposalId.toString(), event);
+
+    this.eventPublisher.publishEvent(event);
+
+    return proposalMapper.toDto(proposal);
   }
 
   @Transactional

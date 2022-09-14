@@ -1,4 +1,4 @@
-package de.innovationhub.prox.projectservice.proposal.event;
+package de.innovationhub.prox.projectservice.project.event;
 
 import java.util.UUID;
 

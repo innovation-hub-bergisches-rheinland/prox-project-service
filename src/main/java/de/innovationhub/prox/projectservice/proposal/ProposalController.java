@@ -1,7 +1,6 @@
 package de.innovationhub.prox.projectservice.proposal;
 
 
-import de.innovationhub.prox.projectservice.project.dto.ReadProjectDto;
 import de.innovationhub.prox.projectservice.proposal.dto.CreateProposalDto;
 import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalCollectionDto;
 import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalDto;
@@ -87,10 +86,10 @@ public class ProposalController {
 
   @PreAuthorize("hasRole('professor')")
   @PostMapping(value = "/proposals/{id}/commitment")
-  public @ResponseBody ResponseEntity<ReadProjectDto> commitForProposal(
+  public @ResponseBody ResponseEntity<ReadProposalDto> commitForProposal(
       @PathVariable("id") UUID id, Authentication auth) {
-    var createdProject = this.proposalService.promoteToProject(id, auth);
-    return ResponseEntity.status(HttpStatus.CREATED).body(createdProject);
+    var proposal = this.proposalService.applyCommitment(id, auth);
+    return ResponseEntity.status(HttpStatus.OK).body(proposal);
   }
 
   /*
