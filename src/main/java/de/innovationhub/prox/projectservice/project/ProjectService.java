@@ -9,6 +9,7 @@ import de.innovationhub.prox.projectservice.owners.organization.OrganizationRepo
 import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.owners.user.UserRepository;
 import de.innovationhub.prox.projectservice.project.dto.CreateProjectDto;
+import de.innovationhub.prox.projectservice.project.dto.CreateProjectFromProposal;
 import de.innovationhub.prox.projectservice.project.dto.ReadProjectCollectionDto;
 import de.innovationhub.prox.projectservice.project.dto.ReadProjectDto;
 import de.innovationhub.prox.projectservice.project.exception.ProjectNotFoundException;
@@ -85,6 +86,33 @@ public class ProjectService {
     var user = this.userRepository.findById(userId)
       .orElseGet(() -> new User(userId, "UNKNWON"));
     return create(projectDto, user);
+  }
+
+  // TODO: REALLY REALLY POORLY WRITTEN TEST (As everything else here)
+  //  Do it properly once abstractions for eventing are set.
+  @Transactional
+  public ReadProjectDto createProjectFromProposal(CreateProjectFromProposal proposalDto) {
+    var proposal = proposalDto.proposal();
+    var project = new Project();
+    project.setName(proposal.getName());
+    project.setOwner(proposal.getOwner());
+    project.setShortDescription(proposal.getDescription());
+    project.setStatus(ProjectStatus.AVAILABLE);
+    project.setModules(proposal.getModules());
+    project.setSpecializations(proposal.getSpecializations());
+    project.setRequirement(proposal.getRequirement());
+    project.setProposalId(proposal.getId());
+
+    // Profile information will eventually be added.
+    // The user should already be present
+    var supervisorUser = this.userRepository.findById(proposal.getCommittedSupervisor())
+      .orElseGet(() -> new User(proposal.getCommittedSupervisor(), "UNKNWON"));
+
+    var supervisor = new Supervisor(supervisorUser.getId(), supervisorUser.getName());
+    project.setSupervisors(List.of(supervisor));
+
+    project = saveAndPublish(project);
+    return projectMapper.toDto(project);
   }
 
   @Transactional

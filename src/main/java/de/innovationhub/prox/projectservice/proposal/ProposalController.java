@@ -89,7 +89,7 @@ public class ProposalController {
   public @ResponseBody ResponseEntity<ReadProposalDto> commitForProposal(
       @PathVariable("id") UUID id, Authentication auth) {
     var proposal = this.proposalService.applyCommitment(id, auth);
-    return ResponseEntity.status(HttpStatus.CREATED).body(proposal);
+    return ResponseEntity.status(HttpStatus.OK).body(proposal);
   }
 
   /*

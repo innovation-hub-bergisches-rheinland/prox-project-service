@@ -85,6 +85,9 @@ public class Project extends AbstractEntity implements Ownable {
   @JoinColumn(name = "owner_id", nullable = false, updatable = false)
   private AbstractOwner owner;
 
+  // If the project has been created from a proposal, we store the corresponding proposal id here.
+  private UUID proposalId = null;
+
   @JsonProperty(access = Access.READ_ONLY)
   @Column(name = "created_at", updatable = false)
   @CreationTimestamp

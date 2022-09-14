@@ -35,6 +35,7 @@ class ProjectJsonTest {
           Collections.emptySet(),
           Collections.emptySet(),
           new User(UUID.randomUUID(), "Xavier Tester"),
+          null,
           Instant.now(),
           Instant.now());
 
@@ -109,7 +110,7 @@ class ProjectJsonTest {
     // Should not be deserialized
     assertThat(deserializedResult.getCreatedAt()).isNull();
     assertThat(deserializedResult.getModifiedAt()).isNull();
-    
+
     assertThat(deserializedResult.getId())
         .isNotEqualByComparingTo(UUID.fromString("1c57e910-ac3c-4d72-8e11-961ef07cdf44"));
     assertThat(deserializedResult.getSupervisors())
