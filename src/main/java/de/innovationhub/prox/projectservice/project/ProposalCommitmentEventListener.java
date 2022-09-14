@@ -4,9 +4,12 @@ import de.innovationhub.prox.projectservice.project.dto.CreateProjectFromProposa
 import de.innovationhub.prox.projectservice.project.event.ProposalPromotedToProject;
 import de.innovationhub.prox.projectservice.proposal.ProposalRepository;
 import de.innovationhub.prox.projectservice.proposal.event.ProposalReceivedCommitment;
+import javax.transaction.Transactional;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
 public class ProposalCommitmentEventListener {
@@ -22,8 +25,9 @@ public class ProposalCommitmentEventListener {
     this.projectService = projectService;
   }
 
-  // @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
+  @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
   @EventListener
+  @Transactional
   public void createProjectOfProposal(ProposalReceivedCommitment promoted) {
     var proposal = this.proposalRepository.findById(promoted.proposalId())
       .orElseThrow();

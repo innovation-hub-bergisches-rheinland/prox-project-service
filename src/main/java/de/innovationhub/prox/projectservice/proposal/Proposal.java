@@ -82,6 +82,11 @@ public class Proposal extends AbstractEntity implements Ownable {
 
   private UUID committedSupervisor;
 
+  // Back-reference to the project if one has been generated from the proposal.
+  // Note: This is a pragmatic workaround so that we can navigate to the created proposal, once it
+  //  has been created. There might be a better approach.
+  private UUID projectId;
+
   @Column(name = "status_changed_at")
   @Builder.Default
   private Instant statusChangedAt = Instant.now();

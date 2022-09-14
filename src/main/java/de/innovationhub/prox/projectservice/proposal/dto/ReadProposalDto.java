@@ -18,6 +18,7 @@ public record ReadProposalDto(
   Set<Specialization> specializations,
   Set<ModuleType> modules,
   AbstractOwner owner,
+  UUID projectId,
   ProposalPermissionsDto permissions,
   Instant createdAt,
   Instant modifiedAt) {}
