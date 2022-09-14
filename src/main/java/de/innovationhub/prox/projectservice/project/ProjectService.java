@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.StreamSupport;
 import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -66,7 +67,7 @@ public class ProjectService {
     return projectMapper.toDto(project);
   }
 
-  @Transactional
+  @Transactional(TxType.REQUIRED)
   public ReadProjectDto createForOrganization(UUID organizationId, CreateProjectDto projectDto) {
     // Assumption is that every organization that enters the service is valid and already verified
     // by the security filter chain.
@@ -77,7 +78,7 @@ public class ProjectService {
     return create(projectDto, org);
   }
 
-  @Transactional
+  @Transactional(TxType.REQUIRED)
   public ReadProjectDto createForUser(UUID userId, CreateProjectDto projectDto) {
     // Assumption is that every user that enters the service is valid and already verified
     // by the security filter chain.
@@ -91,7 +92,7 @@ public class ProjectService {
 
   // TODO: REALLY REALLY POORLY WRITTEN TEST (As everything else here)
   //  Do it properly once abstractions for eventing are set.
-  @Transactional
+  @Transactional(TxType.REQUIRED)
   public ReadProjectDto createProjectFromProposal(CreateProjectFromProposal proposalDto) {
     var proposal = proposalDto.proposal();
     var project = new Project();
@@ -116,7 +117,7 @@ public class ProjectService {
     return projectMapper.toDto(project);
   }
 
-  @Transactional
+  @Transactional(TxType.REQUIRED)
   public ReadProjectDto create(CreateProjectDto projectDto, AbstractOwner owner) {
     var project = projectMapper.toEntity(projectDto);
     project.setOwner(owner);
@@ -124,7 +125,7 @@ public class ProjectService {
     return projectMapper.toDto(project);
   }
 
-  @Transactional
+  @Transactional(TxType.REQUIRED)
   public ReadProjectDto update(UUID projectId, CreateProjectDto projectDto) {
     var project = getOrThrow(projectId);
 
@@ -143,7 +144,7 @@ public class ProjectService {
     this.eventPublisher.publish(new ProjectDeleted(projectId));
   }
 
-  @Transactional
+  @Transactional(TxType.REQUIRED)
   public ReadProjectDto setModuleTypes(UUID projectId, Collection<String> moduleTypeKeys) {
     var project = getOrThrow(projectId);
     var moduleTypes = this.moduleTypeRepository.findAllByKeyIn(moduleTypeKeys);
@@ -153,7 +154,7 @@ public class ProjectService {
     return projectMapper.toDto(project);
   }
 
-  @Transactional
+  @Transactional(TxType.REQUIRED)
   public ReadProjectDto setSpecializations(UUID projectId, Collection<String> specializationKeys) {
     var project = getOrThrow(projectId);
     var specializations = this.specializationRepository.findAllByKeyIn(specializationKeys);

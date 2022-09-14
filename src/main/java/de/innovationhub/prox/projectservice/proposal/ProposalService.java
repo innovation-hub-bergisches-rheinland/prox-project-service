@@ -8,9 +8,6 @@ import de.innovationhub.prox.projectservice.owners.AbstractOwner;
 import de.innovationhub.prox.projectservice.owners.organization.OrganizationRepository;
 import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.owners.user.UserRepository;
-import de.innovationhub.prox.projectservice.project.ProjectStatus;
-import de.innovationhub.prox.projectservice.project.dto.CreateProjectDto;
-import de.innovationhub.prox.projectservice.project.dto.CreateSupervisorDto;
 import de.innovationhub.prox.projectservice.proposal.dto.CreateProposalDto;
 import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalCollectionDto;
 import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalDto;
@@ -26,6 +23,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.StreamSupport;
 import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -71,6 +69,7 @@ public class ProposalService {
     return proposalMapper.toDto(proposal);
   }
 
+  @Transactional(TxType.REQUIRED)
   public ReadProposalDto createForOrganization(
       UUID organizationId, CreateProposalDto proposalToCreate) {
     // Assumption is that every organization that enters the service is valid and already verified
@@ -82,6 +81,7 @@ public class ProposalService {
     return create(proposalToCreate, org);
   }
 
+  @Transactional(TxType.REQUIRED)
   public ReadProposalDto createForUser(UUID userId, CreateProposalDto proposalToCreate) {
     // Assumption is that every user that enters the service is valid and already verified
     // by the security filter chain.
@@ -93,6 +93,7 @@ public class ProposalService {
     return create(proposalToCreate, user);
   }
 
+  @Transactional(TxType.REQUIRED)
   private ReadProposalDto create(CreateProposalDto proposalToCreate, AbstractOwner owner) {
     var proposal = proposalMapper.toEntity(proposalToCreate);
     proposal.setOwner(owner);
@@ -100,6 +101,7 @@ public class ProposalService {
     return proposalMapper.toDto(proposal);
   }
 
+  @Transactional(TxType.REQUIRED)
   public ReadProposalDto update(UUID proposalId, CreateProposalDto updatedProposal) {
     var proposal = getOrThrow(proposalId);
 
@@ -110,6 +112,7 @@ public class ProposalService {
     return proposalMapper.toDto(proposal);
   }
 
+  @Transactional(TxType.REQUIRED)
   public void delete(UUID proposalId) {
     var proposal = getOrThrow(proposalId);
 
@@ -118,6 +121,7 @@ public class ProposalService {
     this.eventPublisher.publish(new ProposalDeleted(proposalId));
   }
 
+  @Transactional(TxType.REQUIRED)
   public ReadProposalDto setModuleTypes(UUID proposalId, Collection<String> moduleTypeKeys) {
     var proposal = getOrThrow(proposalId);
     var moduleTypes = this.moduleTypeRepository.findAllByKeyIn(moduleTypeKeys);
@@ -127,6 +131,7 @@ public class ProposalService {
     return proposalMapper.toDto(proposal);
   }
 
+  @Transactional(TxType.REQUIRED)
   public ReadProposalDto setSpecializations(
       UUID proposalId, Collection<String> specializationKeys) {
     var proposal = getOrThrow(proposalId);
@@ -137,7 +142,7 @@ public class ProposalService {
     return proposalMapper.toDto(proposal);
   }
 
-  @Transactional
+  @Transactional(TxType.REQUIRED)
   public ReadProposalDto applyCommitment(UUID proposalId, Authentication authentication) {
     var proposal = getOrThrow(proposalId);
 
@@ -176,18 +181,6 @@ public class ProposalService {
     return proposalRepository
       .findById(proposalId)
       .orElseThrow(() -> new ProposalNotFoundException(proposalId));
-  }
-
-  private CreateProjectDto promoteToProjectRequest(
-    Proposal proposal, CreateSupervisorDto supervisor) {
-    return new CreateProjectDto(
-      proposal.getName(),
-      null,
-      proposal.getDescription(),
-      proposal.getRequirement(),
-      ProjectStatus.AVAILABLE,
-      null,
-      List.of(supervisor));
   }
 
   private Proposal saveAndPublish(Proposal proposal) {
