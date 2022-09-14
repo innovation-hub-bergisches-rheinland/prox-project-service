@@ -328,34 +328,6 @@ class ProposalIntegrationTest {
       .hasSize(1);
     assertThat(applicationEvents.stream(ProposalReceivedCommitment.class))
       .hasSize(1);
-
-    /*verify(kafkaTemplate, atLeastOnce()).send(eq(PROPOSAL_TOPIC), eq(testProposal.getId().toString()), isNotNull());
-    /*verify(kafkaTemplate, atLeastOnce()).send(eq(PROPOSAL_RECEIVED_COMMITMENT_TOPIC), eq(testProposal.getId().toString()),
-      isNotNull());*/
-
-    /*var argCapture = ArgumentCaptor.forClass(ProposalPromotedToProject.class);
-    verify(kafkaTemplate, atLeastOnce()).send(eq(PROPOSAL_PROMOTED_TOPIC), eq(testProposal.getId().toString()),
-      argCapture.capture());
-    var event = argCapture.getValue();
-    assertThat(event)
-      .isNotNull();
-
-    Project createdProject = this.entityManager.find(Project.class, event.projectId());
-    assertThat(createdProject)
-      .isNotNull()
-      .satisfies(project -> {
-        assertThat(project.getName()).isEqualTo(testProposal.getName());
-        assertThat(project.getShortDescription()).isEqualTo(testProposal.getDescription());
-        assertThat(project.getModules()).containsExactlyInAnyOrderElementsOf(testProposal.getModules());
-        assertThat(project.getSpecializations()).containsExactlyInAnyOrderElementsOf(testProposal.getSpecializations());
-        assertThat(project.getOwner()).isEqualTo(testProposal.getOwner());
-        assertThat(project.getSupervisors())
-          .hasSize(1)
-          .first()
-          .satisfies(s -> {
-            assertThat(s.getId()).isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
-          });
-      });*/
   }
 
   private Proposal getTestProposal(User owner) {
