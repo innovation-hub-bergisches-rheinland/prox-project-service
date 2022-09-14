@@ -9,6 +9,7 @@ import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.project.Supervisor;
+import de.innovationhub.prox.projectservice.project.event.ProposalPromotedToProject;
 import de.innovationhub.prox.projectservice.proposal.event.ProposalChanged;
 import de.innovationhub.prox.projectservice.proposal.event.ProposalDeleted;
 import de.innovationhub.prox.projectservice.proposal.event.ProposalReceivedCommitment;
@@ -327,6 +328,8 @@ class ProposalIntegrationTest {
     assertThat(applicationEvents.stream(ProposalChanged.class))
       .hasSize(1);
     assertThat(applicationEvents.stream(ProposalReceivedCommitment.class))
+      .hasSize(1);
+    assertThat(applicationEvents.stream(ProposalPromotedToProject.class))
       .hasSize(1);
   }
 

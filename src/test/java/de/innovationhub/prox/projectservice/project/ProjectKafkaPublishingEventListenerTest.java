@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import de.innovationhub.prox.projectservice.project.event.ProjectChanged;
 import de.innovationhub.prox.projectservice.project.event.ProjectDeleted;
 import de.innovationhub.prox.projectservice.project.event.ProposalPromotedToProject;
+import de.innovationhub.prox.projectservice.proposal.ProposalPromotedEventListener;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ class ProjectKafkaPublishingEventListenerTest {
 
   @Autowired
   ApplicationEventPublisher eventPublisher;
+
+  @MockBean
+  ProposalPromotedEventListener proposalPromotedEventListener;
 
   @Test
   void shouldPublishTombstone() {

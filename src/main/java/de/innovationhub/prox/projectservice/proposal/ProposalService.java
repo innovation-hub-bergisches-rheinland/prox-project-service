@@ -164,6 +164,7 @@ public class ProposalService {
 
     this.eventPublisher.publish(event);
 
+    proposal = getOrThrow(proposalId);
     return proposalMapper.toDto(proposal);
   }
 

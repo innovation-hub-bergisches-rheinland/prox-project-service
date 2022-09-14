@@ -15,6 +15,7 @@ import de.innovationhub.prox.projectservice.project.dto.ReadProjectCollectionDto
 import de.innovationhub.prox.projectservice.project.dto.ReadProjectDto;
 import de.innovationhub.prox.projectservice.project.event.ProjectChanged;
 import de.innovationhub.prox.projectservice.project.event.ProjectDeleted;
+import de.innovationhub.prox.projectservice.project.event.ProposalPromotedToProject;
 import de.innovationhub.prox.projectservice.project.exception.ProjectNotFoundException;
 import de.innovationhub.prox.projectservice.project.mapper.ProjectMapper;
 import java.util.Collection;
@@ -112,8 +113,11 @@ public class ProjectService {
 
     var supervisor = new Supervisor(supervisorUser.getId(), supervisorUser.getName());
     project.setSupervisors(List.of(supervisor));
-
     project = saveAndPublish(project);
+
+    var event = new ProposalPromotedToProject(proposal.getId(), project.getId());
+    this.eventPublisher.publish(event);
+
     return projectMapper.toDto(project);
   }
 
