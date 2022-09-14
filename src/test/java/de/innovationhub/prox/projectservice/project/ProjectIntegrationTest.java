@@ -3,9 +3,6 @@ package de.innovationhub.prox.projectservice.project;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isNull;
-import static org.mockito.Mockito.verify;
 
 import com.c4_soft.springaddons.security.oauth2.test.annotations.OpenIdClaims;
 import com.c4_soft.springaddons.security.oauth2.test.annotations.WithMockJwtAuth;
@@ -13,6 +10,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.user.User;
+import de.innovationhub.prox.projectservice.project.event.ProjectChanged;
+import de.innovationhub.prox.projectservice.project.event.ProjectDeleted;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -33,12 +32,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.event.ApplicationEvents;
+import org.springframework.test.context.event.RecordApplicationEvents;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("h2")
+@RecordApplicationEvents
 @SuppressWarnings("java:S2699")
 class ProjectIntegrationTest {
 
@@ -52,7 +54,10 @@ class ProjectIntegrationTest {
   ObjectMapper objectMapper;
 
   @MockBean
-  KafkaTemplate<String, Project> kafkaTemplate;
+  KafkaTemplate<String, Object> kafkaTemplate;
+
+  @Autowired
+  ApplicationEvents applicationEvents;
 
 
   static final String PROJECT_TOPIC = "entity.project.project";
@@ -148,7 +153,8 @@ class ProjectIntegrationTest {
     assertThat(project.getOwner().getId())
       .isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
 
-    verify(kafkaTemplate).send(eq(PROJECT_TOPIC), eq(id.toString()), eq(project));
+    assertThat(applicationEvents.stream(ProjectChanged.class))
+      .hasSize(1);
   }
 
   @Test
@@ -182,7 +188,8 @@ class ProjectIntegrationTest {
     assertThat(project.getOwner().getId())
       .isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
 
-    verify(kafkaTemplate).send(eq(PROJECT_TOPIC), eq(id.toString()), eq(project));
+    assertThat(applicationEvents.stream(ProjectChanged.class))
+      .hasSize(1);
   }
 
   @Test
@@ -219,7 +226,8 @@ class ProjectIntegrationTest {
       .ignoringFields("id", "createdAt", "creatorName", "modifiedAt", "modules")
       .isEqualTo(updatedProject);
 
-    verify(kafkaTemplate).send(eq(PROJECT_TOPIC), eq(randomProject.getId().toString()), eq(found));
+    assertThat(applicationEvents.stream(ProjectChanged.class))
+      .hasSize(1);
   }
 
   @Test
@@ -257,7 +265,8 @@ class ProjectIntegrationTest {
     // Everything except name is unchanged
     assertThat(found).usingRecursiveComparison().ignoringFields("name").isEqualTo(randomProject);
 
-    verify(kafkaTemplate).send(eq(PROJECT_TOPIC), eq(randomProject.getId().toString()), eq(found));
+    assertThat(applicationEvents.stream(ProjectChanged.class))
+      .hasSize(1);
   }
 
   @Test
@@ -286,7 +295,8 @@ class ProjectIntegrationTest {
 
     assertThat(this.entityManager.find(Project.class, randomProject.getId())).isNull();
 
-    verify(kafkaTemplate).send(eq(PROJECT_TOPIC), eq(randomProject.getId().toString()), isNull());
+    assertThat(applicationEvents.stream(ProjectDeleted.class))
+      .hasSize(1);
   }
 
   @Test
@@ -322,8 +332,8 @@ class ProjectIntegrationTest {
     assertThat(foundProject).isNotNull();
     assertThat(foundProject.getModules()).containsExactlyInAnyOrderElementsOf(randomModules);
 
-    verify(kafkaTemplate).send(eq(PROJECT_TOPIC), eq(randomProject.getId().toString()),
-      eq(foundProject));
+    assertThat(applicationEvents.stream(ProjectChanged.class))
+      .hasSize(1);
   }
 
   @Test
@@ -361,8 +371,8 @@ class ProjectIntegrationTest {
     assertThat(foundProject.getSpecializations())
       .containsExactlyInAnyOrderElementsOf(randomSpecializations);
 
-    verify(kafkaTemplate).send(eq(PROJECT_TOPIC), eq(randomProject.getId().toString()),
-      eq(foundProject));
+    assertThat(applicationEvents.stream(ProjectChanged.class))
+      .hasSize(1);
   }
 
   private Project getTestProject() {

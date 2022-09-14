@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.core.event;
 
+import java.util.Collection;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
@@ -17,5 +18,12 @@ public class InProcessEventPublisher implements EventPublisher {
   @Override
   public void publish(Event event) {
     this.eventPublisher.publishEvent(event);
+  }
+
+  @Override
+  public void publish(Collection<Event> events) {
+    for (Event event : events) {
+      this.eventPublisher.publishEvent(event);
+    }
   }
 }

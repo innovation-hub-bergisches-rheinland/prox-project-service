@@ -1,6 +1,7 @@
 package de.innovationhub.prox.projectservice.proposal;
 
 
+import de.innovationhub.prox.projectservice.core.event.EventPublisher;
 import de.innovationhub.prox.projectservice.module.ModuleTypeRepository;
 import de.innovationhub.prox.projectservice.module.SpecializationRepository;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
@@ -13,6 +14,8 @@ import de.innovationhub.prox.projectservice.project.dto.CreateSupervisorDto;
 import de.innovationhub.prox.projectservice.proposal.dto.CreateProposalDto;
 import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalCollectionDto;
 import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalDto;
+import de.innovationhub.prox.projectservice.proposal.event.ProposalChanged;
+import de.innovationhub.prox.projectservice.proposal.event.ProposalDeleted;
 import de.innovationhub.prox.projectservice.proposal.event.ProposalReceivedCommitment;
 import de.innovationhub.prox.projectservice.proposal.exception.NoUsernameInAuthenticationException;
 import de.innovationhub.prox.projectservice.proposal.exception.ProposalNotFoundException;
@@ -24,8 +27,6 @@ import java.util.UUID;
 import java.util.stream.StreamSupport;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
@@ -33,20 +34,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProposalService {
 
-  private static final String PROPOSAL_TOPIC = "entity.proposal.proposal";
-  private static final String PROPOSAL_RECEIVED_COMMITMENT = "event.proposal.received-commitment";
   private final ProposalRepository proposalRepository;
   private final UserRepository userRepository;
   private final OrganizationRepository organizationRepository;
   private final ProposalMapper proposalMapper;
   private final ModuleTypeRepository moduleTypeRepository;
   private final SpecializationRepository specializationRepository;
-  private final KafkaTemplate<String, Object> kafkaTemplate;
-  // TODO: Publish events here ONLY using the internal event publisher
-  //  and eventually publish events to kafka. I will do it probably in another
-  //  change, as I'm working on a feature right now.
-  //  Some thing should be done for projects.
-  private final ApplicationEventPublisher eventPublisher;
+  private final EventPublisher eventPublisher;
 
   @Autowired
   public ProposalService(
@@ -56,15 +50,13 @@ public class ProposalService {
     ProposalMapper proposalMapper,
     ModuleTypeRepository moduleTypeRepository,
     SpecializationRepository specializationRepository,
-    KafkaTemplate<String, Object> kafkaTemplate,
-    ApplicationEventPublisher eventPublisher) {
+    EventPublisher eventPublisher) {
     this.proposalRepository = proposalRepository;
     this.userRepository = userRepository;
     this.organizationRepository = organizationRepository;
     this.proposalMapper = proposalMapper;
     this.moduleTypeRepository = moduleTypeRepository;
     this.specializationRepository = specializationRepository;
-    this.kafkaTemplate = kafkaTemplate;
     this.eventPublisher = eventPublisher;
   }
 
@@ -123,7 +115,7 @@ public class ProposalService {
 
     // Assumption is that permissions are already verified by the security filter chain
     proposalRepository.delete(proposal);
-    this.kafkaTemplate.send(PROPOSAL_TOPIC, proposalId.toString(), null);
+    this.eventPublisher.publish(new ProposalDeleted(proposalId));
   }
 
   public ReadProposalDto setModuleTypes(UUID proposalId, Collection<String> moduleTypeKeys) {
@@ -164,9 +156,8 @@ public class ProposalService {
     this.saveAndPublish(proposal);
 
     var event = new ProposalReceivedCommitment(proposalId, userId);
-    this.kafkaTemplate.send(PROPOSAL_RECEIVED_COMMITMENT, proposalId.toString(), event);
 
-    this.eventPublisher.publishEvent(event);
+    this.eventPublisher.publish(event);
 
     return proposalMapper.toDto(proposal);
   }
@@ -201,7 +192,7 @@ public class ProposalService {
 
   private Proposal saveAndPublish(Proposal proposal) {
     proposal = proposalRepository.save(proposal);
-    this.kafkaTemplate.send(PROPOSAL_TOPIC, proposal.getId().toString(), proposal);
+    this.eventPublisher.publish(new ProposalChanged(proposal));
     return proposal;
   }
 }

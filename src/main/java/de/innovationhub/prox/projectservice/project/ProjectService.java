@@ -1,6 +1,7 @@
 package de.innovationhub.prox.projectservice.project;
 
 
+import de.innovationhub.prox.projectservice.core.event.EventPublisher;
 import de.innovationhub.prox.projectservice.module.ModuleTypeRepository;
 import de.innovationhub.prox.projectservice.module.SpecializationRepository;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
@@ -12,6 +13,8 @@ import de.innovationhub.prox.projectservice.project.dto.CreateProjectDto;
 import de.innovationhub.prox.projectservice.project.dto.CreateProjectFromProposal;
 import de.innovationhub.prox.projectservice.project.dto.ReadProjectCollectionDto;
 import de.innovationhub.prox.projectservice.project.dto.ReadProjectDto;
+import de.innovationhub.prox.projectservice.project.event.ProjectChanged;
+import de.innovationhub.prox.projectservice.project.event.ProjectDeleted;
 import de.innovationhub.prox.projectservice.project.exception.ProjectNotFoundException;
 import de.innovationhub.prox.projectservice.project.mapper.ProjectMapper;
 import java.util.Collection;
@@ -21,21 +24,17 @@ import java.util.stream.StreamSupport;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProjectService {
-
-  private static final String PROJECT_TOPIC = "entity.project.project";
-
   private final ProjectRepository projectRepository;
   private final SpecializationRepository specializationRepository;
   private final ModuleTypeRepository moduleTypeRepository;
   private final UserRepository userRepository;
   private final OrganizationRepository organizationRepository;
   private final ProjectMapper projectMapper;
-  private final KafkaTemplate<String, Project> kafkaTemplate;
+  private final EventPublisher eventPublisher;
 
   @Autowired
   public ProjectService(
@@ -44,14 +43,16 @@ public class ProjectService {
     ModuleTypeRepository moduleTypeRepository,
     UserRepository userRepository,
     OrganizationRepository organizationRepository,
-    ProjectMapper projectMapper, KafkaTemplate<String, Project> kafkaTemplate) {
+    ProjectMapper projectMapper,
+    EventPublisher eventPublisher
+  ) {
     this.projectRepository = projectRepository;
     this.specializationRepository = specializationRepository;
     this.moduleTypeRepository = moduleTypeRepository;
     this.userRepository = userRepository;
     this.organizationRepository = organizationRepository;
     this.projectMapper = projectMapper;
-    this.kafkaTemplate = kafkaTemplate;
+    this.eventPublisher = eventPublisher;
   }
 
   public ReadProjectCollectionDto getAll() {
@@ -139,7 +140,7 @@ public class ProjectService {
 
     // Assumption is that permissions are already verified by the security filter chain
     projectRepository.delete(project);
-    this.kafkaTemplate.send(PROJECT_TOPIC, projectId.toString(), null);
+    this.eventPublisher.publish(new ProjectDeleted(projectId));
   }
 
   @Transactional
@@ -201,7 +202,7 @@ public class ProjectService {
 
   private Project saveAndPublish(Project project) {
     var saved = this.projectRepository.save(project);
-    this.kafkaTemplate.send(PROJECT_TOPIC, project.getId().toString(), saved);
+    this.eventPublisher.publish(new ProjectChanged(saved));
     return saved;
   }
 }

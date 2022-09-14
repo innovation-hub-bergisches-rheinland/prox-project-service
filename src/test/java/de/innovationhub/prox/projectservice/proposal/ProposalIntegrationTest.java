@@ -2,20 +2,16 @@ package de.innovationhub.prox.projectservice.proposal;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isNotNull;
-import static org.mockito.ArgumentMatchers.isNull;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.verify;
 
 import com.c4_soft.springaddons.security.oauth2.test.annotations.OpenIdClaims;
 import com.c4_soft.springaddons.security.oauth2.test.annotations.WithMockJwtAuth;
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.user.User;
-import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.Supervisor;
-import de.innovationhub.prox.projectservice.project.event.ProposalPromotedToProject;
+import de.innovationhub.prox.projectservice.proposal.event.ProposalChanged;
+import de.innovationhub.prox.projectservice.proposal.event.ProposalDeleted;
+import de.innovationhub.prox.projectservice.proposal.event.ProposalReceivedCommitment;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +24,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,6 +34,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.event.ApplicationEvents;
+import org.springframework.test.context.event.RecordApplicationEvents;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
@@ -46,6 +43,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @Transactional
 @ActiveProfiles("h2")
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@RecordApplicationEvents
 @SuppressWarnings("java:S2699")
 class ProposalIntegrationTest {
 
@@ -58,15 +56,12 @@ class ProposalIntegrationTest {
   @Autowired
   Validator validator;
 
+  @Autowired
+  ApplicationEvents applicationEvents;
+
+  // TODO: Add testcontainers instead of mocking.
   @MockBean
   KafkaTemplate<String, Object> kafkaTemplate;
-
-  @MockBean
-  KafkaTemplate<String, Project> kafkaTemplateProj;
-
-  static final String PROPOSAL_TOPIC = "entity.proposal.proposal";
-  static final String PROPOSAL_RECEIVED_COMMITMENT_TOPIC = "event.proposal.received-commitment";
-  static final String PROPOSAL_PROMOTED_TOPIC = "event.proposal.promoted-to-project";
 
   @BeforeEach
   void setup() {
@@ -133,7 +128,8 @@ class ProposalIntegrationTest {
       .containsExactly(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "user");
     proposalAssertions.assertAll();
 
-    verify(kafkaTemplate).send(eq(PROPOSAL_TOPIC), eq(id.toString()), eq(proposal));
+    assertThat(applicationEvents.stream(ProposalChanged.class))
+      .hasSize(1);
   }
 
   @Test
@@ -184,7 +180,8 @@ class ProposalIntegrationTest {
       .containsExactly(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "user");
     proposalAssertions.assertAll();
 
-    verify(kafkaTemplate).send(eq(PROPOSAL_TOPIC), eq(proposal.getId().toString()), eq(proposal));
+    assertThat(applicationEvents.stream(ProposalChanged.class))
+      .hasSize(1);
   }
 
   @Test
@@ -210,7 +207,8 @@ class ProposalIntegrationTest {
     var result = this.entityManager.find(Proposal.class, proposal.getId());
     assertThat(result).isNull();
 
-    verify(kafkaTemplate).send(eq(PROPOSAL_TOPIC), eq(proposal.getId().toString()), isNull());
+    assertThat(applicationEvents.stream(ProposalDeleted.class))
+      .hasSize(1);
   }
 
   @Test
@@ -245,7 +243,8 @@ class ProposalIntegrationTest {
     var result = this.entityManager.find(Proposal.class, proposal.getId());
     assertThat(result.getModules()).containsExactlyInAnyOrderElementsOf(randomModules);
 
-    verify(kafkaTemplate).send(eq(PROPOSAL_TOPIC), eq(proposal.getId().toString()), eq(proposal));
+    assertThat(applicationEvents.stream(ProposalChanged.class))
+      .hasSize(1);
   }
 
   @Test
@@ -282,8 +281,8 @@ class ProposalIntegrationTest {
     assertThat(result.getSpecializations())
       .containsExactlyInAnyOrderElementsOf(randomSpecializations);
 
-    verify(kafkaTemplate).send(eq(PROPOSAL_TOPIC), eq(testProposal.getId().toString()),
-      eq(testProposal));
+    assertThat(applicationEvents.stream(ProposalChanged.class))
+      .hasSize(1);
   }
 
   @Test
@@ -325,11 +324,16 @@ class ProposalIntegrationTest {
           assertThat(result.getStatus()).isEqualTo(ProposalStatus.HAS_COMMITMENT);
         });
 
-    verify(kafkaTemplate, atLeastOnce()).send(eq(PROPOSAL_TOPIC), eq(testProposal.getId().toString()), isNotNull());
-    verify(kafkaTemplate, atLeastOnce()).send(eq(PROPOSAL_RECEIVED_COMMITMENT_TOPIC), eq(testProposal.getId().toString()),
-      isNotNull());
+    assertThat(applicationEvents.stream(ProposalChanged.class))
+      .hasSize(1);
+    assertThat(applicationEvents.stream(ProposalReceivedCommitment.class))
+      .hasSize(1);
 
-    var argCapture = ArgumentCaptor.forClass(ProposalPromotedToProject.class);
+    /*verify(kafkaTemplate, atLeastOnce()).send(eq(PROPOSAL_TOPIC), eq(testProposal.getId().toString()), isNotNull());
+    /*verify(kafkaTemplate, atLeastOnce()).send(eq(PROPOSAL_RECEIVED_COMMITMENT_TOPIC), eq(testProposal.getId().toString()),
+      isNotNull());*/
+
+    /*var argCapture = ArgumentCaptor.forClass(ProposalPromotedToProject.class);
     verify(kafkaTemplate, atLeastOnce()).send(eq(PROPOSAL_PROMOTED_TOPIC), eq(testProposal.getId().toString()),
       argCapture.capture());
     var event = argCapture.getValue();
@@ -351,7 +355,7 @@ class ProposalIntegrationTest {
           .satisfies(s -> {
             assertThat(s.getId()).isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
           });
-      });
+      });*/
   }
 
   private Proposal getTestProposal(User owner) {
