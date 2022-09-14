@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v2.7.0...v3.0.0) (2022-09-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* reference proposal in project
+* use a new status instead deleting proposal
+
+### Features
+
+* add a back-reference to the created project ([4f2a38e](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/4f2a38eb4e319a3c1ca17d6e929121302c12ea54))
+* add abstractions for events ([ca31316](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/ca31316d3016240fb482dcc10b67ccaadbf52272))
+* add proposal id to project dto ([0e87605](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/0e87605a9a99d17a96ecae271d74cefd035705d8))
+* reference proposal in project ([65f3be5](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/65f3be5546654d2edfb4e5b4bd5cbffaf17dcb87))
+* use a new status instead deleting proposal ([dae5c99](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/dae5c998a932051bf7ee7d892cf72bcfd10736da))
+
+
+### Bug Fixes
+
+* make event listeners really synchronous ([afcd140](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/afcd1406bf5651722e257e379350fc11aa8884f2))
+
 ## [2.7.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v2.6.0...v2.7.0) (2022-09-12)
 
 
