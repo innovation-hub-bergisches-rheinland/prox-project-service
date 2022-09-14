@@ -2,12 +2,9 @@ package de.innovationhub.prox.projectservice.proposal;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isNotNull;
 import static org.mockito.ArgumentMatchers.isNull;
-import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 
 import com.c4_soft.springaddons.security.oauth2.test.annotations.OpenIdClaims;
@@ -317,17 +314,16 @@ class ProposalIntegrationTest {
     // @formatter:on
 
     var result = this.entityManager.find(Proposal.class, testProposal.getId());
-    assertThat(result).isNull();
-    var projectResult = this.entityManager.find(Project.class, projectId);
-    assertThat(projectResult).isNotNull();
-    assertThat(projectResult.getSupervisors())
-      .extracting("id", "name")
-      .contains(tuple(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Karl Peter"));
+    assertThat(result)
+      .isNotNull()
+        .satisfies(proposal -> {
+          assertThat(result.getCommittedSupervisor()).isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+          assertThat(result.getStatus()).isEqualTo(ProposalStatus.HAS_COMMITMENT);
+        });
 
-    verify(kafkaTemplate).send(eq(PROPOSAL_TOPIC), eq(testProposal.getId().toString()), isNull());
+    verify(kafkaTemplate).send(eq(PROPOSAL_TOPIC), eq(testProposal.getId().toString()), isNotNull());
     verify(kafkaTemplate).send(eq(PROPOSAL_PROPOSED_TOPIC), eq(testProposal.getId().toString()),
       isNotNull());
-    verify(kafkaTemplateProj, atLeastOnce()).send(any(), any(), any());
   }
 
   private Proposal getTestProposal(User owner) {

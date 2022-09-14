@@ -11,6 +11,7 @@ import de.innovationhub.prox.projectservice.owners.AbstractOwner;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -78,6 +79,8 @@ public class Proposal extends AbstractEntity implements Ownable {
   @ManyToOne(optional = false)
   @JoinColumn(name = "owner_id", nullable = false, updatable = false)
   private AbstractOwner owner;
+
+  private UUID committedSupervisor;
 
   @Column(name = "status_changed_at")
   @Builder.Default
