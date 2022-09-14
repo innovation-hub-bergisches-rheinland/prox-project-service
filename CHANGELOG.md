@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v3.0.0...v3.1.0) (2022-09-14)
+
+
+### Features
+
+* add status filter to proposal API ([a056468](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/a056468e50f6cccfdebf0cd9c914aa75a6db0e4a))
+
 ## [3.0.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v2.7.0...v3.0.0) (2022-09-14)
 
 
