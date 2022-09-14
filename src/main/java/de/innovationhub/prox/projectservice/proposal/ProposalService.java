@@ -58,8 +58,8 @@ public class ProposalService {
     this.eventPublisher = eventPublisher;
   }
 
-  public ReadProposalCollectionDto getAll() {
-    var all = proposalRepository.findAll();
+  public ReadProposalCollectionDto getAll(ProposalStatus status) {
+    var all = proposalRepository.findAllByStatus(status);
     return proposalMapper.toDto(StreamSupport.stream(all.spliterator(), false).toList());
   }
 
@@ -93,7 +93,6 @@ public class ProposalService {
     return create(proposalToCreate, user);
   }
 
-  @Transactional(TxType.REQUIRED)
   private ReadProposalDto create(CreateProposalDto proposalToCreate, AbstractOwner owner) {
     var proposal = proposalMapper.toEntity(proposalToCreate);
     proposal.setOwner(owner);

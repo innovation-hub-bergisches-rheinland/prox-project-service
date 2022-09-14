@@ -17,4 +17,7 @@ public interface ProposalRepository extends PagingAndSortingRepository<Proposal,
 
   @Query("select p from Proposal p where p.id in ?1 order by p.modifiedAt desc")
   List<Proposal> findAllByIdIn(Collection<UUID> ids);
+
+  @Query("select p from Proposal p where p.status = ?1")
+  List<Proposal> findAllByStatus(ProposalStatus status);
 }

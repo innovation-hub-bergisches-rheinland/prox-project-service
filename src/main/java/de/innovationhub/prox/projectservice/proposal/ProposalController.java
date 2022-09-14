@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,8 +38,10 @@ public class ProposalController {
    */
 
   @GetMapping(value = "/proposals", produces = MediaType.APPLICATION_JSON_VALUE)
-  public @ResponseBody ResponseEntity<ReadProposalCollectionDto> getAll() {
-    var proposals = this.proposalService.getAll();
+  public @ResponseBody ResponseEntity<ReadProposalCollectionDto> getAll(
+    @RequestParam(name = "status", defaultValue = "PROPOSED") ProposalStatus status
+  ) {
+    var proposals = this.proposalService.getAll(status);
     return ResponseEntity.ok(proposals);
   }
 
