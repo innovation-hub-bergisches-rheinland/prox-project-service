@@ -22,6 +22,7 @@ public record ReadProjectDto(
     Set<Specialization> specializations,
     Set<ModuleType> modules,
     AbstractOwner owner,
+    UUID proposalId,
     Instant createdAt,
     Instant modifiedAt,
     ProjectPermissionsDto permissions) {}
