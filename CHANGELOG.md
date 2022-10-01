@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v3.2.0...v3.3.0) (2022-10-01)
+
+
+### Features
+
+* add tags to dto ([f14ccfd](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/f14ccfdea877b79dd1378aa9fc62ccd95dadf05b))
+
+
+### Bug Fixes
+
+* fix nullpointer ([a6b2ed4](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/a6b2ed414df2ce77a3d33acc3bf8bd33be874776))
+
 ## [3.2.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v3.1.0...v3.2.0) (2022-10-01)
 
 
