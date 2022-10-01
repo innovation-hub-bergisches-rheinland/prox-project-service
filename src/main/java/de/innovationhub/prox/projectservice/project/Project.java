@@ -88,6 +88,9 @@ public class Project extends AbstractEntity implements Ownable {
   // If the project has been created from a proposal, we store the corresponding proposal id here.
   private UUID proposalId = null;
 
+  @ElementCollection
+  private List<String> tags = new ArrayList<>();
+
   @JsonProperty(access = Access.READ_ONLY)
   @Column(name = "created_at", updatable = false)
   @CreationTimestamp

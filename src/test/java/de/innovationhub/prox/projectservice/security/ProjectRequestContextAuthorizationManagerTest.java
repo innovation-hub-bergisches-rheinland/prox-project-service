@@ -152,6 +152,7 @@ class ProjectRequestContextAuthorizationManagerTest {
       Collections.emptySet(),
       new User(userId, "Xavier Tester"),
       null,
+      Collections.emptyList(),
       Instant.now(),
       Instant.now());
   }

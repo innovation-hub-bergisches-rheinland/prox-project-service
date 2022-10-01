@@ -61,17 +61,18 @@ class ProjectAuditingTest {
     this.entityManager.persist(owner);
     return new Project(
         "Test Project",
-        "Test Project Description",
-        "Test Project Short Description",
-        "Test Project Requirement",
-        ProjectStatus.AVAILABLE,
-        "Test Project Creator Name",
-        List.of(new Supervisor(UUID.randomUUID(), "Test Project Supervisor")),
-        Collections.emptySet(),
-        Collections.emptySet(),
-        owner,
-        null,
-        Instant.now(),
-        Instant.now());
+      "Test Project Description",
+      "Test Project Short Description",
+      "Test Project Requirement",
+      ProjectStatus.AVAILABLE,
+      "Test Project Creator Name",
+      List.of(new Supervisor(UUID.randomUUID(), "Test Project Supervisor")),
+      Collections.emptySet(),
+      Collections.emptySet(),
+      owner,
+      null,
+      Collections.emptyList(),
+      Instant.now(),
+      Instant.now());
   }
 }

@@ -36,6 +36,7 @@ class ProjectJsonTest {
           Collections.emptySet(),
           new User(UUID.randomUUID(), "Xavier Tester"),
           null,
+          Collections.emptyList(),
           Instant.now(),
           Instant.now());
 

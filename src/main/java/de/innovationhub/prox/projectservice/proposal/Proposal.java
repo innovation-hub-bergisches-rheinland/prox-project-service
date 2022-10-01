@@ -9,10 +9,13 @@ import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
@@ -86,6 +89,9 @@ public class Proposal extends AbstractEntity implements Ownable {
   // Note: This is a pragmatic workaround so that we can navigate to the created proposal, once it
   //  has been created. There might be a better approach.
   private UUID projectId;
+
+  @ElementCollection
+  private List<String> tags = new ArrayList<>();
 
   @Column(name = "status_changed_at")
   @Builder.Default

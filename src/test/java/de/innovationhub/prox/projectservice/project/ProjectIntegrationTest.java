@@ -384,18 +384,19 @@ class ProjectIntegrationTest {
     this.entityManager.persist(owner);
     return new Project(
         "Test Project",
-        "Test Project Description",
-        "Test Project Short Description",
-        "Test Project Requirement",
-        ProjectStatus.AVAILABLE,
-        "Test Project Creator Name",
-        getSupervisors(),
-        Collections.emptySet(),
-        Collections.emptySet(),
-        owner,
-        null,
-        Instant.now(),
-        Instant.now());
+      "Test Project Description",
+      "Test Project Short Description",
+      "Test Project Requirement",
+      ProjectStatus.AVAILABLE,
+      "Test Project Creator Name",
+      getSupervisors(),
+      Collections.emptySet(),
+      Collections.emptySet(),
+      owner,
+      null,
+      Collections.emptyList(),
+      Instant.now(),
+      Instant.now());
   }
 
   // Note: We need to construct a mutable collection for ElementCollections (thanks Hibernate)
