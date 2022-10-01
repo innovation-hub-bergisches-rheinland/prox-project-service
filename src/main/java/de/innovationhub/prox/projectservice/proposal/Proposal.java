@@ -20,6 +20,7 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -79,7 +80,7 @@ public class Proposal extends AbstractEntity implements Ownable {
   @Builder.Default
   private Set<ModuleType> modules = new HashSet<>();
 
-  @ManyToOne(optional = false)
+  @ManyToOne(optional = false, fetch = FetchType.EAGER)
   @JoinColumn(name = "owner_id", nullable = false, updatable = false)
   private AbstractOwner owner;
 
@@ -90,7 +91,7 @@ public class Proposal extends AbstractEntity implements Ownable {
   //  has been created. There might be a better approach.
   private UUID projectId;
 
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   private List<String> tags = new ArrayList<>();
 
   @Column(name = "status_changed_at")

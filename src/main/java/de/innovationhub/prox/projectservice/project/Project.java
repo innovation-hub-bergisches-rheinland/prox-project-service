@@ -81,14 +81,14 @@ public class Project extends AbstractEntity implements Ownable {
   @Builder.Default
   private Set<ModuleType> modules = new HashSet<>();
 
-  @ManyToOne(optional = false)
+  @ManyToOne(optional = false, fetch = FetchType.EAGER)
   @JoinColumn(name = "owner_id", nullable = false, updatable = false)
   private AbstractOwner owner;
 
   // If the project has been created from a proposal, we store the corresponding proposal id here.
   private UUID proposalId = null;
 
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   private List<String> tags = new ArrayList<>();
 
   @JsonProperty(access = Access.READ_ONLY)
