@@ -6,6 +6,7 @@ import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
 import de.innovationhub.prox.projectservice.proposal.ProposalStatus;
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,6 +18,7 @@ public record ReadProposalDto(
   ProposalStatus status,
   Set<Specialization> specializations,
   Set<ModuleType> modules,
+  List<String> tags,
   AbstractOwner owner,
   UUID projectId,
   ProposalPermissionsDto permissions,
