@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v3.1.0...v3.2.0) (2022-10-01)
+
+
+### Features
+
+* add simple tags to projects/proposals ([913de7d](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/913de7d5774abc34a5bea98b2122c0dee62fa89d))
+* add tags for search capability ([dfa61f1](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/dfa61f15eeeec5830f9dbd0e33da453f99c1c5d2))
+
+
+### Bug Fixes
+
+* only fetch one bag ([7d08afb](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/7d08afba6fa2e030824199b06bf2a5a4ead6a16f))
+
 ## [3.1.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v3.0.0...v3.1.0) (2022-09-14)
 
 
