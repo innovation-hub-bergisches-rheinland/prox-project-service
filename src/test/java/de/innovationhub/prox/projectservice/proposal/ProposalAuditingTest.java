@@ -8,16 +8,12 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
-@SpringBootTest
-@AutoConfigureDataJpa
-@Transactional
+@DataJpaTest
 @ActiveProfiles("h2")
 class ProposalAuditingTest {
   @Autowired private EntityManager entityManager;

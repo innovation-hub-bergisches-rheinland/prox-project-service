@@ -19,18 +19,25 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
-public class ProposalServiceTest {
-  @MockBean ProposalRepository proposalRepository;
+class ProposalServiceTest {
 
-  @MockBean UserRepository userRepository;
+  @MockBean
+  ProposalRepository proposalRepository;
 
-  @MockBean OrganizationRepository organizationRepository;
+  @MockBean
+  UserRepository userRepository;
 
-  @MockBean ModuleTypeRepository moduleTypeRepository;
+  @MockBean
+  OrganizationRepository organizationRepository;
 
-  @MockBean SpecializationRepository specializationRepository;
+  @MockBean
+  ModuleTypeRepository moduleTypeRepository;
 
-  @Autowired ProposalService proposalService;
+  @MockBean
+  SpecializationRepository specializationRepository;
+
+  @Autowired
+  ProposalService proposalService;
 
   @Test
   void shouldThrowWhenProposalNotFound() {
