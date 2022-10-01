@@ -21,11 +21,11 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
       String text,
       Sort sort) {
     // TODO refactor and use fuzzy search or something similar which does not require hardcoding
-    var keywords = text.split("\\s+");
 
     return StreamSupport.stream(this.projectRepository.findAll(sort).spliterator(), false)
       .filter(p -> status == null || p.getStatus() == status)
-      .filter(p -> p.getTags().stream().anyMatch(t -> Arrays.asList(keywords).contains(t)))
+      .filter(p -> text == null || p.getTags().stream()
+        .anyMatch(t -> Arrays.asList(text.split("\\s+")).contains(t)))
       .filter(
         p ->
           specializationKeys == null
