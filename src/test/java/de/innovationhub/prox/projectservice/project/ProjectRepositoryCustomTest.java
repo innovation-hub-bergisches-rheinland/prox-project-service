@@ -1,5 +1,6 @@
 package de.innovationhub.prox.projectservice.project;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import de.innovationhub.prox.projectservice.module.ModuleType;
@@ -14,7 +15,10 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -22,10 +26,12 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-@SpringBootTest
 @Testcontainers
 @ActiveProfiles("testcontainers-postgres")
 @Transactional
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = Replace.NONE)
+@DirtiesContext
 class ProjectRepositoryCustomTest {
 
   @Autowired
@@ -36,9 +42,9 @@ class ProjectRepositoryCustomTest {
 
   @Container
   static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:14.1")
-      .withDatabaseName("project-db")
-      .withUsername("project-service")
-      .withPassword("project-service");
+    .withDatabaseName("project-db")
+    .withUsername("project-service")
+    .withPassword("project-service");
 
   @DynamicPropertySource
   static void setupDB(DynamicPropertyRegistry registry) {
@@ -202,6 +208,45 @@ class ProjectRepositoryCustomTest {
     var projects = projectRepository.filterProjects(null, List.of(), List.of(), "");
 
     assertEquals(1, projects.size());
+  }
+
+  @Test
+  void shouldSortBySimilarity() {
+    var project = getTestProjectWithRequiredFields();
+    project.setName("Lorem Ipsum Lorem Ipsum");
+    projectRepository.save(project);
+
+    var project2 = getTestProjectWithRequiredFields();
+    project2.setName("Lorem Ipsum 2lol");
+    projectRepository.save(project2);
+
+    var projects = projectRepository.filterProjects(null, null, null, "Lorem Ipsum");
+
+    assertThat(projects)
+      .hasSize(2)
+      .containsExactly(project, project2);
+
+  }
+
+  private Project getTestProjectWithRequiredFields() {
+    var owner = new User(UUID.randomUUID(), "Xavier Tester");
+    em.persist(owner);
+
+    return new Project(
+      "Test Project",
+      "Test Project Description",
+      "Test Project Short Description",
+      "Test Project Requirement",
+      ProjectStatus.AVAILABLE,
+      "Test Project Creator Name",
+      List.of(),
+      Set.of(),
+      Set.of(),
+      owner,
+      null,
+      Collections.emptyList(),
+      Instant.now(),
+      Instant.now());
   }
 
   private Project getTestProject() {

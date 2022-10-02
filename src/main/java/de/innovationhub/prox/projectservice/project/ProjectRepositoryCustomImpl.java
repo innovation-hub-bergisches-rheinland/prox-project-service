@@ -25,7 +25,7 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
     Collection<String> moduleTypeKeys,
     String text) {
     var searchQuery = """
-        SELECT DISTINCT p.*
+        SELECT DISTINCT p.*, ts_rank(document, query) AS rank
         FROM project p
                  LEFT JOIN (SELECT pt.project_id AS id, array_agg(pt.tags) AS tag_array
                             FROM project_tags pt
@@ -35,16 +35,17 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
                  LEFT JOIN project_specializations s on p.id = s.project_id
                  LEFT JOIN specializations s2 on s.specializations_id = s2.id
                  LEFT JOIN project_modules pm on p.id = pm.project_id
-                 LEFT JOIN module_type m on pm.modules_id = m.id
+                 LEFT JOIN module_type m on pm.modules_id = m.id,
+              to_tsvector('simple', concat_ws(' ', p.name, p.short_description, p.requirement, ao.owner_name, ps.name,
+                            array_to_string(tag_array, ' '))) document,
+              to_tsquery('simple', REGEXP_REPLACE(lower(:query), '\\s+', ':* & ', 'g')) query
         WHERE (:status IS NULL OR p.status = :status)
             AND (:specializationKeys IS NULL OR s2.key IN (:specializationKeys))
             AND (:moduleTypeKeys IS NULL OR m.key IN (:moduleTypeKeys))
             AND (:query <> '' IS NOT TRUE OR
-                  to_tsvector('simple', concat_ws(' ', p.name, p.short_description, p.description, p.requirement, ao.owner_name, ps.name,
-                            array_to_string(tag_array, ' '))) @@
-                  to_tsquery('simple', REGEXP_REPLACE(lower(:query), '\\s+', ':* & ', 'g'))
+                  document @@ query
               )
-        ORDER BY p.modified_at DESC;
+        ORDER BY rank DESC, p.modified_at DESC;
       """;
 
     var nativeQuery = entityManager.createNativeQuery(searchQuery, Project.class);
