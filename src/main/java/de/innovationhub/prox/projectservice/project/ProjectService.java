@@ -25,7 +25,6 @@ import java.util.stream.StreamSupport;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -169,13 +168,12 @@ public class ProjectService {
   }
 
   public ReadProjectCollectionDto filter(
-      ProjectStatus status,
-      String[] specializationKeys,
-      String[] moduleTypeKeys,
-      String text,
-      Sort sort) {
+    ProjectStatus status,
+    String[] specializationKeys,
+    String[] moduleTypeKeys,
+    String text) {
     var projects =
-        projectRepository.filterProjects(status, specializationKeys, moduleTypeKeys, text, sort);
+      projectRepository.filterProjects(status, specializationKeys, moduleTypeKeys, text);
     return projectMapper.toDto(projects.stream().toList());
   }
 

@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.UUID;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -89,13 +88,12 @@ public class ProjectController {
 
   @GetMapping(value = "/projects/search/filter", produces = MediaType.APPLICATION_JSON_VALUE)
   public @ResponseBody ResponseEntity<ReadProjectCollectionDto> filterProjects(
-      @RequestParam(name = "status", required = false) ProjectStatus status,
-      @RequestParam(name = "specializationKeys", required = false) String[] specializationKeys,
-      @RequestParam(name = "moduleTypeKeys", required = false) String[] moduleTypeKeys,
-      @RequestParam(name = "text", required = false) String text,
-      Sort sort) {
+    @RequestParam(name = "status", required = false) ProjectStatus status,
+    @RequestParam(name = "specializationKeys", required = false) String[] specializationKeys,
+    @RequestParam(name = "moduleTypeKeys", required = false) String[] moduleTypeKeys,
+    @RequestParam(name = "text", required = false) String text) {
     return ResponseEntity.ok(
-        projectService.filter(status, specializationKeys, moduleTypeKeys, text, sort));
+      projectService.filter(status, specializationKeys, moduleTypeKeys, text));
   }
 
   /*
