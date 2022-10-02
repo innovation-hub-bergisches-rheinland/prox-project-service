@@ -122,18 +122,6 @@ class ProjectRepositoryCustomTest {
   }
 
   @Test
-  void shouldFindFuzzyByNameAndTag() {
-    var project = getTestProject();
-    project.setName("Lorem Ipsum");
-    project.setTags(List.of("tag1", "tag2"));
-    projectRepository.save(project);
-
-    var projects = projectRepository.search("Ipsum Lorme tag");
-
-    assertEquals(1, projects.size());
-  }
-
-  @Test
   void shouldFindByStatus() {
     var project = getTestProject();
     project.setName("Lorem Ipsum");
