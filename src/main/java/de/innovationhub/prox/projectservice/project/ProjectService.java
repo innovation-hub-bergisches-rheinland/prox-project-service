@@ -169,8 +169,8 @@ public class ProjectService {
 
   public ReadProjectCollectionDto filter(
     ProjectStatus status,
-    String[] specializationKeys,
-    String[] moduleTypeKeys,
+    Collection<String> specializationKeys,
+    Collection<String> moduleTypeKeys,
     String text) {
     var projects =
       projectRepository.filterProjects(status, specializationKeys, moduleTypeKeys, text);

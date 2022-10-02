@@ -139,7 +139,7 @@ class ProjectRepositoryCustomTest {
     var project = getTestProject();
     projectRepository.save(project);
 
-    var projects = projectRepository.filterProjects(null, new String[]{ "s1" }, null, null);
+    var projects = projectRepository.filterProjects(null, List.of("s1"), null, null);
 
     assertEquals(1, projects.size());
   }
@@ -149,7 +149,7 @@ class ProjectRepositoryCustomTest {
     var project = getTestProject();
     projectRepository.save(project);
 
-    var projects = projectRepository.filterProjects(null, new String[]{ "UNKNOWN" }, null, null);
+    var projects = projectRepository.filterProjects(null, List.of("UNKNOWN"), null, null);
 
     assertEquals(0, projects.size());
   }
@@ -159,7 +159,7 @@ class ProjectRepositoryCustomTest {
     var project = getTestProject();
     projectRepository.save(project);
 
-    var projects = projectRepository.filterProjects(null, null, new String[]{ "m1" }, null);
+    var projects = projectRepository.filterProjects(null, null, List.of("m1"), null);
 
     assertEquals(1, projects.size());
   }
@@ -169,7 +169,7 @@ class ProjectRepositoryCustomTest {
     var project = getTestProject();
     projectRepository.save(project);
 
-    var projects = projectRepository.filterProjects(null, null, new String[]{ "UNKNOWN" }, null);
+    var projects = projectRepository.filterProjects(null, null, List.of("UNKNOWN"), null);
 
     assertEquals(0, projects.size());
   }
@@ -179,7 +179,7 @@ class ProjectRepositoryCustomTest {
     var project = getTestProject();
     projectRepository.save(project);
 
-    var projects = projectRepository.filterProjects(null, new String[]{ "s1" }, new String[]{ "m1" }, null);
+    var projects = projectRepository.filterProjects(null, List.of("s1"), List.of("m1"), null);
 
     assertEquals(1, projects.size());
   }
@@ -199,7 +199,7 @@ class ProjectRepositoryCustomTest {
     var project = getTestProject();
     projectRepository.save(project);
 
-    var projects = projectRepository.filterProjects(null , new String[]{}, new String[] {}, "");
+    var projects = projectRepository.filterProjects(null, List.of(), List.of(), "");
 
     assertEquals(1, projects.size());
   }

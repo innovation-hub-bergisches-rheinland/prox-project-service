@@ -2,7 +2,7 @@ package de.innovationhub.prox.projectservice.project;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.hibernate.jpa.TypedParameterValue;
@@ -21,8 +21,8 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
   @Override
   public List<Project> filterProjects(
     ProjectStatus status,
-    String[] specializationKeys,
-    String[] moduleTypeKeys,
+    Collection<String> specializationKeys,
+    Collection<String> moduleTypeKeys,
     String text) {
     var searchQuery = """
         SELECT DISTINCT p.*
@@ -53,10 +53,9 @@ public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
       new TypedParameterValue(StandardBasicTypes.INTEGER,
         status != null ? status.ordinal() : null));
     nativeQuery.setParameter("specializationKeys",
-      specializationKeys != null ? Arrays.stream(specializationKeys).toList()
-        : new ArrayList<String>());
+      specializationKeys != null ? specializationKeys : new ArrayList<String>());
     nativeQuery.setParameter("moduleTypeKeys",
-      moduleTypeKeys != null ? Arrays.stream(moduleTypeKeys).toList() : new ArrayList<String>());
+      moduleTypeKeys != null ? moduleTypeKeys : new ArrayList<String>());
 
     return (List<Project>) nativeQuery.getResultList();
   }

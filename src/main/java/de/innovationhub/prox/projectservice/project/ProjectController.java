@@ -4,6 +4,7 @@ package de.innovationhub.prox.projectservice.project;
 import de.innovationhub.prox.projectservice.project.dto.CreateProjectDto;
 import de.innovationhub.prox.projectservice.project.dto.ReadProjectCollectionDto;
 import de.innovationhub.prox.projectservice.project.dto.ReadProjectDto;
+import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
 import javax.transaction.Transactional;
@@ -89,8 +90,8 @@ public class ProjectController {
   @GetMapping(value = "/projects/search/filter", produces = MediaType.APPLICATION_JSON_VALUE)
   public @ResponseBody ResponseEntity<ReadProjectCollectionDto> filterProjects(
     @RequestParam(name = "status", required = false) ProjectStatus status,
-    @RequestParam(name = "specializationKeys", required = false) String[] specializationKeys,
-    @RequestParam(name = "moduleTypeKeys", required = false) String[] moduleTypeKeys,
+    @RequestParam(name = "specializationKeys", required = false) Collection<String> specializationKeys,
+    @RequestParam(name = "moduleTypeKeys", required = false) Collection<String> moduleTypeKeys,
     @RequestParam(name = "text", required = false) String text) {
     return ResponseEntity.ok(
       projectService.filter(status, specializationKeys, moduleTypeKeys, text));
