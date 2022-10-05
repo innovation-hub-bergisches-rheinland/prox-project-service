@@ -14,6 +14,11 @@ env:
   JAVA_VERSION: 17
   MAVEN_SETTINGS: .github/settings.xml
 
+concurrency:
+  # Only run once for latest commit per ref and cancel other (previous) runs.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 # Will build the binaries, run tests and checks on them and if everything succeeds AND it is a push
 # to the main branch will build and deploy a snapshot release of the binaries
 
