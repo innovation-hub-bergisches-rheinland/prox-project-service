@@ -48,6 +48,7 @@ public class ProjectController {
     return ResponseEntity.ok(this.projectService.get(id));
   }
 
+  @Transactional
   @PutMapping(
       value = "/projects/{id}",
       produces = MediaType.APPLICATION_JSON_VALUE,
@@ -57,6 +58,7 @@ public class ProjectController {
     return ResponseEntity.ok(projectService.update(id, projectDto));
   }
 
+  @Transactional
   @PutMapping(
       value = "/projects/{id}/specializations",
       produces = MediaType.APPLICATION_JSON_VALUE,
@@ -66,6 +68,7 @@ public class ProjectController {
     return ResponseEntity.ok(projectService.setSpecializations(id, specializationKeys));
   }
 
+  @Transactional
   @PutMapping(
       value = "/projects/{id}/modules",
       produces = MediaType.APPLICATION_JSON_VALUE,
@@ -75,6 +78,7 @@ public class ProjectController {
     return ResponseEntity.ok(projectService.setModuleTypes(id, moduleTypeKeys));
   }
 
+  @Transactional
   @DeleteMapping(value = "/projects/{id}")
   public @ResponseBody ResponseEntity<Void> deleteProjectById(@PathVariable("id") UUID id) {
     this.projectService.delete(id);

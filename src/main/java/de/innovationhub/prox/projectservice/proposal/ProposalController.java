@@ -6,6 +6,7 @@ import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalCollectionD
 import de.innovationhub.prox.projectservice.proposal.dto.ReadProposalDto;
 import java.util.Set;
 import java.util.UUID;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -50,6 +51,7 @@ public class ProposalController {
     return ResponseEntity.ok(this.proposalService.get(id));
   }
 
+  @Transactional
   @PutMapping(
       value = "/proposals/{id}",
       produces = MediaType.APPLICATION_JSON_VALUE,
@@ -61,6 +63,7 @@ public class ProposalController {
     return ResponseEntity.ok(updated);
   }
 
+  @Transactional
   @PutMapping(
       value = "/proposals/{id}/specializations",
       produces = MediaType.APPLICATION_JSON_VALUE,
@@ -71,6 +74,7 @@ public class ProposalController {
     return ResponseEntity.ok(updated);
   }
 
+  @Transactional
   @PutMapping(
       value = "/proposals/{id}/modules",
       produces = MediaType.APPLICATION_JSON_VALUE,
@@ -81,12 +85,14 @@ public class ProposalController {
     return ResponseEntity.ok(updated);
   }
 
+  @Transactional
   @DeleteMapping(value = "/proposals/{id}")
   public @ResponseBody ResponseEntity<Void> deleteById(@PathVariable("id") UUID id) {
     this.proposalService.delete(id);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
 
+  @Transactional
   @PreAuthorize("hasRole('professor')")
   @PostMapping(value = "/proposals/{id}/commitment")
   public @ResponseBody ResponseEntity<ReadProposalDto> commitForProposal(
@@ -100,6 +106,7 @@ public class ProposalController {
    * Contexts
    * ----------------------------
    */
+  @Transactional
   @PostMapping(
       value = "/users/{id}/proposals",
       consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -110,6 +117,7 @@ public class ProposalController {
     return ResponseEntity.status(HttpStatus.CREATED).body(created);
   }
 
+  @Transactional
   @PostMapping(
       value = "/organizations/{id}/proposals",
       consumes = MediaType.APPLICATION_JSON_VALUE,
