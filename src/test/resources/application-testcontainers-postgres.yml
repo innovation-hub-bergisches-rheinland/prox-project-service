@@ -1,8 +1,5 @@
 spring:
   datasource:
-    password: project-service
-    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/project-db
-    username: project-service
     driver-class-name: org.postgresql.Driver
     hikari:
       connection-timeout: 250

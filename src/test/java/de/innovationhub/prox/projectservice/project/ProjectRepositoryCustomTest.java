@@ -3,6 +3,7 @@ package de.innovationhub.prox.projectservice.project;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import de.innovationhub.prox.projectservice.DatabaseIntegrationTest;
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.user.User;
@@ -20,10 +21,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
@@ -32,24 +29,13 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @DirtiesContext
-class ProjectRepositoryCustomTest {
+class ProjectRepositoryCustomTest extends DatabaseIntegrationTest {
 
   @Autowired
   ProjectRepository projectRepository;
 
   @Autowired
   EntityManager em;
-
-  @Container
-  static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:14.1")
-    .withDatabaseName("project-db")
-    .withUsername("project-service")
-    .withPassword("project-service");
-
-  @DynamicPropertySource
-  static void setupDB(DynamicPropertyRegistry registry) {
-    registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
-  }
 
   @Test
   void shouldFindBySingleTag() {
