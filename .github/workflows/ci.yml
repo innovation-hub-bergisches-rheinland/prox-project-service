@@ -25,7 +25,7 @@ concurrency:
 jobs:
   # Simply compile the maven project and upload the build
   build:
-    name: Build
+    name: Maven Compile
 
     runs-on: ubuntu-latest
 
@@ -45,7 +45,7 @@ jobs:
 
       # No Snapshot Updates, Batch Mode, Show errors and skip tests
       - name: Build Project
-        run: mvn clean install -nsu -B -e -skipTests
+        run: mvn clean compile -nsu -B -e
 
       # Upload the built artifacts
       - name: Store Artifacts
@@ -242,6 +242,12 @@ jobs:
       - name: Get the version
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\/v/}
+
+      - name: Download build
+        uses: actions/download-artifact@v2
+        with:
+          path: ./target
+          name: maven-target.zip
 
       - name: Maven Deploy
         run: |
