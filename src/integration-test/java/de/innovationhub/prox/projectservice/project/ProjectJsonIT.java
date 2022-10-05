@@ -14,7 +14,7 @@ import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 
 @JsonTest
-class ProjectJsonTest {
+class ProjectJsonIT {
 
   @Autowired JacksonTester<Project> json;
 

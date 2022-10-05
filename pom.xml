@@ -38,6 +38,9 @@
         <springfox.version>3.0.0</springfox.version>
         <testcontainers.version>1.17.3</testcontainers.version>
         <wiremock.version>2.28.1</wiremock.version>
+        <!-- Allow the skipTests parameter by using it as default -->
+        <skip.unit.tests>${skipTests}</skip.unit.tests>
+        <skip.integration.tests>${skipTests}</skip.integration.tests>
     </properties>
 
     <dependencyManagement>
@@ -224,6 +227,40 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>add-integration-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/integration-test/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>add-integration-test-resources</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>add-test-resource</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <filtering>true</filtering>
+                                    <directory>src/integration-test/resources</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <!-- Separates the unit tests from the integration tests. -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -236,6 +273,10 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <skipTests>${skip.unit.tests}</skipTests>
+                    <testSourceDirectory>src/test/java</testSourceDirectory>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -247,6 +288,10 @@
                             <goal>integration-test</goal>
                             <goal>verify</goal>
                         </goals>
+                        <configuration>
+                            <skipTests>${skip.integration.tests}</skipTests>
+                            <testSourceDirectory>src/integration-test/java</testSourceDirectory>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

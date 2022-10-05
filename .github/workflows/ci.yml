@@ -95,6 +95,49 @@ jobs:
           path: reports-unit-tests.zip
           if-no-files-found: ignore
 
+  integration-test:
+    name: Integration Tests
+
+    needs: [ build ]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v2
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Update Maven Settings
+        run: mkdir -p ~/.m2 ; cp ${{ env.MAVEN_SETTINGS }} ~/.m2
+
+      - name: Download build
+        uses: actions/download-artifact@v2
+        with:
+          path: ./target
+          name: maven-target.zip
+
+      - name: Run integration tests
+        run: |
+          if ! mvn verify -Dskip.unit.tests -nsu -B; then
+            find . -path '*/target/failsafe-reports/*.xml' | zip -q reports-integration-tests.zip -@
+            exit 1
+          fi
+
+      - name: Unit test reports
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: reports-unit-tests
+          retention-days: 14
+          path: reports-integration-tests.zip
+          if-no-files-found: ignore
+
   package:
     name: Maven package
 
@@ -140,7 +183,7 @@ jobs:
   release:
     name: Release
 
-    needs: [ unit-test, package ]
+    needs: [ unit-test, integration-test, package ]
 
     # Only run if a tag is created
     if: startsWith(github.ref, 'refs/tags/v')

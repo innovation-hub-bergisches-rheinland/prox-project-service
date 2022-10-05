@@ -17,7 +17,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.kafka.core.KafkaTemplate;
 
 @SpringBootTest
-class ProjectKafkaPublishingEventListenerTest {
+class ProjectKafkaPublishingEventListenerIT {
 
   static final String PROJECT_TOPIC = "entity.project.project";
   static final String PROPOSAL_PROMOTED_TOPIC = "event.proposal.promoted-to-project";

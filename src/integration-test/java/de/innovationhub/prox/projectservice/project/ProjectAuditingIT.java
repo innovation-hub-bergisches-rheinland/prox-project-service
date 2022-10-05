@@ -17,7 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest
 @ActiveProfiles("h2")
-class ProjectAuditingTest {
+class ProjectAuditingIT {
 
   @Autowired private EntityManager entityManager;
 

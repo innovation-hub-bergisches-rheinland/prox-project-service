@@ -6,7 +6,7 @@ import static org.awaitility.Awaitility.await;
 import de.innovationhub.prox.projectservice.proposal.Proposal;
 import de.innovationhub.prox.projectservice.proposal.ProposalRepository;
 import de.innovationhub.prox.projectservice.proposal.ProposalStatus;
-import de.innovationhub.prox.projectservice.proposal.jobs.ProposalAutoArchiverTest.ArchiveTest.ArchiveTestContextInitializer;
+import de.innovationhub.prox.projectservice.proposal.jobs.ProposalAutoDeleteMarkerTest.MarkTest.MarkTestContextInitializer;
 import java.time.Duration;
 import java.time.Instant;
 import org.junit.jupiter.api.Nested;
@@ -22,58 +22,60 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.TestPropertySourceUtils;
 
-@SpringBootTest(properties = {"project-service.proposals.jobs.auto-archive.after=P2D"})
+@SpringBootTest(properties = {"project-service.proposals.jobs.auto-mark-for-delete.after=P2D"})
 @ActiveProfiles("h2")
-class ProposalAutoArchiverTest extends BaseProposalJobsTest {
-  @Autowired ProposalRepository proposalRepository;
+class ProposalAutoDeleteMarkerTest extends BaseProposalJobsTest {
+  @Autowired
+  ProposalRepository proposalRepository;
 
-  @Autowired ProposalAutoArchiver autoArchiver;
+  @Autowired
+  ProposalAutoDeletionMarker autoDeletionMarker;
 
-  @ContextConfiguration(initializers = {ArchiveTestContextInitializer.class})
+  @ContextConfiguration(initializers = {MarkTestContextInitializer.class})
   @EnabledIfEnvironmentVariable(
       disabledReason = "Long running tests are disabled",
       named = "CI",
       matches = "true")
   @Nested
-  class ArchiveTest {
+  class MarkTest {
 
-    static class ArchiveTestContextInitializer
+    static class MarkTestContextInitializer
         implements ApplicationContextInitializer<ConfigurableApplicationContext> {
       @Override
       public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
         TestPropertySourceUtils.addInlinedPropertiesToEnvironment(
             configurableApplicationContext,
-            "project-service.proposals.jobs.auto-archive.enable=true",
-            "project-service.proposals.jobs.auto-archive.after=P2D",
-            "project-service.proposals.jobs.auto-archive.cron=* * * * * *",
-            "project-service.proposals.jobs.auto-mark-for-delete.enable=false",
+            "project-service.proposals.jobs.auto-archive.enable=false",
+            "project-service.proposals.jobs.auto-mark-for-delete.enable=true",
+            "project-service.proposals.jobs.auto-mark-for-delete.after=P2D",
+            "project-service.proposals.jobs.auto-mark-for-delete.cron=* * * * * *",
             "project-service.proposals.jobs.auto-delete.enable=false");
       }
     }
 
     @Test
-    void shouldArchive() {
+    void shouldMark() {
       // We create a proposal which has been proposed two days ago
       var proposal =
-          getSampleProposal(ProposalStatus.PROPOSED, Instant.now().minus(Duration.ofDays(2)));
+          getSampleProposal(ProposalStatus.ARCHIVED, Instant.now().minus(Duration.ofDays(2)));
       proposal = proposalRepository.save(proposal);
 
       final var proposalId = proposal.getId();
       // Cron is configured to run every second
       await()
           .atMost(Duration.ofSeconds(2))
-          .untilAsserted(() -> proposalHasStatus(proposalId, ProposalStatus.ARCHIVED));
+          .untilAsserted(() -> proposalHasStatus(proposalId, ProposalStatus.READY_FOR_DELETION));
     }
   }
 
   @Test
-  void shouldNotArchiveProposalsNewerThanConfigured() {
+  void shouldNotMarkProposalsNewerThanConfigured() {
     // Given
-    var proposal = getSampleProposal(ProposalStatus.PROPOSED, Instant.now());
+    var proposal = getSampleProposal(ProposalStatus.ARCHIVED, Instant.now());
     proposalRepository.save(proposal);
 
     // When
-    this.autoArchiver.autoArchive();
+    this.autoDeletionMarker.autoMark();
 
     // Then
     var foundProposal = proposalRepository.findById(proposal.getId());
@@ -81,14 +83,14 @@ class ProposalAutoArchiverTest extends BaseProposalJobsTest {
   }
 
   @Test
-  void shouldArchiveSingleProposal() {
+  void shouldMarkSingleProposal() {
     // Given
     var olderTimestamp = Instant.now().minus(Duration.ofDays(2));
-    var proposal = getSampleProposal(ProposalStatus.PROPOSED, olderTimestamp);
+    var proposal = getSampleProposal(ProposalStatus.ARCHIVED, olderTimestamp);
     proposalRepository.save(proposal);
 
     // When
-    this.autoArchiver.autoArchive();
+    this.autoDeletionMarker.autoMark();
 
     // Then
     var foundProposal = proposalRepository.findById(proposal.getId());
@@ -96,13 +98,13 @@ class ProposalAutoArchiverTest extends BaseProposalJobsTest {
         .isPresent()
         .get()
         .extracting(Proposal::getStatus)
-        .isEqualTo(ProposalStatus.ARCHIVED);
+        .isEqualTo(ProposalStatus.READY_FOR_DELETION);
   }
 
   @ParameterizedTest(name = "should not delete {0}")
   @EnumSource(
       value = ProposalStatus.class,
-      names = {"ARCHIVED", "READY_FOR_DELETION"})
+      names = {"PROPOSED", "READY_FOR_DELETION"})
   void shouldNotModifyProposalsWithOtherState(ProposalStatus proposalStatus) {
     // Given
     var olderTimestamp = Instant.now().minus(Duration.ofDays(2));
@@ -110,7 +112,7 @@ class ProposalAutoArchiverTest extends BaseProposalJobsTest {
     proposalRepository.save(proposal);
 
     // When
-    this.autoArchiver.autoArchive();
+    this.autoDeletionMarker.autoMark();
 
     // Then
     var foundProposal = proposalRepository.findById(proposal.getId());

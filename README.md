@@ -26,6 +26,20 @@ cd prox-project-service/
 
 Executes the [Maven default lifecycle](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html) up to the `test` phase. During the `package` phase, an executable JAR and the Docker image are created.
 
+## Testing
+
+The tests of this project are seperated in unit and integration tests.
+If you are unsure about the difference, please take a look [here](https://stackoverflow.com/questions/5357601/whats-the-difference-between-unit-tests-and-integration-tests).
+
+Unit tests are designed to run fast in the `test` phase while integration tests will run slower in the `verify` phase.
+```sh
+# run unit tests
+./mvnw clean test
+
+# run unit and integration tests
+./mvnw clean verify
+```
+
 ## Local usage with docker
 
 A Docker network named `prox` is required for the communication between services:

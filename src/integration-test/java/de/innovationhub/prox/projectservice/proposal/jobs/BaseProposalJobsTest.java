@@ -16,7 +16,8 @@ public class BaseProposalJobsTest {
 
   @Autowired UserRepository userRepository;
 
-  @Autowired ProposalRepository proposalRepository;
+  @Autowired
+  ProposalRepository proposalRepository;
 
   @AfterEach
   void cleanUp() {

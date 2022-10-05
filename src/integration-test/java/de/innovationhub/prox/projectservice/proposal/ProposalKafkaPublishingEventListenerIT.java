@@ -1,6 +1,5 @@
 package de.innovationhub.prox.projectservice.proposal;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.verify;
@@ -16,7 +15,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.kafka.core.KafkaTemplate;
 
 @SpringBootTest
-class ProposalKafkaPublishingEventListenerTest {
+class ProposalKafkaPublishingEventListenerIT {
 
   static final String PROPOSAL_TOPIC = "entity.proposal.proposal";
 

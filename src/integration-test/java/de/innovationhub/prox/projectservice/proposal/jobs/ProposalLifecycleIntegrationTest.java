@@ -2,6 +2,7 @@ package de.innovationhub.prox.projectservice.proposal.jobs;
 
 
 import de.innovationhub.prox.projectservice.proposal.ProposalStatus;
+import de.innovationhub.prox.projectservice.proposal.jobs.BaseProposalJobsTest;
 import java.time.Instant;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.params.ParameterizedTest;

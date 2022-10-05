@@ -24,9 +24,11 @@ import org.springframework.test.context.support.TestPropertySourceUtils;
 @SpringBootTest
 @ActiveProfiles("h2")
 class ProposalAutoDeleteTest extends BaseProposalJobsTest {
-  @Autowired ProposalRepository proposalRepository;
+  @Autowired
+  ProposalRepository proposalRepository;
 
-  @Autowired ProposalAutoDelete autoDeletion;
+  @Autowired
+  ProposalAutoDelete autoDeletion;
 
   @ContextConfiguration(initializers = {DeleteTestContextInitializer.class})
   @EnabledIfEnvironmentVariable(
