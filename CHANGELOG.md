@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.2](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v3.4.1...v3.4.2) (2022-10-05)
+
+
+### Bug Fixes
+
+* run authorization check in transaction ([547d466](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/547d466314221b69c812aa87bcffa99ec3eafebf))
+
 ### [3.4.1](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v3.4.0...v3.4.1) (2022-10-05)
 
 
