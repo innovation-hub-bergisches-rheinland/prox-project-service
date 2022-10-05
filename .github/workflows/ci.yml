@@ -45,7 +45,7 @@ jobs:
 
       # No Snapshot Updates, Batch Mode, Show errors and skip tests
       - name: Build Project
-        run: mvn clean install -nsu -B -e -skipTests
+        run: mvn clean install -nsu -B -e -DskipTests
 
       # Upload the built artifacts
       - name: Store Artifacts
