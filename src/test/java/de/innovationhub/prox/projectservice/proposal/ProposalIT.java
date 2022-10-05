@@ -46,7 +46,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 @RecordApplicationEvents
 @SuppressWarnings("java:S2699")
-class ProposalIntegrationTest {
+class ProposalIT {
 
   @Autowired
   MockMvc mockMvc;

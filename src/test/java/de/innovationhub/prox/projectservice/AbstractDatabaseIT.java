@@ -17,7 +17,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @DirtiesContext
-public abstract class AbstractDatabaseIntegrationTest {
+public abstract class AbstractDatabaseIT {
 
   private static final String PSQL_DB = "project-db";
   private static final String PSQL_USERNAME = "project-service";

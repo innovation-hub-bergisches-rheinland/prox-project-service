@@ -26,7 +26,7 @@ import org.springframework.test.context.DynamicPropertySource;
 @ActiveProfiles("h2")
 @Transactional
 @DirtiesContext(classMode = ClassMode.BEFORE_CLASS)
-class OwnerEntityListenerIntegrationTest {
+class OwnerEntityListenerIT {
 
   @Autowired
   KafkaTemplate<String, String> kafkaTemplate;

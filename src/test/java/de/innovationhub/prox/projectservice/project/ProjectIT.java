@@ -42,7 +42,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @ActiveProfiles("h2")
 @RecordApplicationEvents
 @SuppressWarnings("java:S2699")
-class ProjectIntegrationTest {
+class ProjectIT {
 
   @Autowired
   MockMvc mockMvc;

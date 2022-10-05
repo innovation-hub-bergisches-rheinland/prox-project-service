@@ -2,14 +2,14 @@ package de.innovationhub.prox.projectservice.module;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.innovationhub.prox.projectservice.AbstractDatabaseIntegrationTest;
+import de.innovationhub.prox.projectservice.AbstractDatabaseIT;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class StudyProgramRepositoryIntegrationTest extends AbstractDatabaseIntegrationTest {
+class StudyProgramRepositoryIT extends AbstractDatabaseIT {
 
   @Autowired
   StudyProgramRepository studyProgramRepository;
