@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.1](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v3.4.0...v3.4.1) (2022-10-05)
+
+
+### Bug Fixes
+
+* kafka message deserialization ([747b2cb](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/747b2cb5799831b0f9756a0bb38812b3631d24ca))
+* make controllers transactional ([d944a5a](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/commit/d944a5aa122fde1b96633f972ebfdf570ead4b83))
+
 ## [3.4.0](https://github.com/innovation-hub-bergisches-rheinland/prox-project-service/compare/v3.3.0...v3.4.0) (2022-10-02)
 
 
