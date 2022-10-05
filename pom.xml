@@ -39,7 +39,9 @@
         <testcontainers.version>1.17.3</testcontainers.version>
         <wiremock.version>2.28.1</wiremock.version>
         <!-- Allow the skipTests parameter by using it as default -->
+        <!--suppress UnresolvedMavenProperty -->
         <skip.unit.tests>${skipTests}</skip.unit.tests>
+        <!--suppress UnresolvedMavenProperty -->
         <skip.integration.tests>${skipTests}</skip.integration.tests>
     </properties>
 
