@@ -51,10 +51,15 @@ jobs:
       - name: Store Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: maven-target.zip
+          name: innovationhub-artifacts.zip
           retention-days: 2
           path: |
-            ./target/**
+            ~/.m2/repository/de/innovationhub
+            !~/.m2/repository/de/innovationhub/**/*.tar.gz
+
+      - name: Remove artifacts before caching
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: rm -rf ~/.m2/repository/de/innovationhub
 
   # run tests on pre-built files
   unit-test:
@@ -78,11 +83,14 @@ jobs:
       - name: Update Maven Settings
         run: mkdir -p ~/.m2 ; cp ${{ env.MAVEN_SETTINGS }} ~/.m2
 
+      - name: Cleanup artifacts
+        run: rm -rf ~/.m2/repository/de/innovationhub >/dev/null || true
+
       - name: Download build
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
-          path: ./target
-          name: maven-target.zip
+          path: ~/.m2/repository/de/innovationhub
+          name: innovationhub-artifacts.zip
 
       - name: Run unit tests
         run: |
@@ -121,11 +129,14 @@ jobs:
       - name: Update Maven Settings
         run: mkdir -p ~/.m2 ; cp ${{ env.MAVEN_SETTINGS }} ~/.m2
 
+      - name: Cleanup artifacts
+        run: rm -rf ~/.m2/repository/de/innovationhub >/dev/null || true
+
       - name: Download build
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
-          path: ./target
-          name: maven-target.zip
+          path: ~/.m2/repository/de/innovationhub
+          name: innovationhub-artifacts.zip
 
       - name: Run integration tests
         run: |
@@ -163,11 +174,14 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
+      - name: Cleanup artifacts
+        run: rm -rf ~/.m2/repository/de/innovationhub >/dev/null || true
+
       - name: Download build
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
-          path: ./target
-          name: maven-target.zip
+          path: ~/.m2/repository/de/innovationhub
+          name: innovationhub-artifacts.zip
 
       - name: Update Maven Settings
         run: mkdir -p ~/.m2 ; cp ${{ env.MAVEN_SETTINGS }} ~/.m2
@@ -208,6 +222,15 @@ jobs:
 
       - name: Update Maven Settings
         run: mkdir -p ~/.m2 ; cp ${{ env.MAVEN_SETTINGS }} ~/.m2
+
+      - name: Cleanup artifacts
+        run: rm -rf ~/.m2/repository/de/innovationhub >/dev/null || true
+
+      - name: Download build
+        uses: actions/download-artifact@v3
+        with:
+          path: ~/.m2/repository/de/innovationhub
+          name: innovationhub-artifacts.zip
 
       - name: Login to Quay
         uses: docker/login-action@v1
