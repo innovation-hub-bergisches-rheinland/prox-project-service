@@ -5,6 +5,7 @@ import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.ProjectRepository;
 import java.util.UUID;
 import java.util.function.Supplier;
+import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
@@ -28,6 +29,7 @@ public class ProjectRequestContextAuthorizationManager
   }
 
   @Override
+  @Transactional
   public AuthorizationDecision check(
       Supplier<Authentication> authentication, RequestAuthorizationContext object) {
     // If we don't have a projectId in the request context, we can't do anything
