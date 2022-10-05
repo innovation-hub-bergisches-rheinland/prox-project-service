@@ -6,17 +6,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 
+@Slf4j
 public class KeycloakGrantedAuthoritiesConverter
     implements Converter<Jwt, Collection<GrantedAuthority>> {
 
   @Override
   public Collection<GrantedAuthority> convert(Jwt source) {
     Map<String, Object> realmAccess = source.getClaimAsMap("realm_access");
+
+    if(realmAccess == null) {
+      log.warn("The provided token does not have a realm_access claim. Is it a valid Keycloak Token?");
+      realmAccess = Map.of();
+    }
 
     var roles = (List<String>) realmAccess.get("roles");
     Stream<GrantedAuthority> roleAuthorities = Stream.empty();
