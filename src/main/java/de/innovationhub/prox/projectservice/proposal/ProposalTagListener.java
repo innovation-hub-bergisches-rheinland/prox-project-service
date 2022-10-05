@@ -28,7 +28,7 @@ public class ProposalTagListener {
       log.error("Could not parse event", e);
       throw new RuntimeException(e);
     }
-    var optionalProposal = proposalRepository.findById(parsedEvent.item());
+    var optionalProposal = proposalRepository.findById(parsedEvent.id());
     if(optionalProposal.isEmpty()) {
       // OK, we don't care
       return;

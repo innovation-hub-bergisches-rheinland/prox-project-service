@@ -24,7 +24,7 @@ class ProposalTagListenerTest {
   void shouldSkipWhenNoProposalIsFound() throws JsonProcessingException {
     when(proposalRepository.findById(any())).thenReturn(Optional.empty());
     var event = new ItemTaggedDto(UUID.randomUUID(), Set.of());
-    var record = new ConsumerRecord<String, String>("event.item.tagged", 0, 0, null, objectMapper.writeValueAsString(event));
+    var record = new ConsumerRecord<String, String>("event.id.tagged", 0, 0, null, objectMapper.writeValueAsString(event));
 
     proposalTagListener.tagProposal(record);
 
@@ -36,7 +36,7 @@ class ProposalTagListenerTest {
     var proposal = new Proposal();
     when(proposalRepository.findById(eq(proposal.getId()))).thenReturn(Optional.of(proposal));
     var event = new ItemTaggedDto(proposal.getId(), Set.of("tag1", "tag2"));
-    var record = new ConsumerRecord<String, String>("event.item.tagged", 0, 0, null, objectMapper.writeValueAsString(event));
+    var record = new ConsumerRecord<String, String>("event.id.tagged", 0, 0, null, objectMapper.writeValueAsString(event));
 
     proposalTagListener.tagProposal(record);
 

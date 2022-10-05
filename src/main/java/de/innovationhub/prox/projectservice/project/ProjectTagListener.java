@@ -29,7 +29,7 @@ public class ProjectTagListener {
       log.error("Could not parse event", e);
       throw new RuntimeException(e);
     }
-    var optionalProject = projectRepository.findById(parsedEvent.item());
+    var optionalProject = projectRepository.findById(parsedEvent.id());
     if(optionalProject.isEmpty()) {
       // OK, we don't care
       return;

@@ -23,7 +23,7 @@ class ProjectTagListenerTest {
   void shouldSkipWhenNoProjectIsFound() throws JsonProcessingException {
     when(projectRepository.findById(any())).thenReturn(Optional.empty());
     var event = new ItemTaggedDto(UUID.randomUUID(), Set.of());
-    var record = new ConsumerRecord<String, String>("event.item.tagged", 0, 0, null, objectMapper.writeValueAsString(event));
+    var record = new ConsumerRecord<String, String>("event.id.tagged", 0, 0, null, objectMapper.writeValueAsString(event));
 
     projectTagListener.tagProject(record);
 
@@ -36,7 +36,7 @@ class ProjectTagListenerTest {
     when(projectRepository.findById(any())).thenReturn(Optional.of(project));
 
     var event = new ItemTaggedDto(project.getId(), Set.of("tag1", "tag2"));
-    var record = new ConsumerRecord<String, String>("event.item.tagged", 0, 0, null, objectMapper.writeValueAsString(event));
+    var record = new ConsumerRecord<String, String>("event.id.tagged", 0, 0, null, objectMapper.writeValueAsString(event));
 
     projectTagListener.tagProject(record);
 
