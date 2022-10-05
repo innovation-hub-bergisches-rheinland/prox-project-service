@@ -10,6 +10,7 @@ import de.innovationhub.prox.projectservice.security.OwnablePermissionEvaluatorH
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 @Mapper(componentModel = "spring")
 public abstract class ProposalMapper {
+  public static final ProposalMapper INSTANCE = Mappers.getMapper(ProposalMapper.class);
 
   @Mapping(target = "permissions", expression = "java( this.getPermissions(proposal) )")
   public abstract ReadProposalDto toDto(Proposal proposal);

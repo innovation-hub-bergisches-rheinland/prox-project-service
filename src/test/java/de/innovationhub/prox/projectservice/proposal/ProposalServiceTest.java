@@ -4,40 +4,37 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
+import de.innovationhub.prox.projectservice.core.event.EventPublisher;
 import de.innovationhub.prox.projectservice.module.ModuleTypeRepository;
 import de.innovationhub.prox.projectservice.module.SpecializationRepository;
 import de.innovationhub.prox.projectservice.owners.organization.OrganizationRepository;
 import de.innovationhub.prox.projectservice.owners.user.UserRepository;
 import de.innovationhub.prox.projectservice.proposal.dto.CreateProposalDto;
 import de.innovationhub.prox.projectservice.proposal.exception.ProposalNotFoundException;
+import de.innovationhub.prox.projectservice.proposal.mapper.ProposalMapper;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.Mockito;
 
-@SpringBootTest
 class ProposalServiceTest {
+  ProposalRepository proposalRepository = Mockito.mock(ProposalRepository.class);
+  UserRepository userRepository = Mockito.mock(UserRepository.class);
+  OrganizationRepository organizationRepository = Mockito.mock(OrganizationRepository.class);
+  ModuleTypeRepository moduleTypeRepository = Mockito.mock(ModuleTypeRepository.class);
+  SpecializationRepository specializationRepository = Mockito.mock(SpecializationRepository.class);
+  EventPublisher eventPublisher = Mockito.mock(EventPublisher.class);
 
-  @MockBean
-  ProposalRepository proposalRepository;
-
-  @MockBean
-  UserRepository userRepository;
-
-  @MockBean
-  OrganizationRepository organizationRepository;
-
-  @MockBean
-  ModuleTypeRepository moduleTypeRepository;
-
-  @MockBean
-  SpecializationRepository specializationRepository;
-
-  @Autowired
-  ProposalService proposalService;
+  ProposalService proposalService = new ProposalService(
+    proposalRepository,
+    userRepository,
+    organizationRepository,
+    ProposalMapper.INSTANCE,
+    moduleTypeRepository,
+    specializationRepository,
+    eventPublisher
+  );
 
   @Test
   void shouldThrowWhenProposalNotFound() {
