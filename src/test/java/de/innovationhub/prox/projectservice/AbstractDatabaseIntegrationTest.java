@@ -1,10 +1,23 @@
 package de.innovationhub.prox.projectservice;
 
+import javax.transaction.Transactional;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
-public class DatabaseIntegrationTest {
+@Testcontainers
+@ActiveProfiles("testcontainers-postgres")
+@Transactional
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = Replace.NONE)
+@DirtiesContext
+public abstract class AbstractDatabaseIntegrationTest {
 
   private static final String PSQL_DB = "project-db";
   private static final String PSQL_USERNAME = "project-service";

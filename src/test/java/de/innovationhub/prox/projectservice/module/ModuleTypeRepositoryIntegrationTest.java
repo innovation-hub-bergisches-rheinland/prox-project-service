@@ -2,27 +2,14 @@ package de.innovationhub.prox.projectservice.module;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.innovationhub.prox.projectservice.DatabaseIntegrationTest;
+import de.innovationhub.prox.projectservice.AbstractDatabaseIntegrationTest;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
-@Testcontainers
-@ActiveProfiles("testcontainers-postgres")
-@Transactional
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
-@DirtiesContext
-class ModuleTypeRepositoryTest extends DatabaseIntegrationTest {
+class ModuleTypeRepositoryIntegrationTest extends AbstractDatabaseIntegrationTest {
 
   @Autowired ModuleTypeRepository moduleTypeRepository;
 
