@@ -35,7 +35,7 @@ class ProposalTagListenerTest {
   void shouldAddTags() throws JsonProcessingException {
     var proposal = new Proposal();
     when(proposalRepository.findById(eq(proposal.getId()))).thenReturn(Optional.of(proposal));
-    var event = new ItemTaggedDto(proposal.getId(), Set.of(new ItemTaggedDto.Tag("tag1"), new ItemTaggedDto.Tag("tag2")));
+    var event = new ItemTaggedDto(proposal.getId(), Set.of("tag1", "tag2"));
     var record = new ConsumerRecord<String, String>("event.item.tagged", 0, 0, null, objectMapper.writeValueAsString(event));
 
     proposalTagListener.tagProposal(record);

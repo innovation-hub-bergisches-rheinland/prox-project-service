@@ -35,7 +35,7 @@ public class ProjectTagListener {
       return;
     }
     var project = optionalProject.get();
-    project.setTags(parsedEvent.tags().stream().map(ItemTaggedDto.Tag::tag).toList());
+    project.setTags(parsedEvent.tags().stream().toList());
     projectRepository.save(project);
   }
 }

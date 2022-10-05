@@ -34,7 +34,7 @@ public class ProposalTagListener {
       return;
     }
     var proposal = optionalProposal.get();
-    proposal.setTags(parsedEvent.tags().stream().map(ItemTaggedDto.Tag::tag).toList());
+    proposal.setTags(parsedEvent.tags().stream().toList());
     proposalRepository.save(proposal);
   }
 }

@@ -35,7 +35,7 @@ class ProjectTagListenerTest {
     var project = new Project();
     when(projectRepository.findById(any())).thenReturn(Optional.of(project));
 
-    var event = new ItemTaggedDto(project.getId(), Set.of(new ItemTaggedDto.Tag("tag1"), new ItemTaggedDto.Tag("tag2")));
+    var event = new ItemTaggedDto(project.getId(), Set.of("tag1", "tag2"));
     var record = new ConsumerRecord<String, String>("event.item.tagged", 0, 0, null, objectMapper.writeValueAsString(event));
 
     projectTagListener.tagProject(record);
