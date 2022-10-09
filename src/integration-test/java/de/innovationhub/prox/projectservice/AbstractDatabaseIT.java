@@ -4,7 +4,6 @@ import javax.transaction.Transactional;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -16,7 +15,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Transactional
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@DirtiesContext
 public abstract class AbstractDatabaseIT {
 
   private static final String PSQL_DB = "project-db";

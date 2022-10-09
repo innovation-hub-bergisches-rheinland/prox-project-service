@@ -11,7 +11,6 @@ import java.time.Duration;
 import java.time.Instant;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +31,6 @@ class ProposalAutoArchiverIT extends BaseProposalJobsIT {
   ProposalAutoArchiver autoArchiver;
 
   @ContextConfiguration(initializers = {ArchiveTestContextInitializer.class})
-  @EnabledIfEnvironmentVariable(
-      disabledReason = "Long running tests are disabled",
-      named = "CI",
-      matches = "true")
   @Nested
   class ArchiveTest {
 

@@ -2,7 +2,6 @@ package de.innovationhub.prox.projectservice.owner;
 
 import static de.innovationhub.prox.projectservice.AwaitilityAssertions.assertEventually;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.awaitility.Awaitility.await;
 
 import de.innovationhub.prox.projectservice.AbstractRedpandaIT;
 import de.innovationhub.prox.projectservice.owners.OrganizationEntityEventDto;
@@ -18,20 +17,15 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-import org.awaitility.core.ThrowingRunnable;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("h2")
-@DirtiesContext
 class OwnerEntityListenerIT extends AbstractRedpandaIT {
 
   @Autowired
