@@ -26,7 +26,7 @@ import org.springframework.test.context.DynamicPropertySource;
 @SpringBootTest
 @ActiveProfiles("h2")
 @Transactional
-@DirtiesContext(classMode = ClassMode.BEFORE_CLASS)
+@DirtiesContext
 class OwnerEntityListenerIT extends AbstractRedpandaIT {
 
   @Autowired
