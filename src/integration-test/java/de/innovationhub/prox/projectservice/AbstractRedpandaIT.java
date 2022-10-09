@@ -12,7 +12,6 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @ActiveProfiles("testcontainers-kafka")
-@DirtiesContext
 public abstract class AbstractRedpandaIT {
   static RedpandaContainer REDPANDA_CONTAINER =
     new RedpandaContainer("docker.redpanda.com/vectorized/redpanda:v22.2.2");

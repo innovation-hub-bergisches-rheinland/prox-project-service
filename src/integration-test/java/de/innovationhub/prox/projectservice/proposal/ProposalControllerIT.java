@@ -43,7 +43,6 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("h2")
-@DirtiesContext
 @RecordApplicationEvents
 @SuppressWarnings("java:S2699")
 class ProposalControllerIT {

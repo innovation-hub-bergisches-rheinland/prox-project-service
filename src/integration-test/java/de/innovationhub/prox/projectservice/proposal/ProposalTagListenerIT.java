@@ -41,8 +41,8 @@ class ProposalTagListenerIT extends AbstractRedpandaIT {
 
   @AfterEach
   void tearDown() {
-    userRepository.deleteAll();
     proposalRepository.deleteAll();
+    userRepository.deleteAll();
   }
 
   @Test

@@ -39,8 +39,8 @@ class ProjectTagListenerIT extends AbstractRedpandaIT {
 
   @AfterEach
   void tearDown() {
-    userRepository.deleteAll();
     projectRepository.deleteAll();
+    userRepository.deleteAll();
   }
 
   @Test
@@ -67,6 +67,8 @@ class ProjectTagListenerIT extends AbstractRedpandaIT {
       .name("Test Project")
       .description("Lol")
       .requirement("Yes")
+      .shortDescription("xD")
+      .status(ProjectStatus.RUNNING)
       .owner(owner)
       .build();
     projectRepository.save(project);
