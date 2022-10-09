@@ -10,6 +10,7 @@ import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.project.Supervisor;
 import de.innovationhub.prox.projectservice.project.event.ProposalPromotedToProject;
+import de.innovationhub.prox.projectservice.proposal.dto.CreateProposalDto;
 import de.innovationhub.prox.projectservice.proposal.event.ProposalChanged;
 import de.innovationhub.prox.projectservice.proposal.event.ProposalDeleted;
 import de.innovationhub.prox.projectservice.proposal.event.ProposalReceivedCommitment;
@@ -24,6 +25,7 @@ import javax.validation.Validator;
 import org.assertj.core.api.SoftAssertions;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -33,7 +35,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.event.ApplicationEvents;
 import org.springframework.test.context.event.RecordApplicationEvents;
@@ -46,7 +47,9 @@ import org.springframework.test.web.servlet.MockMvc;
 @DirtiesContext
 @RecordApplicationEvents
 @SuppressWarnings("java:S2699")
-class ProposalIT {
+class ProposalControllerIT {
+  private final static String USER_ID_STR = "35982f30-18df-48bf-afc1-e7f8deeeb49c";
+  private final static UUID USER_ID = UUID.fromString(USER_ID_STR);
 
   @Autowired
   MockMvc mockMvc;
@@ -69,42 +72,36 @@ class ProposalIT {
     RestAssuredMockMvc.mockMvc(mockMvc);
   }
 
-  @Test
-  void shouldReturnUnauthorizedPost() {
-    // @formatter:off
-    given()
+  @Nested
+  class SecurityTests {
+    @Test
+    void shouldReturnUnauthorizedPost() {
+      given()
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .when()
         .post("/users/35982f30-18df-48bf-afc1-e7f8deeeb49c/proposals")
         .then()
         .status(HttpStatus.UNAUTHORIZED);
-    // @formatter:on
+    }
   }
 
   @Test
   @WithMockJwtAuth(
     authorities = {"ROLE_professor"},
-    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+    claims = @OpenIdClaims(sub = USER_ID_STR))
   void shouldCreateProposalForUser() throws InterruptedException {
-    var user = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
-    entityManager.persist(user);
+    var user = createAndPersistUser(USER_ID);
+    var proposalToCreate = getTestProposalDto();
 
     // @formatter:off
     var id =
         given()
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .body(
-                """
-            {
-              "name": "Test",
-              "description": "Test",
-              "requirement": "Test"
-            }
-            """)
+            .body(proposalToCreate)
             .when()
-            .post("/users/35982f30-18df-48bf-afc1-e7f8deeeb49c/proposals")
+            .post("/users/{userId}/proposals", USER_ID_STR)
             .then()
             .status(HttpStatus.CREATED)
             .extract()
@@ -112,34 +109,17 @@ class ProposalIT {
             .getUUID("id");
     // @formatter:on
 
-    var proposal = entityManager.find(Proposal.class, id);
-    var proposalAssertions = new SoftAssertions();
-    proposalAssertions
-      .assertThat(proposal)
-      .extracting(
-        Proposal::getName,
-        Proposal::getDescription,
-        Proposal::getRequirement,
-        Proposal::getStatus)
-      .doesNotContainNull()
-      .containsExactly("Test", "Test", "Test", ProposalStatus.PROPOSED);
-    proposalAssertions
-      .assertThat(proposal)
-      .extracting(p -> p.getOwner().getId(), p -> p.getOwner().getDiscriminator())
-      .containsExactly(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "user");
-    proposalAssertions.assertAll();
-
-    assertThat(applicationEvents.stream(ProposalChanged.class))
-      .hasSize(1);
+    assertProposalExists(id);
+    assertProposalIsOwnedByUser(id, USER_ID);
   }
 
   @Test
   @WithMockJwtAuth(
     authorities = {"ROLE_professor"},
-    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+    claims = @OpenIdClaims(sub = USER_ID_STR))
   void shouldUpdate() throws InterruptedException {
     // Ensure that authenticated User is the creator
-    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
+    var owner = createAndPersistUser(UUID.fromString(USER_ID_STR));
     var proposal = getTestProposal(owner);
 
     this.entityManager.persist(proposal);
@@ -178,7 +158,7 @@ class ProposalIT {
     proposalAssertions
       .assertThat(result)
       .extracting(p -> p.getOwner().getId(), p -> p.getOwner().getDiscriminator())
-      .containsExactly(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "user");
+      .containsExactly(UUID.fromString(USER_ID_STR), "user");
     proposalAssertions.assertAll();
 
     assertThat(applicationEvents.stream(ProposalChanged.class))
@@ -188,10 +168,9 @@ class ProposalIT {
   @Test
   @WithMockJwtAuth(
     authorities = {"ROLE_professor"},
-    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+    claims = @OpenIdClaims(sub = USER_ID_STR))
   void shouldDelete() throws InterruptedException {
-    // Ensure that authenticated User is the creator
-    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
+    var owner = createAndPersistUser(UUID.fromString(USER_ID_STR));
     var proposal = getTestProposal(owner);
 
     this.entityManager.persist(proposal);
@@ -215,13 +194,12 @@ class ProposalIT {
   @Test
   @WithMockJwtAuth(
     authorities = {"ROLE_professor"},
-    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+    claims = @OpenIdClaims(sub = USER_ID_STR))
   void shouldUpdateModules() throws InterruptedException {
-    var easyRandom = new EasyRandom();
     var randomModules =
       List.of(new ModuleType("AB", "Alpha Beta"), new ModuleType("BG", "Beta Gamma"));
     // Ensure that authenticated User is the creator
-    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
+    var owner = createAndPersistUser(UUID.fromString(USER_ID_STR));
     var proposal = getTestProposal(owner);
 
     this.entityManager.persist(proposal);
@@ -251,13 +229,12 @@ class ProposalIT {
   @Test
   @WithMockJwtAuth(
     authorities = {"ROLE_professor"},
-    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
+    claims = @OpenIdClaims(sub = USER_ID_STR))
   void shouldUpdateSpecialization() throws InterruptedException {
     var easyRandom = new EasyRandom();
     var randomSpecializations =
       List.of(new Specialization("AB", "Alpha Beta"), new Specialization("BG", "Beta Gamma"));
-    // Ensure that authenticated User is the creator
-    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
+    var owner = createAndPersistUser(UUID.fromString(USER_ID_STR));
     var testProposal = getTestProposal(owner);
 
     this.entityManager.persist(testProposal);
@@ -289,13 +266,13 @@ class ProposalIT {
   @Test
   @WithMockJwtAuth(
     authorities = {"ROLE_professor"},
-    claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c", name = "Karl Peter"))
+    claims = @OpenIdClaims(sub = USER_ID_STR, name = "Karl Peter"))
   void shouldApplyCommitment() throws InterruptedException {
     var easyRandom = new EasyRandom();
     var randomSpecializations =
       List.of(new Specialization("AB", "Alpha Beta"), new Specialization("BG", "Beta Gamma"));
     // Ensure that authenticated User is the creator
-    var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
+    var owner = createAndPersistUser(UUID.fromString(USER_ID_STR));
     var testProposal = getTestProposal(owner);
 
     randomSpecializations.forEach(specialization -> this.entityManager.persist(specialization));
@@ -321,7 +298,7 @@ class ProposalIT {
     assertThat(result)
       .isNotNull()
         .satisfies(proposal -> {
-          assertThat(result.getCommittedSupervisor()).isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
+          assertThat(result.getCommittedSupervisor()).isEqualTo(UUID.fromString(USER_ID_STR));
           assertThat(result.getStatus()).isEqualTo(ProposalStatus.HAS_COMMITMENT);
         });
 
@@ -343,10 +320,33 @@ class ProposalIT {
         .build();
   }
 
+  private CreateProposalDto getTestProposalDto() {
+    return new CreateProposalDto("Test", "Test", "Test");
+  }
+
+  private void assertProposalExists(UUID uuid) {
+    assertThat(this.entityManager.find(Proposal.class, uuid)).isNotNull();
+  }
+
+  private void assertProposalIsOwnedByUser(UUID uuid, UUID userId) {
+    assertThat(this.entityManager.find(Proposal.class, uuid))
+      .isNotNull()
+      .satisfies(proposal -> {
+        assertThat(proposal.getOwner().getId()).isEqualTo(userId);
+        assertThat(proposal.getOwner()).isInstanceOf(User.class);
+      });
+  }
+
   // Note: We need to construct a mutable collection for ElementCollections (thanks Hibernate)
   private List<Supervisor> getSupervisors() {
     var list = new ArrayList<Supervisor>();
     list.add(new Supervisor(UUID.randomUUID(), "Test Project Supervisor"));
     return list;
+  }
+
+  private User createAndPersistUser(UUID userId) {
+    var user = new User(userId, "Test User");
+    this.entityManager.persist(user);
+    return user;
   }
 }
