@@ -5,7 +5,7 @@ import static org.awaitility.Awaitility.await;
 
 import de.innovationhub.prox.projectservice.proposal.ProposalRepository;
 import de.innovationhub.prox.projectservice.proposal.ProposalStatus;
-import de.innovationhub.prox.projectservice.proposal.jobs.ProposalAutoDeleteTest.DeleteTest.DeleteTestContextInitializer;
+import de.innovationhub.prox.projectservice.proposal.jobs.ProposalAutoDeleteIT.DeleteTest.DeleteTestContextInitializer;
 import java.time.Duration;
 import java.time.Instant;
 import org.junit.jupiter.api.Nested;
@@ -23,7 +23,7 @@ import org.springframework.test.context.support.TestPropertySourceUtils;
 
 @SpringBootTest
 @ActiveProfiles("h2")
-class ProposalAutoDeleteTest extends BaseProposalJobsTest {
+class ProposalAutoDeleteIT extends BaseProposalJobsIT {
   @Autowired
   ProposalRepository proposalRepository;
 

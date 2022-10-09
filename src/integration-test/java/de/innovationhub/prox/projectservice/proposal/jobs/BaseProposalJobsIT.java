@@ -12,7 +12,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class BaseProposalJobsTest {
+public class BaseProposalJobsIT {
 
   @Autowired UserRepository userRepository;
 

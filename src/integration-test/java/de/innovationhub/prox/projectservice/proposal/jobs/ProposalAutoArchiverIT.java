@@ -6,7 +6,7 @@ import static org.awaitility.Awaitility.await;
 import de.innovationhub.prox.projectservice.proposal.Proposal;
 import de.innovationhub.prox.projectservice.proposal.ProposalRepository;
 import de.innovationhub.prox.projectservice.proposal.ProposalStatus;
-import de.innovationhub.prox.projectservice.proposal.jobs.ProposalAutoArchiverTest.ArchiveTest.ArchiveTestContextInitializer;
+import de.innovationhub.prox.projectservice.proposal.jobs.ProposalAutoArchiverIT.ArchiveTest.ArchiveTestContextInitializer;
 import java.time.Duration;
 import java.time.Instant;
 import org.junit.jupiter.api.Nested;
@@ -24,7 +24,7 @@ import org.springframework.test.context.support.TestPropertySourceUtils;
 
 @SpringBootTest(properties = {"project-service.proposals.jobs.auto-archive.after=P2D"})
 @ActiveProfiles("h2")
-class ProposalAutoArchiverTest extends BaseProposalJobsTest {
+class ProposalAutoArchiverIT extends BaseProposalJobsIT {
   @Autowired
   ProposalRepository proposalRepository;
 

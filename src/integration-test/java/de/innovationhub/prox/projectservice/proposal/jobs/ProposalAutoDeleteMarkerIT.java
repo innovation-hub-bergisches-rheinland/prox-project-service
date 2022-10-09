@@ -6,7 +6,7 @@ import static org.awaitility.Awaitility.await;
 import de.innovationhub.prox.projectservice.proposal.Proposal;
 import de.innovationhub.prox.projectservice.proposal.ProposalRepository;
 import de.innovationhub.prox.projectservice.proposal.ProposalStatus;
-import de.innovationhub.prox.projectservice.proposal.jobs.ProposalAutoDeleteMarkerTest.MarkTest.MarkTestContextInitializer;
+import de.innovationhub.prox.projectservice.proposal.jobs.ProposalAutoDeleteMarkerIT.MarkTest.MarkTestContextInitializer;
 import java.time.Duration;
 import java.time.Instant;
 import org.junit.jupiter.api.Nested;
@@ -24,7 +24,7 @@ import org.springframework.test.context.support.TestPropertySourceUtils;
 
 @SpringBootTest(properties = {"project-service.proposals.jobs.auto-mark-for-delete.after=P2D"})
 @ActiveProfiles("h2")
-class ProposalAutoDeleteMarkerTest extends BaseProposalJobsTest {
+class ProposalAutoDeleteMarkerIT extends BaseProposalJobsIT {
   @Autowired
   ProposalRepository proposalRepository;
 
