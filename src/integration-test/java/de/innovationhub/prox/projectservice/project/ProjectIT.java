@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.UUID;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -69,7 +68,6 @@ class ProjectIT {
 
   @Test
   void shouldGetProjects() {
-    var easyRandom = new EasyRandom();
     var randomProjects =
         List.of(
             getTestProject(),
@@ -94,7 +92,6 @@ class ProjectIT {
 
   @Test
   void shouldGetProject() {
-    var easyRandom = new EasyRandom();
     var randomProject = getTestProject();
     this.entityManager.persist(randomProject);
     entityManager.flush();
@@ -127,7 +124,6 @@ class ProjectIT {
     authorities = {"ROLE_professor"},
     claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldCreateProjectForAuthenticatedUser() throws Exception {
-    var easyRandom = new EasyRandom();
     var randomProject = getTestProject();
     var user = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     entityManager.persist(user);
@@ -162,7 +158,6 @@ class ProjectIT {
     authorities = {"ROLE_professor"},
     claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldCreateProject() throws InterruptedException {
-    var easyRandom = new EasyRandom();
     var randomProject = getTestProject();
     var user = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     entityManager.persist(user);
@@ -197,8 +192,6 @@ class ProjectIT {
     authorities = {"ROLE_professor"},
     claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldUpdateProject() throws InterruptedException {
-    var easyRandom = new EasyRandom();
-    // Ensure that authenticated User is the creator
     var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     var randomProject = getTestProject(owner);
 
@@ -236,8 +229,6 @@ class ProjectIT {
     claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   @Disabled("Not implemented")
   void shouldPartiallyUpdateProject() throws InterruptedException {
-    var easyRandom = new EasyRandom();
-    // Ensure that authenticated User is the creator
     var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     var randomProject = getTestProject(owner);
 
@@ -274,8 +265,6 @@ class ProjectIT {
     authorities = {"ROLE_professor"},
     claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldDeleteProject() throws InterruptedException {
-    var easyRandom = new EasyRandom();
-    // Ensure that authenticated User is the creator
     var owner = new User(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"), "Xavier Tester");
     var randomProject = getTestProject(owner);
 
@@ -304,7 +293,6 @@ class ProjectIT {
     authorities = {"ROLE_professor"},
     claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldUpdateModulesOfProject() throws InterruptedException {
-    var easyRandom = new EasyRandom();
     var randomModules =
       List.of(new ModuleType("AB", "Alpha Beta"), new ModuleType("BG", "Beta Gamma"));
     // Ensure that authenticated User is the creator
@@ -341,7 +329,6 @@ class ProjectIT {
     authorities = {"ROLE_professor"},
     claims = @OpenIdClaims(sub = "35982f30-18df-48bf-afc1-e7f8deeeb49c"))
   void shouldUpdateSpecializationOfProject() throws InterruptedException {
-    var easyRandom = new EasyRandom();
     var randomSpecializations =
       List.of(new Specialization("AB", "Alpha Beta"), new Specialization("BG", "Beta Gamma"));
     // Ensure that authenticated User is the creator

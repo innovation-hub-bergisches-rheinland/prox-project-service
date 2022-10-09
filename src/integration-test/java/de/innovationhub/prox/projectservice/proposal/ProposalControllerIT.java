@@ -23,7 +23,6 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.validation.Validator;
 import org.assertj.core.api.SoftAssertions;
-import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -231,7 +230,6 @@ class ProposalControllerIT {
     authorities = {"ROLE_professor"},
     claims = @OpenIdClaims(sub = USER_ID_STR))
   void shouldUpdateSpecialization() throws InterruptedException {
-    var easyRandom = new EasyRandom();
     var randomSpecializations =
       List.of(new Specialization("AB", "Alpha Beta"), new Specialization("BG", "Beta Gamma"));
     var owner = createAndPersistUser(UUID.fromString(USER_ID_STR));
@@ -268,7 +266,6 @@ class ProposalControllerIT {
     authorities = {"ROLE_professor"},
     claims = @OpenIdClaims(sub = USER_ID_STR, name = "Karl Peter"))
   void shouldApplyCommitment() throws InterruptedException {
-    var easyRandom = new EasyRandom();
     var randomSpecializations =
       List.of(new Specialization("AB", "Alpha Beta"), new Specialization("BG", "Beta Gamma"));
     // Ensure that authenticated User is the creator
