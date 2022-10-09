@@ -122,7 +122,6 @@ class ProposalControllerIT {
     var proposal = getTestProposal(owner);
 
     this.entityManager.persist(proposal);
-    entityManager.flush();
 
     // @formatter:off
     given()
@@ -173,7 +172,6 @@ class ProposalControllerIT {
     var proposal = getTestProposal(owner);
 
     this.entityManager.persist(proposal);
-    entityManager.flush();
 
     // @formatter:off
     given()
@@ -203,7 +201,6 @@ class ProposalControllerIT {
 
     this.entityManager.persist(proposal);
     randomModules.forEach(moduleType -> this.entityManager.persist(moduleType));
-    this.entityManager.flush();
 
     var moduleKeys = randomModules.stream().map(ModuleType::getKey).toList();
 
@@ -237,7 +234,6 @@ class ProposalControllerIT {
 
     this.entityManager.persist(testProposal);
     randomSpecializations.forEach(specialization -> this.entityManager.persist(specialization));
-    this.entityManager.flush();
 
     var specializationIds =
         randomSpecializations.stream().map(specialization -> specialization.getKey()).toList();
@@ -275,7 +271,6 @@ class ProposalControllerIT {
     randomSpecializations.forEach(specialization -> this.entityManager.persist(specialization));
     testProposal.setSpecializations(randomSpecializations.stream().collect(Collectors.toSet()));
     this.entityManager.persist(testProposal);
-    this.entityManager.flush();
 
     // @formatter:off
     var projectId =

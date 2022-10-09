@@ -9,7 +9,9 @@ import de.innovationhub.prox.projectservice.owners.OrganizationEntityEventDto;
 import de.innovationhub.prox.projectservice.owners.OrganizationEntityEventDto.Membership;
 import de.innovationhub.prox.projectservice.owners.UserEntityEventDto;
 import de.innovationhub.prox.projectservice.owners.organization.Organization;
+import de.innovationhub.prox.projectservice.owners.organization.OrganizationRepository;
 import de.innovationhub.prox.projectservice.owners.user.User;
+import de.innovationhub.prox.projectservice.owners.user.UserRepository;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import org.awaitility.core.ThrowingRunnable;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +31,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles("h2")
-@Transactional
 @DirtiesContext
 class OwnerEntityListenerIT extends AbstractRedpandaIT {
 
@@ -36,10 +38,19 @@ class OwnerEntityListenerIT extends AbstractRedpandaIT {
   KafkaTemplate<String, Object> kafkaTemplate;
 
   @Autowired
-  EntityManager em;
+  UserRepository userRepository;
+
+  @Autowired
+  OrganizationRepository organizationRepository;
 
   static final String USER_TOPIC = "entity.user.user";
   static final String ORGANIZATION_TOPIC = "entity.organization.organization";
+
+  @AfterEach
+  void tearDown() {
+    userRepository.deleteAll();
+    organizationRepository.deleteAll();
+  }
 
   @Test
   void shouldCreateUserOnUserEvent() throws Exception {
@@ -93,8 +104,9 @@ class OwnerEntityListenerIT extends AbstractRedpandaIT {
 
     // Then
     assertEventually(() ->
-        assertThat(em.find(Organization.class, orgId))
-          .isNotNull()
+        assertThat(organizationRepository.findById(orgId))
+          .isPresent()
+          .get()
           .satisfies(o -> {
             assertThat(o.getName()).isEqualTo(orgName);
             assertThat(o.getMembers()).isEmpty();
@@ -116,8 +128,9 @@ class OwnerEntityListenerIT extends AbstractRedpandaIT {
 
     // Then
     assertEventually(() ->
-        assertThat(em.find(Organization.class, orgId))
-          .isNotNull()
+        assertThat(organizationRepository.findById(orgId))
+          .isPresent()
+          .get()
           .satisfies(organization -> {
             assertThat(organization.getName())
               .isEqualTo("ACME Inc.");
@@ -139,7 +152,9 @@ class OwnerEntityListenerIT extends AbstractRedpandaIT {
 
     // Then
     assertEventually(() ->
-      assertThat(em.find(Organization.class, orgId))
+      assertThat(organizationRepository.findById(orgId))
+        .isPresent()
+        .get()
         .satisfies(organization -> {
           assertThat(organization.getMembers())
             .containsExactlyInAnyOrderElementsOf(members);
@@ -162,8 +177,9 @@ class OwnerEntityListenerIT extends AbstractRedpandaIT {
 
   private void shouldEventuallyCreateUserWithName(UUID userId, String name) {
     assertEventually(() ->
-        assertThat(em.find(User.class, userId))
-          .isNotNull()
+        assertThat(userRepository.findById(userId))
+          .isPresent()
+          .get()
           .extracting(User::getName)
           .isEqualTo(name)
       );
@@ -171,15 +187,15 @@ class OwnerEntityListenerIT extends AbstractRedpandaIT {
 
   private void shouldEventuallyDeleteUserWithId(UUID userId) {
     assertEventually(() ->
-        assertThat(em.find(User.class, userId))
-          .isNull()
+        assertThat(userRepository.existsById(userId))
+          .isFalse()
       );
   }
 
   private void shouldEventuallyDeleteOrganizationWithId(UUID organizationId) {
     assertEventually(() ->
-      assertThat(em.find(Organization.class, organizationId))
-        .isNull()
+        assertThat(organizationRepository.existsById(organizationId))
+          .isFalse()
     );
   }
 
@@ -216,13 +232,13 @@ class OwnerEntityListenerIT extends AbstractRedpandaIT {
   private Organization createAndPersistOrganization(UUID orgId, String orgName, List<UUID> members) {
     var organization = new Organization(orgId, orgName);
     organization.setMembers(new HashSet<>(members));
-    em.persist(organization);
+    organizationRepository.save(organization);
     return organization;
   }
 
   private User createAndPersistUser(UUID userId, String userName) {
     var user = new User(userId, userName);
-    em.persist(user);
+    userRepository.save(user);
     return user;
   }
 }
