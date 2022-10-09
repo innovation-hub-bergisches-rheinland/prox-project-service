@@ -43,7 +43,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("h2")
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext
 @RecordApplicationEvents
 @SuppressWarnings("java:S2699")
 class ProposalIT {
