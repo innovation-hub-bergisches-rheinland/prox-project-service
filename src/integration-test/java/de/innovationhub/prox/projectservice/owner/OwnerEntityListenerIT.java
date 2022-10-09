@@ -1,27 +1,30 @@
 package de.innovationhub.prox.projectservice.owner;
 
+import static de.innovationhub.prox.projectservice.AwaitilityAssertions.assertEventually;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
 import de.innovationhub.prox.projectservice.AbstractRedpandaIT;
-import de.innovationhub.prox.projectservice.RedpandaContainer;
+import de.innovationhub.prox.projectservice.owners.OrganizationEntityEventDto;
+import de.innovationhub.prox.projectservice.owners.OrganizationEntityEventDto.Membership;
+import de.innovationhub.prox.projectservice.owners.UserEntityEventDto;
 import de.innovationhub.prox.projectservice.owners.organization.Organization;
 import de.innovationhub.prox.projectservice.owners.user.User;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.awaitility.core.ThrowingRunnable;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 
 @SpringBootTest
 @ActiveProfiles("h2")
@@ -30,7 +33,7 @@ import org.springframework.test.context.DynamicPropertySource;
 class OwnerEntityListenerIT extends AbstractRedpandaIT {
 
   @Autowired
-  KafkaTemplate<String, String> kafkaTemplate;
+  KafkaTemplate<String, Object> kafkaTemplate;
 
   @Autowired
   EntityManager em;
@@ -40,86 +43,41 @@ class OwnerEntityListenerIT extends AbstractRedpandaIT {
 
   @Test
   void shouldCreateUserOnUserEvent() throws Exception {
-    // Given
     var userId = UUID.randomUUID();
     var userName = "John Doe";
+    var event = createUserEventDto(userId, userName);
 
-    // When
     var ft = kafkaTemplate
-      .send(USER_TOPIC, userId.toString(), """
-      {
-        "id": "%s",
-        "name": "%s"
-      }
-      """.formatted(userId, userName));
+      .send(USER_TOPIC, userId.toString(), event);
     ft.get(5, TimeUnit.SECONDS);
 
-    // Then
-    await()
-      .atMost(10, TimeUnit.SECONDS)
-      .untilAsserted(() ->
-        assertThat(em.find(User.class, userId))
-          .isNotNull()
-          .extracting(User::getName)
-          .isEqualTo(userName)
-      );
+    shouldEventuallyCreateUserWithName(userId, userName);
   }
 
   @Test
   void shouldUpdateUserOnUserEvent() throws Exception {
-    // Given
     var userId = UUID.randomUUID();
     var userName = "John Doe";
-    var user = new User(userId, userName);
-    em.persist(user);
+    var user = createAndPersistUser(userId, userName);
+    var updateEvent = createUserEventDto(userId, "Jane Doe");
 
-    assertThat(em.find(User.class, userId))
-      .isNotNull()
-      .extracting(User::getName)
-      .isEqualTo(userName);
-
-    // When
-    var ft = kafkaTemplate.send(USER_TOPIC, userId.toString(), """
-      {
-        "id": "%s",
-        "name": "%s"
-      }
-      """.formatted(userId, "Jane Doe"));
+    var ft = kafkaTemplate.send(USER_TOPIC, userId.toString(), updateEvent);
     ft.get(5, TimeUnit.SECONDS);
 
-    // Then
-    await()
-      .atMost(10, TimeUnit.SECONDS)
-      .untilAsserted(() ->
-        assertThat(em.find(User.class, userId))
-          .isNotNull()
-          .extracting(User::getName)
-          .isEqualTo("Jane Doe")
-      );
+    shouldEventuallyCreateUserWithName(userId, "Jane Doe");
   }
 
   @Test
   void shouldDeleteUserOnNullEvent() throws Exception {
-    // Given
     var userId = UUID.randomUUID();
-    var userName = "John Doe";
-    var user = new User(userId, userName);
-    em.persist(user);
-
-    assertThat(em.find(User.class, userId))
-      .isNotNull();
+    createAndPersistUser(userId);
 
     // When
     var ft = kafkaTemplate.send(USER_TOPIC, userId.toString(), null);
     ft.get(5, TimeUnit.SECONDS);
 
     // Then
-    await()
-      .atMost(10, TimeUnit.SECONDS)
-      .untilAsserted(() ->
-        assertThat(em.find(User.class, userId))
-          .isNull()
-      );
+    shouldEventuallyDeleteUserWithId(userId);
   }
 
   @Test
@@ -127,21 +85,14 @@ class OwnerEntityListenerIT extends AbstractRedpandaIT {
     // Given
     var orgId = UUID.randomUUID();
     var orgName = "ACME Ltd.";
+    var event = createOrganizationEventDto(orgId, orgName);
 
     // When
-    var ft = kafkaTemplate.send(ORGANIZATION_TOPIC, orgId.toString(), """
-      {
-        "id": "%s",
-        "name": "%s",
-        "members": null
-      }
-      """.formatted(orgId, orgName));
+    var ft = kafkaTemplate.send(ORGANIZATION_TOPIC, orgId.toString(), event);
     ft.get(5, TimeUnit.SECONDS);
 
     // Then
-    await()
-      .atMost(10, TimeUnit.SECONDS)
-      .untilAsserted(() ->
+    assertEventually(() ->
         assertThat(em.find(Organization.class, orgId))
           .isNotNull()
           .satisfies(o -> {
@@ -156,73 +107,122 @@ class OwnerEntityListenerIT extends AbstractRedpandaIT {
     // Given
     var orgId = UUID.randomUUID();
     var orgName = "ACME Ltd.";
-    var org = new Organization(orgId, orgName);
-    em.persist(org);
-
-    var member1 = UUID.randomUUID();
-    var member2 = UUID.randomUUID();
-
-    assertThat(em.find(Organization.class, orgId))
-      .isNotNull()
-      .extracting(Organization::getName)
-      .isEqualTo(orgName);
+    createAndPersistOrganization(orgId, orgName);
+    var event = createOrganizationEventDto(orgId, "ACME Inc.");
 
     // When
-    var ft = kafkaTemplate.send(ORGANIZATION_TOPIC, orgId.toString(), """
-      {
-        "id": "%s",
-        "name": "%s",
-        "members": {
-          "%s": {
-            "role": "ADMIN"
-          },
-          "%s": {
-            "role": "ADMIN"
-          }
-        }
-      }
-      """.formatted(orgId, "ACME Corporation", member1, member2));
+    var ft = kafkaTemplate.send(ORGANIZATION_TOPIC, orgId.toString(), event);
     ft.get(5, TimeUnit.SECONDS);
 
     // Then
-    await()
-      .atMost(10, TimeUnit.SECONDS)
-      .untilAsserted(() ->
+    assertEventually(() ->
         assertThat(em.find(Organization.class, orgId))
           .isNotNull()
           .satisfies(organization -> {
             assertThat(organization.getName())
-              .isEqualTo("ACME Corporation");
-            assertThat(organization.getMembers())
-              .hasSize(2)
-              .containsExactlyInAnyOrder(member1, member2);
+              .isEqualTo("ACME Inc.");
           })
-
       );
+  }
+
+  @Test
+  void shouldUpdateMembershipsOnOrganizationEvent() throws Exception {
+    // Given
+    var orgId = UUID.randomUUID();
+    var members = List.of(UUID.randomUUID());
+    createAndPersistOrganization(orgId, members);
+    var event = createOrganizationEventDto(orgId, "ACME Inc.", members);
+
+    // When
+    var ft = kafkaTemplate.send(ORGANIZATION_TOPIC, orgId.toString(), event);
+    ft.get(5, TimeUnit.SECONDS);
+
+    // Then
+    assertEventually(() ->
+      assertThat(em.find(Organization.class, orgId))
+        .satisfies(organization -> {
+          assertThat(organization.getMembers())
+            .containsExactlyInAnyOrderElementsOf(members);
+        })
+    );
   }
 
   @Test
   void shouldDeleteOrganizationOnNulLEvent() throws Exception {
     // Given
     var orgId = UUID.randomUUID();
-    var orgName = "ACME Ltd.";
-    var org = new Organization(orgId, orgName);
-    em.persist(org);
-
-    assertThat(em.find(Organization.class, orgId))
-      .isNotNull();
-
+    createAndPersistOrganization(orgId);
 
     // When
     var ft = kafkaTemplate.send(ORGANIZATION_TOPIC, orgId.toString(), null);
     ft.get(5, TimeUnit.SECONDS);
 
-    // Then
-    await()
-      .atMost(10, TimeUnit.SECONDS)
-      .untilAsserted(() ->
-        assertThat(em.find(Organization.class, orgId))
+    shouldEventuallyDeleteOrganizationWithId(orgId);
+  }
+
+  private void shouldEventuallyCreateUserWithName(UUID userId, String name) {
+    assertEventually(() ->
+        assertThat(em.find(User.class, userId))
+          .isNotNull()
+          .extracting(User::getName)
+          .isEqualTo(name)
+      );
+  }
+
+  private void shouldEventuallyDeleteUserWithId(UUID userId) {
+    assertEventually(() ->
+        assertThat(em.find(User.class, userId))
           .isNull()
       );
+  }
+
+  private void shouldEventuallyDeleteOrganizationWithId(UUID organizationId) {
+    assertEventually(() ->
+      assertThat(em.find(Organization.class, organizationId))
+        .isNull()
+    );
+  }
+
+  private OrganizationEntityEventDto createOrganizationEventDto(UUID orgId, String orgName) {
+    return createOrganizationEventDto(orgId, orgName, List.of());
+  }
+
+  private OrganizationEntityEventDto createOrganizationEventDto(UUID orgId, String orgName, List<UUID> members) {
+    Map<UUID, OrganizationEntityEventDto.Membership> memberMap = members.stream()
+      .collect(Collectors.toMap(it -> it, it -> new Membership("Foo")));
+    return new OrganizationEntityEventDto(orgId, orgName, memberMap);
+  }
+
+  private UserEntityEventDto createUserEventDto(UUID userId, String userName) {
+    return new UserEntityEventDto(userId, userName);
+  }
+
+  private User createAndPersistUser(UUID userId) {
+    return createAndPersistUser(userId, "John Doe");
+  }
+
+  private Organization createAndPersistOrganization(UUID orgId) {
+    return createAndPersistOrganization(orgId, "ACME Ltd.", List.of());
+  }
+
+  private Organization createAndPersistOrganization(UUID orgId, String orgName) {
+    return createAndPersistOrganization(orgId, "ACME Ltd.", List.of());
+  }
+
+  private Organization createAndPersistOrganization(UUID orgId, List<UUID> members) {
+    return createAndPersistOrganization(orgId, "ACME Ltd.", members);
+  }
+
+  private Organization createAndPersistOrganization(UUID orgId, String orgName, List<UUID> members) {
+    var organization = new Organization(orgId, orgName);
+    organization.setMembers(new HashSet<>(members));
+    em.persist(organization);
+    return organization;
+  }
+
+  private User createAndPersistUser(UUID userId, String userName) {
+    var user = new User(userId, userName);
+    em.persist(user);
+    return user;
   }
 }
