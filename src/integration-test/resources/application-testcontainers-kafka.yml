@@ -1,0 +1,18 @@
+spring:
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # Note that we're going to use plaint plain text serialization for publishing
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      compression-type: gzip
+    consumer:
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      group-id: project-service
+      # It might happen, that we publish a message in the test method, while the consumer isn't
+      # ready yet. Therefore we will reset the offset at the beginning of a test.
+      auto-offset-reset: earliest
+    properties:
+      "spring.json.trusted.packages": "*"
+      "spring.deserializer.value.delegate.class": org.apache.kafka.common.serialization.StringDeserializer
+      "spring.deserializer.key.delegate.class": org.apache.kafka.common.serialization.StringDeserializer

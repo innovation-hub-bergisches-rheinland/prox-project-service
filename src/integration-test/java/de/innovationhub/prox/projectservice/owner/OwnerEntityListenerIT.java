@@ -3,6 +3,7 @@ package de.innovationhub.prox.projectservice.owner;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
+import de.innovationhub.prox.projectservice.AbstractRedpandaIT;
 import de.innovationhub.prox.projectservice.RedpandaContainer;
 import de.innovationhub.prox.projectservice.owners.organization.Organization;
 import de.innovationhub.prox.projectservice.owners.user.User;
@@ -26,7 +27,7 @@ import org.springframework.test.context.DynamicPropertySource;
 @ActiveProfiles("h2")
 @Transactional
 @DirtiesContext(classMode = ClassMode.BEFORE_CLASS)
-class OwnerEntityListenerIT {
+class OwnerEntityListenerIT extends AbstractRedpandaIT {
 
   @Autowired
   KafkaTemplate<String, String> kafkaTemplate;
@@ -36,28 +37,6 @@ class OwnerEntityListenerIT {
 
   static final String USER_TOPIC = "entity.user.user";
   static final String ORGANIZATION_TOPIC = "entity.organization.organization";
-  static RedpandaContainer REDPANDA_CONTAINER =
-    new RedpandaContainer("docker.redpanda.com/vectorized/redpanda:v22.2.2");
-
-  @BeforeAll
-  static void start() {
-    REDPANDA_CONTAINER.start();
-  }
-
-  @AfterAll
-  static void stop() {
-    REDPANDA_CONTAINER.stop();
-  }
-
-  @DynamicPropertySource
-  static void setupKafkaProperties(DynamicPropertyRegistry registry) {
-    registry.add("spring.kafka.bootstrap-servers", REDPANDA_CONTAINER::getBootstrapServers);
-    registry.add("spring.kafka.consumer.auto-offset-reset", () -> "earliest");
-
-    // Also we want to use plain text serialization for publishing
-    registry.add("spring.kafka.producer.value-serializer",
-      () -> "org.apache.kafka.common.serialization.StringSerializer");
-  }
 
   @Test
   void shouldCreateUserOnUserEvent() throws Exception {
@@ -120,7 +99,7 @@ class OwnerEntityListenerIT {
   }
 
   @Test
-  void shouldDeleteUserOnNulLEvent() throws Exception {
+  void shouldDeleteUserOnNullEvent() throws Exception {
     // Given
     var userId = UUID.randomUUID();
     var userName = "John Doe";
