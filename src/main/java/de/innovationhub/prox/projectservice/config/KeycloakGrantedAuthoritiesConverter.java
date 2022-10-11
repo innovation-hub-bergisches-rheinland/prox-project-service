@@ -4,7 +4,6 @@ package de.innovationhub.prox.projectservice.config;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
@@ -37,6 +36,6 @@ public class KeycloakGrantedAuthoritiesConverter
       featureAuthorities = features.stream().map(fn -> new SimpleGrantedAuthority("FEATURE_" + fn));
     }
 
-    return Stream.concat(roleAuthorities, featureAuthorities).collect(Collectors.toList());
+    return Stream.concat(roleAuthorities, featureAuthorities).toList();
   }
 }
