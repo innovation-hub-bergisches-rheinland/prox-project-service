@@ -32,10 +32,6 @@ class ProposalAutoDeleteMarkerIT extends BaseProposalJobsIT {
   ProposalAutoDeletionMarker autoDeletionMarker;
 
   @ContextConfiguration(initializers = {MarkTestContextInitializer.class})
-  @EnabledIfEnvironmentVariable(
-      disabledReason = "Long running tests are disabled",
-      named = "CI",
-      matches = "true")
   @Nested
   class MarkTest {
 
