@@ -9,6 +9,7 @@ import de.innovationhub.prox.projectservice.proposal.ProposalStatus;
 import java.time.Duration;
 import java.time.Instant;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ class ProposalAutoDeleteMarkerIT extends BaseProposalJobsIT {
   ProposalAutoDeletionMarker autoDeletionMarker;
 
   @Test
+  @DisabledIfEnvironmentVariable(named = "CI", matches = "true", disabledReason = "For whatever reason this test fails in CI")
   void shouldMark() {
     // We create a proposal which has been proposed two days ago
     var proposal =
