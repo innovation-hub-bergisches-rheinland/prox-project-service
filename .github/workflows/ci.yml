@@ -134,11 +134,11 @@ jobs:
             exit 1
           fi
 
-      - name: Unit test reports
+      - name: Integration test reports
         uses: actions/upload-artifact@v2
         if: failure()
         with:
-          name: reports-unit-tests
+          name: reports-integration-tests
           retention-days: 14
           path: reports-integration-tests.zip
           if-no-files-found: ignore
