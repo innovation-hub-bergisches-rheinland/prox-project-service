@@ -30,7 +30,7 @@ class ProposalAutoDeleteMarkerIT extends BaseProposalJobsIT {
   void shouldMark() {
     // We create a proposal which has been proposed two days ago
     var proposal =
-      getSampleProposal(ProposalStatus.ARCHIVED, Instant.now().minus(Duration.ofDays(2)));
+      getSampleProposal(ProposalStatus.ARCHIVED, Instant.now().minus(Duration.ofDays(3)));
     proposal = proposalRepository.save(proposal);
 
     final var proposalId = proposal.getId();
