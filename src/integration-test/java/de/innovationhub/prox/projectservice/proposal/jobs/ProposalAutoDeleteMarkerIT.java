@@ -13,14 +13,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(properties = {"project-service.proposals.jobs.auto-archive.enable=false",
   "project-service.proposals.jobs.auto-mark-for-delete.enable=true",
   "project-service.proposals.jobs.auto-mark-for-delete.after=P2D",
   "project-service.proposals.jobs.auto-mark-for-delete.cron=* * * * * *",
   "project-service.proposals.jobs.auto-delete.enable=false"})
-@ActiveProfiles("h2")
 class ProposalAutoDeleteMarkerIT extends BaseProposalJobsIT {
   @Autowired
   ProposalRepository proposalRepository;

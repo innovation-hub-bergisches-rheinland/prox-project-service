@@ -2,6 +2,7 @@ package de.innovationhub.prox.projectservice.proposal.jobs;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.innovationhub.prox.projectservice.AbstractDatabaseIT;
 import de.innovationhub.prox.projectservice.owners.user.User;
 import de.innovationhub.prox.projectservice.owners.user.UserRepository;
 import de.innovationhub.prox.projectservice.proposal.Proposal;
@@ -12,7 +13,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class BaseProposalJobsIT {
+public class BaseProposalJobsIT extends AbstractDatabaseIT {
 
   @Autowired UserRepository userRepository;
 

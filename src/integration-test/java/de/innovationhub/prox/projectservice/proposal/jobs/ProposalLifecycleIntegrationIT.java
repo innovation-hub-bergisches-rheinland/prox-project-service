@@ -9,7 +9,6 @@ import java.time.Instant;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(
     properties = {
@@ -22,7 +21,6 @@ import org.springframework.test.context.ActiveProfiles;
       "project-service.proposals.jobs.auto-delete.enable=true",
       "project-service.proposals.jobs.auto-delete.cron=* * * * * *",
     })
-@ActiveProfiles("h2")
 class ProposalLifecycleIntegrationIT extends BaseProposalJobsIT {
   @ParameterizedTest(name = "should not touch proposals with a newer timestamp")
   @EnumSource(

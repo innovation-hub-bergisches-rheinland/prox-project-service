@@ -17,12 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.TestPropertySourceUtils;
 
 @SpringBootTest(properties = {"project-service.proposals.jobs.auto-archive.after=P2D"})
-@ActiveProfiles("h2")
 class ProposalAutoArchiverIT extends BaseProposalJobsIT {
   @Autowired
   ProposalRepository proposalRepository;

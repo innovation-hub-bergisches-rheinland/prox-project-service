@@ -2,6 +2,7 @@ package de.innovationhub.prox.projectservice.proposal;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import com.c4_soft.springaddons.security.oauth2.test.annotations.OpenIdClaims;
 import com.c4_soft.springaddons.security.oauth2.test.annotations.WithMockJwtAuth;
@@ -14,11 +15,13 @@ import de.innovationhub.prox.projectservice.proposal.dto.CreateProposalDto;
 import de.innovationhub.prox.projectservice.proposal.event.ProposalChanged;
 import de.innovationhub.prox.projectservice.proposal.event.ProposalDeleted;
 import de.innovationhub.prox.projectservice.proposal.event.ProposalReceivedCommitment;
+import io.restassured.http.Method;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.validation.Validator;
@@ -26,6 +29,9 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -71,15 +77,26 @@ class ProposalControllerIT {
 
   @Nested
   class SecurityTests {
-    @Test
-    void shouldReturnUnauthorizedPost() {
+    @ParameterizedTest
+    @MethodSource("unauthorizedProposalPaths")
+    void shouldReturnUnauthorized(Method method, String path) {
       given()
         .accept(MediaType.APPLICATION_JSON)
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .when()
-        .post("/users/35982f30-18df-48bf-afc1-e7f8deeeb49c/proposals")
+        .request(method, path)
         .then()
         .status(HttpStatus.UNAUTHORIZED);
+    }
+
+    private static Stream<Arguments> unauthorizedProposalPaths() {
+      return Stream.of(
+        arguments(Method.POST, "/users/35982f30-18df-48bf-afc1-e7f8deeeb49c/proposals"),
+        arguments(Method.POST, "/organizations/35982f30-18df-48bf-afc1-e7f8deeeb49c/proposals"),
+        arguments(Method.PUT, "/proposals/35982f30-18df-48bf-afc1-e7f8deeeb49c"),
+        arguments(Method.PATCH, "/proposals/35982f30-18df-48bf-afc1-e7f8deeeb49c"),
+        arguments(Method.DELETE, "/proposals/35982f30-18df-48bf-afc1-e7f8deeeb49c")
+      );
     }
   }
 
