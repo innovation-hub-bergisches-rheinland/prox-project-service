@@ -18,11 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.TestPropertySourceUtils;
 
 @SpringBootTest(properties = {"project-service.proposals.jobs.auto-mark-for-delete.after=P2D"})
+@DirtiesContext
 @ActiveProfiles("h2")
 class ProposalAutoDeleteMarkerIT extends BaseProposalJobsIT {
   @Autowired
@@ -32,6 +34,7 @@ class ProposalAutoDeleteMarkerIT extends BaseProposalJobsIT {
   ProposalAutoDeletionMarker autoDeletionMarker;
 
   @ContextConfiguration(initializers = {MarkTestContextInitializer.class})
+  @DirtiesContext
   @Nested
   class MarkTest {
 
