@@ -9,7 +9,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
 @ActiveProfiles("testcontainers-postgres")
-@Transactional
 public abstract class AbstractDatabaseIT {
 
   private static final String PSQL_DB = "project-db";
