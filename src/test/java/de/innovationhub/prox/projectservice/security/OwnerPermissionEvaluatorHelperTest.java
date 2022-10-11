@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import de.innovationhub.prox.projectservice.core.Ownable;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
+import de.innovationhub.prox.projectservice.owners.AbstractOwnerRepository;
 import de.innovationhub.prox.projectservice.owners.organization.Organization;
 import de.innovationhub.prox.projectservice.owners.organization.OrganizationRepository;
 import de.innovationhub.prox.projectservice.owners.user.User;
@@ -18,58 +19,48 @@ import lombok.Getter;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.Authentication;
 
-class OwnablePermissionEvaluatorHelperTest {
+class OwnerPermissionEvaluatorHelperTest {
 
-  private final OrganizationRepository organizationRepository =
-    mock(OrganizationRepository.class);
-  private final OwnablePermissionEvaluatorHelper<TestOwnable> helper =
-    new OwnablePermissionEvaluatorHelper<>(organizationRepository);
-
-  @Getter
-  class TestOwnable implements Ownable {
-
-    private final AbstractOwner owner;
-
-    TestOwnable(AbstractOwner owner) {
-      this.owner = owner;
-    }
-  }
+  private final AbstractOwnerRepository abstractOwnerRepository =
+    mock(AbstractOwnerRepository.class);
+  private final OwnerPermissionEvaluatorHelper helper = new OwnerPermissionEvaluatorHelper(abstractOwnerRepository);
 
   @Test
   void shouldReturnFalseWhenNotAuthenticated() {
-    var project = getTestOwnableUser(UUID.randomUUID());
     var auth = mock(Authentication.class);
     when(auth.isAuthenticated()).thenReturn(false);
 
     assertThat(
-      helper.hasPermission(
-        project, auth))
+      helper.hasPermissionWithOwnerId(
+        UUID.randomUUID(), auth))
         .isFalse();
   }
 
   @Test
   void shouldReturnTrueWhenUserIsOwner() {
-    var user = UUID.randomUUID();
-    var project = getTestOwnableUser(user);
+    var userId = UUID.randomUUID();
+    var user = new User(userId, "Xavier Tester");
     var auth = mock(Authentication.class);
 
+    when(abstractOwnerRepository.findById(userId)).thenReturn(Optional.of(user));
     when(auth.isAuthenticated()).thenReturn(true);
-    when(auth.getName()).thenReturn(user.toString());
+    when(auth.getName()).thenReturn(userId.toString());
 
-    assertThat(helper.hasPermission(project, auth))
+    assertThat(helper.hasPermissionWithOwnerId(userId, auth))
         .isTrue();
   }
 
   @Test
   void shouldReturnFalseWhenUserIsNotOwner() {
-    var user = UUID.randomUUID();
-    var project = getTestOwnableUser(UUID.randomUUID());
+    var userId = UUID.randomUUID();
+    var user = new User(userId, "Xavier Tester");
     var auth = mock(Authentication.class);
 
+    when(abstractOwnerRepository.findById(userId)).thenReturn(Optional.of(user));
     when(auth.isAuthenticated()).thenReturn(true);
-    when(auth.getName()).thenReturn(user.toString());
+    when(auth.getName()).thenReturn(userId.toString());
 
-    assertThat(helper.hasPermission(project, auth))
+    assertThat(helper.hasPermissionWithOwnerId(UUID.randomUUID(), auth))
         .isFalse();
   }
 
@@ -77,10 +68,9 @@ class OwnablePermissionEvaluatorHelperTest {
   void shouldReturnTrueWhenUserIsInOrg() {
     var user = UUID.randomUUID();
     var orgId = UUID.randomUUID();
-    var project = getTestOwnableOrg(orgId);
     var org = new Organization(orgId, "ACME Ltd");
     org.setMembers(Set.of(user));
-    when(organizationRepository.findById(orgId)).thenReturn(Optional.of(org));
+    when(abstractOwnerRepository.findById(orgId)).thenReturn(Optional.of(org));
 
     var auth = mock(Authentication.class);
 
@@ -88,32 +78,23 @@ class OwnablePermissionEvaluatorHelperTest {
     when(auth.getName()).thenReturn(user.toString());
 
     assertThat(
-      helper.hasPermission(
-        project, auth))
+      helper.hasPermissionWithOwnerId(
+        orgId, auth))
       .isTrue();
-    verify(organizationRepository).findById(eq(orgId));
+    verify(abstractOwnerRepository).findById(eq(orgId));
   }
 
   @Test
   void shouldReturnFalseWhenUserIsNotInOrg() {
     var user = UUID.randomUUID();
     var orgId = UUID.randomUUID();
-    var project = getTestOwnableOrg(orgId);
     var org = new Organization(orgId, "ACME Ltd");
-    when(organizationRepository.findById(orgId)).thenReturn(Optional.of(org));
+    when(abstractOwnerRepository.findById(orgId)).thenReturn(Optional.of(org));
     var auth = mock(Authentication.class);
 
     when(auth.isAuthenticated()).thenReturn(true);
     when(auth.getName()).thenReturn(user.toString());
 
-    assertThat(helper.hasPermission(project, auth)).isFalse();
-  }
-
-  private TestOwnable getTestOwnableUser(UUID userId) {
-    return new TestOwnable(new User(userId, "Xavier Tester"));
-  }
-
-  private TestOwnable getTestOwnableOrg(UUID orgId) {
-    return new TestOwnable(new Organization(orgId, "ACME Ltd."));
+    assertThat(helper.hasPermissionWithOwnerId(orgId, auth)).isFalse();
   }
 }

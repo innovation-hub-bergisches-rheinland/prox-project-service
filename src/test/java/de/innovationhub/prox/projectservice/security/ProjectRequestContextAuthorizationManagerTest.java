@@ -2,6 +2,7 @@ package de.innovationhub.prox.projectservice.security;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -28,8 +29,8 @@ import org.springframework.security.web.access.intercept.RequestAuthorizationCon
 class ProjectRequestContextAuthorizationManagerTest {
 
   private final ProjectRepository projectRepository = mock(ProjectRepository.class);
-  private final OwnablePermissionEvaluatorHelper permissionEvaluatorHelper =
-      mock(OwnablePermissionEvaluatorHelper.class);
+  private final OwnerPermissionEvaluatorHelper permissionEvaluatorHelper =
+      mock(OwnerPermissionEvaluatorHelper.class);
   private final ProjectRequestContextAuthorizationManager manager =
       new ProjectRequestContextAuthorizationManager(projectRepository, permissionEvaluatorHelper);
 
@@ -85,8 +86,8 @@ class ProjectRequestContextAuthorizationManagerTest {
     var context =
         new RequestAuthorizationContext(
             new MockHttpServletRequest(), Map.of("projectId", project.getId().toString()));
-    when(permissionEvaluatorHelper.hasPermission(
-      any(Project.class), any(Authentication.class)))
+    when(permissionEvaluatorHelper.hasPermissionWithOwnerId(
+      eq(userId), any(Authentication.class)))
       .thenReturn(true);
     Supplier<Authentication> keycloakAuthSupplier = () -> mockedAuth(userId.toString());
 
@@ -119,8 +120,8 @@ class ProjectRequestContextAuthorizationManagerTest {
     var userId = UUID.randomUUID();
     var project = getTestProject(UUID.randomUUID());
     when(projectRepository.findById(project.getId())).thenReturn(Optional.of(project));
-    when(permissionEvaluatorHelper.hasPermission(
-      any(Project.class), any(Authentication.class)))
+    when(permissionEvaluatorHelper.hasPermissionWithOwnerId(
+      eq(project.getOwnerId()), any(Authentication.class)))
       .thenReturn(false);
     var context =
         new RequestAuthorizationContext(
@@ -150,7 +151,7 @@ class ProjectRequestContextAuthorizationManagerTest {
       List.of(new Supervisor(UUID.randomUUID(), "Test Project Supervisor")),
       Collections.emptySet(),
       Collections.emptySet(),
-      new User(userId, "Xavier Tester"),
+      userId,
       null,
       Collections.emptyList(),
       Instant.now(),

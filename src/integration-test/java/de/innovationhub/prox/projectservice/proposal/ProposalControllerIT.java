@@ -152,9 +152,8 @@ class ProposalControllerIT {
       .doesNotContainNull()
       .containsExactly("Test2", "Test2", "Test2", ProposalStatus.PROPOSED);
     proposalAssertions
-      .assertThat(result)
-      .extracting(p -> p.getOwner().getId(), p -> p.getOwner().getDiscriminator())
-      .containsExactly(UUID.fromString(USER_ID_STR), "user");
+      .assertThat(result.getOwnerId())
+      .isEqualTo(UUID.fromString(USER_ID_STR));
     proposalAssertions.assertAll();
 
     assertThat(applicationEvents.stream(ProposalChanged.class))
@@ -304,7 +303,7 @@ class ProposalControllerIT {
     this.entityManager.persist(owner);
     return Proposal.builder()
         .name("Test")
-        .owner(owner)
+        .ownerId(owner.getId())
         .requirement("Test")
         .description("Test")
         .build();
@@ -322,8 +321,7 @@ class ProposalControllerIT {
     assertThat(this.entityManager.find(Proposal.class, uuid))
       .isNotNull()
       .satisfies(proposal -> {
-        assertThat(proposal.getOwner().getId()).isEqualTo(userId);
-        assertThat(proposal.getOwner()).isInstanceOf(User.class);
+        assertThat(proposal.getOwnerId()).isEqualTo(userId);
       });
   }
 

@@ -57,8 +57,6 @@ class ProjectAuditingIT {
   }
 
   private Project getTestProject() {
-    var owner = new User(UUID.randomUUID(), "Xavier Tester");
-    this.entityManager.persist(owner);
     return new Project(
         "Test Project",
       "Test Project Description",
@@ -69,7 +67,7 @@ class ProjectAuditingIT {
       List.of(new Supervisor(UUID.randomUUID(), "Test Project Supervisor")),
       Collections.emptySet(),
       Collections.emptySet(),
-      owner,
+      UUID.randomUUID(),
       null,
       Collections.emptyList(),
       Instant.now(),

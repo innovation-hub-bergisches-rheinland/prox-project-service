@@ -95,7 +95,7 @@ public class ProposalService {
 
   private ReadProposalDto create(CreateProposalDto proposalToCreate, AbstractOwner owner) {
     var proposal = proposalMapper.toEntity(proposalToCreate);
-    proposal.setOwner(owner);
+    proposal.setOwnerId(owner.getId());
     proposal = saveAndPublish(proposal);
     return proposalMapper.toDto(proposal);
   }

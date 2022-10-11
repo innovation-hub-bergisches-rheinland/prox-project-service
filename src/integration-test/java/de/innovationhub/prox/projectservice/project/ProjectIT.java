@@ -146,7 +146,7 @@ class ProjectIT {
 
     var project = this.entityManager.find(Project.class, id);
     assertThat(project).isNotNull();
-    assertThat(project.getOwner().getId())
+    assertThat(project.getOwnerId())
       .isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
 
     assertThat(applicationEvents.stream(ProjectChanged.class))
@@ -180,7 +180,7 @@ class ProjectIT {
 
     var project = this.entityManager.find(Project.class, id);
     assertThat(project).isNotNull();
-    assertThat(project.getOwner().getId())
+    assertThat(project.getOwnerId())
       .isEqualTo(UUID.fromString("35982f30-18df-48bf-afc1-e7f8deeeb49c"));
 
     assertThat(applicationEvents.stream(ProjectChanged.class))
@@ -199,7 +199,7 @@ class ProjectIT {
     entityManager.flush();
 
     var updatedProject = getTestProject();
-    updatedProject.setOwner(owner);
+    updatedProject.setOwnerId(owner.getId());
 
     // @formatter:off
     given()
@@ -379,7 +379,7 @@ class ProjectIT {
       getSupervisors(),
       Collections.emptySet(),
       Collections.emptySet(),
-      owner,
+      owner.getId(),
       null,
       Collections.emptyList(),
       Instant.now(),

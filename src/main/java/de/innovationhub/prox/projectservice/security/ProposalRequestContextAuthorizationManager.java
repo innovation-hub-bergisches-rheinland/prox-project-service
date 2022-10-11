@@ -19,11 +19,11 @@ public class ProposalRequestContextAuthorizationManager
     implements AuthorizationManager<RequestAuthorizationContext> {
   public static final String PROPOSAL_ID_VARIABLE = "proposalId";
   private final ProposalRepository proposalRepository;
-  private final OwnablePermissionEvaluatorHelper<Proposal> permissionEvaluatorHelper;
+  private final OwnerPermissionEvaluatorHelper permissionEvaluatorHelper;
 
   public ProposalRequestContextAuthorizationManager(
       ProposalRepository proposalRepository,
-      OwnablePermissionEvaluatorHelper<Proposal> permissionEvaluatorHelper) {
+      OwnerPermissionEvaluatorHelper permissionEvaluatorHelper) {
     this.proposalRepository = proposalRepository;
     this.permissionEvaluatorHelper = permissionEvaluatorHelper;
   }
@@ -55,6 +55,6 @@ public class ProposalRequestContextAuthorizationManager
     var proposal = optProposal.get();
 
     return new AuthorizationDecision(
-      permissionEvaluatorHelper.hasPermission(proposal, auth));
+      permissionEvaluatorHelper.hasPermissionWithOwnerId(proposal.getOwnerId(), auth));
   }
 }

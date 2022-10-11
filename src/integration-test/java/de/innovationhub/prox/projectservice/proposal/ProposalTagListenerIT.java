@@ -58,13 +58,11 @@ class ProposalTagListenerIT extends AbstractRedpandaIT {
   }
 
   private Proposal createAndPersistProposal() {
-    var owner = new User(UUID.randomUUID(), "Homer Simpson");
-    userRepository.save(owner);
     var proposal = Proposal.builder()
       .name("Test Proposal")
       .description("Lol")
       .requirement("Yes")
-      .owner(owner)
+      .ownerId(UUID.randomUUID())
       .build();
     proposalRepository.save(proposal);
     return proposal;

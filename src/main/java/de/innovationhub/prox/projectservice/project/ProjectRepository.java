@@ -19,8 +19,11 @@ public interface ProjectRepository
       .toList();
   }
 
-  @Query(
-    "select p from Project p where p.owner.id = ?1 and p.owner.ownerType = ?2 order by p.modifiedAt desc")
+  @Query("""
+    select p from Project p
+      join AbstractOwner ow on ow.id = p.ownerId
+      where ow.id = ?1 and ow.ownerType = ?2 order by p.modifiedAt desc
+    """)
   List<Project> findByOwner(UUID id, String discriminator);
 
   @Query("select p from Project p where p.id in ?1 order by p.modifiedAt desc")

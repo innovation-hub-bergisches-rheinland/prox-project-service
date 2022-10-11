@@ -97,7 +97,7 @@ public class ProjectService {
     var proposal = proposalDto.proposal();
     var project = new Project();
     project.setName(proposal.getName());
-    project.setOwner(proposal.getOwner());
+    project.setOwnerId(proposal.getOwnerId());
     project.setShortDescription(proposal.getDescription());
     project.setStatus(ProjectStatus.AVAILABLE);
     project.setModules(proposal.getModules());
@@ -123,7 +123,7 @@ public class ProjectService {
   @Transactional(TxType.REQUIRED)
   public ReadProjectDto create(CreateProjectDto projectDto, AbstractOwner owner) {
     var project = projectMapper.toEntity(projectDto);
-    project.setOwner(owner);
+    project.setOwnerId(owner.getId());
     project = saveAndPublish(project);
     return projectMapper.toDto(project);
   }

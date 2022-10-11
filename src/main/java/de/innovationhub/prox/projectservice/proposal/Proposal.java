@@ -52,7 +52,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
 @Builder
-public class Proposal extends AbstractEntity implements Ownable {
+public class Proposal extends AbstractEntity {
   @Column(length = 255)
   @Size(min = 1, max = 255)
   @NotBlank
@@ -80,9 +80,8 @@ public class Proposal extends AbstractEntity implements Ownable {
   @Builder.Default
   private Set<ModuleType> modules = new HashSet<>();
 
-  @ManyToOne(optional = false, fetch = FetchType.EAGER)
-  @JoinColumn(name = "owner_id", nullable = false, updatable = false)
-  private AbstractOwner owner;
+  @Column(name = "owner_id", nullable = false, updatable = false)
+  private UUID ownerId;
 
   private UUID committedSupervisor;
 

@@ -215,7 +215,7 @@ class ProjectRepositoryCustomIT extends AbstractDatabaseIT {
       List.of(),
       Set.of(),
       Set.of(),
-      owner,
+      owner.getId(),
       null,
       Collections.emptyList(),
       Instant.now(),
@@ -225,6 +225,7 @@ class ProjectRepositoryCustomIT extends AbstractDatabaseIT {
   private Project getTestProject() {
     var owner = new User(UUID.randomUUID(), "Xavier Tester");
     em.persist(owner);
+
     Specialization s1 = new Specialization("s1", "Specialization 1");
     Specialization s2 = new Specialization("s2", "Specialization 2");
     em.persist(s1);
@@ -245,7 +246,7 @@ class ProjectRepositoryCustomIT extends AbstractDatabaseIT {
       List.of(),
       Set.of(s1, s2),
       Set.of(m1, m2),
-      owner,
+      owner.getId(),
       null,
       Collections.emptyList(),
       Instant.now(),

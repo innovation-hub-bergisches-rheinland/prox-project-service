@@ -4,10 +4,8 @@ package de.innovationhub.prox.projectservice.project;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import de.innovationhub.prox.projectservice.core.AbstractEntity;
-import de.innovationhub.prox.projectservice.core.Ownable;
 import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
-import de.innovationhub.prox.projectservice.owners.AbstractOwner;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -44,7 +42,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
 @Builder
-public class Project extends AbstractEntity implements Ownable {
+public class Project extends AbstractEntity {
 
   @Column(length = 255)
   @Size(min = 1, max = 255)
@@ -81,9 +79,8 @@ public class Project extends AbstractEntity implements Ownable {
   @Builder.Default
   private Set<ModuleType> modules = new HashSet<>();
 
-  @ManyToOne(optional = false, fetch = FetchType.EAGER)
-  @JoinColumn(name = "owner_id", nullable = false, updatable = false)
-  private AbstractOwner owner;
+  @Column(name = "owner_id", nullable = false, updatable = false)
+  private UUID ownerId;
 
   // If the project has been created from a proposal, we store the corresponding proposal id here.
   private UUID proposalId = null;

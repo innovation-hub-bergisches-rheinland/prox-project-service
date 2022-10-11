@@ -1,6 +1,8 @@
 package de.innovationhub.prox.projectservice.project.mapper;
 
 
+import de.innovationhub.prox.projectservice.owners.AbstractOwner;
+import de.innovationhub.prox.projectservice.owners.AbstractOwnerRepository;
 import de.innovationhub.prox.projectservice.project.Project;
 import de.innovationhub.prox.projectservice.project.Supervisor;
 import de.innovationhub.prox.projectservice.project.dto.CreateProjectDto;
@@ -9,11 +11,14 @@ import de.innovationhub.prox.projectservice.project.dto.ProjectPermissionsDto;
 import de.innovationhub.prox.projectservice.project.dto.ReadProjectCollectionDto;
 import de.innovationhub.prox.projectservice.project.dto.ReadProjectDto;
 import de.innovationhub.prox.projectservice.project.dto.ReadSupervisorDto;
-import de.innovationhub.prox.projectservice.security.OwnablePermissionEvaluatorHelper;
+import de.innovationhub.prox.projectservice.security.OwnerPermissionEvaluatorHelper;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,15 +26,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 public abstract class ProjectMapper {
   public static final ProjectMapper INSTANCE = Mappers.getMapper(ProjectMapper.class);
 
-  @Autowired private OwnablePermissionEvaluatorHelper<Project> permissionEvaluatorHelper;
+  @Autowired private OwnerPermissionEvaluatorHelper permissionEvaluatorHelper;
+
+  @Autowired private AbstractOwnerRepository abstractOwnerRepository;
 
   public ProjectPermissionsDto getPermissions(Project project) {
-    var hasPermission = permissionEvaluatorHelper.hasPermissionWithCurrentContext(project);
+    var hasPermission = permissionEvaluatorHelper.hasPermissionWithCurrentContext(project.getOwnerId());
     return new ProjectPermissionsDto(hasPermission, hasPermission);
   }
 
   @Mapping(target = "permissions", expression = "java( this.getPermissions(project) )")
+  @Mapping(target = "owner", expression = "java( this.getOwner(project.getOwnerId()) )")
   public abstract ReadProjectDto toDto(Project project);
+
+  public AbstractOwner getOwner(UUID ownerId) {
+    return abstractOwnerRepository.findById(ownerId).orElse(null);
+  }
 
   public abstract ReadSupervisorDto toDto(Supervisor supervisor);
 

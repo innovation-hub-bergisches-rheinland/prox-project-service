@@ -19,11 +19,11 @@ public class ProjectRequestContextAuthorizationManager
     implements AuthorizationManager<RequestAuthorizationContext> {
   public static final String PROJECT_ID_VARIABLE = "projectId";
   private final ProjectRepository projectRepository;
-  private final OwnablePermissionEvaluatorHelper<Project> permissionEvaluatorHelper;
+  private final OwnerPermissionEvaluatorHelper permissionEvaluatorHelper;
 
   public ProjectRequestContextAuthorizationManager(
       ProjectRepository projectRepository,
-      OwnablePermissionEvaluatorHelper<Project> permissionEvaluatorHelper) {
+      OwnerPermissionEvaluatorHelper permissionEvaluatorHelper) {
     this.projectRepository = projectRepository;
     this.permissionEvaluatorHelper = permissionEvaluatorHelper;
   }
@@ -63,6 +63,6 @@ public class ProjectRequestContextAuthorizationManager
     }
 
     return new AuthorizationDecision(
-      permissionEvaluatorHelper.hasPermission(project, auth));
+      permissionEvaluatorHelper.hasPermissionWithOwnerId(project.getOwnerId(), auth));
   }
 }

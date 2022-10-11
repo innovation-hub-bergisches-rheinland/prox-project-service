@@ -34,7 +34,7 @@ class ProjectJsonIT {
           List.of(new Supervisor(UUID.randomUUID(), "Test Project Supervisor")),
           Collections.emptySet(),
           Collections.emptySet(),
-          new User(UUID.randomUUID(), "Xavier Tester"),
+          UUID.randomUUID(),
           null,
           Collections.emptyList(),
           Instant.now(),
@@ -67,8 +67,8 @@ class ProjectJsonIT {
         .isEqualTo(randomProject.getCreatorName());
     assertThat(serialized).extractingJsonPathArrayValue("@.supervisors").isNotEmpty();
     assertThat(serialized)
-        .extractingJsonPathStringValue("@.owner.id")
-        .isEqualTo(randomProject.getOwner().getId().toString());
+        .extractingJsonPathStringValue("@.ownerId")
+        .isEqualTo(randomProject.getOwnerId().toString());
     assertThat(serialized).extractingJsonPathStringValue("@.createdAt").isNotBlank();
     assertThat(serialized).extractingJsonPathStringValue("@.modifiedAt").isNotBlank();
   }

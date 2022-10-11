@@ -57,15 +57,13 @@ class ProjectTagListenerIT extends AbstractRedpandaIT {
   }
 
   private Project createAndPersistProject() {
-    var owner = new User(UUID.randomUUID(), "Homer Simpson");
-    userRepository.save(owner);
     var project = Project.builder()
       .name("Test Project")
       .description("Lol")
       .requirement("Yes")
       .shortDescription("xD")
       .status(ProjectStatus.RUNNING)
-      .owner(owner)
+      .ownerId(UUID.randomUUID())
       .build();
     projectRepository.save(project);
     return project;

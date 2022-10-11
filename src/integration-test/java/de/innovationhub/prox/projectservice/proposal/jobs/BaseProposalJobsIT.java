@@ -28,7 +28,7 @@ public class BaseProposalJobsIT {
     var user = userRepository.save(new User(UUID.randomUUID(), "Xavier Tester"));
 
     return Proposal.builder()
-        .owner(user)
+        .ownerId(user.getId())
         .name("Test")
         .description("Test")
         .requirement("Test")
