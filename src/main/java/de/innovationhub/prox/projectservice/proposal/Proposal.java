@@ -72,11 +72,11 @@ public class Proposal extends AbstractEntity {
   @Builder.Default
   private ProposalStatus status = ProposalStatus.PROPOSED;
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @Builder.Default
   private Set<Specialization> specializations = new HashSet<>();
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @Builder.Default
   private Set<ModuleType> modules = new HashSet<>();
 

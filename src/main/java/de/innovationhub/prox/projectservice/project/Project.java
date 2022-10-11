@@ -71,11 +71,11 @@ public class Project extends AbstractEntity {
   @Builder.Default
   private List<Supervisor> supervisors = new ArrayList<>();
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @Builder.Default
   private Set<Specialization> specializations = new HashSet<>();
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @Builder.Default
   private Set<ModuleType> modules = new HashSet<>();
 
