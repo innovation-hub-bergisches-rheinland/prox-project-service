@@ -63,7 +63,7 @@ class ProposalAutoDeleteMarkerIT extends BaseProposalJobsIT {
       final var proposalId = proposal.getId();
       // Cron is configured to run every second
       await()
-          .atMost(Duration.ofSeconds(2))
+          .atMost(Duration.ofSeconds(5))
           .untilAsserted(() -> proposalHasStatus(proposalId, ProposalStatus.READY_FOR_DELETION));
     }
   }

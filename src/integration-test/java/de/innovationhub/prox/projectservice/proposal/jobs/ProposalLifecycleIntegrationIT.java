@@ -38,7 +38,7 @@ class ProposalLifecycleIntegrationIT extends BaseProposalJobsIT {
     // Cron is configured to run every minute, so it should be sufficient to wait 2 seconds.
     // This time we can sleep, because we want to make sure 2 seconds are over
     await()
-      .atMost(Duration.ofSeconds(2))
+      .atMost(Duration.ofSeconds(5))
       .untilAsserted(() -> proposalHasStatus(proposalId, status));
   }
 }

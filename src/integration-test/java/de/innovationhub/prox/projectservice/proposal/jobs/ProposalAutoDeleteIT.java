@@ -55,7 +55,7 @@ class ProposalAutoDeleteIT extends BaseProposalJobsIT {
       final var proposalId = proposal.getId();
       // Cron is configured to run every second
       await()
-          .atMost(Duration.ofSeconds(2))
+          .atMost(Duration.ofSeconds(5))
           .untilAsserted(() -> assertThat(proposalRepository.existsById(proposalId)).isFalse());
     }
   }
