@@ -86,7 +86,7 @@ jobs:
 
       - name: Run unit tests
         run: |
-          if ! mvn test -nsu -B; then
+          if ! mvn test -Dlogging.level.=ERROR -nsu -B; then
             find . -path '*/target/surefire-reports/*.xml' | zip -q reports-unit-tests.zip -@
             exit 1
           fi
@@ -129,7 +129,7 @@ jobs:
 
       - name: Run integration tests
         run: |
-          if ! mvn verify -Dskip.unit.tests -nsu -B; then
+          if ! mvn verify -Dskip.unit.tests -Dlogging.level.=ERROR -nsu -B; then
             find . -path '*/target/failsafe-reports/*.xml' | zip -q reports-integration-tests.zip -@
             exit 1
           fi
