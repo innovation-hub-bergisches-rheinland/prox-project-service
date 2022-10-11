@@ -91,6 +91,15 @@ jobs:
             exit 1
           fi
 
+      - name: Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Maven Unit Tests
+          path: "**/surefire-reports/TEST-*.xml"
+          reporter: java-junit
+          fail-on-error: false
+
       - name: Unit test reports
         uses: actions/upload-artifact@v2
         if: failure()
@@ -133,6 +142,15 @@ jobs:
             find . -path '*/target/failsafe-reports/*.xml' | zip -q reports-integration-tests.zip -@
             exit 1
           fi
+
+      - name: Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Maven Integration Tests
+          path: "**/failsafe-reports/TEST-*.xml"
+          reporter: java-junit
+          fail-on-error: false
 
       - name: Integration test reports
         uses: actions/upload-artifact@v2
