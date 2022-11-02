@@ -69,7 +69,7 @@ class ProjectAuditingIT {
       Collections.emptySet(),
       UUID.randomUUID(),
       null,
-      Collections.emptyList(),
+      Collections.emptySet(),
       Instant.now(),
       Instant.now());
   }

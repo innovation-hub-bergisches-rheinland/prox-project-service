@@ -8,6 +8,7 @@ import de.innovationhub.prox.projectservice.module.ModuleType;
 import de.innovationhub.prox.projectservice.module.Specialization;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -85,8 +86,8 @@ public class Project extends AbstractEntity {
   // If the project has been created from a proposal, we store the corresponding proposal id here.
   private UUID proposalId = null;
 
-  @ElementCollection(fetch = FetchType.LAZY)
-  private List<String> tags = new ArrayList<>();
+  @ElementCollection(fetch = FetchType.EAGER)
+  private Set<String> tags = new HashSet<>();
 
   @JsonProperty(access = Access.READ_ONLY)
   @Column(name = "created_at", updatable = false)
@@ -100,5 +101,9 @@ public class Project extends AbstractEntity {
 
   public boolean isSupervisor(UUID id) {
     return supervisors.stream().anyMatch(s -> s.getId().equals(id));
+  }
+
+  public void setTags(Collection<String> tags) {
+    this.tags = new HashSet<>(tags);
   }
 }

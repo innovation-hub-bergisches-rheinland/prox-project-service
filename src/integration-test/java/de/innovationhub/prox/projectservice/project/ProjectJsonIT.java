@@ -36,7 +36,7 @@ class ProjectJsonIT {
           Collections.emptySet(),
           UUID.randomUUID(),
           null,
-          Collections.emptyList(),
+          Collections.emptySet(),
           Instant.now(),
           Instant.now());
 

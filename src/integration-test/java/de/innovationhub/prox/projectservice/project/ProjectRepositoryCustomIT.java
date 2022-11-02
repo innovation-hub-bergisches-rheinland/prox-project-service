@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.EntityManager;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -222,7 +223,7 @@ class ProjectRepositoryCustomIT extends AbstractDatabaseIT {
       Set.of(),
       owner.getId(),
       null,
-      Collections.emptyList(),
+      Collections.emptySet(),
       Instant.now(),
       Instant.now());
   }
@@ -253,7 +254,7 @@ class ProjectRepositoryCustomIT extends AbstractDatabaseIT {
       Set.of(m1, m2),
       owner.getId(),
       null,
-      Collections.emptyList(),
+      Collections.emptySet(),
       Instant.now(),
       Instant.now());
   }

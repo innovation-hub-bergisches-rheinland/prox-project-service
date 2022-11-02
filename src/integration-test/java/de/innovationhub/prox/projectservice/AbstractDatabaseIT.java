@@ -18,7 +18,7 @@ public abstract class AbstractDatabaseIT {
     .withDatabaseName(PSQL_DB)
     .withUsername(PSQL_USERNAME)
     .withPassword(PSQL_PASSWORD)
-    .withReuse(true);
+    .withReuse(false);
 
   static {
     postgreSQLContainer.start();

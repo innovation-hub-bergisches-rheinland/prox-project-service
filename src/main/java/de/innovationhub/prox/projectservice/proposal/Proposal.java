@@ -10,6 +10,7 @@ import de.innovationhub.prox.projectservice.module.Specialization;
 import de.innovationhub.prox.projectservice.owners.AbstractOwner;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -90,8 +91,8 @@ public class Proposal extends AbstractEntity {
   //  has been created. There might be a better approach.
   private UUID projectId;
 
-  @ElementCollection(fetch = FetchType.LAZY)
-  private List<String> tags = new ArrayList<>();
+  @ElementCollection(fetch = FetchType.EAGER)
+  private Set<String> tags = new HashSet<>();
 
   @Column(name = "status_changed_at")
   @Builder.Default
@@ -112,5 +113,9 @@ public class Proposal extends AbstractEntity {
   public void setStatus(ProposalStatus status) {
     this.status = status;
     statusChangedAt = Instant.now();
+  }
+
+  public void setTags(Collection<String> tags) {
+    this.tags = new HashSet<>(tags);
   }
 }

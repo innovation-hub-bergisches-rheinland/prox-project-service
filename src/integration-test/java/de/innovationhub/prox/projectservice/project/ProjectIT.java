@@ -381,7 +381,7 @@ class ProjectIT {
       Collections.emptySet(),
       owner.getId(),
       null,
-      Collections.emptyList(),
+      Collections.emptySet(),
       Instant.now(),
       Instant.now());
   }

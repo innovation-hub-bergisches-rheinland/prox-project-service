@@ -3,6 +3,7 @@ package de.innovationhub.prox.projectservice.proposal;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.innovationhub.prox.projectservice.tag.event.ItemTaggedDto;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -34,7 +35,7 @@ public class ProposalTagListener {
       return;
     }
     var proposal = optionalProposal.get();
-    proposal.setTags(parsedEvent.tags().stream().toList());
+    proposal.setTags(parsedEvent.tags().stream().collect(Collectors.toSet()));
     proposalRepository.save(proposal);
   }
 }
