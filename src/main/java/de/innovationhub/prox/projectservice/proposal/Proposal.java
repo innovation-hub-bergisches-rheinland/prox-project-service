@@ -90,7 +90,7 @@ public class Proposal extends AbstractEntity {
   //  has been created. There might be a better approach.
   private UUID projectId;
 
-  @ElementCollection(fetch = FetchType.EAGER)
+  @ElementCollection(fetch = FetchType.LAZY)
   private List<String> tags = new ArrayList<>();
 
   @Column(name = "status_changed_at")

@@ -85,7 +85,7 @@ public class Project extends AbstractEntity {
   // If the project has been created from a proposal, we store the corresponding proposal id here.
   private UUID proposalId = null;
 
-  @ElementCollection(fetch = FetchType.EAGER)
+  @ElementCollection(fetch = FetchType.LAZY)
   private List<String> tags = new ArrayList<>();
 
   @JsonProperty(access = Access.READ_ONLY)
