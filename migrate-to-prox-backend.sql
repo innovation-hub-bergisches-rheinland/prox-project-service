@@ -71,10 +71,9 @@ SELECT
 /* project */
 create temporary table temp_state_translation as (
     VALUES
-        (0, 'AVAILABLE'),
+        (0, 'OFFERED'),
         (1, 'RUNNING'),
-        (2, 'FINISHED'),
-        (3, 'ARCHIVED')
+        (2, 'COMPLETED')
 );
 
 SELECT
@@ -120,3 +119,6 @@ SELECT
     LEFT JOIN temp_project_curriculum tpc on p.id = tpc.project_id;
 
 SELECT * FROM project;
+
+/* project_supervisors */
+SELECT project_id, id as lecturer_id FROM project_supervisors;
